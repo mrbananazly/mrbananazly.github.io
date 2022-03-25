@@ -218,11 +218,11 @@
     
     <div class="post-body" itemprop="articleBody">
           <p>[TOC]</p>
-<h1 id="搭建Hexo服务器，通过Git自动部署在阿里云服务器"><a href="#搭建Hexo服务器，通过Git自动部署在阿里云服务器" class="headerlink" title="搭建Hexo服务器，通过Git自动部署在阿里云服务器"></a>搭建Hexo服务器，通过Git自动部署在阿里云服务器</h1><h2 id="搭建及部署"><a href="#搭建及部署" class="headerlink" title="搭建及部署"></a>搭建及部署</h2><p>参考博文链接：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JTTUYJTvtdT6X2fvLUBFZg">Win10下Hexo博客搭建教程，及阿里云服务器部署实战 (qq.com)</a></p>
-<h2 id="博文发布"><a href="#博文发布" class="headerlink" title="博文发布"></a>博文发布</h2><p>在本地机器上部署Hexo相关MyHexoBlogs文件夹下，进入MyHexoBlogs&#x2F;myblogs&#x2F;source&#x2F;_posts目录；</p>
+<h1><span id="搭建hexo服务器通过git自动部署在阿里云服务器">搭建Hexo服务器，通过Git自动部署在阿里云服务器</span></h1><h2><span id="搭建及部署">搭建及部署</span></h2><p>参考博文链接：<a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JTTUYJTvtdT6X2fvLUBFZg">Win10下Hexo博客搭建教程，及阿里云服务器部署实战 (qq.com)</a></p>
+<h2><span id="博文发布">博文发布</span></h2><p>在本地机器上部署Hexo相关MyHexoBlogs文件夹下，进入MyHexoBlogs&#x2F;myblogs&#x2F;source&#x2F;_posts目录；</p>
 <p>在当前页进入git bash，输入hexo clean 清除缓存，hexo g 解析静态文件，hexo d 刷新部署新的资源。</p>
 <p>hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</p>
-<h1 id="主题及其美化"><a href="#主题及其美化" class="headerlink" title="主题及其美化"></a>主题及其美化</h1><h2 id="Butterfly"><a href="#Butterfly" class="headerlink" title="Butterfly"></a>Butterfly</h2>
+<h1><span id="主题及其美化">主题及其美化</span></h1><h2><span id="butterfly">Butterfly</span></h2>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/03/25/tools_1_start/#more" rel="contents">
@@ -308,12 +308,12 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="用于鲁棒人脸对齐和地标固有关系学习的稀疏局部补丁Transformer"><a href="#用于鲁棒人脸对齐和地标固有关系学习的稀疏局部补丁Transformer" class="headerlink" title="用于鲁棒人脸对齐和地标固有关系学习的稀疏局部补丁Transformer"></a>用于鲁棒人脸对齐和地标固有关系学习的稀疏局部补丁Transformer</h1><p>paper: [<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2203.06541">2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org)</a></p>
+          <h1><span id="用于鲁棒人脸对齐和地标固有关系学习的稀疏局部补丁transformer">用于鲁棒人脸对齐和地标固有关系学习的稀疏局部补丁Transformer</span></h1><p>paper: [<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2203.06541">2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org)</a></p>
 <p>code: <a target="_blank" rel="noopener" href="https://github.com/Jiahao-UTS/SLPT-master">Jiahao-UTS&#x2F;SLPT-master (github.com)</a></p>
-<h2 id="出发点"><a href="#出发点" class="headerlink" title="出发点"></a>出发点</h2><p>landmark之间的内在联系对于人脸对齐的性能有很大影响，本文重点考虑其内在联系。</p>
+<h2><span id="出发点">出发点</span></h2><p>landmark之间的内在联系对于人脸对齐的性能有很大影响，本文重点考虑其内在联系。</p>
 <p>之前的方法有heatmap regression，Coordinate regression，有着不同方面的劣势。</p>
-<h2 id="创新点"><a href="#创新点" class="headerlink" title="创新点"></a>创新点</h2><p>提出了SLPT（<em>sparse local patch transformer</em>）来学习<em>query-query</em>和<em>representation-query</em>关系（自适应内在关系）；为了进一步提高SLPT的性能，提出了一种从粗到精的框架，使局部补丁进化为<strong>金字塔形补丁</strong>。</p>
-<h2 id="做法"><a href="#做法" class="headerlink" title="做法"></a>做法</h2><p>本文的SLPT并非同DETR从完整的feature map中预测坐标，而是首先从局部patch中生成每个landmark的表示特征。</p>
+<h2><span id="创新点">创新点</span></h2><p>提出了SLPT（<em>sparse local patch transformer</em>）来学习<em>query-query</em>和<em>representation-query</em>关系（自适应内在关系）；为了进一步提高SLPT的性能，提出了一种从粗到精的框架，使局部补丁进化为<strong>金字塔形补丁</strong>。</p>
+<h2><span id="做法">做法</span></h2><p>本文的SLPT并非同DETR从完整的feature map中预测坐标，而是首先从局部patch中生成每个landmark的表示特征。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/#more" rel="contents">
