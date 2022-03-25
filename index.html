@@ -195,7 +195,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-03-25 10:33:25 / Modified: 12:42:47" itemprop="dateCreated datePublished" datetime="2022-03-25T10:33:25+08:00">2022-03-25</time>
+      <time title="Created: 2022-03-25 10:33:25 / Modified: 12:45:40" itemprop="dateCreated datePublished" datetime="2022-03-25T10:33:25+08:00">2022-03-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -311,7 +311,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2022-03-25 10:33:25 / Modified: 12:44:32" itemprop="dateCreated datePublished" datetime="2022-03-25T10:33:25+08:00">2022-03-25</time>
+      <time title="Created: 2022-03-25 10:33:25 / Modified: 12:46:33" itemprop="dateCreated datePublished" datetime="2022-03-25T10:33:25+08:00">2022-03-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -335,12 +335,13 @@
     <div class="post-body" itemprop="articleBody">
           <!--toc-->
 
-<h2><span id="资源">资源</span></h2><p>paper: [<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2203.06541">2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org)</a></p>
+<p>paper: [<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2203.06541">2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org)</a></p>
 <p>code: <a target="_blank" rel="noopener" href="https://github.com/Jiahao-UTS/SLPT-master">Jiahao-UTS&#x2F;SLPT-master (github.com)</a></p>
-<h2><span id="出发点">出发点</span></h2><p>landmark之间的内在联系对于人脸对齐的性能有很大影响，本文重点考虑其内在联系。</p>
+<h1><span id="出发点">出发点</span></h1><p>landmark之间的内在联系对于人脸对齐的性能有很大影响，本文重点考虑其内在联系。</p>
 <p>之前的方法有heatmap regression，Coordinate regression，有着不同方面的劣势。</p>
-<h2><span id="创新点">创新点</span></h2><p>提出了SLPT（<em>sparse local patch transformer</em>）来学习<em>query-query</em>和<em>representation-query</em>关系（自适应内在关系）；为了进一步提高SLPT的性能，提出了一种从粗到精的框架，使局部补丁进化为<strong>金字塔形补丁</strong>。</p>
-<h2><span id="做法">做法</span></h2><p>本文的SLPT并非同DETR从完整的feature map中预测坐标，而是首先从局部patch中生成每个landmark的表示特征。</p>
+<h1><span id="创新点">创新点</span></h1><p>提出了SLPT（<em>sparse local patch transformer</em>）来学习<em>query-query</em>和<em>representation-query</em>关系（自适应内在关系）；为了进一步提高SLPT的性能，提出了一种从粗到精的框架，使局部补丁进化为<strong>金字塔形补丁</strong>。</p>
+<h1><span id="做法">做法</span></h1><p>本文的SLPT并非同DETR从完整的feature map中预测坐标，而是首先从局部patch中生成每个landmark的表示特征。</p>
+<p>然后，使用一系列可学习的queries（称为<em>landmark queries</em>）来聚合表示。</p>
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/#more" rel="contents">
