@@ -27,14 +27,14 @@
 <meta property="og:site_name" content="Road 2 the Final">
 <meta property="og:description" content="用于鲁棒人脸对齐和地标固有关系学习的稀疏局部补丁Transformerpaper: [2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org) code: Jiahao-UTS&#x2F;SLPT-master (">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://mrbananazly.cn/.cn//1.png">
-<meta property="og:image" content="http://mrbananazly.cn/.cn//2.png">
+<meta property="og:image" content="http://mrbananazly.cn/1.png">
+<meta property="og:image" content="http://mrbananazly.cn/2.png">
 <meta property="article:published_time" content="2022-03-25T02:33:25.270Z">
 <meta property="article:modified_time" content="2022-03-25T03:13:01.906Z">
 <meta property="article:author" content="mrbanana_zly">
 <meta property="article:tag" content="Patch-based,Transformer">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://mrbananazly.cn/.cn//1.png">
+<meta name="twitter:image" content="http://mrbananazly.cn/1.png">
 
 
 <link rel="canonical" href="http://mrbananazly.cn/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/">
@@ -238,9 +238,9 @@
 <p>然后，使用一系列可学习的queries（称为<em>landmark queries</em>）来聚合表示。</p>
 <p>基于Transformer的交叉注意机制，SPLT在每一层学习一个<strong>自适应邻接矩阵</strong>。最后，通过MLP独立预测每个landmark在其对应patch中的subpixel坐标。由于使用了稀疏的局部补丁，与其他ViT相比，输入token的数量显著减少。 </p>
 <p>为了进一步提高性能，引入了从粗到精的框架，以与SLPT结合。下图为所提出的从粗到精的框架利用稀疏的局部面片实现鲁棒的人脸对齐。根据前一阶段的landmarks裁剪稀疏的局部补丁，并将其输入到同一SLPT中以预测面部landmarks。此外，patch大小随着阶段的增加而缩小，以使局部特征演变成金字塔形式。</p>
-<p><img src="/.cn//1.png" alt="1"></p>
+<p><img src="/1.png" alt="1"></p>
 <p>整体框架图：</p>
-<p><img src="/.cn//2.png" alt="2"></p>
+<p><img src="/2.png" alt="2"></p>
 <p>分为三部分：</p>
 <p><strong>the patch embedding &amp; structure encoding</strong></p>
 <p>不同于ViT，SLPT先根据landmark裁剪patch，再通过线性插值将patch大小调整为K*K，又使用了结构编码（可学习的参数）来补充表示。每种编码都与相邻地标（如左眼和右眼）的编码有很高的相似性。</p>
