@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" integrity="sha256-jTIdiMuX/e3DGJUGwl3pKSxuc6YOuqtJYkM0bGQESA4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mrbananazly.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="出发点 创新点 做法 Visual Context Transformer Encoder Pose-guided Feature Aggregation Part View Based Transformer Decoder      paper: https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;2112.02466v2.pdf code: WangTaoAs&#x2F;PFD_Net: Th">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer》">
+<meta property="og:url" content="http://mrbananazly.cn/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/index.html">
+<meta property="og:site_name" content="Road 2 the Final">
+<meta property="og:description" content="出发点 创新点 做法 Visual Context Transformer Encoder Pose-guided Feature Aggregation Part View Based Transformer Decoder      paper: https:&#x2F;&#x2F;arxiv.org&#x2F;pdf&#x2F;2112.02466v2.pdf code: WangTaoAs&#x2F;PFD_Net: Th">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://mrbananazly.cn/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103047158.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103958451.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329104849953.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329110809342.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112105052.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112535277.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115119956.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115132888.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329151559098.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152506162.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152517889.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329153030797.png">
+<meta property="article:published_time" content="2022-03-30T03:08:26.085Z">
+<meta property="article:modified_time" content="2022-03-30T03:09:48.066Z">
+<meta property="article:author" content="mrbanana_zly">
+<meta property="article:tag" content="ReID">
+<meta property="article:tag" content="Transformer">
+<meta property="article:tag" content="Landmark">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://mrbananazly.cn/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103047158.png">
+
+
+<link rel="canonical" href="http://mrbananazly.cn/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://mrbananazly.cn/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/","path":"2022/03/30/review_2_Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer/","title":"《Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer》"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer》 | Road 2 the Final</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Road 2 the Final</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">出发点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">创新点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">做法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.1.</span> <span class="nav-text">Visual Context Transformer Encoder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.2.</span> <span class="nav-text">Pose-guided Feature Aggregation</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.3.</span> <span class="nav-text">Part View Based Transformer Decoder</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="mrbanana_zly"
+      src="/images/favicon.png">
+  <p class="site-author-name" itemprop="name">mrbanana_zly</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">3</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://mrbananazly.cn/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.png">
+      <meta itemprop="name" content="mrbanana_zly">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="《Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer》 | Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer》
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-03-30 11:08:26 / Modified: 11:09:48" itemprop="dateCreated datePublished" datetime="2022-03-30T11:08:26+08:00">2022-03-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/paper-review/" itemprop="url" rel="index"><span itemprop="name">paper review</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <!-- toc -->
+
+<ul>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#visual-context-transformer-encoder">Visual Context Transformer Encoder</a></li>
+<li><a href="#pose-guided-feature-aggregation">Pose-guided Feature Aggregation</a></li>
+<li><a href="#part-view-based-transformer-decoder">Part View Based Transformer Decoder</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://arxiv.org/pdf/2112.02466v2.pdf</a></p>
+<p>code: <a target="_blank" rel="noopener" href="https://github.com/WangTaoAs/PFD_Net">WangTaoAs&#x2F;PFD_Net: This is Official implementation for “Pose-guided Feature Disentangling for Occluded Person Re-Identification Based on Transformer” in AAAI2022 (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="出发点">出发点</span></h1><p>存在遮挡的行人重识别（<em>Occluded Person Re-identification</em>），由于遮挡的存在，各种噪声被引入，导致特征不匹配；遮挡可能具有与人体部位相似的特征，导致特征学习失败。</p>
+<p>前人的方法有：使用姿势信息指导特征空间将全局特征划分为局部特征（缺点是需要严格的特征空间对齐）；使用基于图的方法建模拓扑信息（缺点是容易陷入上述的第二种问题）。</p>
+<h1><span id="创新点">创新点</span></h1><p>本文探索了在没有空间对齐的情况下，将附加姿势信息与Transformer相结合的可能性。其使用姿势信息对语义成分（如人体的关节部位）进行分解，并对非遮挡的部位进行选择性匹配；设计了一种<em>Pose-guided Push Loss</em>。</p>
+<h1><span id="做法">做法</span></h1><p>整体框架图：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103047158.png" alt="image-20220329103047158"></p>
+<h2><span id="visual-context-transformer-encoder">Visual Context Transformer Encoder</span></h2><p>首先需要对输入图像划分为固定大小的N块patch，步距大小定义为S，每块patch的尺度定义为P，patch个数N为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103958451.png" alt="image-20220329103958451"></p>
+<p>当S等于P时，划分出来的patch就不重叠；当S&lt;P时，patch重叠，可以减少空间领域信息的丢失。</p>
+<p>将这些patch通过线形层生成一个序列输入transformer encoder，concat一组可训练的<em>Position Encoding</em>，以及<em>Camera Information Embedding</em>（表示该图像所属的摄像头视角信息，标签给定的，相同视角图像有一样的值），最终的输入序列定义为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329104849953.png" alt="image-20220329104849953"></p>
+<p>最后通过Transformer Encoder输出分为两部分的特征，一部分为global feature，一部分为part feature。为进一步区分人体各个部位的特征，part feature又分为K组，每一组都与global feature做cancat送入shared transformer layer学习这些K组融合特征。</p>
+<p><strong>Encoder Supervision Loss</strong></p>
+<p>选用交叉熵损失作为identity loss以及triplet loss来作为这部分的loss：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329110809342.png" alt="image-20220329110809342"></p>
+<h2><span id="pose-guided-feature-aggregation">Pose-guided Feature Aggregation</span></h2><p>被遮挡的人体图像的身体信息较少，而非身体部位的信息可能不明确。本文使用<em>pose estimator</em> 从图像中提取landmark信息。</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112105052.png" alt="image-20220329112105052"></p>
+<p><strong>Pose Estimation</strong></p>
+<p>给定一张图像，估计器从中提取M个landmark，然后利用这些landmark生成一组heatmap <strong>H</strong>，每张heatmap都被下采样到（H&#x2F;4）*（W&#x2F;4），其中最大的response point对应一个joint point，设置了一个阈值γ来滤除高置信度和低置信度的landmark。滤除出的剩余landmark的heatmap并不是将其设为0，而是赋值0&#x2F;1，热图标签可以形式化为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112535277.png" alt="image-20220329112535277"></p>
+<p>ci定义为第i个landmark的置信度分数。</p>
+<p><strong>Pose-guided Feature Aggregation</strong></p>
+<p>将之前的分组数设为K&#x3D;M，使其等于landmark的数量。将生成的一组heatmap <strong>H</strong>后接一层FC，使其尺寸与group part local feature（fgp）相同，得到<strong>H‘</strong>。将<strong>H‘</strong>与<strong>fgp</strong> mutiply element-wisely（向量对应元素相乘，将heatmap的注意力附加在fgp上）获得<strong>P</strong>，其目的是为了从fgp中找到对身体某个部位贡献最大的信息部分。</p>
+<p>为此，本文开发了一种匹配和分布机制，将part local feature和pose-guided feature视为一组相似性度量问题，最终获取一个pose-guided feature集合<strong>S</strong>。</p>
+<p>对于每个<strong>Pi</strong>,在fgp中找到最相似的特征，即<strong>找寻融合了heatmap注意力的序列和原始局部特征的最近距离的局部特征</strong>，以选出优质的局部特征，用余弦距离，形式化定义为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115119956.png" alt="image-20220329115119956"></p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115132888.png" alt="image-20220329115132888"></p>
+<h2><span id="part-view-based-transformer-decoder">Part View Based Transformer Decoder</span></h2><p>将heatmap和fen做点乘送入Decoder学习一系列learnable semantic views以学习有区别的身体部分。其实整个框架的大体思路为一张图片走两路，一路分patch进transformer encoder，一路特征点检测生成heatmap走transformer decoder，再将这两部分的输出进行match，可以得到view feature，取高置信度的view feature采样成与fgb，fgp相同尺寸算triplet loss，再将所有的view feature采样做<em>Pose Guided Push Loss</em>。</p>
+<p><strong>Pose-View Matching Module</strong></p>
+<p>此部分计算patch view和通过Pose-guided Feature Aggregation得到的Set之间的相似度，来获得最终的view feature，用余弦距离，形式化定义为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329151559098.png" alt="image-20220329151559098"></p>
+<p>之前的heatmap通过阈值打好了0&#x2F;1标签，最终的view feature即可通过heatmap标签分为两类。在上述距离置信度较高的view feature中取heatmap label为1的；在置信度较低的view feature中取heatmap label为0的。这样的操作会产生可变长度，需要固定长度补0操作。</p>
+<p><strong>Decoder Supervision Loss</strong></p>
+<p>提出的Pose-guided Push Loss：</p>
+<p>余弦距离：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152506162.png" alt="image-20220329152506162"></p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152517889.png" alt="image-20220329152517889"></p>
+<p>整体的loss定义：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329153030797.png" alt="image-20220329153030797"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ReID/" rel="tag"># ReID</a>
+              <a href="/tags/Transformer/" rel="tag"># Transformer</a>
+              <a href="/tags/Landmark/" rel="tag"># Landmark</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/25/tools_1_start/" rel="prev" title="Hexo建站相关">
+                  <i class="fa fa-chevron-left"></i> Hexo建站相关
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mrbanana_zly</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
