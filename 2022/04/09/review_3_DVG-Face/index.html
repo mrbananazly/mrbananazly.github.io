@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" integrity="sha256-jTIdiMuX/e3DGJUGwl3pKSxuc6YOuqtJYkM0bGQESA4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mrbananazly.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="出发点 创新点 与前作DVG的不同 前备知识 做法 Dual Generation Training with Paired Heterogeneous Data Training with Unpaired VIS Data   Heterogeneous Face Recognition      paper: 2009.09399.pdf (arxiv.org) code: Brady">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《DVG-Face》">
+<meta property="og:url" content="http://mrbananazly.cn/2022/04/09/review_3_DVG-Face/index.html">
+<meta property="og:site_name" content="Road 2 the Final">
+<meta property="og:description" content="出发点 创新点 与前作DVG的不同 前备知识 做法 Dual Generation Training with Paired Heterogeneous Data Training with Unpaired VIS Data   Heterogeneous Face Recognition      paper: 2009.09399.pdf (arxiv.org) code: Brady">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/09/review_3_DVG-Face/image-20220409140033446.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/09/review_3_DVG-Face/image-20220409153226995.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/09/review_3_DVG-Face/image-20220409162532051.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/09/review_3_DVG-Face/image-20220409162539110.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/09/review_3_DVG-Face/image-20220409162548220.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/09/review_3_DVG-Face/image-20220409172316619.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/09/review_3_DVG-Face/image-20220409172325881.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/09/review_3_DVG-Face/image-20220409172332593.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/09/review_3_DVG-Face/image-20220409184040111.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/09/review_3_DVG-Face/image-20220409184047202.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/09/review_3_DVG-Face/image-20220409184118573.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/09/review_3_DVG-Face/image-20220409191600670.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/09/review_3_DVG-Face/image-20220409191702568.png">
+<meta property="article:published_time" content="2022-04-08T16:53:46.198Z">
+<meta property="article:modified_time" content="2022-04-09T11:43:56.610Z">
+<meta property="article:author" content="mrbanana_zly">
+<meta property="article:tag" content="HFR">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://mrbananazly.cn/2022/04/09/review_3_DVG-Face/image-20220409140033446.png">
+
+
+<link rel="canonical" href="http://mrbananazly.cn/2022/04/09/review_3_DVG-Face/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://mrbananazly.cn/2022/04/09/review_3_DVG-Face/","path":"2022/04/09/review_3_DVG-Face/","title":"《DVG-Face》"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《DVG-Face》 | Road 2 the Final</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Road 2 the Final</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">出发点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">创新点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">与前作DVG的不同</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">前备知识</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">做法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.1.</span> <span class="nav-text">Dual Generation</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.1.</span> <span class="nav-text">Training with Paired Heterogeneous Data</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.1.2.</span> <span class="nav-text">Training with Unpaired VIS Data</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.2.</span> <span class="nav-text">Heterogeneous Face Recognition</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="mrbanana_zly"
+      src="/images/favicon.png">
+  <p class="site-author-name" itemprop="name">mrbanana_zly</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://mrbananazly.cn/2022/04/09/review_3_DVG-Face/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.png">
+      <meta itemprop="name" content="mrbanana_zly">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="《DVG-Face》 | Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《DVG-Face》
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-04-09 00:53:46 / Modified: 19:43:56" itemprop="dateCreated datePublished" datetime="2022-04-09T00:53:46+08:00">2022-04-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/paper-review/" itemprop="url" rel="index"><span itemprop="name">paper review</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <!-- toc -->
+
+<ul>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E4%B8%8E%E5%89%8D%E4%BD%9Cdvg%E7%9A%84%E4%B8%8D%E5%90%8C">与前作DVG的不同</a></li>
+<li><a href="#%E5%89%8D%E5%A4%87%E7%9F%A5%E8%AF%86">前备知识</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#dual-generation">Dual Generation</a><ul>
+<li><a href="#training-with-paired-heterogeneous-data">Training with Paired Heterogeneous Data</a></li>
+<li><a href="#training-with-unpaired-vis-data">Training with Unpaired VIS Data</a></li>
+</ul>
+</li>
+<li><a href="#heterogeneous-face-recognition">Heterogeneous Face Recognition</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2009.09399.pdf">2009.09399.pdf (arxiv.org)</a></p>
+<p>code: <a target="_blank" rel="noopener" href="https://github.com/WangTaoAs/PFD_Net"><a target="_blank" rel="noopener" href="https://github.com/BradyFU/DVG-Face">BradyFU&#x2F;DVG-Face: DVG-Face: Dual Variational Generation for Heterogeneous Face Recognition, TPAMI 2021 (github.com)</a></a></p>
+<span id="more"></span>
+
+<h1><span id="出发点">出发点</span></h1><p>为解决异构人脸识别（Heterogeneous Face Recognition）问题中成对异构数据匮乏的问题。</p>
+<h1><span id="创新点">创新点</span></h1><p>将异构人脸识别视为一个双生成（dual generation）问题，<strong>从噪声中采样大规模的成对</strong>异构人脸数据；</p>
+<p>将丰富的<strong>身份信息集成到联合分布</strong>中，以丰富生成数据的身份多样性。同时，对生成的成对图像施加一个保持成对身份的损失（<strong>pairwise identity preserving loss</strong>），以确保它们的身份一致性。这两个特性使得能够更好地利用生成的未标记数据来训练异构人脸识别网络；</p>
+<p>通过将生成的成对图像视为正对，将从不同样本获取的图像视为负对，通过<strong>对比学习</strong>对异构人脸识别网络进行优化，以学习domain-invariant和区分性的embedding feature。</p>
+<h1><span id="与前作dvg的不同">与前作DVG的不同</span></h1><p><strong>生成图像的身份更丰富：</strong></p>
+<p>对于前作，生成器只能使用小规模的成对异构数据进行训练，从而限制生成图像的身份多样性。在当前版本中，重新设计了生成器的体系结构和训练方式，允许使用成对异构数据和<strong>大规模未配对VIS数据</strong>（单模态的非成对真实人脸数据）对其进行训练。后者的引入极大地丰富了生成图像的身份多样性。 </p>
+<p><strong>生成的图像被更有效地利用：</strong></p>
+<p>前作借助身份一致性属性，通过成对距离损失（pairwise distance loss）使用生成的成对数据对异构人脸识别网络进行训练。在此基础上，得益于上述身份多样性特性，当前版本进一步将从不同样本中获得的图像视为负对，形成了一种<strong>对比学习</strong>机制。 先前版本只能利用生成的图像来减少域差异，而当前版本则利用生成的图像来学习域不变和区分性嵌入特征（可学习）。 </p>
+<p><strong>增加了更深入的分析和更多的实验：</strong></p>
+<p>增加不同模态对图像的实验。</p>
+<h1><span id="前备知识">前备知识</span></h1><p><strong>VAE</strong></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/364917826">变分自编码器（VAE）原理 - 知乎 (zhihu.com)</a></p>
+<h1><span id="做法">做法</span></h1><p><img src="/2022/04/09/review_3_DVG-Face/image-20220409140033446.png" alt="image-20220409140033446"></p>
+<p>待解决问题：</p>
+<p>（1）如何生成不同的配对异构数据</p>
+<p>（2）如何有效利用这些生成的数据</p>
+<h2><span id="dual-generation">Dual Generation</span></h2><p><strong>核心：结合域属性和身份特征</strong></p>
+<p>通过一个双变分生成器实现。生成器包含两个特定域的encoder（图中的橙色和灰色Ev，En），一个decoder（浅蓝色G），一个预训练好的人脸识别网络（F）以及一个身份采样器（Fs）。</p>
+<p>两个<em>Domain-specific attribute encoders</em>用于学习NIR和VIS数据的领域特定属性分布，人脸识别网络用于提取身份特征，身份采样器可以灵活地从噪声中采样丰富的身份表示（？）。成对异构数据的联合分布由身份表示和属性分布组成（具体的fusion文中并未指出，代码中是concat），decoder将联合分布映射到像素空间。</p>
+<h3><span id="training-with-paired-heterogeneous-data">Training with Paired Heterogeneous Data</span></h3><p>输入成对同身份的异构图像，生成器学习潜在空间中的解耦联合分布。具体而言，采用在MS-Celeb-1M上预训练的人脸识别模型（本文采用的是LightCNN）作为特征提取器，由F提取出的特征被认为仅仅是identity related。考虑到F是从VIS模态预训练得到的，在另一个模态的表现不好，那么只需要提取VIS模态的身份特征作为两个模态共同的身份表示。</p>
+<p>两个encoder提取出Domain-specific attribute分布，为确保其仅仅是属性相关的，在属性和身份表示之间施加了角度正交损失。最后解耦后的两种分布构成成对NIR-VIS数据的联合分布，然后被送到decoder作为输入。</p>
+<p>该过程中涉及到了四个损失函数：包括角正交损失、分布学习损失、成对身份保持损失和对抗性损失。</p>
+<p><strong>Angular Orthogonal Loss</strong></p>
+<p>角正交损失施加在Zv和f，Zn和f之间，计算它们之间的余弦相似度，最小化他们的绝对值的和。</p>
+<p><img src="/2022/04/09/review_3_DVG-Face/image-20220409153226995.png" alt="image-20220409153226995"></p>
+<p><strong>Distribution Learning Loss</strong></p>
+<p>分布学习损失启发自VAEs，首先用KL散度计算两个分布的差异，再结合L1正则化重构decoder的输入。</p>
+<p><img src="/2022/04/09/review_3_DVG-Face/image-20220409162532051.png" alt="image-20220409162532051"></p>
+<p><img src="/2022/04/09/review_3_DVG-Face/image-20220409162539110.png" alt="image-20220409162539110"></p>
+<p><img src="/2022/04/09/review_3_DVG-Face/image-20220409162548220.png" alt="image-20220409162548220"></p>
+<p><strong>Pairwise Identity Preserving Loss</strong></p>
+<p>为了保留生成数据的身份，以前基于条件生成的方法通常采用身份保留损失。利用预训练好的人脸识别网络分别提取生成数据和真实目标数据的嵌入特征，然后迫使这两个特征尽可能接近。然而，由于既不存在类内约束，也不存在类间约束，因此很难保证生成的图像属于与目标一致的特定类。</p>
+<p>本文关注生成的成对图像的身份一致性，而不是生成的图像属于谁。因此提出了一种成对的身份保持损失，以限制特征之间的距离</p>
+<p><img src="/2022/04/09/review_3_DVG-Face/image-20220409172316619.png" alt="image-20220409172316619"></p>
+<p><img src="/2022/04/09/review_3_DVG-Face/image-20220409172325881.png" alt="image-20220409172325881"></p>
+<p><img src="/2022/04/09/review_3_DVG-Face/image-20220409172332593.png" alt="image-20220409172332593"></p>
+<p><strong>Adversarial Loss</strong></p>
+<p>引入对抗损失来提高生成图像的清晰度。</p>
+<p><img src="/2022/04/09/review_3_DVG-Face/image-20220409184040111.png" alt="image-20220409184040111"></p>
+<p><img src="/2022/04/09/review_3_DVG-Face/image-20220409184047202.png" alt="image-20220409184047202"></p>
+<p><strong>Overall Loss</strong></p>
+<p><img src="/2022/04/09/review_3_DVG-Face/image-20220409184118573.png" alt="image-20220409184118573"></p>
+<h3><span id="training-with-unpaired-vis-data">Training with Unpaired VIS Data</span></h3><p>身份信息获取的一种简单的方法是使用预训练的人脸识别网络从大规模VIS数据中提取身份。然而，如果希望在测试阶段生成大规模的新配对数据，必须拥有相同数量的具有不同身份的VIS数据（如b图右下角）。</p>
+<p>为避免此情况，引入了身份采样器（identity sampler）。具体实现为，首先采用识别网络提取MS-Celeb-1M数据集上的embedding特征，利用这些特征来训练VAE模型。训练后的VAE的decoder被用作身份采样器，它可以将标准高斯噪声中的点映射到身份表示。</p>
+<p>由于这些采样的身份表示没有对应的ground true异构图像，本文建议以不成对的方式训练生成器。 </p>
+<p><strong>整体流程：</strong></p>
+<p>首先，通过身份采样器Fs对身份特征f<del>（经过识别网络提取）进行采样。然后，将两种属性分布特征Zn和Zv以及f</del>分别concat输入decoder G。最后，生成一对不属于异构数据库的新异构图像。 </p>
+<p>其中的loss和train with paired的情况类似，只不过没有了对抗损失（具体可见train_generator.py代码中的loss部分）。</p>
+<h2><span id="heterogeneous-face-recognition">Heterogeneous Face Recognition</span></h2><p>与训练好的LightCNN作为backbone，使用有限的数据对进行训练，再使用大规模生成后的数据进行训练对比。loss选择softmax loss。backbone在训练生成器时是权重更新的，在此处HRN中固定。</p>
+<p>对于生成的数据，由于没有特定的类别标签，上述softmax loss不适用。引入<strong>对比学习</strong>机制来利用这些数据。</p>
+<p>对比学习机制流程：</p>
+<p>首先从生成数据中采样两对异构数据，基于生成的都是身份一致的，这两对都是正例，再将其做交叉，构造出了两对负例，要注意的是要保证交叉后的模态还是跨模态的。对比损失如下：</p>
+<p><img src="/2022/04/09/review_3_DVG-Face/image-20220409191600670.png" alt="image-20220409191600670"></p>
+<p>其中m是一个margin值。</p>
+<p>整体的HFR网络损失为：</p>
+<p><img src="/2022/04/09/review_3_DVG-Face/image-20220409191702568.png" alt="image-20220409191702568"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/HFR/" rel="tag"># HFR</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/" rel="prev" title="《Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer》">
+                  <i class="fa fa-chevron-left"></i> 《Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer》
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mrbanana_zly</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
