@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</title>
+    <url>/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a></li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: [<a href="https://arxiv.org/abs/2203.06541">2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org)</a></p>
+<p>code: <a href="https://github.com/Jiahao-UTS/SLPT-master">Jiahao-UTS&#x2F;SLPT-master (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="出发点">出发点</span></h1><p>landmark之间的内在联系对于人脸对齐的性能有很大影响，本文重点考虑其内在联系。</p>
+<p>之前的方法有heatmap regression，Coordinate regression，有着不同方面的劣势。</p>
+<h1><span id="创新点">创新点</span></h1><p>提出了SLPT（<em>sparse local patch transformer</em>）来学习<em>query-query</em>和<em>representation-query</em>关系（自适应内在关系）；为了进一步提高SLPT的性能，提出了一种从粗到精的框架，使局部补丁进化为<strong>金字塔形补丁</strong>。</p>
+<h1><span id="做法">做法</span></h1><p>本文的SLPT并非同DETR从完整的feature map中预测坐标，而是首先从局部patch中生成每个landmark的表示特征。</p>
+<p>然后，使用一系列可学习的queries（称为<em>landmark queries</em>）来聚合表示。</p>
+<p>基于Transformer的交叉注意机制，SPLT在每一层学习一个<strong>自适应邻接矩阵</strong>。最后，通过MLP独立预测每个landmark在其对应patch中的subpixel坐标。由于使用了稀疏的局部补丁，与其他ViT相比，输入token的数量显著减少。 </p>
+<p>为了进一步提高性能，引入了从粗到精的框架，以与SLPT结合。下图为所提出的从粗到精的框架利用稀疏的局部面片实现鲁棒的人脸对齐。根据前一阶段的landmarks裁剪稀疏的局部补丁，并将其输入到同一SLPT中以预测面部landmarks。此外，patch大小随着阶段的增加而缩小，以使局部特征演变成金字塔形式。</p>
+<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/1.png" alt="1"></p>
+<p>整体框架图：</p>
+<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/2.png" alt="2"></p>
+<p>分为三部分：</p>
+<p><strong>the patch embedding &amp; structure encoding</strong></p>
+<p>不同于ViT，SLPT先根据landmark裁剪patch，再通过线性插值将patch大小调整为K*K，又使用了结构编码（可学习的参数）来补充表示。每种编码都与相邻地标（如左眼和右眼）的编码有很高的相似性。</p>
+<p>Muti-head Cross-attention（在Vision Transformer基础上的改进）：通过landmark在CNN提取出的feature map上划取局部patch，将这些feature map上的patch排成一个patch embedding，将其视为landmark的表示；紧接着对其进行结构编码（Structure Encodeing）,以获取人脸中的相对位置和patch embedding做concat。输入 landmarks queries ，通过这些MLP，独立预测每个landmark的位置。</p>
+<p><strong>inherent relation layers</strong></p>
+<p>受Transformer启发，每一层由三个块组成，即多头自注意（MSA）块、多头交叉注意（MCA）块和多层感知器（MLP）块，并且在每个块之前应用一个layer norm（LN）。 </p>
+<p><strong>prediction heads</strong></p>
+<p>预测头由一个用于规范化输入的分层模板和一个用于预测结果的MLP层组成。</p>
+<p>最右边的图像显示了不同样本的自适应固有关系。其将每个点连接到第一个内在关系层中交叉注意权重最高的点显示。</p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>Patch-based Transformer</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer》</title>
     <url>/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/</url>
     <content><![CDATA[<!-- toc -->
@@ -70,50 +113,7 @@
       </tags>
   </entry>
   <entry>
-    <title>《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</title>
-    <url>/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a></li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: [<a href="https://arxiv.org/abs/2203.06541">2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org)</a></p>
-<p>code: <a href="https://github.com/Jiahao-UTS/SLPT-master">Jiahao-UTS&#x2F;SLPT-master (github.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="出发点">出发点</span></h1><p>landmark之间的内在联系对于人脸对齐的性能有很大影响，本文重点考虑其内在联系。</p>
-<p>之前的方法有heatmap regression，Coordinate regression，有着不同方面的劣势。</p>
-<h1><span id="创新点">创新点</span></h1><p>提出了SLPT（<em>sparse local patch transformer</em>）来学习<em>query-query</em>和<em>representation-query</em>关系（自适应内在关系）；为了进一步提高SLPT的性能，提出了一种从粗到精的框架，使局部补丁进化为<strong>金字塔形补丁</strong>。</p>
-<h1><span id="做法">做法</span></h1><p>本文的SLPT并非同DETR从完整的feature map中预测坐标，而是首先从局部patch中生成每个landmark的表示特征。</p>
-<p>然后，使用一系列可学习的queries（称为<em>landmark queries</em>）来聚合表示。</p>
-<p>基于Transformer的交叉注意机制，SPLT在每一层学习一个<strong>自适应邻接矩阵</strong>。最后，通过MLP独立预测每个landmark在其对应patch中的subpixel坐标。由于使用了稀疏的局部补丁，与其他ViT相比，输入token的数量显著减少。 </p>
-<p>为了进一步提高性能，引入了从粗到精的框架，以与SLPT结合。下图为所提出的从粗到精的框架利用稀疏的局部面片实现鲁棒的人脸对齐。根据前一阶段的landmarks裁剪稀疏的局部补丁，并将其输入到同一SLPT中以预测面部landmarks。此外，patch大小随着阶段的增加而缩小，以使局部特征演变成金字塔形式。</p>
-<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/1.png" alt="1"></p>
-<p>整体框架图：</p>
-<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/2.png" alt="2"></p>
-<p>分为三部分：</p>
-<p><strong>the patch embedding &amp; structure encoding</strong></p>
-<p>不同于ViT，SLPT先根据landmark裁剪patch，再通过线性插值将patch大小调整为K*K，又使用了结构编码（可学习的参数）来补充表示。每种编码都与相邻地标（如左眼和右眼）的编码有很高的相似性。</p>
-<p>Muti-head Cross-attention（在Vision Transformer基础上的改进）：通过landmark在CNN提取出的feature map上划取局部patch，将这些feature map上的patch排成一个patch embedding，将其视为landmark的表示；紧接着对其进行结构编码（Structure Encodeing）,以获取人脸中的相对位置和patch embedding做concat。输入 landmarks queries ，通过这些MLP，独立预测每个landmark的位置。</p>
-<p><strong>inherent relation layers</strong></p>
-<p>受Transformer启发，每一层由三个块组成，即多头自注意（MSA）块、多头交叉注意（MCA）块和多层感知器（MLP）块，并且在每个块之前应用一个layer norm（LN）。 </p>
-<p><strong>prediction heads</strong></p>
-<p>预测头由一个用于规范化输入的分层模板和一个用于预测结果的MLP层组成。</p>
-<p>最右边的图像显示了不同样本的自适应固有关系。其将每个点连接到第一个内在关系层中交叉注意权重最高的点显示。</p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>Patch-based Transformer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《DVG-Face》</title>
+    <title>《DVG-Face:Dual Variational Generation for Heterogeneous Face Recognition》</title>
     <url>/2022/04/09/review_3_DVG-Face/</url>
     <content><![CDATA[<!-- toc -->
 
@@ -200,6 +200,7 @@
       </categories>
       <tags>
         <tag>HFR</tag>
+        <tag>generation</tag>
       </tags>
   </entry>
   <entry>
