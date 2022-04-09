@@ -184,7 +184,9 @@
 <p>为避免此情况，引入了身份采样器（identity sampler）。具体实现为，首先采用识别网络提取MS-Celeb-1M数据集上的embedding特征，利用这些特征来训练VAE模型。训练后的VAE的decoder被用作身份采样器，它可以将标准高斯噪声中的点映射到身份表示。</p>
 <p>由于这些采样的身份表示没有对应的ground true异构图像，本文建议以不成对的方式训练生成器。 </p>
 <p><strong>整体流程：</strong></p>
-<p>首先，通过身份采样器Fs对身份特征f<del>（经过识别网络提取）进行采样。然后，将两种属性分布特征Zn和Zv以及f</del>分别concat输入decoder G。最后，生成一对不属于异构数据库的新异构图像。 </p>
+<p>首先，通过身份采样器Fs对身份特征f~（经过识别网络提取）进行采样。</p>
+<p>然后，将两种属性分布特征Zn和Zv以及f~分别concat输入decoder G。</p>
+<p>最后，生成一对不属于异构数据库的新异构图像。 </p>
 <p>其中的loss和train with paired的情况类似，只不过没有了对抗损失（具体可见train_generator.py代码中的loss部分）。</p>
 <h2><span id="heterogeneous-face-recognition">Heterogeneous Face Recognition</span></h2><p>与训练好的LightCNN作为backbone，使用有限的数据对进行训练，再使用大规模生成后的数据进行训练对比。loss选择softmax loss。backbone在训练生成器时是权重更新的，在此处HRN中固定。</p>
 <p>对于生成的数据，由于没有特定的类别标签，上述softmax loss不适用。引入<strong>对比学习</strong>机制来利用这些数据。</p>
