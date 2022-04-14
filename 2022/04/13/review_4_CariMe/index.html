@@ -27,25 +27,25 @@
 <meta property="og:site_name" content="Road 2 the Final">
 <meta property="og:description" content="任务 出发点 创新点 做法 Multi-exaggeration Warper Warp Reconstruction Loss Photo Reconstruction Loss Total Variation Loss Wrapper Total Loss   Styler Adversarial Loss Image Reconstruction Loss Cycle Consiste">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414090134868.png">
-<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414083337682.png">
-<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414092823399.png">
-<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414093327113.png">
-<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414094156859.png">
-<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414094730445.png">
-<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414101725797.png">
-<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414083358409.png">
-<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414101755992.png">
-<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414101914719.png">
-<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414103236545.png">
-<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414103409597.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/13/review_4_CariMe/image-20220414090134868.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/13/review_4_CariMe/image-20220414083337682.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/13/review_4_CariMe/image-20220414092823399.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/13/review_4_CariMe/image-20220414093327113.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/13/review_4_CariMe/image-20220414094156859.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/13/review_4_CariMe/image-20220414094730445.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/13/review_4_CariMe/image-20220414101725797.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/13/review_4_CariMe/image-20220414083358409.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/13/review_4_CariMe/image-20220414101755992.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/13/review_4_CariMe/image-20220414101914719.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/13/review_4_CariMe/image-20220414103236545.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/04/13/review_4_CariMe/image-20220414103409597.png">
 <meta property="article:published_time" content="2022-04-13T07:56:10.000Z">
-<meta property="article:modified_time" content="2022-04-14T02:56:57.043Z">
+<meta property="article:modified_time" content="2022-04-14T02:58:56.488Z">
 <meta property="article:author" content="mrbanana_zly">
 <meta property="article:tag" content="generation">
 <meta property="article:tag" content="caricature">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414090134868.png">
+<meta name="twitter:image" content="http://mrbananazly.cn/2022/04/13/review_4_CariMe/image-20220414090134868.png">
 
 
 <link rel="canonical" href="http://mrbananazly.cn/2022/04/13/review_4_CariMe/">
@@ -253,7 +253,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-04-14 10:56:57" itemprop="dateModified" datetime="2022-04-14T10:56:57+08:00">2022-04-14</time>
+      <time title="Modified: 2022-04-14 10:58:56" itemprop="dateModified" datetime="2022-04-14T10:58:56+08:00">2022-04-14</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -310,28 +310,28 @@
 <h1><span id="创新点">创新点</span></h1><p>CariMe可生成具有<strong>多重</strong>夸张和<strong>多种</strong>风格的漫画</p>
 <p>提出了一种基于变形场（deformation fields）的非成对漫画生成方法，可以有效地学习真实照片到漫画的空间变换分布。还引入了一个辅助内容编码（auxiliary content code），以帮助产生有意义的、特定于照片的夸张。</p>
 <h1><span id="做法">做法</span></h1><p>一个wrapper，一个styler</p>
-<h2><span id="multi-exaggeration-warper">Multi-exaggeration Warper</span></h2><p>分别输入一张漫画脸和真实脸，首先计算所有漫画的平均landmark（代码中的main_cal_wrap_degree.py），<img src="/review_4_CariMe/image-20220414090134868.png" alt="image-20220414090134868">从每个漫画中得到，表达了该张漫画所表示的特定的夸张模式，然后该特征经过encoder获得低维向量Zw（wrap code)，与此同时引入了对应的真实人脸过另一个encoder提取Zp（auxiliary photo-specific content code)，Zp与Zw都是满足标准正态分布的向量，在测试阶段Zw是从正态分布中随机采样获取，以获得不同的变形编码。down scale和up scale操作文中的解释是给变形场去噪。</p>
-<p><img src="/review_4_CariMe/image-20220414083337682.png" alt="image-20220414083337682"></p>
-<h3><span id="warp-reconstruction-loss">Warp Reconstruction Loss</span></h3><p><img src="/review_4_CariMe/image-20220414092823399.png" alt="image-20220414092823399"></p>
+<h2><span id="multi-exaggeration-warper">Multi-exaggeration Warper</span></h2><p>分别输入一张漫画脸和真实脸，首先计算所有漫画的平均landmark（代码中的main_cal_wrap_degree.py），<img src="/2022/04/13/review_4_CariMe/image-20220414090134868.png" alt="image-20220414090134868">从每个漫画中得到，表达了该张漫画所表示的特定的夸张模式，然后该特征经过encoder获得低维向量Zw（wrap code)，与此同时引入了对应的真实人脸过另一个encoder提取Zp（auxiliary photo-specific content code)，Zp与Zw都是满足标准正态分布的向量，在测试阶段Zw是从正态分布中随机采样获取，以获得不同的变形编码。down scale和up scale操作文中的解释是给变形场去噪。</p>
+<p><img src="/2022/04/13/review_4_CariMe/image-20220414083337682.png" alt="image-20220414083337682"></p>
+<h3><span id="warp-reconstruction-loss">Warp Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414092823399.png" alt="image-20220414092823399"></p>
 <p>L1正则，旨在拉近reconstruction后的变形场与原变形场的差异。</p>
-<h3><span id="photo-reconstruction-loss">Photo Reconstruction Loss</span></h3><p><img src="/review_4_CariMe/image-20220414093327113.png" alt="image-20220414093327113"></p>
+<h3><span id="photo-reconstruction-loss">Photo Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414093327113.png" alt="image-20220414093327113"></p>
 <p>L1正则，旨在拉近reconstruction后的真实人脸与输入真实人脸的差异，来鼓励Zp保持对原真是人脸的内容和空间信息。</p>
-<h3><span id="total-variation-loss">Total Variation Loss</span></h3><p><img src="/review_4_CariMe/image-20220414094156859.png" alt="image-20220414094156859"></p>
+<h3><span id="total-variation-loss">Total Variation Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414094156859.png" alt="image-20220414094156859"></p>
 <p>用来给生成的图像去噪。</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38406029/article/details/118996415">(54条消息) TV Loss详解_鬼道2022的博客-CSDN博客_tvloss公式</a></p>
-<h3><span id="wrapper-total-loss">Wrapper Total Loss</span></h3><p><img src="/review_4_CariMe/image-20220414094730445.png" alt="image-20220414094730445"></p>
+<h3><span id="wrapper-total-loss">Wrapper Total Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414094730445.png" alt="image-20220414094730445"></p>
 <h2><span id="styler">Styler</span></h2><p>旨在做风格迁移，将图像分界为content representation和style code。</p>
 <p>一个style encoder，一个context encoder，一个style decoder（AdaLIN:<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43823140/article/details/107840916">(54条消息) 【飞桨】论文解读：U-GAT-IT: Unsupervised Generative Attentional Networks with Adaptive Layer-Instance_目楽 Leo mu的博客-CSDN博客</a>），style输出一个正态分布的style code，context输出feature map。</p>
 <p>将context输出的feature map分别进行instance normalization（styler中常用的一种像素normalization）和layer normalization，combine方式需要到代码中查看，送到AdaLIN中，其范式为：</p>
-<p><img src="/review_4_CariMe/image-20220414101725797.png" alt="image-20220414101725797"></p>
-<p><img src="/review_4_CariMe/image-20220414083358409.png"></p>
-<h3><span id="adversarial-loss">Adversarial Loss</span></h3><p><img src="/review_4_CariMe/image-20220414101755992.png" alt="image-20220414101755992"></p>
+<p><img src="/2022/04/13/review_4_CariMe/image-20220414101725797.png" alt="image-20220414101725797"></p>
+<p><img src="/2022/04/13/review_4_CariMe/image-20220414083358409.png"></p>
+<h3><span id="adversarial-loss">Adversarial Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414101755992.png" alt="image-20220414101755992"></p>
 <p>AdaLIN是基于GAN的方法，所以有adversarial loss。</p>
-<h3><span id="image-reconstruction-loss">Image Reconstruction Loss</span></h3><p><img src="/review_4_CariMe/image-20220414101914719.png" alt="image-20220414101914719"></p>
+<h3><span id="image-reconstruction-loss">Image Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414101914719.png" alt="image-20220414101914719"></p>
 <p>L1正则，旨在拉近reconstruction后的图像与原图像的距离。</p>
 <h3><span id="cycle-consistency-loss">Cycle Consistency Loss</span></h3><p>对生成后的图像再次进入encoder，输出特征与之前encoder输出做L1正则，这里的cycle是循环，不是cycle loss！</p>
-<p><img src="/review_4_CariMe/image-20220414103236545.png" alt="image-20220414103236545"></p>
-<h3><span id="style-total-loss">Style Total Loss</span></h3><p><img src="/review_4_CariMe/image-20220414103409597.png" alt="image-20220414103409597"></p>
+<p><img src="/2022/04/13/review_4_CariMe/image-20220414103236545.png" alt="image-20220414103236545"></p>
+<h3><span id="style-total-loss">Style Total Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414103409597.png" alt="image-20220414103409597"></p>
 
     </div>
 

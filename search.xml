@@ -1,49 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</title>
-    <url>/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a></li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: [<a href="https://arxiv.org/abs/2203.06541">2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org)</a></p>
-<p>code: <a href="https://github.com/Jiahao-UTS/SLPT-master">Jiahao-UTS&#x2F;SLPT-master (github.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="出发点">出发点</span></h1><p>landmark之间的内在联系对于人脸对齐的性能有很大影响，本文重点考虑其内在联系。</p>
-<p>之前的方法有heatmap regression，Coordinate regression，有着不同方面的劣势。</p>
-<h1><span id="创新点">创新点</span></h1><p>提出了SLPT（<em>sparse local patch transformer</em>）来学习<em>query-query</em>和<em>representation-query</em>关系（自适应内在关系）；为了进一步提高SLPT的性能，提出了一种从粗到精的框架，使局部补丁进化为<strong>金字塔形补丁</strong>。</p>
-<h1><span id="做法">做法</span></h1><p>本文的SLPT并非同DETR从完整的feature map中预测坐标，而是首先从局部patch中生成每个landmark的表示特征。</p>
-<p>然后，使用一系列可学习的queries（称为<em>landmark queries</em>）来聚合表示。</p>
-<p>基于Transformer的交叉注意机制，SPLT在每一层学习一个<strong>自适应邻接矩阵</strong>。最后，通过MLP独立预测每个landmark在其对应patch中的subpixel坐标。由于使用了稀疏的局部补丁，与其他ViT相比，输入token的数量显著减少。 </p>
-<p>为了进一步提高性能，引入了从粗到精的框架，以与SLPT结合。下图为所提出的从粗到精的框架利用稀疏的局部面片实现鲁棒的人脸对齐。根据前一阶段的landmarks裁剪稀疏的局部补丁，并将其输入到同一SLPT中以预测面部landmarks。此外，patch大小随着阶段的增加而缩小，以使局部特征演变成金字塔形式。</p>
-<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/1.png" alt="1"></p>
-<p>整体框架图：</p>
-<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/2.png" alt="2"></p>
-<p>分为三部分：</p>
-<p><strong>the patch embedding &amp; structure encoding</strong></p>
-<p>不同于ViT，SLPT先根据landmark裁剪patch，再通过线性插值将patch大小调整为K*K，又使用了结构编码（可学习的参数）来补充表示。每种编码都与相邻地标（如左眼和右眼）的编码有很高的相似性。</p>
-<p>Muti-head Cross-attention（在Vision Transformer基础上的改进）：通过landmark在CNN提取出的feature map上划取局部patch，将这些feature map上的patch排成一个patch embedding，将其视为landmark的表示；紧接着对其进行结构编码（Structure Encodeing）,以获取人脸中的相对位置和patch embedding做concat。输入 landmarks queries ，通过这些MLP，独立预测每个landmark的位置。</p>
-<p><strong>inherent relation layers</strong></p>
-<p>受Transformer启发，每一层由三个块组成，即多头自注意（MSA）块、多头交叉注意（MCA）块和多层感知器（MLP）块，并且在每个块之前应用一个layer norm（LN）。 </p>
-<p><strong>prediction heads</strong></p>
-<p>预测头由一个用于规范化输入的分层模板和一个用于预测结果的MLP层组成。</p>
-<p>最右边的图像显示了不同样本的自适应固有关系。其将每个点连接到第一个内在关系层中交叉注意权重最高的点显示。</p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>Patch-based Transformer</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer》</title>
     <url>/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/</url>
     <content><![CDATA[<!-- toc -->
@@ -110,6 +67,49 @@
         <tag>ReID</tag>
         <tag>Transformer</tag>
         <tag>Landmark</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</title>
+    <url>/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a></li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: [<a href="https://arxiv.org/abs/2203.06541">2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org)</a></p>
+<p>code: <a href="https://github.com/Jiahao-UTS/SLPT-master">Jiahao-UTS&#x2F;SLPT-master (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="出发点">出发点</span></h1><p>landmark之间的内在联系对于人脸对齐的性能有很大影响，本文重点考虑其内在联系。</p>
+<p>之前的方法有heatmap regression，Coordinate regression，有着不同方面的劣势。</p>
+<h1><span id="创新点">创新点</span></h1><p>提出了SLPT（<em>sparse local patch transformer</em>）来学习<em>query-query</em>和<em>representation-query</em>关系（自适应内在关系）；为了进一步提高SLPT的性能，提出了一种从粗到精的框架，使局部补丁进化为<strong>金字塔形补丁</strong>。</p>
+<h1><span id="做法">做法</span></h1><p>本文的SLPT并非同DETR从完整的feature map中预测坐标，而是首先从局部patch中生成每个landmark的表示特征。</p>
+<p>然后，使用一系列可学习的queries（称为<em>landmark queries</em>）来聚合表示。</p>
+<p>基于Transformer的交叉注意机制，SPLT在每一层学习一个<strong>自适应邻接矩阵</strong>。最后，通过MLP独立预测每个landmark在其对应patch中的subpixel坐标。由于使用了稀疏的局部补丁，与其他ViT相比，输入token的数量显著减少。 </p>
+<p>为了进一步提高性能，引入了从粗到精的框架，以与SLPT结合。下图为所提出的从粗到精的框架利用稀疏的局部面片实现鲁棒的人脸对齐。根据前一阶段的landmarks裁剪稀疏的局部补丁，并将其输入到同一SLPT中以预测面部landmarks。此外，patch大小随着阶段的增加而缩小，以使局部特征演变成金字塔形式。</p>
+<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/1.png" alt="1"></p>
+<p>整体框架图：</p>
+<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/2.png" alt="2"></p>
+<p>分为三部分：</p>
+<p><strong>the patch embedding &amp; structure encoding</strong></p>
+<p>不同于ViT，SLPT先根据landmark裁剪patch，再通过线性插值将patch大小调整为K*K，又使用了结构编码（可学习的参数）来补充表示。每种编码都与相邻地标（如左眼和右眼）的编码有很高的相似性。</p>
+<p>Muti-head Cross-attention（在Vision Transformer基础上的改进）：通过landmark在CNN提取出的feature map上划取局部patch，将这些feature map上的patch排成一个patch embedding，将其视为landmark的表示；紧接着对其进行结构编码（Structure Encodeing）,以获取人脸中的相对位置和patch embedding做concat。输入 landmarks queries ，通过这些MLP，独立预测每个landmark的位置。</p>
+<p><strong>inherent relation layers</strong></p>
+<p>受Transformer启发，每一层由三个块组成，即多头自注意（MSA）块、多头交叉注意（MCA）块和多层感知器（MLP）块，并且在每个块之前应用一个layer norm（LN）。 </p>
+<p><strong>prediction heads</strong></p>
+<p>预测头由一个用于规范化输入的分层模板和一个用于预测结果的MLP层组成。</p>
+<p>最右边的图像显示了不同样本的自适应固有关系。其将每个点连接到第一个内在关系层中交叉注意权重最高的点显示。</p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>Patch-based Transformer</tag>
       </tags>
   </entry>
   <entry>
@@ -243,28 +243,28 @@
 <h1><span id="创新点">创新点</span></h1><p>CariMe可生成具有<strong>多重</strong>夸张和<strong>多种</strong>风格的漫画</p>
 <p>提出了一种基于变形场（deformation fields）的非成对漫画生成方法，可以有效地学习真实照片到漫画的空间变换分布。还引入了一个辅助内容编码（auxiliary content code），以帮助产生有意义的、特定于照片的夸张。</p>
 <h1><span id="做法">做法</span></h1><p>一个wrapper，一个styler</p>
-<h2><span id="multi-exaggeration-warper">Multi-exaggeration Warper</span></h2><p>分别输入一张漫画脸和真实脸，首先计算所有漫画的平均landmark（代码中的main_cal_wrap_degree.py），<img src="/review_4_CariMe/image-20220414090134868.png" alt="image-20220414090134868">从每个漫画中得到，表达了该张漫画所表示的特定的夸张模式，然后该特征经过encoder获得低维向量Zw（wrap code)，与此同时引入了对应的真实人脸过另一个encoder提取Zp（auxiliary photo-specific content code)，Zp与Zw都是满足标准正态分布的向量，在测试阶段Zw是从正态分布中随机采样获取，以获得不同的变形编码。down scale和up scale操作文中的解释是给变形场去噪。</p>
-<p><img src="/review_4_CariMe/image-20220414083337682.png" alt="image-20220414083337682"></p>
-<h3><span id="warp-reconstruction-loss">Warp Reconstruction Loss</span></h3><p><img src="/review_4_CariMe/image-20220414092823399.png" alt="image-20220414092823399"></p>
+<h2><span id="multi-exaggeration-warper">Multi-exaggeration Warper</span></h2><p>分别输入一张漫画脸和真实脸，首先计算所有漫画的平均landmark（代码中的main_cal_wrap_degree.py），<img src="/2022/04/13/review_4_CariMe/image-20220414090134868.png" alt="image-20220414090134868">从每个漫画中得到，表达了该张漫画所表示的特定的夸张模式，然后该特征经过encoder获得低维向量Zw（wrap code)，与此同时引入了对应的真实人脸过另一个encoder提取Zp（auxiliary photo-specific content code)，Zp与Zw都是满足标准正态分布的向量，在测试阶段Zw是从正态分布中随机采样获取，以获得不同的变形编码。down scale和up scale操作文中的解释是给变形场去噪。</p>
+<p><img src="/2022/04/13/review_4_CariMe/image-20220414083337682.png" alt="image-20220414083337682"></p>
+<h3><span id="warp-reconstruction-loss">Warp Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414092823399.png" alt="image-20220414092823399"></p>
 <p>L1正则，旨在拉近reconstruction后的变形场与原变形场的差异。</p>
-<h3><span id="photo-reconstruction-loss">Photo Reconstruction Loss</span></h3><p><img src="/review_4_CariMe/image-20220414093327113.png" alt="image-20220414093327113"></p>
+<h3><span id="photo-reconstruction-loss">Photo Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414093327113.png" alt="image-20220414093327113"></p>
 <p>L1正则，旨在拉近reconstruction后的真实人脸与输入真实人脸的差异，来鼓励Zp保持对原真是人脸的内容和空间信息。</p>
-<h3><span id="total-variation-loss">Total Variation Loss</span></h3><p><img src="/review_4_CariMe/image-20220414094156859.png" alt="image-20220414094156859"></p>
+<h3><span id="total-variation-loss">Total Variation Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414094156859.png" alt="image-20220414094156859"></p>
 <p>用来给生成的图像去噪。</p>
 <p><a href="https://blog.csdn.net/qq_38406029/article/details/118996415">(54条消息) TV Loss详解_鬼道2022的博客-CSDN博客_tvloss公式</a></p>
-<h3><span id="wrapper-total-loss">Wrapper Total Loss</span></h3><p><img src="/review_4_CariMe/image-20220414094730445.png" alt="image-20220414094730445"></p>
+<h3><span id="wrapper-total-loss">Wrapper Total Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414094730445.png" alt="image-20220414094730445"></p>
 <h2><span id="styler">Styler</span></h2><p>旨在做风格迁移，将图像分界为content representation和style code。</p>
 <p>一个style encoder，一个context encoder，一个style decoder（AdaLIN:<a href="https://blog.csdn.net/weixin_43823140/article/details/107840916">(54条消息) 【飞桨】论文解读：U-GAT-IT: Unsupervised Generative Attentional Networks with Adaptive Layer-Instance_目楽 Leo mu的博客-CSDN博客</a>），style输出一个正态分布的style code，context输出feature map。</p>
 <p>将context输出的feature map分别进行instance normalization（styler中常用的一种像素normalization）和layer normalization，combine方式需要到代码中查看，送到AdaLIN中，其范式为：</p>
-<p><img src="/review_4_CariMe/image-20220414101725797.png" alt="image-20220414101725797"></p>
-<p><img src="/review_4_CariMe/image-20220414083358409.png"></p>
-<h3><span id="adversarial-loss">Adversarial Loss</span></h3><p><img src="/review_4_CariMe/image-20220414101755992.png" alt="image-20220414101755992"></p>
+<p><img src="/2022/04/13/review_4_CariMe/image-20220414101725797.png" alt="image-20220414101725797"></p>
+<p><img src="/2022/04/13/review_4_CariMe/image-20220414083358409.png"></p>
+<h3><span id="adversarial-loss">Adversarial Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414101755992.png" alt="image-20220414101755992"></p>
 <p>AdaLIN是基于GAN的方法，所以有adversarial loss。</p>
-<h3><span id="image-reconstruction-loss">Image Reconstruction Loss</span></h3><p><img src="/review_4_CariMe/image-20220414101914719.png" alt="image-20220414101914719"></p>
+<h3><span id="image-reconstruction-loss">Image Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414101914719.png" alt="image-20220414101914719"></p>
 <p>L1正则，旨在拉近reconstruction后的图像与原图像的距离。</p>
 <h3><span id="cycle-consistency-loss">Cycle Consistency Loss</span></h3><p>对生成后的图像再次进入encoder，输出特征与之前encoder输出做L1正则，这里的cycle是循环，不是cycle loss！</p>
-<p><img src="/review_4_CariMe/image-20220414103236545.png" alt="image-20220414103236545"></p>
-<h3><span id="style-total-loss">Style Total Loss</span></h3><p><img src="/review_4_CariMe/image-20220414103409597.png" alt="image-20220414103409597"></p>
+<p><img src="/2022/04/13/review_4_CariMe/image-20220414103236545.png" alt="image-20220414103236545"></p>
+<h3><span id="style-total-loss">Style Total Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414103409597.png" alt="image-20220414103409597"></p>
 ]]></content>
       <categories>
         <category>paper review</category>
