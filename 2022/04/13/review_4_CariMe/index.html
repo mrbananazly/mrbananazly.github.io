@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" integrity="sha256-jTIdiMuX/e3DGJUGwl3pKSxuc6YOuqtJYkM0bGQESA4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mrbananazly.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="任务 出发点 创新点 做法 Multi-exaggeration Warper Warp Reconstruction Loss Photo Reconstruction Loss Total Variation Loss Wrapper Total Loss   Styler Adversarial Loss Image Reconstruction Loss Cycle Consiste">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《CariMe:Unpaired Caricature Generation with Multiple Exaggerations》">
+<meta property="og:url" content="http://mrbananazly.cn/2022/04/13/review_4_CariMe/index.html">
+<meta property="og:site_name" content="Road 2 the Final">
+<meta property="og:description" content="任务 出发点 创新点 做法 Multi-exaggeration Warper Warp Reconstruction Loss Photo Reconstruction Loss Total Variation Loss Wrapper Total Loss   Styler Adversarial Loss Image Reconstruction Loss Cycle Consiste">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414090134868.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414083337682.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414092823399.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414093327113.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414094156859.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414094730445.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414101725797.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414083358409.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414101755992.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414101914719.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414103236545.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414103409597.png">
+<meta property="article:published_time" content="2022-04-13T07:56:10.000Z">
+<meta property="article:modified_time" content="2022-04-14T02:56:57.043Z">
+<meta property="article:author" content="mrbanana_zly">
+<meta property="article:tag" content="generation">
+<meta property="article:tag" content="caricature">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://mrbananazly.cn/review_4_CariMe/image-20220414090134868.png">
+
+
+<link rel="canonical" href="http://mrbananazly.cn/2022/04/13/review_4_CariMe/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://mrbananazly.cn/2022/04/13/review_4_CariMe/","path":"2022/04/13/review_4_CariMe/","title":"《CariMe:Unpaired Caricature Generation with Multiple Exaggerations》"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《CariMe:Unpaired Caricature Generation with Multiple Exaggerations》 | Road 2 the Final</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Road 2 the Final</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">任务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">出发点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">创新点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">做法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.1.</span> <span class="nav-text">Multi-exaggeration Warper</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.1.1.</span> <span class="nav-text">Warp Reconstruction Loss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.1.2.</span> <span class="nav-text">Photo Reconstruction Loss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.1.3.</span> <span class="nav-text">Total Variation Loss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.1.4.</span> <span class="nav-text">Wrapper Total Loss</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.2.</span> <span class="nav-text">Styler</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.2.1.</span> <span class="nav-text">Adversarial Loss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.2.2.</span> <span class="nav-text">Image Reconstruction Loss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.2.3.</span> <span class="nav-text">Cycle Consistency Loss</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">4.2.4.</span> <span class="nav-text">Style Total Loss</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="mrbanana_zly"
+      src="/images/favicon.png">
+  <p class="site-author-name" itemprop="name">mrbanana_zly</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://mrbananazly.cn/2022/04/13/review_4_CariMe/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.png">
+      <meta itemprop="name" content="mrbanana_zly">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="《CariMe:Unpaired Caricature Generation with Multiple Exaggerations》 | Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《CariMe:Unpaired Caricature Generation with Multiple Exaggerations》
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-04-13 15:56:10" itemprop="dateCreated datePublished" datetime="2022-04-13T15:56:10+08:00">2022-04-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-04-14 10:56:57" itemprop="dateModified" datetime="2022-04-14T10:56:57+08:00">2022-04-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/paper-review/" itemprop="url" rel="index"><span itemprop="name">paper review</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#multi-exaggeration-warper">Multi-exaggeration Warper</a><ul>
+<li><a href="#warp-reconstruction-loss">Warp Reconstruction Loss</a></li>
+<li><a href="#photo-reconstruction-loss">Photo Reconstruction Loss</a></li>
+<li><a href="#total-variation-loss">Total Variation Loss</a></li>
+<li><a href="#wrapper-total-loss">Wrapper Total Loss</a></li>
+</ul>
+</li>
+<li><a href="#styler">Styler</a><ul>
+<li><a href="#adversarial-loss">Adversarial Loss</a></li>
+<li><a href="#image-reconstruction-loss">Image Reconstruction Loss</a></li>
+<li><a href="#cycle-consistency-loss">Cycle Consistency Loss</a></li>
+<li><a href="#style-total-loss">Style Total Loss</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://ieeexplore.ieee.org/abstract/document/9454341/</a></p>
+<p>code: <a target="_blank" rel="noopener" href="https://github.com/edward3862/CariMe-pytorch">edward3862&#x2F;CariMe-pytorch: Unpaired Caricature Generation with Multiple Exaggerations (TMM 2021) (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="任务">任务</span></h1><p>漫画生成、图像到图像的翻译、图像扭曲、风格转换</p>
+<h1><span id="出发点">出发点</span></h1><p>与一般的image-to-image translation不同，由于各种空间变形的存在，自动绘制漫画是一项更具挑战性的任务。原先的漫画生成方式都是instance-level，本文拓展到distribution-level。</p>
+<h1><span id="创新点">创新点</span></h1><p>CariMe可生成具有<strong>多重</strong>夸张和<strong>多种</strong>风格的漫画</p>
+<p>提出了一种基于变形场（deformation fields）的非成对漫画生成方法，可以有效地学习真实照片到漫画的空间变换分布。还引入了一个辅助内容编码（auxiliary content code），以帮助产生有意义的、特定于照片的夸张。</p>
+<h1><span id="做法">做法</span></h1><p>一个wrapper，一个styler</p>
+<h2><span id="multi-exaggeration-warper">Multi-exaggeration Warper</span></h2><p>分别输入一张漫画脸和真实脸，首先计算所有漫画的平均landmark（代码中的main_cal_wrap_degree.py），<img src="/review_4_CariMe/image-20220414090134868.png" alt="image-20220414090134868">从每个漫画中得到，表达了该张漫画所表示的特定的夸张模式，然后该特征经过encoder获得低维向量Zw（wrap code)，与此同时引入了对应的真实人脸过另一个encoder提取Zp（auxiliary photo-specific content code)，Zp与Zw都是满足标准正态分布的向量，在测试阶段Zw是从正态分布中随机采样获取，以获得不同的变形编码。down scale和up scale操作文中的解释是给变形场去噪。</p>
+<p><img src="/review_4_CariMe/image-20220414083337682.png" alt="image-20220414083337682"></p>
+<h3><span id="warp-reconstruction-loss">Warp Reconstruction Loss</span></h3><p><img src="/review_4_CariMe/image-20220414092823399.png" alt="image-20220414092823399"></p>
+<p>L1正则，旨在拉近reconstruction后的变形场与原变形场的差异。</p>
+<h3><span id="photo-reconstruction-loss">Photo Reconstruction Loss</span></h3><p><img src="/review_4_CariMe/image-20220414093327113.png" alt="image-20220414093327113"></p>
+<p>L1正则，旨在拉近reconstruction后的真实人脸与输入真实人脸的差异，来鼓励Zp保持对原真是人脸的内容和空间信息。</p>
+<h3><span id="total-variation-loss">Total Variation Loss</span></h3><p><img src="/review_4_CariMe/image-20220414094156859.png" alt="image-20220414094156859"></p>
+<p>用来给生成的图像去噪。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_38406029/article/details/118996415">(54条消息) TV Loss详解_鬼道2022的博客-CSDN博客_tvloss公式</a></p>
+<h3><span id="wrapper-total-loss">Wrapper Total Loss</span></h3><p><img src="/review_4_CariMe/image-20220414094730445.png" alt="image-20220414094730445"></p>
+<h2><span id="styler">Styler</span></h2><p>旨在做风格迁移，将图像分界为content representation和style code。</p>
+<p>一个style encoder，一个context encoder，一个style decoder（AdaLIN:<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_43823140/article/details/107840916">(54条消息) 【飞桨】论文解读：U-GAT-IT: Unsupervised Generative Attentional Networks with Adaptive Layer-Instance_目楽 Leo mu的博客-CSDN博客</a>），style输出一个正态分布的style code，context输出feature map。</p>
+<p>将context输出的feature map分别进行instance normalization（styler中常用的一种像素normalization）和layer normalization，combine方式需要到代码中查看，送到AdaLIN中，其范式为：</p>
+<p><img src="/review_4_CariMe/image-20220414101725797.png" alt="image-20220414101725797"></p>
+<p><img src="/review_4_CariMe/image-20220414083358409.png"></p>
+<h3><span id="adversarial-loss">Adversarial Loss</span></h3><p><img src="/review_4_CariMe/image-20220414101755992.png" alt="image-20220414101755992"></p>
+<p>AdaLIN是基于GAN的方法，所以有adversarial loss。</p>
+<h3><span id="image-reconstruction-loss">Image Reconstruction Loss</span></h3><p><img src="/review_4_CariMe/image-20220414101914719.png" alt="image-20220414101914719"></p>
+<p>L1正则，旨在拉近reconstruction后的图像与原图像的距离。</p>
+<h3><span id="cycle-consistency-loss">Cycle Consistency Loss</span></h3><p>对生成后的图像再次进入encoder，输出特征与之前encoder输出做L1正则，这里的cycle是循环，不是cycle loss！</p>
+<p><img src="/review_4_CariMe/image-20220414103236545.png" alt="image-20220414103236545"></p>
+<h3><span id="style-total-loss">Style Total Loss</span></h3><p><img src="/review_4_CariMe/image-20220414103409597.png" alt="image-20220414103409597"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/generation/" rel="tag"># generation</a>
+              <a href="/tags/caricature/" rel="tag"># caricature</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/04/09/review_3_DVG-Face/" rel="prev" title="《DVG-Face:Dual Variational Generation for Heterogeneous Face Recognition》">
+                  <i class="fa fa-chevron-left"></i> 《DVG-Face:Dual Variational Generation for Heterogeneous Face Recognition》
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mrbanana_zly</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
