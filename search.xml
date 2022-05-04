@@ -113,6 +113,131 @@
       </tags>
   </entry>
   <entry>
+    <title>《Clothes-Changing Person Re-identification with RGB Modality Only》</title>
+    <url>/2022/05/02/review_5_Simple-CCReID/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#clothes-based-adversarial-loss">Clothes-based Adversarial Loss</a><ul>
+<li><a href="#training-clothes-classifier">Training clothes classifier</a></li>
+<li><a href="#learning-clothes-irrelevant-features">Learning clothes-irrelevant features</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://arxiv.org/pdf/2204.06890v1.pdf</a></p>
+<p>code: <a href="https://github.com/guxinqian/simple-ccreid">guxinqian&#x2F;Simple-CCReID: Pytorch implementation of ‘Clothes-Changing Person Re-identification with RGB Modality Only. In CVPR, 2022.’ (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="任务">任务</span></h1><p>换装人员重识别</p>
+<h1><span id="出发点">出发点</span></h1><p><strong>提取与衣服无关的特征</strong>，如脸型、发型、体形和步态。目前大多数工作主要集中在从多模态信息（如剪影和草图）中建模身体形状，但没有充分利用原始 RGB 图像中与衣服无关的信息。</p>
+<h1><span id="创新点">创新点</span></h1><p>文章提出一种基于衣服的<strong>对抗</strong>性损失（CAL），通过惩罚 re-id 模型对衣服的预测能力（其实就是个分类器），从原始 RGB 图像中<strong>挖掘与衣服无关的特征</strong>。</p>
+<h1><span id="做法">做法</span></h1><p>首先通过最小化Lc来优化衣服分类器。然后固定衣服分类器的参数，最小化Lid和Lca，迫使backbone学习与衣服无关的特征。（每张图片对应一个一个身份标签和服装标签，将衣服类定义为细粒度标识类——所有同一身份的样本都根据他们的衣服被划分为属于该身份的不同类别，不同的人即使穿着相同的衣服也不会共享相同的衣服标签）</p>
+<p><img src="/review_5_Simple-CCReID/image-20220504092335366.png" alt="image-20220504092335366"></p>
+<h2><span id="clothes-based-adversarial-loss">Clothes-based Adversarial Loss</span></h2><h3><span id="training-clothes-classifier">Training clothes classifier</span></h3><p>Lc采用交叉熵损失</p>
+<h3><span id="learning-clothes-irrelevant-features">Learning clothes-irrelevant features</span></h3><p>固定衣服分类器的参数，并强制主干学习与衣服无关的特征。为此，应该<strong>惩罚re-id模型对于衣服的预测能力</strong>。</p>
+<p>然而，由于衣服类被定义为细粒度类，因此惩罚re-id模型对于所有衣服类别的预测能力，也会降低其预测身份的能力，这对re-id是有害的。</p>
+<p>那么最终的目的是使经过训练的<strong>服装分类器无法区分相同身份和不同服装的样本</strong>。</p>
+<p>所以，Lca是一个<em>multi-positive-class classification loss</em>，属于同一个身份的不同服装类互为正类。（把不同衣服的只要是属于同一个id身份的衣服类都视为衣服正类）</p>
+<p><img src="/review_5_Simple-CCReID/image-20220504101750986.png" alt="image-20220504101750986"></p>
+<p>Si+（Si-)是一个有相同身份的衣服标签fi的集合，K是S中的衣服类别数量，q(c)是第c个衣服类别的交叉熵损失的权重，同一件衣服同一个身份的正例，和不同衣服同一个身份的正例有相同的权重1&#x2F;K。</p>
+<p>同时，为了在不严重降低衣服一致性识别精度的情况下提高模型的换衣识别能力，等式（4）可替换为：</p>
+<p><img src="/review_5_Simple-CCReID/image-20220504105337953.png" alt="image-20220504105337953"></p>
+<p><img src="/review_5_Simple-CCReID/image-20220504105427890.png" alt="image-20220504105427890"></p>
+<p>另外，穿着相同衣服的正例比穿着不同衣服的正例有更大的权重。</p>
+<p>在优化CAL的同时，对身份分类器进行了优化。因此，第二步的优化过程是：</p>
+<p><img src="/review_5_Simple-CCReID/image-20220504105540307.png" alt="image-20220504105540307"></p>
+<p>当仅使用Lid进行训练时，该模型在优化的早期阶段倾向于学习简单样本（具有相同的衣服），然后逐渐学习区分困难样本（具有相同的身份和不同的衣服）。类似课程学习方式，但尽管如此（6）中并未抛弃Lid。其原因是，在优化的早期阶段，只有最小化Lca并迫使模型区分硬样本，才可能导致局部最优。相反，在我们的实验中，在第一次降低学习率后，增加了Lca用于训练。</p>
+<p>&#96;&#96;</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class ClothesBasedAdversarialLoss(nn.Module):</span><br><span class="line">    &quot;&quot;&quot; Clothes-based Adversarial Loss.</span><br><span class="line"></span><br><span class="line">    Reference:</span><br><span class="line">        Gu et al. Clothes-Changing Person Re-identification with RGB Modality Only. In CVPR, 2022.</span><br><span class="line"></span><br><span class="line">    Args:</span><br><span class="line">        scale (float): scaling factor.</span><br><span class="line">        epsilon (float): a trade-off hyper-parameter.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __init__(self, scale=16, epsilon=0.1):</span><br><span class="line">        super().__init__()</span><br><span class="line">        self.scale = scale</span><br><span class="line">        self.epsilon = epsilon</span><br><span class="line"></span><br><span class="line">    def forward(self, inputs, targets, positive_mask):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        Args:</span><br><span class="line">            inputs: prediction matrix (before softmax) with shape (batch_size, num_classes)</span><br><span class="line">            targets: ground truth labels with shape (batch_size)</span><br><span class="line">            positive_mask: positive mask matrix with shape (batch_size, num_classes). The clothes classes with </span><br><span class="line">                the same identity as the anchor sample are defined as positive clothes classes and their mask </span><br><span class="line">                values are 1. The clothes classes with different identities from the anchor sample are defined </span><br><span class="line">                as negative clothes classes and their mask values in positive_mask are 0.</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        inputs = self.scale * inputs</span><br><span class="line">        negtive_mask = 1 - positive_mask</span><br><span class="line">        identity_mask = torch.zeros(inputs.size()).scatter_(1, targets.unsqueeze(1).data.cpu(), 1).cuda()</span><br><span class="line"></span><br><span class="line">        exp_logits = torch.exp(inputs)</span><br><span class="line">        log_sum_exp_pos_and_all_neg = torch.log((exp_logits * negtive_mask).sum(1, keepdim=True) + exp_logits)</span><br><span class="line">        log_prob = inputs - log_sum_exp_pos_and_all_neg</span><br><span class="line"></span><br><span class="line">        mask = (1 - self.epsilon) * identity_mask + self.epsilon / positive_mask.sum(1, keepdim=True) * positive_mask</span><br><span class="line">        loss = (- mask * log_prob).sum(1).mean()</span><br><span class="line"></span><br><span class="line">        return loss</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>ReID</tag>
+        <tag>decouple</tag>
+        <tag>adversarial</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo建站相关</title>
+    <url>/2022/03/25/tools_1_start/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E6%90%AD%E5%BB%BAhexo%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%80%9A%E8%BF%87git%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8">搭建Hexo服务器，通过Git自动部署在阿里云服务器</a><ul>
+<li><a href="#%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%83%A8%E7%BD%B2">搭建及部署</a></li>
+<li><a href="#%E5%8D%9A%E6%96%87%E5%8F%91%E5%B8%83">博文发布</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%BB%E9%A2%98%E5%8F%8A%E5%85%B6%E7%BE%8E%E5%8C%96">主题及其美化</a><ul>
+<li><a href="#butterfly">Butterfly</a></li>
+<li><a href="#next">Next</a><ul>
+<li><a href="#%E7%BE%8E%E5%8C%96">美化</a></li>
+<li><a href="#%E6%96%87%E7%AB%A0%E5%90%AF%E7%94%A8tags%E5%92%8Ccategories">文章启用tags和categories</a></li>
+<li><a href="#%E8%AE%BE%E7%BD%AE%E9%98%85%E8%AF%BB%E5%85%A8%E6%96%87">设置阅读全文</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98updating">相关问题（Updating…）</a><ul>
+<li><a href="#%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98">插入图片问题</a></li>
+<li><a href="#%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98">目录生成问题</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E6%9C%AC%E5%9C%B0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD">添加本地搜索功能</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="搭建hexo服务器通过git自动部署在阿里云服务器">搭建Hexo服务器，通过Git自动部署在阿里云服务器</span></h1><h2><span id="搭建及部署">搭建及部署</span></h2><p>参考博文链接：<a href="https://mp.weixin.qq.com/s/JTTUYJTvtdT6X2fvLUBFZg">Win10下Hexo博客搭建教程，及阿里云服务器部署实战 (qq.com)</a></p>
+<h2><span id="博文发布">博文发布</span></h2><p>在本地机器上部署Hexo相关MyHexoBlogs文件夹下，进入MyHexoBlogs&#x2F;myblogs&#x2F;source&#x2F;_posts目录；</p>
+<p>在当前页进入git bash，输入hexo clean 清除缓存，hexo g 解析静态文件，hexo d 刷新部署新的资源。</p>
+<p>hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</p>
+<h1><span id="主题及其美化">主题及其美化</span></h1><h2><span id="butterfly">Butterfly</span></h2><p>Butterfly主题部署参考博文链接：<a href="https://www.jianshu.com/p/50a565adaf15?ivk_sa=1024320u">hexo框架|butterfly主题配置 - 简书 (jianshu.com)</a></p>
+<p>Butterfly主题官方文档：<a href="https://www.butterfly1.cn/">Hexo-Butterfly主题(🦋 A Hexo Theme: Butterfly-Official website) (butterfly1.cn)</a></p>
+<p>Hexo默认美化项：<a href="https://zhuanlan.zhihu.com/p/369951111">Hexo个性化设置 - 知乎 (zhihu.com)</a></p>
+<h2><span id="next">Next</span></h2><h3><span id="美化">美化</span></h3><p><a href="https://blog.csdn.net/qq_34003239/article/details/100883213">(54条消息) Next主题美化_蜗牛非牛的博客-CSDN博客_next主题美化</a></p>
+<h3><span id="文章启用tags和categories">文章启用tags和categories</span></h3><p><a href="https://blog.csdn.net/Lancis/article/details/118788205">(54条消息) hexo next主题简单美化_Lancis的博客-CSDN博客_next主题美化</a></p>
+<h3><span id="设置阅读全文">设置阅读全文</span></h3><p><a href="https://blog.csdn.net/CHENGXUYUAN09/article/details/103408380">(54条消息) next7.6版本关于设置阅读全文_LIYUANWAISPRING的博客-CSDN博客</a></p>
+<h1><span id="相关问题updating">相关问题（Updating…）</span></h1><h2><span id="插入图片问题">插入图片问题</span></h2><p>选择采用hexo官网的解决方式：<a href="https://hexo.io/zh-cn/docs/asset-folders">资源文件夹 | Hexo</a></p>
+<h2><span id="目录生成问题">目录生成问题</span></h2><p>安装插件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-toc --save</span><br></pre></td></tr></table></figure>
+
+<p>hexo的配置文件中设置格式，添加配置代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">toc:</span><br><span class="line">  maxdepth: 3</span><br></pre></td></tr></table></figure>
+
+<p>在md中使用时</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- toc --&gt;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="添加本地搜索功能">添加本地搜索功能</span></h2><p>与Next官方配置文件中的链接步骤不同的是，还需要修改</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">preload: true</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《DVG-Face:Dual Variational Generation for Heterogeneous Face Recognition》</title>
     <url>/2022/04/09/review_3_DVG-Face/</url>
     <content><![CDATA[<!-- toc -->
@@ -272,71 +397,6 @@
       <tags>
         <tag>generation</tag>
         <tag>caricature</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo建站相关</title>
-    <url>/2022/03/25/tools_1_start/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E6%90%AD%E5%BB%BAhexo%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%80%9A%E8%BF%87git%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8">搭建Hexo服务器，通过Git自动部署在阿里云服务器</a><ul>
-<li><a href="#%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%83%A8%E7%BD%B2">搭建及部署</a></li>
-<li><a href="#%E5%8D%9A%E6%96%87%E5%8F%91%E5%B8%83">博文发布</a></li>
-</ul>
-</li>
-<li><a href="#%E4%B8%BB%E9%A2%98%E5%8F%8A%E5%85%B6%E7%BE%8E%E5%8C%96">主题及其美化</a><ul>
-<li><a href="#butterfly">Butterfly</a></li>
-<li><a href="#next">Next</a><ul>
-<li><a href="#%E7%BE%8E%E5%8C%96">美化</a></li>
-<li><a href="#%E6%96%87%E7%AB%A0%E5%90%AF%E7%94%A8tags%E5%92%8Ccategories">文章启用tags和categories</a></li>
-<li><a href="#%E8%AE%BE%E7%BD%AE%E9%98%85%E8%AF%BB%E5%85%A8%E6%96%87">设置阅读全文</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98updating">相关问题（Updating…）</a><ul>
-<li><a href="#%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98">插入图片问题</a></li>
-<li><a href="#%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98">目录生成问题</a></li>
-<li><a href="#%E6%B7%BB%E5%8A%A0%E6%9C%AC%E5%9C%B0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD">添加本地搜索功能</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<span id="more"></span>
-
-<h1><span id="搭建hexo服务器通过git自动部署在阿里云服务器">搭建Hexo服务器，通过Git自动部署在阿里云服务器</span></h1><h2><span id="搭建及部署">搭建及部署</span></h2><p>参考博文链接：<a href="https://mp.weixin.qq.com/s/JTTUYJTvtdT6X2fvLUBFZg">Win10下Hexo博客搭建教程，及阿里云服务器部署实战 (qq.com)</a></p>
-<h2><span id="博文发布">博文发布</span></h2><p>在本地机器上部署Hexo相关MyHexoBlogs文件夹下，进入MyHexoBlogs&#x2F;myblogs&#x2F;source&#x2F;_posts目录；</p>
-<p>在当前页进入git bash，输入hexo clean 清除缓存，hexo g 解析静态文件，hexo d 刷新部署新的资源。</p>
-<p>hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</p>
-<h1><span id="主题及其美化">主题及其美化</span></h1><h2><span id="butterfly">Butterfly</span></h2><p>Butterfly主题部署参考博文链接：<a href="https://www.jianshu.com/p/50a565adaf15?ivk_sa=1024320u">hexo框架|butterfly主题配置 - 简书 (jianshu.com)</a></p>
-<p>Butterfly主题官方文档：<a href="https://www.butterfly1.cn/">Hexo-Butterfly主题(🦋 A Hexo Theme: Butterfly-Official website) (butterfly1.cn)</a></p>
-<p>Hexo默认美化项：<a href="https://zhuanlan.zhihu.com/p/369951111">Hexo个性化设置 - 知乎 (zhihu.com)</a></p>
-<h2><span id="next">Next</span></h2><h3><span id="美化">美化</span></h3><p><a href="https://blog.csdn.net/qq_34003239/article/details/100883213">(54条消息) Next主题美化_蜗牛非牛的博客-CSDN博客_next主题美化</a></p>
-<h3><span id="文章启用tags和categories">文章启用tags和categories</span></h3><p><a href="https://blog.csdn.net/Lancis/article/details/118788205">(54条消息) hexo next主题简单美化_Lancis的博客-CSDN博客_next主题美化</a></p>
-<h3><span id="设置阅读全文">设置阅读全文</span></h3><p><a href="https://blog.csdn.net/CHENGXUYUAN09/article/details/103408380">(54条消息) next7.6版本关于设置阅读全文_LIYUANWAISPRING的博客-CSDN博客</a></p>
-<h1><span id="相关问题updating">相关问题（Updating…）</span></h1><h2><span id="插入图片问题">插入图片问题</span></h2><p>选择采用hexo官网的解决方式：<a href="https://hexo.io/zh-cn/docs/asset-folders">资源文件夹 | Hexo</a></p>
-<h2><span id="目录生成问题">目录生成问题</span></h2><p>安装插件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-toc --save</span><br></pre></td></tr></table></figure>
-
-<p>hexo的配置文件中设置格式，添加配置代码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">toc:</span><br><span class="line">  maxdepth: 3</span><br></pre></td></tr></table></figure>
-
-<p>在md中使用时</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- toc --&gt;</span><br></pre></td></tr></table></figure>
-
-<h2><span id="添加本地搜索功能">添加本地搜索功能</span></h2><p>与Next官方配置文件中的链接步骤不同的是，还需要修改</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">preload: true</span><br></pre></td></tr></table></figure>
-
-
-
-]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
 </search>
