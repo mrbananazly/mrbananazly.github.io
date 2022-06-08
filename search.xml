@@ -1,6 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>《Identity-Aware CycleGAN for Face Photo-Sketch Synthesis and Recognition》</title>
+    <url>/2022/06/08/generation_review_1_IACycleGAN/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B">生成模型</a><ul>
+<li><a href="#%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C%E6%95%B4%E4%BD%93loss%E5%9B%BE%E7%A4%BA">生成网络整体loss图示</a></li>
+</ul>
+</li>
+<li><a href="#%E8%AF%86%E5%88%AB%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C%E7%9A%84%E4%BA%92%E7%9B%B8%E4%BC%98%E5%8C%96">识别网络与生成网络的互相优化</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AE%9E%E9%AA%8C">实验</a><ul>
+<li><a href="#%E6%95%B0%E6%8D%AE%E9%9B%86">数据集</a><ul>
+<li><a href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82">生成模型实施细节</a></li>
+<li><a href="#%E8%AF%86%E5%88%AB%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82">识别模型实施细节</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf"><a href="https://arxiv.org/pdf/2103.16019.pdf">Identity-Aware CycleGAN for Face Photo-Sketch Synthesis and Recognition (arxiv.org)</a></a></p>
+<p>code: none</p>
+<span id="more"></span>
+
+<h1><span id="任务">任务</span></h1><p>真人素描生成与识别</p>
+<h1><span id="出发点">出发点</span></h1><p>生成促进识别 识别促进生成；</p>
+<p>大部分生成方法使得合成图像与原始图像在纹理上保持一致，会导致信息丢失；</p>
+<p>大多数生成框架都只能学习两个域之间的关系，其鉴别器只关注照片和草图之间的差异，而不考虑任何特定的识别优化（身份信息）；</p>
+<h1><span id="创新点">创新点</span></h1><p>在CycleGAN上加入了感知损失（perceptual loss）,能更好的关注面部的语义信息（眼睛、鼻子）;</p>
+<p>使生成模型和识别模型相互优化，生成模型迭代生成更好的图像，Triplet Loss训识别模型；</p>
+<h1><span id="做法">做法</span></h1><h2><span id="生成模型">生成模型</span></h2><p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608102426736.png" alt="image-20220608102426736"></p>
+<p>分别给出两个domain的照片（这里输入的是paired数据，这里的paired应该身份paired），其训练目的是获得Gx，Gy两个生成器。</p>
+<p>两个识别网络，其目的是使用pretrain好的vggface提取feature做Identity perception loss；</p>
+<p>生成器用了《Perceptual losses for real-time style transfer and super-resolution》中的结构；</p>
+<p>判别器用了PatchGAN的结构；</p>
+<h3><span id="生成网络整体loss图示">生成网络整体loss图示</span></h3><p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608105545461.png" alt="image-20220608105545461"></p>
+<h4><span id="对抗损失adversarial-loss">对抗损失（adversarial loss）</span></h4><p>输入图像与生成图像进入判别器进行计算，最小化下式</p>
+<p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608110633855.png" alt="image-20220608110633855"></p>
+<h4><span id="循环一致性损失cycle-consistency-loss">循环一致性损失（cycle consistency loss）</span></h4><p>Gx生成的图像再进入Gy恢复原本domain与最初的输入x计算L1，<strong>此loss为pix级</strong>，最小化下式</p>
+<p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608110959225.png" alt="image-20220608110959225"></p>
+<h4><span id="身份保持损失identity-perception-loss">身份保持损失（identity perception loss）</span></h4><p>仅使用对抗损失会导致伪影和训练不稳定，需要加更强大的监督；</p>
+<p>通过一个pretrain的识别网络（文中选择vggface）分别提取两对（原图与合成图）的feature计算L2，<strong>此loss区别于pix级监督，是feature级</strong>，文中对于此处的解释是：绘制的草图会有夸张成分以扭曲面部纹理信息，夸大面部特征，完全基于pix重建图像效果不会好；CycleGAN的训练需要进行数据增强操作（resize，flip等）难以实施pix级的监督。</p>
+<p>最小化下式</p>
+<p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608111456554.png" alt="image-20220608111456554"></p>
+<h4><span id="身份映射损失identity-mapping-loss">身份映射损失（identity mapping loss）</span></h4><p>常规的pix级的约束，最小化下式</p>
+<p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608112212476.png" alt="image-20220608112212476"></p>
+<h4><span id="整体loss">整体loss</span></h4><p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608112236780.png" alt="image-20220608112236780"></p>
+<p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608112252105.png" alt="image-20220608112252105"></p>
+<p>最小化生成器的loss最大化判别器的loss</p>
+<p>其中超参数lamda分别设为10，30000000，5</p>
+<h2><span id="识别网络与生成网络的互相优化">识别网络与生成网络的互相优化</span></h2><p>许多主做生成的工作都是fix相应的识别网络作为一个特征提取器来附加身份保持损失；</p>
+<p>本文的做法估计是：</p>
+<p>step1：先fix识别网络参数训练生成网络，获得一定量的生成的图片；</p>
+<p>step2：使用生成的图片fine-tune识别网络（单走一个人脸识别模型的流程），用了triplet loss，更新识别网络参数，其中两个模态分别有两个识别网络，要分开训练；</p>
+<p>step3：重复上述操作以获得更好的生成模型和识别模型。</p>
+<p>（有问题的点：若第一次生成的质量得不到保证，那低质量的生成图像真的能提升识别模型的acc吗？<strong>互相优化的模型很依赖第一次生成的图像质量</strong>）</p>
+<p>我认为的做法：先简单训练一个识别网络达到一个还行的acc，更新其backbone参数作为生成网络的特征提取器，然后再进行生成网络的训练。</p>
+<p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608135047478.png" alt="image-20220608135047478"></p>
+<h1><span id="实验">实验</span></h1><p>CycleGAN生成—》一阶段vgg fine-tune—》IACycleGAN生成（加入fine-tune的vgg提取的特征做身份保持损失）—》二阶段vgg fine-tune</p>
+<h2><span id="数据集">数据集</span></h2><p>CUFS和CUFSF</p>
+<h3><span id="生成模型实施细节">生成模型实施细节</span></h3><p>对于生成网络的训练，都是从头开始训练，使用instance normalization来实现更好的稳定性和更低的噪声；</p>
+<p>使用Adam优化器，horizontal filp prob&#x3D;0.5用于数据增强；</p>
+<p>前100个epoch设置0.0002的学习率，并在后100个epoch线性下降至0；</p>
+<p>在titian xp上训练了10小时；</p>
+<p>为减小网络震荡，采用存储多个生成图像的图像缓冲区来更新鉴别器，而不是使用最后生成的图像。</p>
+<p>生成使用了SSIM FSIM两个指标</p>
+<p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608152343197.png" alt="image-20220608152343197"></p>
+<h3><span id="识别模型实施细节">识别模型实施细节</span></h3><p>文中用的vggface，caffe上跑的（估计是官方代码）</p>
+<p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608153331083.png" alt="image-20220608153331083"></p>
+<p>在做检索任务时，先做风格模态的迁移，再计算相似度。</p>
+<p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608155946505.png" alt="image-20220608155946505"></p>
+<p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608160958943.png" alt="image-20220608160958943"></p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>sketch</tag>
+        <tag>synthesis</tag>
+        <tag>GAN</tag>
+        <tag>recognition</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</title>
+    <url>/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a></li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: [<a href="https://arxiv.org/abs/2203.06541">2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org)</a></p>
+<p>code: <a href="https://github.com/Jiahao-UTS/SLPT-master">Jiahao-UTS&#x2F;SLPT-master (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="出发点">出发点</span></h1><p>landmark之间的内在联系对于人脸对齐的性能有很大影响，本文重点考虑其内在联系。</p>
+<p>之前的方法有heatmap regression，Coordinate regression，有着不同方面的劣势。</p>
+<h1><span id="创新点">创新点</span></h1><p>提出了SLPT（<em>sparse local patch transformer</em>）来学习<em>query-query</em>和<em>representation-query</em>关系（自适应内在关系）；为了进一步提高SLPT的性能，提出了一种从粗到精的框架，使局部补丁进化为<strong>金字塔形补丁</strong>。</p>
+<h1><span id="做法">做法</span></h1><p>本文的SLPT并非同DETR从完整的feature map中预测坐标，而是首先从局部patch中生成每个landmark的表示特征。</p>
+<p>然后，使用一系列可学习的queries（称为<em>landmark queries</em>）来聚合表示。</p>
+<p>基于Transformer的交叉注意机制，SPLT在每一层学习一个<strong>自适应邻接矩阵</strong>。最后，通过MLP独立预测每个landmark在其对应patch中的subpixel坐标。由于使用了稀疏的局部补丁，与其他ViT相比，输入token的数量显著减少。 </p>
+<p>为了进一步提高性能，引入了从粗到精的框架，以与SLPT结合。下图为所提出的从粗到精的框架利用稀疏的局部面片实现鲁棒的人脸对齐。根据前一阶段的landmarks裁剪稀疏的局部补丁，并将其输入到同一SLPT中以预测面部landmarks。此外，patch大小随着阶段的增加而缩小，以使局部特征演变成金字塔形式。</p>
+<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/1.png" alt="1"></p>
+<p>整体框架图：</p>
+<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/2.png" alt="2"></p>
+<p>分为三部分：</p>
+<p><strong>the patch embedding &amp; structure encoding</strong></p>
+<p>不同于ViT，SLPT先根据landmark裁剪patch，再通过线性插值将patch大小调整为K*K，又使用了结构编码（可学习的参数）来补充表示。每种编码都与相邻地标（如左眼和右眼）的编码有很高的相似性。</p>
+<p>Muti-head Cross-attention（在Vision Transformer基础上的改进）：通过landmark在CNN提取出的feature map上划取局部patch，将这些feature map上的patch排成一个patch embedding，将其视为landmark的表示；紧接着对其进行结构编码（Structure Encodeing）,以获取人脸中的相对位置和patch embedding做concat。输入 landmarks queries ，通过这些MLP，独立预测每个landmark的位置。</p>
+<p><strong>inherent relation layers</strong></p>
+<p>受Transformer启发，每一层由三个块组成，即多头自注意（MSA）块、多头交叉注意（MCA）块和多层感知器（MLP）块，并且在每个块之前应用一个layer norm（LN）。 </p>
+<p><strong>prediction heads</strong></p>
+<p>预测头由一个用于规范化输入的分层模板和一个用于预测结果的MLP层组成。</p>
+<p>最右边的图像显示了不同样本的自适应固有关系。其将每个点连接到第一个内在关系层中交叉注意权重最高的点显示。</p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>Patch-based Transformer</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer》</title>
     <url>/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/</url>
     <content><![CDATA[<!-- toc -->
@@ -67,178 +201,6 @@
         <tag>ReID</tag>
         <tag>Transformer</tag>
         <tag>Landmark</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</title>
-    <url>/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a></li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: [<a href="https://arxiv.org/abs/2203.06541">2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org)</a></p>
-<p>code: <a href="https://github.com/Jiahao-UTS/SLPT-master">Jiahao-UTS&#x2F;SLPT-master (github.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="出发点">出发点</span></h1><p>landmark之间的内在联系对于人脸对齐的性能有很大影响，本文重点考虑其内在联系。</p>
-<p>之前的方法有heatmap regression，Coordinate regression，有着不同方面的劣势。</p>
-<h1><span id="创新点">创新点</span></h1><p>提出了SLPT（<em>sparse local patch transformer</em>）来学习<em>query-query</em>和<em>representation-query</em>关系（自适应内在关系）；为了进一步提高SLPT的性能，提出了一种从粗到精的框架，使局部补丁进化为<strong>金字塔形补丁</strong>。</p>
-<h1><span id="做法">做法</span></h1><p>本文的SLPT并非同DETR从完整的feature map中预测坐标，而是首先从局部patch中生成每个landmark的表示特征。</p>
-<p>然后，使用一系列可学习的queries（称为<em>landmark queries</em>）来聚合表示。</p>
-<p>基于Transformer的交叉注意机制，SPLT在每一层学习一个<strong>自适应邻接矩阵</strong>。最后，通过MLP独立预测每个landmark在其对应patch中的subpixel坐标。由于使用了稀疏的局部补丁，与其他ViT相比，输入token的数量显著减少。 </p>
-<p>为了进一步提高性能，引入了从粗到精的框架，以与SLPT结合。下图为所提出的从粗到精的框架利用稀疏的局部面片实现鲁棒的人脸对齐。根据前一阶段的landmarks裁剪稀疏的局部补丁，并将其输入到同一SLPT中以预测面部landmarks。此外，patch大小随着阶段的增加而缩小，以使局部特征演变成金字塔形式。</p>
-<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/1.png" alt="1"></p>
-<p>整体框架图：</p>
-<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/2.png" alt="2"></p>
-<p>分为三部分：</p>
-<p><strong>the patch embedding &amp; structure encoding</strong></p>
-<p>不同于ViT，SLPT先根据landmark裁剪patch，再通过线性插值将patch大小调整为K*K，又使用了结构编码（可学习的参数）来补充表示。每种编码都与相邻地标（如左眼和右眼）的编码有很高的相似性。</p>
-<p>Muti-head Cross-attention（在Vision Transformer基础上的改进）：通过landmark在CNN提取出的feature map上划取局部patch，将这些feature map上的patch排成一个patch embedding，将其视为landmark的表示；紧接着对其进行结构编码（Structure Encodeing）,以获取人脸中的相对位置和patch embedding做concat。输入 landmarks queries ，通过这些MLP，独立预测每个landmark的位置。</p>
-<p><strong>inherent relation layers</strong></p>
-<p>受Transformer启发，每一层由三个块组成，即多头自注意（MSA）块、多头交叉注意（MCA）块和多层感知器（MLP）块，并且在每个块之前应用一个layer norm（LN）。 </p>
-<p><strong>prediction heads</strong></p>
-<p>预测头由一个用于规范化输入的分层模板和一个用于预测结果的MLP层组成。</p>
-<p>最右边的图像显示了不同样本的自适应固有关系。其将每个点连接到第一个内在关系层中交叉注意权重最高的点显示。</p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>Patch-based Transformer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《CariMe:Unpaired Caricature Generation with Multiple Exaggerations》</title>
-    <url>/2022/04/13/review_4_CariMe/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
-<li><a href="#multi-exaggeration-warper">Multi-exaggeration Warper</a><ul>
-<li><a href="#warp-reconstruction-loss">Warp Reconstruction Loss</a></li>
-<li><a href="#photo-reconstruction-loss">Photo Reconstruction Loss</a></li>
-<li><a href="#total-variation-loss">Total Variation Loss</a></li>
-<li><a href="#wrapper-total-loss">Wrapper Total Loss</a></li>
-</ul>
-</li>
-<li><a href="#styler">Styler</a><ul>
-<li><a href="#adversarial-loss">Adversarial Loss</a></li>
-<li><a href="#image-reconstruction-loss">Image Reconstruction Loss</a></li>
-<li><a href="#cycle-consistency-loss">Cycle Consistency Loss</a></li>
-<li><a href="#style-total-loss">Style Total Loss</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://ieeexplore.ieee.org/abstract/document/9454341/</a></p>
-<p>code: <a href="https://github.com/edward3862/CariMe-pytorch">edward3862&#x2F;CariMe-pytorch: Unpaired Caricature Generation with Multiple Exaggerations (TMM 2021) (github.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="任务">任务</span></h1><p>漫画生成、图像到图像的翻译、图像扭曲、风格转换</p>
-<h1><span id="出发点">出发点</span></h1><p>与一般的image-to-image translation不同，由于各种空间变形的存在，自动绘制漫画是一项更具挑战性的任务。原先的漫画生成方式都是instance-level，本文拓展到distribution-level。</p>
-<h1><span id="创新点">创新点</span></h1><p>CariMe可生成具有<strong>多重</strong>夸张和<strong>多种</strong>风格的漫画</p>
-<p>提出了一种基于变形场（deformation fields）的非成对漫画生成方法，可以有效地学习真实照片到漫画的空间变换分布。还引入了一个辅助内容编码（auxiliary content code），以帮助产生有意义的、特定于照片的夸张。</p>
-<h1><span id="做法">做法</span></h1><p>一个wrapper，一个styler</p>
-<h2><span id="multi-exaggeration-warper">Multi-exaggeration Warper</span></h2><p>分别输入一张漫画脸和真实脸，首先计算所有漫画的平均landmark（代码中的main_cal_wrap_degree.py），<img src="/2022/04/13/review_4_CariMe/image-20220414090134868.png" alt="image-20220414090134868">从每个漫画中得到，表达了该张漫画所表示的特定的夸张模式，然后该特征经过encoder获得低维向量Zw（wrap code)，与此同时引入了对应的真实人脸过另一个encoder提取Zp（auxiliary photo-specific content code)，Zp与Zw都是满足标准正态分布的向量，在测试阶段Zw是从正态分布中随机采样获取，以获得不同的变形编码。down scale和up scale操作文中的解释是给变形场去噪。</p>
-<p><img src="/2022/04/13/review_4_CariMe/image-20220414083337682.png" alt="image-20220414083337682"></p>
-<h3><span id="warp-reconstruction-loss">Warp Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414092823399.png" alt="image-20220414092823399"></p>
-<p>L1正则，旨在拉近reconstruction后的变形场与原变形场的差异。</p>
-<h3><span id="photo-reconstruction-loss">Photo Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414093327113.png" alt="image-20220414093327113"></p>
-<p>L1正则，旨在拉近reconstruction后的真实人脸与输入真实人脸的差异，来鼓励Zp保持对原真是人脸的内容和空间信息。</p>
-<h3><span id="total-variation-loss">Total Variation Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414094156859.png" alt="image-20220414094156859"></p>
-<p>用来给生成的图像去噪。</p>
-<p><a href="https://blog.csdn.net/qq_38406029/article/details/118996415">(54条消息) TV Loss详解_鬼道2022的博客-CSDN博客_tvloss公式</a></p>
-<h3><span id="wrapper-total-loss">Wrapper Total Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414094730445.png" alt="image-20220414094730445"></p>
-<h2><span id="styler">Styler</span></h2><p>旨在做风格迁移，将图像分界为content representation和style code。</p>
-<p>一个style encoder，一个context encoder，一个style decoder（AdaLIN:<a href="https://blog.csdn.net/weixin_43823140/article/details/107840916">(54条消息) 【飞桨】论文解读：U-GAT-IT: Unsupervised Generative Attentional Networks with Adaptive Layer-Instance_目楽 Leo mu的博客-CSDN博客</a>），style输出一个正态分布的style code，context输出feature map。</p>
-<p>将context输出的feature map分别进行instance normalization（styler中常用的一种像素normalization）和layer normalization，combine方式需要到代码中查看，送到AdaLIN中，其范式为：</p>
-<p><img src="/2022/04/13/review_4_CariMe/image-20220414101725797.png" alt="image-20220414101725797"></p>
-<p><img src="/2022/04/13/review_4_CariMe/image-20220414083358409.png"></p>
-<h3><span id="adversarial-loss">Adversarial Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414101755992.png" alt="image-20220414101755992"></p>
-<p>AdaLIN是基于GAN的方法，所以有adversarial loss。</p>
-<h3><span id="image-reconstruction-loss">Image Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414101914719.png" alt="image-20220414101914719"></p>
-<p>L1正则，旨在拉近reconstruction后的图像与原图像的距离。</p>
-<h3><span id="cycle-consistency-loss">Cycle Consistency Loss</span></h3><p>对生成后的图像再次进入encoder，输出特征与之前encoder输出做L1正则，这里的cycle是循环，不是cycle loss！</p>
-<p><img src="/2022/04/13/review_4_CariMe/image-20220414103236545.png" alt="image-20220414103236545"></p>
-<h3><span id="style-total-loss">Style Total Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414103409597.png" alt="image-20220414103409597"></p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>caricature</tag>
-        <tag>generation</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Clothes-Changing Person Re-identification with RGB Modality Only》</title>
-    <url>/2022/05/02/review_5_Simple-CCReID/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
-<li><a href="#clothes-based-adversarial-loss">Clothes-based Adversarial Loss</a><ul>
-<li><a href="#training-clothes-classifier">Training clothes classifier</a></li>
-<li><a href="#learning-clothes-irrelevant-features">Learning clothes-irrelevant features</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://arxiv.org/pdf/2204.06890v1.pdf</a></p>
-<p>code: <a href="https://github.com/guxinqian/simple-ccreid">guxinqian&#x2F;Simple-CCReID: Pytorch implementation of ‘Clothes-Changing Person Re-identification with RGB Modality Only. In CVPR, 2022.’ (github.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="任务">任务</span></h1><p>换装人员重识别</p>
-<h1><span id="出发点">出发点</span></h1><p><strong>提取与衣服无关的特征</strong>，如脸型、发型、体形和步态。目前大多数工作主要集中在从多模态信息（如剪影和草图）中建模身体形状，但没有充分利用原始 RGB 图像中与衣服无关的信息。</p>
-<h1><span id="创新点">创新点</span></h1><p>文章提出一种基于衣服的<strong>对抗</strong>性损失（CAL），通过惩罚 re-id 模型对衣服的预测能力（其实就是个分类器），从原始 RGB 图像中<strong>挖掘与衣服无关的特征</strong>。</p>
-<h1><span id="做法">做法</span></h1><p>首先通过最小化Lc来优化衣服分类器。然后固定衣服分类器的参数，最小化Lid和Lca，迫使backbone学习与衣服无关的特征。（每张图片对应一个一个身份标签和服装标签，将衣服类定义为细粒度标识类——所有同一身份的样本都根据他们的衣服被划分为属于该身份的不同类别，不同的人即使穿着相同的衣服也不会共享相同的衣服标签）</p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504092335366.png" alt="image-20220504092335366"></p>
-<h2><span id="clothes-based-adversarial-loss">Clothes-based Adversarial Loss</span></h2><h3><span id="training-clothes-classifier">Training clothes classifier</span></h3><p>Lc采用交叉熵损失</p>
-<h3><span id="learning-clothes-irrelevant-features">Learning clothes-irrelevant features</span></h3><p>固定衣服分类器的参数，并强制主干学习与衣服无关的特征。为此，应该<strong>惩罚re-id模型对于衣服的预测能力</strong>。</p>
-<p>然而，由于衣服类被定义为细粒度类，因此惩罚re-id模型对于所有衣服类别的预测能力，也会降低其预测身份的能力，这对re-id是有害的。</p>
-<p>那么最终的目的是使经过训练的<strong>服装分类器无法区分相同身份和不同服装的样本</strong>。</p>
-<p>所以，Lca是一个<em>multi-positive-class classification loss</em>，属于同一个身份的不同服装类互为正类。（把不同衣服的只要是属于同一个id身份的衣服类都视为衣服正类）</p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504101750986.png" alt="image-20220504101750986"></p>
-<p>Si+（Si-)是一个有相同身份的衣服标签fi的集合，K是S中的衣服类别数量，q(c)是第c个衣服类别的交叉熵损失的权重，同一件衣服同一个身份的正例，和不同衣服同一个身份的正例有相同的权重1&#x2F;K。</p>
-<p>同时，为了在不严重降低衣服一致性识别精度的情况下提高模型的换衣识别能力，等式（4）可替换为：</p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105337953.png" alt="image-20220504105337953"></p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105427890.png" alt="image-20220504105427890"></p>
-<p>另外，穿着相同衣服的正例比穿着不同衣服的正例有更大的权重。</p>
-<p>在优化CAL的同时，对身份分类器进行了优化。因此，第二步的优化过程是：</p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105540307.png" alt="image-20220504105540307"></p>
-<p>当仅使用Lid进行训练时，该模型在优化的早期阶段倾向于学习简单样本（具有相同的衣服），然后逐渐学习区分困难样本（具有相同的身份和不同的衣服）。类似课程学习方式，但尽管如此（6）中并未抛弃Lid。其原因是，在优化的早期阶段，只有最小化Lca并迫使模型区分硬样本，才可能导致局部最优。相反，在我们的实验中，在第一次降低学习率后，增加了Lca用于训练。</p>
-<p>&#96;&#96;</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class ClothesBasedAdversarialLoss(nn.Module):</span><br><span class="line">    &quot;&quot;&quot; Clothes-based Adversarial Loss.</span><br><span class="line"></span><br><span class="line">    Reference:</span><br><span class="line">        Gu et al. Clothes-Changing Person Re-identification with RGB Modality Only. In CVPR, 2022.</span><br><span class="line"></span><br><span class="line">    Args:</span><br><span class="line">        scale (float): scaling factor.</span><br><span class="line">        epsilon (float): a trade-off hyper-parameter.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __init__(self, scale=16, epsilon=0.1):</span><br><span class="line">        super().__init__()</span><br><span class="line">        self.scale = scale</span><br><span class="line">        self.epsilon = epsilon</span><br><span class="line"></span><br><span class="line">    def forward(self, inputs, targets, positive_mask):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        Args:</span><br><span class="line">            inputs: prediction matrix (before softmax) with shape (batch_size, num_classes)</span><br><span class="line">            targets: ground truth labels with shape (batch_size)</span><br><span class="line">            positive_mask: positive mask matrix with shape (batch_size, num_classes). The clothes classes with </span><br><span class="line">                the same identity as the anchor sample are defined as positive clothes classes and their mask </span><br><span class="line">                values are 1. The clothes classes with different identities from the anchor sample are defined </span><br><span class="line">                as negative clothes classes and their mask values in positive_mask are 0.</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        inputs = self.scale * inputs</span><br><span class="line">        negtive_mask = 1 - positive_mask</span><br><span class="line">        identity_mask = torch.zeros(inputs.size()).scatter_(1, targets.unsqueeze(1).data.cpu(), 1).cuda()</span><br><span class="line"></span><br><span class="line">        exp_logits = torch.exp(inputs)</span><br><span class="line">        log_sum_exp_pos_and_all_neg = torch.log((exp_logits * negtive_mask).sum(1, keepdim=True) + exp_logits)</span><br><span class="line">        log_prob = inputs - log_sum_exp_pos_and_all_neg</span><br><span class="line"></span><br><span class="line">        mask = (1 - self.epsilon) * identity_mask + self.epsilon / positive_mask.sum(1, keepdim=True) * positive_mask</span><br><span class="line">        loss = (- mask * log_prob).sum(1).mean()</span><br><span class="line"></span><br><span class="line">        return loss</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>ReID</tag>
-        <tag>decouple</tag>
-        <tag>adversarial</tag>
       </tags>
   </entry>
   <entry>
@@ -330,8 +292,77 @@
         <category>paper review</category>
       </categories>
       <tags>
-        <tag>generation</tag>
         <tag>HFR</tag>
+        <tag>generation</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《CariMe:Unpaired Caricature Generation with Multiple Exaggerations》</title>
+    <url>/2022/04/13/review_4_CariMe/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#multi-exaggeration-warper">Multi-exaggeration Warper</a><ul>
+<li><a href="#warp-reconstruction-loss">Warp Reconstruction Loss</a></li>
+<li><a href="#photo-reconstruction-loss">Photo Reconstruction Loss</a></li>
+<li><a href="#total-variation-loss">Total Variation Loss</a></li>
+<li><a href="#wrapper-total-loss">Wrapper Total Loss</a></li>
+</ul>
+</li>
+<li><a href="#styler">Styler</a><ul>
+<li><a href="#adversarial-loss">Adversarial Loss</a></li>
+<li><a href="#image-reconstruction-loss">Image Reconstruction Loss</a></li>
+<li><a href="#cycle-consistency-loss">Cycle Consistency Loss</a></li>
+<li><a href="#style-total-loss">Style Total Loss</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://ieeexplore.ieee.org/abstract/document/9454341/</a></p>
+<p>code: <a href="https://github.com/edward3862/CariMe-pytorch">edward3862&#x2F;CariMe-pytorch: Unpaired Caricature Generation with Multiple Exaggerations (TMM 2021) (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="任务">任务</span></h1><p>漫画生成、图像到图像的翻译、图像扭曲、风格转换</p>
+<h1><span id="出发点">出发点</span></h1><p>与一般的image-to-image translation不同，由于各种空间变形的存在，自动绘制漫画是一项更具挑战性的任务。原先的漫画生成方式都是instance-level，本文拓展到distribution-level。</p>
+<h1><span id="创新点">创新点</span></h1><p>CariMe可生成具有<strong>多重</strong>夸张和<strong>多种</strong>风格的漫画</p>
+<p>提出了一种基于变形场（deformation fields）的非成对漫画生成方法，可以有效地学习真实照片到漫画的空间变换分布。还引入了一个辅助内容编码（auxiliary content code），以帮助产生有意义的、特定于照片的夸张。</p>
+<h1><span id="做法">做法</span></h1><p>一个wrapper，一个styler</p>
+<h2><span id="multi-exaggeration-warper">Multi-exaggeration Warper</span></h2><p>分别输入一张漫画脸和真实脸，首先计算所有漫画的平均landmark（代码中的main_cal_wrap_degree.py），<img src="/2022/04/13/review_4_CariMe/image-20220414090134868.png" alt="image-20220414090134868">从每个漫画中得到，表达了该张漫画所表示的特定的夸张模式，然后该特征经过encoder获得低维向量Zw（wrap code)，与此同时引入了对应的真实人脸过另一个encoder提取Zp（auxiliary photo-specific content code)，Zp与Zw都是满足标准正态分布的向量，在测试阶段Zw是从正态分布中随机采样获取，以获得不同的变形编码。down scale和up scale操作文中的解释是给变形场去噪。</p>
+<p><img src="/2022/04/13/review_4_CariMe/image-20220414083337682.png" alt="image-20220414083337682"></p>
+<h3><span id="warp-reconstruction-loss">Warp Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414092823399.png" alt="image-20220414092823399"></p>
+<p>L1正则，旨在拉近reconstruction后的变形场与原变形场的差异。</p>
+<h3><span id="photo-reconstruction-loss">Photo Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414093327113.png" alt="image-20220414093327113"></p>
+<p>L1正则，旨在拉近reconstruction后的真实人脸与输入真实人脸的差异，来鼓励Zp保持对原真是人脸的内容和空间信息。</p>
+<h3><span id="total-variation-loss">Total Variation Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414094156859.png" alt="image-20220414094156859"></p>
+<p>用来给生成的图像去噪。</p>
+<p><a href="https://blog.csdn.net/qq_38406029/article/details/118996415">(54条消息) TV Loss详解_鬼道2022的博客-CSDN博客_tvloss公式</a></p>
+<h3><span id="wrapper-total-loss">Wrapper Total Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414094730445.png" alt="image-20220414094730445"></p>
+<h2><span id="styler">Styler</span></h2><p>旨在做风格迁移，将图像分界为content representation和style code。</p>
+<p>一个style encoder，一个context encoder，一个style decoder（AdaLIN:<a href="https://blog.csdn.net/weixin_43823140/article/details/107840916">(54条消息) 【飞桨】论文解读：U-GAT-IT: Unsupervised Generative Attentional Networks with Adaptive Layer-Instance_目楽 Leo mu的博客-CSDN博客</a>），style输出一个正态分布的style code，context输出feature map。</p>
+<p>将context输出的feature map分别进行instance normalization（styler中常用的一种像素normalization）和layer normalization，combine方式需要到代码中查看，送到AdaLIN中，其范式为：</p>
+<p><img src="/2022/04/13/review_4_CariMe/image-20220414101725797.png" alt="image-20220414101725797"></p>
+<p><img src="/2022/04/13/review_4_CariMe/image-20220414083358409.png"></p>
+<h3><span id="adversarial-loss">Adversarial Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414101755992.png" alt="image-20220414101755992"></p>
+<p>AdaLIN是基于GAN的方法，所以有adversarial loss。</p>
+<h3><span id="image-reconstruction-loss">Image Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414101914719.png" alt="image-20220414101914719"></p>
+<p>L1正则，旨在拉近reconstruction后的图像与原图像的距离。</p>
+<h3><span id="cycle-consistency-loss">Cycle Consistency Loss</span></h3><p>对生成后的图像再次进入encoder，输出特征与之前encoder输出做L1正则，这里的cycle是循环，不是cycle loss！</p>
+<p><img src="/2022/04/13/review_4_CariMe/image-20220414103236545.png" alt="image-20220414103236545"></p>
+<h3><span id="style-total-loss">Style Total Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414103409597.png" alt="image-20220414103409597"></p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>generation</tag>
+        <tag>caricature</tag>
       </tags>
   </entry>
   <entry>
@@ -397,6 +428,66 @@
       </categories>
       <tags>
         <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Clothes-Changing Person Re-identification with RGB Modality Only》</title>
+    <url>/2022/05/02/review_5_Simple-CCReID/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#clothes-based-adversarial-loss">Clothes-based Adversarial Loss</a><ul>
+<li><a href="#training-clothes-classifier">Training clothes classifier</a></li>
+<li><a href="#learning-clothes-irrelevant-features">Learning clothes-irrelevant features</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://arxiv.org/pdf/2204.06890v1.pdf</a></p>
+<p>code: <a href="https://github.com/guxinqian/simple-ccreid">guxinqian&#x2F;Simple-CCReID: Pytorch implementation of ‘Clothes-Changing Person Re-identification with RGB Modality Only. In CVPR, 2022.’ (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="任务">任务</span></h1><p>换装人员重识别</p>
+<h1><span id="出发点">出发点</span></h1><p><strong>提取与衣服无关的特征</strong>，如脸型、发型、体形和步态。目前大多数工作主要集中在从多模态信息（如剪影和草图）中建模身体形状，但没有充分利用原始 RGB 图像中与衣服无关的信息。</p>
+<h1><span id="创新点">创新点</span></h1><p>文章提出一种基于衣服的<strong>对抗</strong>性损失（CAL），通过惩罚 re-id 模型对衣服的预测能力（其实就是个分类器），从原始 RGB 图像中<strong>挖掘与衣服无关的特征</strong>。</p>
+<h1><span id="做法">做法</span></h1><p>首先通过最小化Lc来优化衣服分类器。然后固定衣服分类器的参数，最小化Lid和Lca，迫使backbone学习与衣服无关的特征。（每张图片对应一个一个身份标签和服装标签，将衣服类定义为细粒度标识类——所有同一身份的样本都根据他们的衣服被划分为属于该身份的不同类别，不同的人即使穿着相同的衣服也不会共享相同的衣服标签）</p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504092335366.png" alt="image-20220504092335366"></p>
+<h2><span id="clothes-based-adversarial-loss">Clothes-based Adversarial Loss</span></h2><h3><span id="training-clothes-classifier">Training clothes classifier</span></h3><p>Lc采用交叉熵损失</p>
+<h3><span id="learning-clothes-irrelevant-features">Learning clothes-irrelevant features</span></h3><p>固定衣服分类器的参数，并强制主干学习与衣服无关的特征。为此，应该<strong>惩罚re-id模型对于衣服的预测能力</strong>。</p>
+<p>然而，由于衣服类被定义为细粒度类，因此惩罚re-id模型对于所有衣服类别的预测能力，也会降低其预测身份的能力，这对re-id是有害的。</p>
+<p>那么最终的目的是使经过训练的<strong>服装分类器无法区分相同身份和不同服装的样本</strong>。</p>
+<p>所以，Lca是一个<em>multi-positive-class classification loss</em>，属于同一个身份的不同服装类互为正类。（把不同衣服的只要是属于同一个id身份的衣服类都视为衣服正类）</p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504101750986.png" alt="image-20220504101750986"></p>
+<p>Si+（Si-)是一个有相同身份的衣服标签fi的集合，K是S中的衣服类别数量，q(c)是第c个衣服类别的交叉熵损失的权重，同一件衣服同一个身份的正例，和不同衣服同一个身份的正例有相同的权重1&#x2F;K。</p>
+<p>同时，为了在不严重降低衣服一致性识别精度的情况下提高模型的换衣识别能力，等式（4）可替换为：</p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105337953.png" alt="image-20220504105337953"></p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105427890.png" alt="image-20220504105427890"></p>
+<p>另外，穿着相同衣服的正例比穿着不同衣服的正例有更大的权重。</p>
+<p>在优化CAL的同时，对身份分类器进行了优化。因此，第二步的优化过程是：</p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105540307.png" alt="image-20220504105540307"></p>
+<p>当仅使用Lid进行训练时，该模型在优化的早期阶段倾向于学习简单样本（具有相同的衣服），然后逐渐学习区分困难样本（具有相同的身份和不同的衣服）。类似课程学习方式，但尽管如此（6）中并未抛弃Lid。其原因是，在优化的早期阶段，只有最小化Lca并迫使模型区分硬样本，才可能导致局部最优。相反，在我们的实验中，在第一次降低学习率后，增加了Lca用于训练。</p>
+<p>&#96;&#96;</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class ClothesBasedAdversarialLoss(nn.Module):</span><br><span class="line">    &quot;&quot;&quot; Clothes-based Adversarial Loss.</span><br><span class="line"></span><br><span class="line">    Reference:</span><br><span class="line">        Gu et al. Clothes-Changing Person Re-identification with RGB Modality Only. In CVPR, 2022.</span><br><span class="line"></span><br><span class="line">    Args:</span><br><span class="line">        scale (float): scaling factor.</span><br><span class="line">        epsilon (float): a trade-off hyper-parameter.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __init__(self, scale=16, epsilon=0.1):</span><br><span class="line">        super().__init__()</span><br><span class="line">        self.scale = scale</span><br><span class="line">        self.epsilon = epsilon</span><br><span class="line"></span><br><span class="line">    def forward(self, inputs, targets, positive_mask):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        Args:</span><br><span class="line">            inputs: prediction matrix (before softmax) with shape (batch_size, num_classes)</span><br><span class="line">            targets: ground truth labels with shape (batch_size)</span><br><span class="line">            positive_mask: positive mask matrix with shape (batch_size, num_classes). The clothes classes with </span><br><span class="line">                the same identity as the anchor sample are defined as positive clothes classes and their mask </span><br><span class="line">                values are 1. The clothes classes with different identities from the anchor sample are defined </span><br><span class="line">                as negative clothes classes and their mask values in positive_mask are 0.</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        inputs = self.scale * inputs</span><br><span class="line">        negtive_mask = 1 - positive_mask</span><br><span class="line">        identity_mask = torch.zeros(inputs.size()).scatter_(1, targets.unsqueeze(1).data.cpu(), 1).cuda()</span><br><span class="line"></span><br><span class="line">        exp_logits = torch.exp(inputs)</span><br><span class="line">        log_sum_exp_pos_and_all_neg = torch.log((exp_logits * negtive_mask).sum(1, keepdim=True) + exp_logits)</span><br><span class="line">        log_prob = inputs - log_sum_exp_pos_and_all_neg</span><br><span class="line"></span><br><span class="line">        mask = (1 - self.epsilon) * identity_mask + self.epsilon / positive_mask.sum(1, keepdim=True) * positive_mask</span><br><span class="line">        loss = (- mask * log_prob).sum(1).mean()</span><br><span class="line"></span><br><span class="line">        return loss</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>ReID</tag>
+        <tag>decouple</tag>
+        <tag>adversarial</tag>
       </tags>
   </entry>
 </search>
