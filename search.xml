@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>《Identity-Aware CycleGAN for Face Photo-Sketch Synthesis and Recognition》</title>
+    <title>《IACycleGAN》</title>
     <url>/2022/06/08/generation_review_1_IACycleGAN/</url>
     <content><![CDATA[<!-- toc -->
 
@@ -89,6 +89,49 @@
         <tag>synthesis</tag>
         <tag>GAN</tag>
         <tag>face recognition</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</title>
+    <url>/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a></li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: [<a href="https://arxiv.org/abs/2203.06541">2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org)</a></p>
+<p>code: <a href="https://github.com/Jiahao-UTS/SLPT-master">Jiahao-UTS&#x2F;SLPT-master (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="出发点">出发点</span></h1><p>landmark之间的内在联系对于人脸对齐的性能有很大影响，本文重点考虑其内在联系。</p>
+<p>之前的方法有heatmap regression，Coordinate regression，有着不同方面的劣势。</p>
+<h1><span id="创新点">创新点</span></h1><p>提出了SLPT（<em>sparse local patch transformer</em>）来学习<em>query-query</em>和<em>representation-query</em>关系（自适应内在关系）；为了进一步提高SLPT的性能，提出了一种从粗到精的框架，使局部补丁进化为<strong>金字塔形补丁</strong>。</p>
+<h1><span id="做法">做法</span></h1><p>本文的SLPT并非同DETR从完整的feature map中预测坐标，而是首先从局部patch中生成每个landmark的表示特征。</p>
+<p>然后，使用一系列可学习的queries（称为<em>landmark queries</em>）来聚合表示。</p>
+<p>基于Transformer的交叉注意机制，SPLT在每一层学习一个<strong>自适应邻接矩阵</strong>。最后，通过MLP独立预测每个landmark在其对应patch中的subpixel坐标。由于使用了稀疏的局部补丁，与其他ViT相比，输入token的数量显著减少。 </p>
+<p>为了进一步提高性能，引入了从粗到精的框架，以与SLPT结合。下图为所提出的从粗到精的框架利用稀疏的局部面片实现鲁棒的人脸对齐。根据前一阶段的landmarks裁剪稀疏的局部补丁，并将其输入到同一SLPT中以预测面部landmarks。此外，patch大小随着阶段的增加而缩小，以使局部特征演变成金字塔形式。</p>
+<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/1.png" alt="1"></p>
+<p>整体框架图：</p>
+<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/2.png" alt="2"></p>
+<p>分为三部分：</p>
+<p><strong>the patch embedding &amp; structure encoding</strong></p>
+<p>不同于ViT，SLPT先根据landmark裁剪patch，再通过线性插值将patch大小调整为K*K，又使用了结构编码（可学习的参数）来补充表示。每种编码都与相邻地标（如左眼和右眼）的编码有很高的相似性。</p>
+<p>Muti-head Cross-attention（在Vision Transformer基础上的改进）：通过landmark在CNN提取出的feature map上划取局部patch，将这些feature map上的patch排成一个patch embedding，将其视为landmark的表示；紧接着对其进行结构编码（Structure Encodeing）,以获取人脸中的相对位置和patch embedding做concat。输入 landmarks queries ，通过这些MLP，独立预测每个landmark的位置。</p>
+<p><strong>inherent relation layers</strong></p>
+<p>受Transformer启发，每一层由三个块组成，即多头自注意（MSA）块、多头交叉注意（MCA）块和多层感知器（MLP）块，并且在每个块之前应用一个layer norm（LN）。 </p>
+<p><strong>prediction heads</strong></p>
+<p>预测头由一个用于规范化输入的分层模板和一个用于预测结果的MLP层组成。</p>
+<p>最右边的图像显示了不同样本的自适应固有关系。其将每个点连接到第一个内在关系层中交叉注意权重最高的点显示。</p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>Patch-based Transformer</tag>
       </tags>
   </entry>
   <entry>
@@ -254,46 +297,63 @@
       </tags>
   </entry>
   <entry>
-    <title>《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</title>
-    <url>/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/</url>
+    <title>《Clothes-Changing Person Re-identification with RGB Modality Only》</title>
+    <url>/2022/05/02/review_5_Simple-CCReID/</url>
     <content><![CDATA[<!-- toc -->
 
 <ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
 <li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
 <li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#clothes-based-adversarial-loss">Clothes-based Adversarial Loss</a><ul>
+<li><a href="#training-clothes-classifier">Training clothes classifier</a></li>
+<li><a href="#learning-clothes-irrelevant-features">Learning clothes-irrelevant features</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <!-- tocstop -->
 
-<p>paper: [<a href="https://arxiv.org/abs/2203.06541">2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org)</a></p>
-<p>code: <a href="https://github.com/Jiahao-UTS/SLPT-master">Jiahao-UTS&#x2F;SLPT-master (github.com)</a></p>
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://arxiv.org/pdf/2204.06890v1.pdf</a></p>
+<p>code: <a href="https://github.com/guxinqian/simple-ccreid">guxinqian&#x2F;Simple-CCReID: Pytorch implementation of ‘Clothes-Changing Person Re-identification with RGB Modality Only. In CVPR, 2022.’ (github.com)</a></p>
 <span id="more"></span>
 
-<h1><span id="出发点">出发点</span></h1><p>landmark之间的内在联系对于人脸对齐的性能有很大影响，本文重点考虑其内在联系。</p>
-<p>之前的方法有heatmap regression，Coordinate regression，有着不同方面的劣势。</p>
-<h1><span id="创新点">创新点</span></h1><p>提出了SLPT（<em>sparse local patch transformer</em>）来学习<em>query-query</em>和<em>representation-query</em>关系（自适应内在关系）；为了进一步提高SLPT的性能，提出了一种从粗到精的框架，使局部补丁进化为<strong>金字塔形补丁</strong>。</p>
-<h1><span id="做法">做法</span></h1><p>本文的SLPT并非同DETR从完整的feature map中预测坐标，而是首先从局部patch中生成每个landmark的表示特征。</p>
-<p>然后，使用一系列可学习的queries（称为<em>landmark queries</em>）来聚合表示。</p>
-<p>基于Transformer的交叉注意机制，SPLT在每一层学习一个<strong>自适应邻接矩阵</strong>。最后，通过MLP独立预测每个landmark在其对应patch中的subpixel坐标。由于使用了稀疏的局部补丁，与其他ViT相比，输入token的数量显著减少。 </p>
-<p>为了进一步提高性能，引入了从粗到精的框架，以与SLPT结合。下图为所提出的从粗到精的框架利用稀疏的局部面片实现鲁棒的人脸对齐。根据前一阶段的landmarks裁剪稀疏的局部补丁，并将其输入到同一SLPT中以预测面部landmarks。此外，patch大小随着阶段的增加而缩小，以使局部特征演变成金字塔形式。</p>
-<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/1.png" alt="1"></p>
-<p>整体框架图：</p>
-<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/2.png" alt="2"></p>
-<p>分为三部分：</p>
-<p><strong>the patch embedding &amp; structure encoding</strong></p>
-<p>不同于ViT，SLPT先根据landmark裁剪patch，再通过线性插值将patch大小调整为K*K，又使用了结构编码（可学习的参数）来补充表示。每种编码都与相邻地标（如左眼和右眼）的编码有很高的相似性。</p>
-<p>Muti-head Cross-attention（在Vision Transformer基础上的改进）：通过landmark在CNN提取出的feature map上划取局部patch，将这些feature map上的patch排成一个patch embedding，将其视为landmark的表示；紧接着对其进行结构编码（Structure Encodeing）,以获取人脸中的相对位置和patch embedding做concat。输入 landmarks queries ，通过这些MLP，独立预测每个landmark的位置。</p>
-<p><strong>inherent relation layers</strong></p>
-<p>受Transformer启发，每一层由三个块组成，即多头自注意（MSA）块、多头交叉注意（MCA）块和多层感知器（MLP）块，并且在每个块之前应用一个layer norm（LN）。 </p>
-<p><strong>prediction heads</strong></p>
-<p>预测头由一个用于规范化输入的分层模板和一个用于预测结果的MLP层组成。</p>
-<p>最右边的图像显示了不同样本的自适应固有关系。其将每个点连接到第一个内在关系层中交叉注意权重最高的点显示。</p>
+<h1><span id="任务">任务</span></h1><p>换装人员重识别</p>
+<h1><span id="出发点">出发点</span></h1><p><strong>提取与衣服无关的特征</strong>，如脸型、发型、体形和步态。目前大多数工作主要集中在从多模态信息（如剪影和草图）中建模身体形状，但没有充分利用原始 RGB 图像中与衣服无关的信息。</p>
+<h1><span id="创新点">创新点</span></h1><p>文章提出一种基于衣服的<strong>对抗</strong>性损失（CAL），通过惩罚 re-id 模型对衣服的预测能力（其实就是个分类器），从原始 RGB 图像中<strong>挖掘与衣服无关的特征</strong>。</p>
+<h1><span id="做法">做法</span></h1><p>首先通过最小化Lc来优化衣服分类器。然后固定衣服分类器的参数，最小化Lid和Lca，迫使backbone学习与衣服无关的特征。（每张图片对应一个一个身份标签和服装标签，将衣服类定义为细粒度标识类——所有同一身份的样本都根据他们的衣服被划分为属于该身份的不同类别，不同的人即使穿着相同的衣服也不会共享相同的衣服标签）</p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504092335366.png" alt="image-20220504092335366"></p>
+<h2><span id="clothes-based-adversarial-loss">Clothes-based Adversarial Loss</span></h2><h3><span id="training-clothes-classifier">Training clothes classifier</span></h3><p>Lc采用交叉熵损失</p>
+<h3><span id="learning-clothes-irrelevant-features">Learning clothes-irrelevant features</span></h3><p>固定衣服分类器的参数，并强制主干学习与衣服无关的特征。为此，应该<strong>惩罚re-id模型对于衣服的预测能力</strong>。</p>
+<p>然而，由于衣服类被定义为细粒度类，因此惩罚re-id模型对于所有衣服类别的预测能力，也会降低其预测身份的能力，这对re-id是有害的。</p>
+<p>那么最终的目的是使经过训练的<strong>服装分类器无法区分相同身份和不同服装的样本</strong>。</p>
+<p>所以，Lca是一个<em>multi-positive-class classification loss</em>，属于同一个身份的不同服装类互为正类。（把不同衣服的只要是属于同一个id身份的衣服类都视为衣服正类）</p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504101750986.png" alt="image-20220504101750986"></p>
+<p>Si+（Si-)是一个有相同身份的衣服标签fi的集合，K是S中的衣服类别数量，q(c)是第c个衣服类别的交叉熵损失的权重，同一件衣服同一个身份的正例，和不同衣服同一个身份的正例有相同的权重1&#x2F;K。</p>
+<p>同时，为了在不严重降低衣服一致性识别精度的情况下提高模型的换衣识别能力，等式（4）可替换为：</p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105337953.png" alt="image-20220504105337953"></p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105427890.png" alt="image-20220504105427890"></p>
+<p>另外，穿着相同衣服的正例比穿着不同衣服的正例有更大的权重。</p>
+<p>在优化CAL的同时，对身份分类器进行了优化。因此，第二步的优化过程是：</p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105540307.png" alt="image-20220504105540307"></p>
+<p>当仅使用Lid进行训练时，该模型在优化的早期阶段倾向于学习简单样本（具有相同的衣服），然后逐渐学习区分困难样本（具有相同的身份和不同的衣服）。类似课程学习方式，但尽管如此（6）中并未抛弃Lid。其原因是，在优化的早期阶段，只有最小化Lca并迫使模型区分硬样本，才可能导致局部最优。相反，在我们的实验中，在第一次降低学习率后，增加了Lca用于训练。</p>
+<p>&#96;&#96;</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class ClothesBasedAdversarialLoss(nn.Module):</span><br><span class="line">    &quot;&quot;&quot; Clothes-based Adversarial Loss.</span><br><span class="line"></span><br><span class="line">    Reference:</span><br><span class="line">        Gu et al. Clothes-Changing Person Re-identification with RGB Modality Only. In CVPR, 2022.</span><br><span class="line"></span><br><span class="line">    Args:</span><br><span class="line">        scale (float): scaling factor.</span><br><span class="line">        epsilon (float): a trade-off hyper-parameter.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __init__(self, scale=16, epsilon=0.1):</span><br><span class="line">        super().__init__()</span><br><span class="line">        self.scale = scale</span><br><span class="line">        self.epsilon = epsilon</span><br><span class="line"></span><br><span class="line">    def forward(self, inputs, targets, positive_mask):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        Args:</span><br><span class="line">            inputs: prediction matrix (before softmax) with shape (batch_size, num_classes)</span><br><span class="line">            targets: ground truth labels with shape (batch_size)</span><br><span class="line">            positive_mask: positive mask matrix with shape (batch_size, num_classes). The clothes classes with </span><br><span class="line">                the same identity as the anchor sample are defined as positive clothes classes and their mask </span><br><span class="line">                values are 1. The clothes classes with different identities from the anchor sample are defined </span><br><span class="line">                as negative clothes classes and their mask values in positive_mask are 0.</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        inputs = self.scale * inputs</span><br><span class="line">        negtive_mask = 1 - positive_mask</span><br><span class="line">        identity_mask = torch.zeros(inputs.size()).scatter_(1, targets.unsqueeze(1).data.cpu(), 1).cuda()</span><br><span class="line"></span><br><span class="line">        exp_logits = torch.exp(inputs)</span><br><span class="line">        log_sum_exp_pos_and_all_neg = torch.log((exp_logits * negtive_mask).sum(1, keepdim=True) + exp_logits)</span><br><span class="line">        log_prob = inputs - log_sum_exp_pos_and_all_neg</span><br><span class="line"></span><br><span class="line">        mask = (1 - self.epsilon) * identity_mask + self.epsilon / positive_mask.sum(1, keepdim=True) * positive_mask</span><br><span class="line">        loss = (- mask * log_prob).sum(1).mean()</span><br><span class="line"></span><br><span class="line">        return loss</span><br></pre></td></tr></table></figure>
+
+
+
+
+
 ]]></content>
       <categories>
         <category>paper review</category>
       </categories>
       <tags>
-        <tag>Patch-based Transformer</tag>
+        <tag>ReID</tag>
+        <tag>decouple</tag>
+        <tag>adversarial</tag>
       </tags>
   </entry>
   <entry>
@@ -363,66 +423,6 @@
       <tags>
         <tag>generation</tag>
         <tag>caricature</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Clothes-Changing Person Re-identification with RGB Modality Only》</title>
-    <url>/2022/05/02/review_5_Simple-CCReID/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
-<li><a href="#clothes-based-adversarial-loss">Clothes-based Adversarial Loss</a><ul>
-<li><a href="#training-clothes-classifier">Training clothes classifier</a></li>
-<li><a href="#learning-clothes-irrelevant-features">Learning clothes-irrelevant features</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://arxiv.org/pdf/2204.06890v1.pdf</a></p>
-<p>code: <a href="https://github.com/guxinqian/simple-ccreid">guxinqian&#x2F;Simple-CCReID: Pytorch implementation of ‘Clothes-Changing Person Re-identification with RGB Modality Only. In CVPR, 2022.’ (github.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="任务">任务</span></h1><p>换装人员重识别</p>
-<h1><span id="出发点">出发点</span></h1><p><strong>提取与衣服无关的特征</strong>，如脸型、发型、体形和步态。目前大多数工作主要集中在从多模态信息（如剪影和草图）中建模身体形状，但没有充分利用原始 RGB 图像中与衣服无关的信息。</p>
-<h1><span id="创新点">创新点</span></h1><p>文章提出一种基于衣服的<strong>对抗</strong>性损失（CAL），通过惩罚 re-id 模型对衣服的预测能力（其实就是个分类器），从原始 RGB 图像中<strong>挖掘与衣服无关的特征</strong>。</p>
-<h1><span id="做法">做法</span></h1><p>首先通过最小化Lc来优化衣服分类器。然后固定衣服分类器的参数，最小化Lid和Lca，迫使backbone学习与衣服无关的特征。（每张图片对应一个一个身份标签和服装标签，将衣服类定义为细粒度标识类——所有同一身份的样本都根据他们的衣服被划分为属于该身份的不同类别，不同的人即使穿着相同的衣服也不会共享相同的衣服标签）</p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504092335366.png" alt="image-20220504092335366"></p>
-<h2><span id="clothes-based-adversarial-loss">Clothes-based Adversarial Loss</span></h2><h3><span id="training-clothes-classifier">Training clothes classifier</span></h3><p>Lc采用交叉熵损失</p>
-<h3><span id="learning-clothes-irrelevant-features">Learning clothes-irrelevant features</span></h3><p>固定衣服分类器的参数，并强制主干学习与衣服无关的特征。为此，应该<strong>惩罚re-id模型对于衣服的预测能力</strong>。</p>
-<p>然而，由于衣服类被定义为细粒度类，因此惩罚re-id模型对于所有衣服类别的预测能力，也会降低其预测身份的能力，这对re-id是有害的。</p>
-<p>那么最终的目的是使经过训练的<strong>服装分类器无法区分相同身份和不同服装的样本</strong>。</p>
-<p>所以，Lca是一个<em>multi-positive-class classification loss</em>，属于同一个身份的不同服装类互为正类。（把不同衣服的只要是属于同一个id身份的衣服类都视为衣服正类）</p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504101750986.png" alt="image-20220504101750986"></p>
-<p>Si+（Si-)是一个有相同身份的衣服标签fi的集合，K是S中的衣服类别数量，q(c)是第c个衣服类别的交叉熵损失的权重，同一件衣服同一个身份的正例，和不同衣服同一个身份的正例有相同的权重1&#x2F;K。</p>
-<p>同时，为了在不严重降低衣服一致性识别精度的情况下提高模型的换衣识别能力，等式（4）可替换为：</p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105337953.png" alt="image-20220504105337953"></p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105427890.png" alt="image-20220504105427890"></p>
-<p>另外，穿着相同衣服的正例比穿着不同衣服的正例有更大的权重。</p>
-<p>在优化CAL的同时，对身份分类器进行了优化。因此，第二步的优化过程是：</p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105540307.png" alt="image-20220504105540307"></p>
-<p>当仅使用Lid进行训练时，该模型在优化的早期阶段倾向于学习简单样本（具有相同的衣服），然后逐渐学习区分困难样本（具有相同的身份和不同的衣服）。类似课程学习方式，但尽管如此（6）中并未抛弃Lid。其原因是，在优化的早期阶段，只有最小化Lca并迫使模型区分硬样本，才可能导致局部最优。相反，在我们的实验中，在第一次降低学习率后，增加了Lca用于训练。</p>
-<p>&#96;&#96;</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class ClothesBasedAdversarialLoss(nn.Module):</span><br><span class="line">    &quot;&quot;&quot; Clothes-based Adversarial Loss.</span><br><span class="line"></span><br><span class="line">    Reference:</span><br><span class="line">        Gu et al. Clothes-Changing Person Re-identification with RGB Modality Only. In CVPR, 2022.</span><br><span class="line"></span><br><span class="line">    Args:</span><br><span class="line">        scale (float): scaling factor.</span><br><span class="line">        epsilon (float): a trade-off hyper-parameter.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __init__(self, scale=16, epsilon=0.1):</span><br><span class="line">        super().__init__()</span><br><span class="line">        self.scale = scale</span><br><span class="line">        self.epsilon = epsilon</span><br><span class="line"></span><br><span class="line">    def forward(self, inputs, targets, positive_mask):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        Args:</span><br><span class="line">            inputs: prediction matrix (before softmax) with shape (batch_size, num_classes)</span><br><span class="line">            targets: ground truth labels with shape (batch_size)</span><br><span class="line">            positive_mask: positive mask matrix with shape (batch_size, num_classes). The clothes classes with </span><br><span class="line">                the same identity as the anchor sample are defined as positive clothes classes and their mask </span><br><span class="line">                values are 1. The clothes classes with different identities from the anchor sample are defined </span><br><span class="line">                as negative clothes classes and their mask values in positive_mask are 0.</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        inputs = self.scale * inputs</span><br><span class="line">        negtive_mask = 1 - positive_mask</span><br><span class="line">        identity_mask = torch.zeros(inputs.size()).scatter_(1, targets.unsqueeze(1).data.cpu(), 1).cuda()</span><br><span class="line"></span><br><span class="line">        exp_logits = torch.exp(inputs)</span><br><span class="line">        log_sum_exp_pos_and_all_neg = torch.log((exp_logits * negtive_mask).sum(1, keepdim=True) + exp_logits)</span><br><span class="line">        log_prob = inputs - log_sum_exp_pos_and_all_neg</span><br><span class="line"></span><br><span class="line">        mask = (1 - self.epsilon) * identity_mask + self.epsilon / positive_mask.sum(1, keepdim=True) * positive_mask</span><br><span class="line">        loss = (- mask * log_prob).sum(1).mean()</span><br><span class="line"></span><br><span class="line">        return loss</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>ReID</tag>
-        <tag>decouple</tag>
-        <tag>adversarial</tag>
       </tags>
   </entry>
   <entry>
