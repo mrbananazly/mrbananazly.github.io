@@ -38,24 +38,24 @@
 <p>大多数生成框架都只能学习两个域之间的关系，其鉴别器只关注照片和草图之间的差异，而不考虑任何特定的识别优化（身份信息）；</p>
 <h1><span id="创新点">创新点</span></h1><p>在CycleGAN上加入了感知损失（perceptual loss）,能更好的关注面部的语义信息（眼睛、鼻子）;</p>
 <p>使生成模型和识别模型相互优化，生成模型迭代生成更好的图像，Triplet Loss训识别模型；</p>
-<h1><span id="做法">做法</span></h1><h2><span id="生成模型">生成模型</span></h2><p><img src="/generation_review_1_IACycleGAN/image-20220608102426736.png" alt="image-20220608102426736"></p>
+<h1><span id="做法">做法</span></h1><h2><span id="生成模型">生成模型</span></h2><p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608102426736.png" alt="image-20220608102426736"></p>
 <p>分别给出两个domain的照片（这里输入的是paired数据，这里的paired应该身份paired），其训练目的是获得Gx，Gy两个生成器。</p>
 <p>两个识别网络，其目的是使用pretrain好的vggface提取feature做Identity perception loss；</p>
 <p>生成器用了《Perceptual losses for real-time style transfer and super-resolution》中的结构；</p>
 <p>判别器用了PatchGAN的结构；</p>
-<h3><span id="生成网络整体loss图示">生成网络整体loss图示</span></h3><p><img src="/generation_review_1_IACycleGAN/image-20220608105545461.png" alt="image-20220608105545461"></p>
+<h3><span id="生成网络整体loss图示">生成网络整体loss图示</span></h3><p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608105545461.png" alt="image-20220608105545461"></p>
 <h4><span id="对抗损失adversarial-loss">对抗损失（adversarial loss）</span></h4><p>输入图像与生成图像进入判别器进行计算，最小化下式</p>
-<p><img src="/generation_review_1_IACycleGAN/image-20220608110633855.png" alt="image-20220608110633855"></p>
+<p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608110633855.png" alt="image-20220608110633855"></p>
 <h4><span id="循环一致性损失cycle-consistency-loss">循环一致性损失（cycle consistency loss）</span></h4><p>Gx生成的图像再进入Gy恢复原本domain与最初的输入x计算L1，<strong>此loss为pix级</strong>，最小化下式</p>
-<p><img src="/generation_review_1_IACycleGAN/image-20220608110959225.png" alt="image-20220608110959225"></p>
+<p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608110959225.png" alt="image-20220608110959225"></p>
 <h4><span id="身份保持损失identity-perception-loss">身份保持损失（identity perception loss）</span></h4><p>仅使用对抗损失会导致伪影和训练不稳定，需要加更强大的监督；</p>
 <p>通过一个pretrain的识别网络（文中选择vggface）分别提取两对（原图与合成图）的feature计算L2，<strong>此loss区别于pix级监督，是feature级</strong>，文中对于此处的解释是：绘制的草图会有夸张成分以扭曲面部纹理信息，夸大面部特征，完全基于pix重建图像效果不会好；CycleGAN的训练需要进行数据增强操作（resize，flip等）难以实施pix级的监督。</p>
 <p>最小化下式</p>
-<p><img src="/generation_review_1_IACycleGAN/image-20220608111456554.png" alt="image-20220608111456554"></p>
+<p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608111456554.png" alt="image-20220608111456554"></p>
 <h4><span id="身份映射损失identity-mapping-loss">身份映射损失（identity mapping loss）</span></h4><p>常规的pix级的约束，最小化下式</p>
-<p><img src="/generation_review_1_IACycleGAN/image-20220608112212476.png" alt="image-20220608112212476"></p>
-<h4><span id="整体loss">整体loss</span></h4><p><img src="/generation_review_1_IACycleGAN/image-20220608112236780.png" alt="image-20220608112236780"></p>
-<p><img src="/generation_review_1_IACycleGAN/image-20220608112252105.png" alt="image-20220608112252105"></p>
+<p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608112212476.png" alt="image-20220608112212476"></p>
+<h4><span id="整体loss">整体loss</span></h4><p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608112236780.png" alt="image-20220608112236780"></p>
+<p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608112252105.png" alt="image-20220608112252105"></p>
 <p>最小化生成器的loss最大化判别器的loss</p>
 <p>其中超参数lamda分别设为10，30000000，5</p>
 <h2><span id="识别网络与生成网络的互相优化">识别网络与生成网络的互相优化</span></h2><p>许多主做生成的工作都是fix相应的识别网络作为一个特征提取器来附加身份保持损失；</p>
@@ -65,7 +65,7 @@
 <p>step3：重复上述操作以获得更好的生成模型和识别模型。</p>
 <p>（有问题的点：若第一次生成的质量得不到保证，那低质量的生成图像真的能提升识别模型的acc吗？<strong>互相优化的模型很依赖第一次生成的图像质量</strong>）</p>
 <p>我认为的做法：先简单训练一个识别网络达到一个还行的acc，更新其backbone参数作为生成网络的特征提取器，然后再进行生成网络的训练。</p>
-<p><img src="/generation_review_1_IACycleGAN/image-20220608135047478.png" alt="image-20220608135047478"></p>
+<p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608135047478.png" alt="image-20220608135047478"></p>
 <h1><span id="实验">实验</span></h1><p>CycleGAN生成—》一阶段vgg fine-tune—》IACycleGAN生成（加入fine-tune的vgg提取的特征做身份保持损失）—》二阶段vgg fine-tune</p>
 <h2><span id="数据集">数据集</span></h2><p>CUFS和CUFSF</p>
 <h3><span id="生成模型实施细节">生成模型实施细节</span></h3><p>对于生成网络的训练，都是从头开始训练，使用instance normalization来实现更好的稳定性和更低的噪声；</p>
@@ -74,12 +74,12 @@
 <p>在titian xp上训练了10小时；</p>
 <p>为减小网络震荡，采用存储多个生成图像的图像缓冲区来更新鉴别器，而不是使用最后生成的图像。</p>
 <p>生成使用了SSIM FSIM两个指标</p>
-<p><img src="/generation_review_1_IACycleGAN/image-20220608152343197.png" alt="image-20220608152343197"></p>
+<p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608152343197.png" alt="image-20220608152343197"></p>
 <h3><span id="识别模型实施细节">识别模型实施细节</span></h3><p>文中用的vggface，caffe上跑的（估计是官方代码）</p>
-<p><img src="/generation_review_1_IACycleGAN/image-20220608153331083.png" alt="image-20220608153331083"></p>
+<p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608153331083.png" alt="image-20220608153331083"></p>
 <p>在做检索任务时，先做风格模态的迁移，再计算相似度。</p>
-<p><img src="/generation_review_1_IACycleGAN/image-20220608155946505.png" alt="image-20220608155946505"></p>
-<p><img src="/generation_review_1_IACycleGAN/image-20220608160958943.png" alt="image-20220608160958943"></p>
+<p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608155946505.png" alt="image-20220608155946505"></p>
+<p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608160958943.png" alt="image-20220608160958943"></p>
 ]]></content>
       <categories>
         <category>paper review</category>
@@ -132,6 +132,75 @@
       </categories>
       <tags>
         <tag>Patch-based Transformer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer》</title>
+    <url>/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#visual-context-transformer-encoder">Visual Context Transformer Encoder</a></li>
+<li><a href="#pose-guided-feature-aggregation">Pose-guided Feature Aggregation</a></li>
+<li><a href="#part-view-based-transformer-decoder">Part View Based Transformer Decoder</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://arxiv.org/pdf/2112.02466v2.pdf</a></p>
+<p>code: <a href="https://github.com/WangTaoAs/PFD_Net">WangTaoAs&#x2F;PFD_Net: This is Official implementation for “Pose-guided Feature Disentangling for Occluded Person Re-Identification Based on Transformer” in AAAI2022 (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="出发点">出发点</span></h1><p>存在遮挡的行人重识别（<em>Occluded Person Re-identification</em>），由于遮挡的存在，各种噪声被引入，导致特征不匹配；遮挡可能具有与人体部位相似的特征，导致特征学习失败。</p>
+<p>前人的方法有：使用姿势信息指导特征空间将全局特征划分为局部特征（缺点是需要严格的特征空间对齐）；使用基于图的方法建模拓扑信息（缺点是容易陷入上述的第二种问题）。</p>
+<h1><span id="创新点">创新点</span></h1><p>本文探索了在没有空间对齐的情况下，将附加姿势信息与Transformer相结合的可能性。其使用姿势信息对语义成分（如人体的关节部位）进行分解，并对非遮挡的部位进行选择性匹配；设计了一种<em>Pose-guided Push Loss</em>。</p>
+<h1><span id="做法">做法</span></h1><p>整体框架图：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103047158.png" alt="image-20220329103047158"></p>
+<h2><span id="visual-context-transformer-encoder">Visual Context Transformer Encoder</span></h2><p>首先需要对输入图像划分为固定大小的N块patch，步距大小定义为S，每块patch的尺度定义为P，patch个数N为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103958451.png" alt="image-20220329103958451"></p>
+<p>当S等于P时，划分出来的patch就不重叠；当S&lt;P时，patch重叠，可以减少空间领域信息的丢失。</p>
+<p>将这些patch通过线形层生成一个序列输入transformer encoder，concat一组可训练的<em>Position Encoding</em>，以及<em>Camera Information Embedding</em>（表示该图像所属的摄像头视角信息，标签给定的，相同视角图像有一样的值），最终的输入序列定义为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329104849953.png" alt="image-20220329104849953"></p>
+<p>最后通过Transformer Encoder输出分为两部分的特征，一部分为global feature，一部分为part feature。为进一步区分人体各个部位的特征，part feature又分为K组，每一组都与global feature做cancat送入shared transformer layer学习这些K组融合特征。</p>
+<p><strong>Encoder Supervision Loss</strong></p>
+<p>选用交叉熵损失作为identity loss以及triplet loss来作为这部分的loss：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329110809342.png" alt="image-20220329110809342"></p>
+<h2><span id="pose-guided-feature-aggregation">Pose-guided Feature Aggregation</span></h2><p>被遮挡的人体图像的身体信息较少，而非身体部位的信息可能不明确。本文使用<em>pose estimator</em> 从图像中提取landmark信息。</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112105052.png" alt="image-20220329112105052"></p>
+<p><strong>Pose Estimation</strong></p>
+<p>给定一张图像，估计器从中提取M个landmark，然后利用这些landmark生成一组heatmap <strong>H</strong>，每张heatmap都被下采样到（H&#x2F;4）*（W&#x2F;4），其中最大的response point对应一个joint point，设置了一个阈值γ来滤除高置信度和低置信度的landmark。滤除出的剩余landmark的heatmap并不是将其设为0，而是赋值0&#x2F;1，热图标签可以形式化为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112535277.png" alt="image-20220329112535277"></p>
+<p>ci定义为第i个landmark的置信度分数。</p>
+<p><strong>Pose-guided Feature Aggregation</strong></p>
+<p>将之前的分组数设为K&#x3D;M，使其等于landmark的数量。将生成的一组heatmap <strong>H</strong>后接一层FC，使其尺寸与group part local feature（fgp）相同，得到<strong>H‘</strong>。将<strong>H‘</strong>与<strong>fgp</strong> mutiply element-wisely（向量对应元素相乘，将heatmap的注意力附加在fgp上）获得<strong>P</strong>，其目的是为了从fgp中找到对身体某个部位贡献最大的信息部分。</p>
+<p>为此，本文开发了一种匹配和分布机制，将part local feature和pose-guided feature视为一组相似性度量问题，最终获取一个pose-guided feature集合<strong>S</strong>。</p>
+<p>对于每个<strong>Pi</strong>,在fgp中找到最相似的特征，即<strong>找寻融合了heatmap注意力的序列和原始局部特征的最近距离的局部特征</strong>，以选出优质的局部特征，用余弦距离，形式化定义为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115119956.png" alt="image-20220329115119956"></p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115132888.png" alt="image-20220329115132888"></p>
+<h2><span id="part-view-based-transformer-decoder">Part View Based Transformer Decoder</span></h2><p>将heatmap和fen做点乘送入Decoder学习一系列learnable semantic views以学习有区别的身体部分。其实整个框架的大体思路为一张图片走两路，一路分patch进transformer encoder，一路特征点检测生成heatmap走transformer decoder，再将这两部分的输出进行match，可以得到view feature，取高置信度的view feature采样成与fgb，fgp相同尺寸算triplet loss，再将所有的view feature采样做<em>Pose Guided Push Loss</em>。</p>
+<p><strong>Pose-View Matching Module</strong></p>
+<p>此部分计算patch view和通过Pose-guided Feature Aggregation得到的Set之间的相似度，来获得最终的view feature，用余弦距离，形式化定义为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329151559098.png" alt="image-20220329151559098"></p>
+<p>之前的heatmap通过阈值打好了0&#x2F;1标签，最终的view feature即可通过heatmap标签分为两类。在上述距离置信度较高的view feature中取heatmap label为1的；在置信度较低的view feature中取heatmap label为0的。这样的操作会产生可变长度，需要固定长度补0操作。</p>
+<p><strong>Decoder Supervision Loss</strong></p>
+<p>提出的Pose-guided Push Loss：</p>
+<p>余弦距离：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152506162.png" alt="image-20220329152506162"></p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152517889.png" alt="image-20220329152517889"></p>
+<p>整体的loss定义：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329153030797.png" alt="image-20220329153030797"></p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>ReID</tag>
+        <tag>Transformer</tag>
+        <tag>Landmark</tag>
       </tags>
   </entry>
   <entry>
@@ -225,75 +294,6 @@
       <tags>
         <tag>HFR</tag>
         <tag>generation</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer》</title>
-    <url>/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
-<li><a href="#visual-context-transformer-encoder">Visual Context Transformer Encoder</a></li>
-<li><a href="#pose-guided-feature-aggregation">Pose-guided Feature Aggregation</a></li>
-<li><a href="#part-view-based-transformer-decoder">Part View Based Transformer Decoder</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://arxiv.org/pdf/2112.02466v2.pdf</a></p>
-<p>code: <a href="https://github.com/WangTaoAs/PFD_Net">WangTaoAs&#x2F;PFD_Net: This is Official implementation for “Pose-guided Feature Disentangling for Occluded Person Re-Identification Based on Transformer” in AAAI2022 (github.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="出发点">出发点</span></h1><p>存在遮挡的行人重识别（<em>Occluded Person Re-identification</em>），由于遮挡的存在，各种噪声被引入，导致特征不匹配；遮挡可能具有与人体部位相似的特征，导致特征学习失败。</p>
-<p>前人的方法有：使用姿势信息指导特征空间将全局特征划分为局部特征（缺点是需要严格的特征空间对齐）；使用基于图的方法建模拓扑信息（缺点是容易陷入上述的第二种问题）。</p>
-<h1><span id="创新点">创新点</span></h1><p>本文探索了在没有空间对齐的情况下，将附加姿势信息与Transformer相结合的可能性。其使用姿势信息对语义成分（如人体的关节部位）进行分解，并对非遮挡的部位进行选择性匹配；设计了一种<em>Pose-guided Push Loss</em>。</p>
-<h1><span id="做法">做法</span></h1><p>整体框架图：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103047158.png" alt="image-20220329103047158"></p>
-<h2><span id="visual-context-transformer-encoder">Visual Context Transformer Encoder</span></h2><p>首先需要对输入图像划分为固定大小的N块patch，步距大小定义为S，每块patch的尺度定义为P，patch个数N为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103958451.png" alt="image-20220329103958451"></p>
-<p>当S等于P时，划分出来的patch就不重叠；当S&lt;P时，patch重叠，可以减少空间领域信息的丢失。</p>
-<p>将这些patch通过线形层生成一个序列输入transformer encoder，concat一组可训练的<em>Position Encoding</em>，以及<em>Camera Information Embedding</em>（表示该图像所属的摄像头视角信息，标签给定的，相同视角图像有一样的值），最终的输入序列定义为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329104849953.png" alt="image-20220329104849953"></p>
-<p>最后通过Transformer Encoder输出分为两部分的特征，一部分为global feature，一部分为part feature。为进一步区分人体各个部位的特征，part feature又分为K组，每一组都与global feature做cancat送入shared transformer layer学习这些K组融合特征。</p>
-<p><strong>Encoder Supervision Loss</strong></p>
-<p>选用交叉熵损失作为identity loss以及triplet loss来作为这部分的loss：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329110809342.png" alt="image-20220329110809342"></p>
-<h2><span id="pose-guided-feature-aggregation">Pose-guided Feature Aggregation</span></h2><p>被遮挡的人体图像的身体信息较少，而非身体部位的信息可能不明确。本文使用<em>pose estimator</em> 从图像中提取landmark信息。</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112105052.png" alt="image-20220329112105052"></p>
-<p><strong>Pose Estimation</strong></p>
-<p>给定一张图像，估计器从中提取M个landmark，然后利用这些landmark生成一组heatmap <strong>H</strong>，每张heatmap都被下采样到（H&#x2F;4）*（W&#x2F;4），其中最大的response point对应一个joint point，设置了一个阈值γ来滤除高置信度和低置信度的landmark。滤除出的剩余landmark的heatmap并不是将其设为0，而是赋值0&#x2F;1，热图标签可以形式化为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112535277.png" alt="image-20220329112535277"></p>
-<p>ci定义为第i个landmark的置信度分数。</p>
-<p><strong>Pose-guided Feature Aggregation</strong></p>
-<p>将之前的分组数设为K&#x3D;M，使其等于landmark的数量。将生成的一组heatmap <strong>H</strong>后接一层FC，使其尺寸与group part local feature（fgp）相同，得到<strong>H‘</strong>。将<strong>H‘</strong>与<strong>fgp</strong> mutiply element-wisely（向量对应元素相乘，将heatmap的注意力附加在fgp上）获得<strong>P</strong>，其目的是为了从fgp中找到对身体某个部位贡献最大的信息部分。</p>
-<p>为此，本文开发了一种匹配和分布机制，将part local feature和pose-guided feature视为一组相似性度量问题，最终获取一个pose-guided feature集合<strong>S</strong>。</p>
-<p>对于每个<strong>Pi</strong>,在fgp中找到最相似的特征，即<strong>找寻融合了heatmap注意力的序列和原始局部特征的最近距离的局部特征</strong>，以选出优质的局部特征，用余弦距离，形式化定义为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115119956.png" alt="image-20220329115119956"></p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115132888.png" alt="image-20220329115132888"></p>
-<h2><span id="part-view-based-transformer-decoder">Part View Based Transformer Decoder</span></h2><p>将heatmap和fen做点乘送入Decoder学习一系列learnable semantic views以学习有区别的身体部分。其实整个框架的大体思路为一张图片走两路，一路分patch进transformer encoder，一路特征点检测生成heatmap走transformer decoder，再将这两部分的输出进行match，可以得到view feature，取高置信度的view feature采样成与fgb，fgp相同尺寸算triplet loss，再将所有的view feature采样做<em>Pose Guided Push Loss</em>。</p>
-<p><strong>Pose-View Matching Module</strong></p>
-<p>此部分计算patch view和通过Pose-guided Feature Aggregation得到的Set之间的相似度，来获得最终的view feature，用余弦距离，形式化定义为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329151559098.png" alt="image-20220329151559098"></p>
-<p>之前的heatmap通过阈值打好了0&#x2F;1标签，最终的view feature即可通过heatmap标签分为两类。在上述距离置信度较高的view feature中取heatmap label为1的；在置信度较低的view feature中取heatmap label为0的。这样的操作会产生可变长度，需要固定长度补0操作。</p>
-<p><strong>Decoder Supervision Loss</strong></p>
-<p>提出的Pose-guided Push Loss：</p>
-<p>余弦距离：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152506162.png" alt="image-20220329152506162"></p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152517889.png" alt="image-20220329152517889"></p>
-<p>整体的loss定义：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329153030797.png" alt="image-20220329153030797"></p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>ReID</tag>
-        <tag>Transformer</tag>
-        <tag>Landmark</tag>
       </tags>
   </entry>
   <entry>

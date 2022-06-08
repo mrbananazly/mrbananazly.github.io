@@ -27,28 +27,28 @@
 <meta property="og:site_name" content="Road 2 the Final">
 <meta property="og:description" content="任务 出发点 创新点 做法 生成模型 生成网络整体loss图示   识别网络与生成网络的互相优化   实验 数据集 生成模型实施细节 识别模型实施细节        paper: Identity-Aware CycleGAN for Face Photo-Sketch Synthesis and Recognition (arxiv.org) code: none">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://mrbananazly.cn/generation_review_1_IACycleGAN/image-20220608102426736.png">
-<meta property="og:image" content="http://mrbananazly.cn/generation_review_1_IACycleGAN/image-20220608105545461.png">
-<meta property="og:image" content="http://mrbananazly.cn/generation_review_1_IACycleGAN/image-20220608110633855.png">
-<meta property="og:image" content="http://mrbananazly.cn/generation_review_1_IACycleGAN/image-20220608110959225.png">
-<meta property="og:image" content="http://mrbananazly.cn/generation_review_1_IACycleGAN/image-20220608111456554.png">
-<meta property="og:image" content="http://mrbananazly.cn/generation_review_1_IACycleGAN/image-20220608112212476.png">
-<meta property="og:image" content="http://mrbananazly.cn/generation_review_1_IACycleGAN/image-20220608112236780.png">
-<meta property="og:image" content="http://mrbananazly.cn/generation_review_1_IACycleGAN/image-20220608112252105.png">
-<meta property="og:image" content="http://mrbananazly.cn/generation_review_1_IACycleGAN/image-20220608135047478.png">
-<meta property="og:image" content="http://mrbananazly.cn/generation_review_1_IACycleGAN/image-20220608152343197.png">
-<meta property="og:image" content="http://mrbananazly.cn/generation_review_1_IACycleGAN/image-20220608153331083.png">
-<meta property="og:image" content="http://mrbananazly.cn/generation_review_1_IACycleGAN/image-20220608155946505.png">
-<meta property="og:image" content="http://mrbananazly.cn/generation_review_1_IACycleGAN/image-20220608160958943.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/07/generation_review_1_IACycleGAN/image-20220608102426736.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/07/generation_review_1_IACycleGAN/image-20220608105545461.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/07/generation_review_1_IACycleGAN/image-20220608110633855.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/07/generation_review_1_IACycleGAN/image-20220608110959225.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/07/generation_review_1_IACycleGAN/image-20220608111456554.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/07/generation_review_1_IACycleGAN/image-20220608112212476.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/07/generation_review_1_IACycleGAN/image-20220608112236780.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/07/generation_review_1_IACycleGAN/image-20220608112252105.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/07/generation_review_1_IACycleGAN/image-20220608135047478.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/07/generation_review_1_IACycleGAN/image-20220608152343197.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/07/generation_review_1_IACycleGAN/image-20220608153331083.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/07/generation_review_1_IACycleGAN/image-20220608155946505.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/07/generation_review_1_IACycleGAN/image-20220608160958943.png">
 <meta property="article:published_time" content="2022-06-07T12:31:38.000Z">
-<meta property="article:modified_time" content="2022-06-08T08:35:57.000Z">
+<meta property="article:modified_time" content="2022-06-08T08:44:05.912Z">
 <meta property="article:author" content="mrbanana_zly">
 <meta property="article:tag" content="sketch">
 <meta property="article:tag" content="synthesis">
 <meta property="article:tag" content="GAN">
 <meta property="article:tag" content="face recognition">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://mrbananazly.cn/generation_review_1_IACycleGAN/image-20220608102426736.png">
+<meta name="twitter:image" content="http://mrbananazly.cn/2022/06/07/generation_review_1_IACycleGAN/image-20220608102426736.png">
 
 
 <link rel="canonical" href="http://mrbananazly.cn/2022/06/07/generation_review_1_IACycleGAN/">
@@ -256,7 +256,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-06-08 16:35:57" itemprop="dateModified" datetime="2022-06-08T16:35:57+08:00">2022-06-08</time>
+      <time title="Modified: 2022-06-08 16:44:05" itemprop="dateModified" datetime="2022-06-08T16:44:05+08:00">2022-06-08</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -313,24 +313,24 @@
 <p>大多数生成框架都只能学习两个域之间的关系，其鉴别器只关注照片和草图之间的差异，而不考虑任何特定的识别优化（身份信息）；</p>
 <h1><span id="创新点">创新点</span></h1><p>在CycleGAN上加入了感知损失（perceptual loss）,能更好的关注面部的语义信息（眼睛、鼻子）;</p>
 <p>使生成模型和识别模型相互优化，生成模型迭代生成更好的图像，Triplet Loss训识别模型；</p>
-<h1><span id="做法">做法</span></h1><h2><span id="生成模型">生成模型</span></h2><p><img src="/generation_review_1_IACycleGAN/image-20220608102426736.png" alt="image-20220608102426736"></p>
+<h1><span id="做法">做法</span></h1><h2><span id="生成模型">生成模型</span></h2><p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608102426736.png" alt="image-20220608102426736"></p>
 <p>分别给出两个domain的照片（这里输入的是paired数据，这里的paired应该身份paired），其训练目的是获得Gx，Gy两个生成器。</p>
 <p>两个识别网络，其目的是使用pretrain好的vggface提取feature做Identity perception loss；</p>
 <p>生成器用了《Perceptual losses for real-time style transfer and super-resolution》中的结构；</p>
 <p>判别器用了PatchGAN的结构；</p>
-<h3><span id="生成网络整体loss图示">生成网络整体loss图示</span></h3><p><img src="/generation_review_1_IACycleGAN/image-20220608105545461.png" alt="image-20220608105545461"></p>
+<h3><span id="生成网络整体loss图示">生成网络整体loss图示</span></h3><p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608105545461.png" alt="image-20220608105545461"></p>
 <h4><span id="对抗损失adversarial-loss">对抗损失（adversarial loss）</span></h4><p>输入图像与生成图像进入判别器进行计算，最小化下式</p>
-<p><img src="/generation_review_1_IACycleGAN/image-20220608110633855.png" alt="image-20220608110633855"></p>
+<p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608110633855.png" alt="image-20220608110633855"></p>
 <h4><span id="循环一致性损失cycle-consistency-loss">循环一致性损失（cycle consistency loss）</span></h4><p>Gx生成的图像再进入Gy恢复原本domain与最初的输入x计算L1，<strong>此loss为pix级</strong>，最小化下式</p>
-<p><img src="/generation_review_1_IACycleGAN/image-20220608110959225.png" alt="image-20220608110959225"></p>
+<p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608110959225.png" alt="image-20220608110959225"></p>
 <h4><span id="身份保持损失identity-perception-loss">身份保持损失（identity perception loss）</span></h4><p>仅使用对抗损失会导致伪影和训练不稳定，需要加更强大的监督；</p>
 <p>通过一个pretrain的识别网络（文中选择vggface）分别提取两对（原图与合成图）的feature计算L2，<strong>此loss区别于pix级监督，是feature级</strong>，文中对于此处的解释是：绘制的草图会有夸张成分以扭曲面部纹理信息，夸大面部特征，完全基于pix重建图像效果不会好；CycleGAN的训练需要进行数据增强操作（resize，flip等）难以实施pix级的监督。</p>
 <p>最小化下式</p>
-<p><img src="/generation_review_1_IACycleGAN/image-20220608111456554.png" alt="image-20220608111456554"></p>
+<p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608111456554.png" alt="image-20220608111456554"></p>
 <h4><span id="身份映射损失identity-mapping-loss">身份映射损失（identity mapping loss）</span></h4><p>常规的pix级的约束，最小化下式</p>
-<p><img src="/generation_review_1_IACycleGAN/image-20220608112212476.png" alt="image-20220608112212476"></p>
-<h4><span id="整体loss">整体loss</span></h4><p><img src="/generation_review_1_IACycleGAN/image-20220608112236780.png" alt="image-20220608112236780"></p>
-<p><img src="/generation_review_1_IACycleGAN/image-20220608112252105.png" alt="image-20220608112252105"></p>
+<p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608112212476.png" alt="image-20220608112212476"></p>
+<h4><span id="整体loss">整体loss</span></h4><p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608112236780.png" alt="image-20220608112236780"></p>
+<p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608112252105.png" alt="image-20220608112252105"></p>
 <p>最小化生成器的loss最大化判别器的loss</p>
 <p>其中超参数lamda分别设为10，30000000，5</p>
 <h2><span id="识别网络与生成网络的互相优化">识别网络与生成网络的互相优化</span></h2><p>许多主做生成的工作都是fix相应的识别网络作为一个特征提取器来附加身份保持损失；</p>
@@ -340,7 +340,7 @@
 <p>step3：重复上述操作以获得更好的生成模型和识别模型。</p>
 <p>（有问题的点：若第一次生成的质量得不到保证，那低质量的生成图像真的能提升识别模型的acc吗？<strong>互相优化的模型很依赖第一次生成的图像质量</strong>）</p>
 <p>我认为的做法：先简单训练一个识别网络达到一个还行的acc，更新其backbone参数作为生成网络的特征提取器，然后再进行生成网络的训练。</p>
-<p><img src="/generation_review_1_IACycleGAN/image-20220608135047478.png" alt="image-20220608135047478"></p>
+<p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608135047478.png" alt="image-20220608135047478"></p>
 <h1><span id="实验">实验</span></h1><p>CycleGAN生成—》一阶段vgg fine-tune—》IACycleGAN生成（加入fine-tune的vgg提取的特征做身份保持损失）—》二阶段vgg fine-tune</p>
 <h2><span id="数据集">数据集</span></h2><p>CUFS和CUFSF</p>
 <h3><span id="生成模型实施细节">生成模型实施细节</span></h3><p>对于生成网络的训练，都是从头开始训练，使用instance normalization来实现更好的稳定性和更低的噪声；</p>
@@ -349,12 +349,12 @@
 <p>在titian xp上训练了10小时；</p>
 <p>为减小网络震荡，采用存储多个生成图像的图像缓冲区来更新鉴别器，而不是使用最后生成的图像。</p>
 <p>生成使用了SSIM FSIM两个指标</p>
-<p><img src="/generation_review_1_IACycleGAN/image-20220608152343197.png" alt="image-20220608152343197"></p>
+<p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608152343197.png" alt="image-20220608152343197"></p>
 <h3><span id="识别模型实施细节">识别模型实施细节</span></h3><p>文中用的vggface，caffe上跑的（估计是官方代码）</p>
-<p><img src="/generation_review_1_IACycleGAN/image-20220608153331083.png" alt="image-20220608153331083"></p>
+<p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608153331083.png" alt="image-20220608153331083"></p>
 <p>在做检索任务时，先做风格模态的迁移，再计算相似度。</p>
-<p><img src="/generation_review_1_IACycleGAN/image-20220608155946505.png" alt="image-20220608155946505"></p>
-<p><img src="/generation_review_1_IACycleGAN/image-20220608160958943.png" alt="image-20220608160958943"></p>
+<p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608155946505.png" alt="image-20220608155946505"></p>
+<p><img src="/2022/06/07/generation_review_1_IACycleGAN/image-20220608160958943.png" alt="image-20220608160958943"></p>
 
     </div>
 
