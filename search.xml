@@ -1,97 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>《IACycleGAN》</title>
-    <url>/2022/06/08/generation_review_1_IACycleGAN/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
-<li><a href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B">生成模型</a><ul>
-<li><a href="#%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C%E6%95%B4%E4%BD%93loss%E5%9B%BE%E7%A4%BA">生成网络整体loss图示</a></li>
-</ul>
-</li>
-<li><a href="#%E8%AF%86%E5%88%AB%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C%E7%9A%84%E4%BA%92%E7%9B%B8%E4%BC%98%E5%8C%96">识别网络与生成网络的互相优化</a></li>
-</ul>
-</li>
-<li><a href="#%E5%AE%9E%E9%AA%8C">实验</a><ul>
-<li><a href="#%E6%95%B0%E6%8D%AE%E9%9B%86">数据集</a><ul>
-<li><a href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82">生成模型实施细节</a></li>
-<li><a href="#%E8%AF%86%E5%88%AB%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82">识别模型实施细节</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf"><a href="https://arxiv.org/pdf/2103.16019.pdf">Identity-Aware CycleGAN for Face Photo-Sketch Synthesis and Recognition (arxiv.org)</a></a></p>
-<p>code: none</p>
-<span id="more"></span>
-
-<h1><span id="任务">任务</span></h1><p>真人素描生成与识别</p>
-<h1><span id="出发点">出发点</span></h1><p>生成促进识别 识别促进生成；</p>
-<p>大部分生成方法使得合成图像与原始图像在纹理上保持一致，会导致信息丢失；</p>
-<p>大多数生成框架都只能学习两个域之间的关系，其鉴别器只关注照片和草图之间的差异，而不考虑任何特定的识别优化（身份信息）；</p>
-<h1><span id="创新点">创新点</span></h1><p>在CycleGAN上加入了感知损失（perceptual loss）,能更好的关注面部的语义信息（眼睛、鼻子）;</p>
-<p>使生成模型和识别模型相互优化，生成模型迭代生成更好的图像，Triplet Loss训识别模型；</p>
-<h1><span id="做法">做法</span></h1><h2><span id="生成模型">生成模型</span></h2><p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608102426736.png" alt="image-20220608102426736"></p>
-<p>分别给出两个domain的照片（这里输入的是paired数据，这里的paired应该身份paired），其训练目的是获得Gx，Gy两个生成器。</p>
-<p>两个识别网络，其目的是使用pretrain好的vggface提取feature做Identity perception loss；</p>
-<p>生成器用了《Perceptual losses for real-time style transfer and super-resolution》中的结构；</p>
-<p>判别器用了PatchGAN的结构；</p>
-<h3><span id="生成网络整体loss图示">生成网络整体loss图示</span></h3><p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608105545461.png" alt="image-20220608105545461"></p>
-<h4><span id="对抗损失adversarial-loss">对抗损失（adversarial loss）</span></h4><p>输入图像与生成图像进入判别器进行计算，最小化下式</p>
-<p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608110633855.png" alt="image-20220608110633855"></p>
-<h4><span id="循环一致性损失cycle-consistency-loss">循环一致性损失（cycle consistency loss）</span></h4><p>Gx生成的图像再进入Gy恢复原本domain与最初的输入x计算L1，<strong>此loss为pix级</strong>，最小化下式</p>
-<p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608110959225.png" alt="image-20220608110959225"></p>
-<h4><span id="身份保持损失identity-perception-loss">身份保持损失（identity perception loss）</span></h4><p>仅使用对抗损失会导致伪影和训练不稳定，需要加更强大的监督；</p>
-<p>通过一个pretrain的识别网络（文中选择vggface）分别提取两对（原图与合成图）的feature计算L2，<strong>此loss区别于pix级监督，是feature级</strong>，文中对于此处的解释是：绘制的草图会有夸张成分以扭曲面部纹理信息，夸大面部特征，完全基于pix重建图像效果不会好；CycleGAN的训练需要进行数据增强操作（resize，flip等）难以实施pix级的监督。</p>
-<p>最小化下式</p>
-<p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608111456554.png" alt="image-20220608111456554"></p>
-<h4><span id="身份映射损失identity-mapping-loss">身份映射损失（identity mapping loss）</span></h4><p>常规的pix级的约束，最小化下式</p>
-<p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608112212476.png" alt="image-20220608112212476"></p>
-<h4><span id="整体loss">整体loss</span></h4><p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608112236780.png" alt="image-20220608112236780"></p>
-<p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608112252105.png" alt="image-20220608112252105"></p>
-<p>最小化生成器的loss最大化判别器的loss</p>
-<p>其中超参数lamda分别设为10，30000000，5</p>
-<h2><span id="识别网络与生成网络的互相优化">识别网络与生成网络的互相优化</span></h2><p>许多主做生成的工作都是fix相应的识别网络作为一个特征提取器来附加身份保持损失；</p>
-<p>本文的做法估计是：</p>
-<p>step1：先fix识别网络参数训练生成网络，获得一定量的生成的图片；</p>
-<p>step2：使用生成的图片fine-tune识别网络（单走一个人脸识别模型的流程），用了triplet loss，更新识别网络参数，其中两个模态分别有两个识别网络，要分开训练；</p>
-<p>step3：重复上述操作以获得更好的生成模型和识别模型。</p>
-<p>（有问题的点：若第一次生成的质量得不到保证，那低质量的生成图像真的能提升识别模型的acc吗？<strong>互相优化的模型很依赖第一次生成的图像质量</strong>）</p>
-<p>我认为的做法：先简单训练一个识别网络达到一个还行的acc，更新其backbone参数作为生成网络的特征提取器，然后再进行生成网络的训练。</p>
-<p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608135047478.png" alt="image-20220608135047478"></p>
-<h1><span id="实验">实验</span></h1><p>CycleGAN生成—》一阶段vgg fine-tune—》IACycleGAN生成（加入fine-tune的vgg提取的特征做身份保持损失）—》二阶段vgg fine-tune</p>
-<h2><span id="数据集">数据集</span></h2><p>CUFS和CUFSF</p>
-<h3><span id="生成模型实施细节">生成模型实施细节</span></h3><p>对于生成网络的训练，都是从头开始训练，使用instance normalization来实现更好的稳定性和更低的噪声；</p>
-<p>使用Adam优化器，horizontal filp prob&#x3D;0.5用于数据增强；</p>
-<p>前100个epoch设置0.0002的学习率，并在后100个epoch线性下降至0；</p>
-<p>在titian xp上训练了10小时；</p>
-<p>为减小网络震荡，采用存储多个生成图像的图像缓冲区来更新鉴别器，而不是使用最后生成的图像。</p>
-<p>生成使用了SSIM FSIM两个指标</p>
-<p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608152343197.png" alt="image-20220608152343197"></p>
-<h3><span id="识别模型实施细节">识别模型实施细节</span></h3><p>文中用的vggface，caffe上跑的（估计是官方代码）</p>
-<p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608153331083.png" alt="image-20220608153331083"></p>
-<p>在做检索任务时，先做风格模态的迁移，再计算相似度。</p>
-<p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608155946505.png" alt="image-20220608155946505"></p>
-<p><img src="/2022/06/08/generation_review_1_IACycleGAN/image-20220608160958943.png" alt="image-20220608160958943"></p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>sketch</tag>
-        <tag>synthesis</tag>
-        <tag>GAN</tag>
-        <tag>face recognition</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</title>
     <url>/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/</url>
     <content><![CDATA[<!-- toc -->
@@ -132,75 +41,6 @@
       </categories>
       <tags>
         <tag>Patch-based Transformer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer》</title>
-    <url>/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
-<li><a href="#visual-context-transformer-encoder">Visual Context Transformer Encoder</a></li>
-<li><a href="#pose-guided-feature-aggregation">Pose-guided Feature Aggregation</a></li>
-<li><a href="#part-view-based-transformer-decoder">Part View Based Transformer Decoder</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://arxiv.org/pdf/2112.02466v2.pdf</a></p>
-<p>code: <a href="https://github.com/WangTaoAs/PFD_Net">WangTaoAs&#x2F;PFD_Net: This is Official implementation for “Pose-guided Feature Disentangling for Occluded Person Re-Identification Based on Transformer” in AAAI2022 (github.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="出发点">出发点</span></h1><p>存在遮挡的行人重识别（<em>Occluded Person Re-identification</em>），由于遮挡的存在，各种噪声被引入，导致特征不匹配；遮挡可能具有与人体部位相似的特征，导致特征学习失败。</p>
-<p>前人的方法有：使用姿势信息指导特征空间将全局特征划分为局部特征（缺点是需要严格的特征空间对齐）；使用基于图的方法建模拓扑信息（缺点是容易陷入上述的第二种问题）。</p>
-<h1><span id="创新点">创新点</span></h1><p>本文探索了在没有空间对齐的情况下，将附加姿势信息与Transformer相结合的可能性。其使用姿势信息对语义成分（如人体的关节部位）进行分解，并对非遮挡的部位进行选择性匹配；设计了一种<em>Pose-guided Push Loss</em>。</p>
-<h1><span id="做法">做法</span></h1><p>整体框架图：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103047158.png" alt="image-20220329103047158"></p>
-<h2><span id="visual-context-transformer-encoder">Visual Context Transformer Encoder</span></h2><p>首先需要对输入图像划分为固定大小的N块patch，步距大小定义为S，每块patch的尺度定义为P，patch个数N为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103958451.png" alt="image-20220329103958451"></p>
-<p>当S等于P时，划分出来的patch就不重叠；当S&lt;P时，patch重叠，可以减少空间领域信息的丢失。</p>
-<p>将这些patch通过线形层生成一个序列输入transformer encoder，concat一组可训练的<em>Position Encoding</em>，以及<em>Camera Information Embedding</em>（表示该图像所属的摄像头视角信息，标签给定的，相同视角图像有一样的值），最终的输入序列定义为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329104849953.png" alt="image-20220329104849953"></p>
-<p>最后通过Transformer Encoder输出分为两部分的特征，一部分为global feature，一部分为part feature。为进一步区分人体各个部位的特征，part feature又分为K组，每一组都与global feature做cancat送入shared transformer layer学习这些K组融合特征。</p>
-<p><strong>Encoder Supervision Loss</strong></p>
-<p>选用交叉熵损失作为identity loss以及triplet loss来作为这部分的loss：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329110809342.png" alt="image-20220329110809342"></p>
-<h2><span id="pose-guided-feature-aggregation">Pose-guided Feature Aggregation</span></h2><p>被遮挡的人体图像的身体信息较少，而非身体部位的信息可能不明确。本文使用<em>pose estimator</em> 从图像中提取landmark信息。</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112105052.png" alt="image-20220329112105052"></p>
-<p><strong>Pose Estimation</strong></p>
-<p>给定一张图像，估计器从中提取M个landmark，然后利用这些landmark生成一组heatmap <strong>H</strong>，每张heatmap都被下采样到（H&#x2F;4）*（W&#x2F;4），其中最大的response point对应一个joint point，设置了一个阈值γ来滤除高置信度和低置信度的landmark。滤除出的剩余landmark的heatmap并不是将其设为0，而是赋值0&#x2F;1，热图标签可以形式化为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112535277.png" alt="image-20220329112535277"></p>
-<p>ci定义为第i个landmark的置信度分数。</p>
-<p><strong>Pose-guided Feature Aggregation</strong></p>
-<p>将之前的分组数设为K&#x3D;M，使其等于landmark的数量。将生成的一组heatmap <strong>H</strong>后接一层FC，使其尺寸与group part local feature（fgp）相同，得到<strong>H‘</strong>。将<strong>H‘</strong>与<strong>fgp</strong> mutiply element-wisely（向量对应元素相乘，将heatmap的注意力附加在fgp上）获得<strong>P</strong>，其目的是为了从fgp中找到对身体某个部位贡献最大的信息部分。</p>
-<p>为此，本文开发了一种匹配和分布机制，将part local feature和pose-guided feature视为一组相似性度量问题，最终获取一个pose-guided feature集合<strong>S</strong>。</p>
-<p>对于每个<strong>Pi</strong>,在fgp中找到最相似的特征，即<strong>找寻融合了heatmap注意力的序列和原始局部特征的最近距离的局部特征</strong>，以选出优质的局部特征，用余弦距离，形式化定义为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115119956.png" alt="image-20220329115119956"></p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115132888.png" alt="image-20220329115132888"></p>
-<h2><span id="part-view-based-transformer-decoder">Part View Based Transformer Decoder</span></h2><p>将heatmap和fen做点乘送入Decoder学习一系列learnable semantic views以学习有区别的身体部分。其实整个框架的大体思路为一张图片走两路，一路分patch进transformer encoder，一路特征点检测生成heatmap走transformer decoder，再将这两部分的输出进行match，可以得到view feature，取高置信度的view feature采样成与fgb，fgp相同尺寸算triplet loss，再将所有的view feature采样做<em>Pose Guided Push Loss</em>。</p>
-<p><strong>Pose-View Matching Module</strong></p>
-<p>此部分计算patch view和通过Pose-guided Feature Aggregation得到的Set之间的相似度，来获得最终的view feature，用余弦距离，形式化定义为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329151559098.png" alt="image-20220329151559098"></p>
-<p>之前的heatmap通过阈值打好了0&#x2F;1标签，最终的view feature即可通过heatmap标签分为两类。在上述距离置信度较高的view feature中取heatmap label为1的；在置信度较低的view feature中取heatmap label为0的。这样的操作会产生可变长度，需要固定长度补0操作。</p>
-<p><strong>Decoder Supervision Loss</strong></p>
-<p>提出的Pose-guided Push Loss：</p>
-<p>余弦距离：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152506162.png" alt="image-20220329152506162"></p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152517889.png" alt="image-20220329152517889"></p>
-<p>整体的loss定义：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329153030797.png" alt="image-20220329153030797"></p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>ReID</tag>
-        <tag>Transformer</tag>
-        <tag>Landmark</tag>
       </tags>
   </entry>
   <entry>
@@ -366,6 +206,75 @@
       </tags>
   </entry>
   <entry>
+    <title>《Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer》</title>
+    <url>/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#visual-context-transformer-encoder">Visual Context Transformer Encoder</a></li>
+<li><a href="#pose-guided-feature-aggregation">Pose-guided Feature Aggregation</a></li>
+<li><a href="#part-view-based-transformer-decoder">Part View Based Transformer Decoder</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://arxiv.org/pdf/2112.02466v2.pdf</a></p>
+<p>code: <a href="https://github.com/WangTaoAs/PFD_Net">WangTaoAs&#x2F;PFD_Net: This is Official implementation for “Pose-guided Feature Disentangling for Occluded Person Re-Identification Based on Transformer” in AAAI2022 (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="出发点">出发点</span></h1><p>存在遮挡的行人重识别（<em>Occluded Person Re-identification</em>），由于遮挡的存在，各种噪声被引入，导致特征不匹配；遮挡可能具有与人体部位相似的特征，导致特征学习失败。</p>
+<p>前人的方法有：使用姿势信息指导特征空间将全局特征划分为局部特征（缺点是需要严格的特征空间对齐）；使用基于图的方法建模拓扑信息（缺点是容易陷入上述的第二种问题）。</p>
+<h1><span id="创新点">创新点</span></h1><p>本文探索了在没有空间对齐的情况下，将附加姿势信息与Transformer相结合的可能性。其使用姿势信息对语义成分（如人体的关节部位）进行分解，并对非遮挡的部位进行选择性匹配；设计了一种<em>Pose-guided Push Loss</em>。</p>
+<h1><span id="做法">做法</span></h1><p>整体框架图：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103047158.png" alt="image-20220329103047158"></p>
+<h2><span id="visual-context-transformer-encoder">Visual Context Transformer Encoder</span></h2><p>首先需要对输入图像划分为固定大小的N块patch，步距大小定义为S，每块patch的尺度定义为P，patch个数N为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103958451.png" alt="image-20220329103958451"></p>
+<p>当S等于P时，划分出来的patch就不重叠；当S&lt;P时，patch重叠，可以减少空间领域信息的丢失。</p>
+<p>将这些patch通过线形层生成一个序列输入transformer encoder，concat一组可训练的<em>Position Encoding</em>，以及<em>Camera Information Embedding</em>（表示该图像所属的摄像头视角信息，标签给定的，相同视角图像有一样的值），最终的输入序列定义为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329104849953.png" alt="image-20220329104849953"></p>
+<p>最后通过Transformer Encoder输出分为两部分的特征，一部分为global feature，一部分为part feature。为进一步区分人体各个部位的特征，part feature又分为K组，每一组都与global feature做cancat送入shared transformer layer学习这些K组融合特征。</p>
+<p><strong>Encoder Supervision Loss</strong></p>
+<p>选用交叉熵损失作为identity loss以及triplet loss来作为这部分的loss：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329110809342.png" alt="image-20220329110809342"></p>
+<h2><span id="pose-guided-feature-aggregation">Pose-guided Feature Aggregation</span></h2><p>被遮挡的人体图像的身体信息较少，而非身体部位的信息可能不明确。本文使用<em>pose estimator</em> 从图像中提取landmark信息。</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112105052.png" alt="image-20220329112105052"></p>
+<p><strong>Pose Estimation</strong></p>
+<p>给定一张图像，估计器从中提取M个landmark，然后利用这些landmark生成一组heatmap <strong>H</strong>，每张heatmap都被下采样到（H&#x2F;4）*（W&#x2F;4），其中最大的response point对应一个joint point，设置了一个阈值γ来滤除高置信度和低置信度的landmark。滤除出的剩余landmark的heatmap并不是将其设为0，而是赋值0&#x2F;1，热图标签可以形式化为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112535277.png" alt="image-20220329112535277"></p>
+<p>ci定义为第i个landmark的置信度分数。</p>
+<p><strong>Pose-guided Feature Aggregation</strong></p>
+<p>将之前的分组数设为K&#x3D;M，使其等于landmark的数量。将生成的一组heatmap <strong>H</strong>后接一层FC，使其尺寸与group part local feature（fgp）相同，得到<strong>H‘</strong>。将<strong>H‘</strong>与<strong>fgp</strong> mutiply element-wisely（向量对应元素相乘，将heatmap的注意力附加在fgp上）获得<strong>P</strong>，其目的是为了从fgp中找到对身体某个部位贡献最大的信息部分。</p>
+<p>为此，本文开发了一种匹配和分布机制，将part local feature和pose-guided feature视为一组相似性度量问题，最终获取一个pose-guided feature集合<strong>S</strong>。</p>
+<p>对于每个<strong>Pi</strong>,在fgp中找到最相似的特征，即<strong>找寻融合了heatmap注意力的序列和原始局部特征的最近距离的局部特征</strong>，以选出优质的局部特征，用余弦距离，形式化定义为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115119956.png" alt="image-20220329115119956"></p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115132888.png" alt="image-20220329115132888"></p>
+<h2><span id="part-view-based-transformer-decoder">Part View Based Transformer Decoder</span></h2><p>将heatmap和fen做点乘送入Decoder学习一系列learnable semantic views以学习有区别的身体部分。其实整个框架的大体思路为一张图片走两路，一路分patch进transformer encoder，一路特征点检测生成heatmap走transformer decoder，再将这两部分的输出进行match，可以得到view feature，取高置信度的view feature采样成与fgb，fgp相同尺寸算triplet loss，再将所有的view feature采样做<em>Pose Guided Push Loss</em>。</p>
+<p><strong>Pose-View Matching Module</strong></p>
+<p>此部分计算patch view和通过Pose-guided Feature Aggregation得到的Set之间的相似度，来获得最终的view feature，用余弦距离，形式化定义为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329151559098.png" alt="image-20220329151559098"></p>
+<p>之前的heatmap通过阈值打好了0&#x2F;1标签，最终的view feature即可通过heatmap标签分为两类。在上述距离置信度较高的view feature中取heatmap label为1的；在置信度较低的view feature中取heatmap label为0的。这样的操作会产生可变长度，需要固定长度补0操作。</p>
+<p><strong>Decoder Supervision Loss</strong></p>
+<p>提出的Pose-guided Push Loss：</p>
+<p>余弦距离：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152506162.png" alt="image-20220329152506162"></p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152517889.png" alt="image-20220329152517889"></p>
+<p>整体的loss定义：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329153030797.png" alt="image-20220329153030797"></p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>ReID</tag>
+        <tag>Transformer</tag>
+        <tag>Landmark</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Clothes-Changing Person Re-identification with RGB Modality Only》</title>
     <url>/2022/05/02/review_5_Simple-CCReID/</url>
     <content><![CDATA[<!-- toc -->
@@ -423,6 +332,211 @@
         <tag>ReID</tag>
         <tag>decouple</tag>
         <tag>adversarial</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《IACycleGAN》</title>
+    <url>/2022/06/08/review_6_IACycleGAN/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B">生成模型</a><ul>
+<li><a href="#%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C%E6%95%B4%E4%BD%93loss%E5%9B%BE%E7%A4%BA">生成网络整体loss图示</a></li>
+</ul>
+</li>
+<li><a href="#%E8%AF%86%E5%88%AB%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C%E7%9A%84%E4%BA%92%E7%9B%B8%E4%BC%98%E5%8C%96">识别网络与生成网络的互相优化</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AE%9E%E9%AA%8C">实验</a><ul>
+<li><a href="#%E6%95%B0%E6%8D%AE%E9%9B%86">数据集</a><ul>
+<li><a href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82">生成模型实施细节</a></li>
+<li><a href="#%E8%AF%86%E5%88%AB%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82">识别模型实施细节</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf"><a href="https://arxiv.org/pdf/2103.16019.pdf">Identity-Aware CycleGAN for Face Photo-Sketch Synthesis and Recognition (arxiv.org)</a></a></p>
+<p>code: none</p>
+<span id="more"></span>
+
+<h1><span id="任务">任务</span></h1><p>真人素描生成与识别</p>
+<h1><span id="出发点">出发点</span></h1><p>生成促进识别 识别促进生成；</p>
+<p>大部分生成方法使得合成图像与原始图像在纹理上保持一致，会导致信息丢失；</p>
+<p>大多数生成框架都只能学习两个域之间的关系，其鉴别器只关注照片和草图之间的差异，而不考虑任何特定的识别优化（身份信息）；</p>
+<h1><span id="创新点">创新点</span></h1><p>在CycleGAN上加入了感知损失（perceptual loss）,能更好的关注面部的语义信息（眼睛、鼻子）;</p>
+<p>使生成模型和识别模型相互优化，生成模型迭代生成更好的图像，Triplet Loss训识别模型；</p>
+<h1><span id="做法">做法</span></h1><h2><span id="生成模型">生成模型</span></h2><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608102426736.png" alt="image-20220608102426736"></p>
+<p>分别给出两个domain的照片（这里输入的是paired数据，这里的paired应该身份paired），其训练目的是获得Gx，Gy两个生成器。</p>
+<p>两个识别网络，其目的是使用pretrain好的vggface提取feature做Identity perception loss；</p>
+<p>生成器用了《Perceptual losses for real-time style transfer and super-resolution》中的结构；</p>
+<p>判别器用了PatchGAN的结构；</p>
+<h3><span id="生成网络整体loss图示">生成网络整体loss图示</span></h3><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608105545461.png" alt="image-20220608105545461"></p>
+<h4><span id="对抗损失adversarial-loss">对抗损失（adversarial loss）</span></h4><p>输入图像与生成图像进入判别器进行计算，最小化下式</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608110633855.png" alt="image-20220608110633855"></p>
+<h4><span id="循环一致性损失cycle-consistency-loss">循环一致性损失（cycle consistency loss）</span></h4><p>Gx生成的图像再进入Gy恢复原本domain与最初的输入x计算L1，<strong>此loss为pix级</strong>，最小化下式</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608110959225.png" alt="image-20220608110959225"></p>
+<h4><span id="身份保持损失identity-perception-loss">身份保持损失（identity perception loss）</span></h4><p>仅使用对抗损失会导致伪影和训练不稳定，需要加更强大的监督；</p>
+<p>通过一个pretrain的识别网络（文中选择vggface）分别提取两对（原图与合成图）的feature计算L2，<strong>此loss区别于pix级监督，是feature级</strong>，文中对于此处的解释是：绘制的草图会有夸张成分以扭曲面部纹理信息，夸大面部特征，完全基于pix重建图像效果不会好；CycleGAN的训练需要进行数据增强操作（resize，flip等）难以实施pix级的监督。</p>
+<p>最小化下式</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608111456554.png" alt="image-20220608111456554"></p>
+<h4><span id="身份映射损失identity-mapping-loss">身份映射损失（identity mapping loss）</span></h4><p>常规的pix级的约束，最小化下式</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112212476.png" alt="image-20220608112212476"></p>
+<h4><span id="整体loss">整体loss</span></h4><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112236780.png" alt="image-20220608112236780"></p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112252105.png" alt="image-20220608112252105"></p>
+<p>最小化生成器的loss最大化判别器的loss</p>
+<p>其中超参数lamda分别设为10，30000000，5</p>
+<h2><span id="识别网络与生成网络的互相优化">识别网络与生成网络的互相优化</span></h2><p>许多主做生成的工作都是fix相应的识别网络作为一个特征提取器来附加身份保持损失；</p>
+<p>本文的做法估计是：</p>
+<p>step1：先fix识别网络参数训练生成网络，获得一定量的生成的图片；</p>
+<p>step2：使用生成的图片fine-tune识别网络（单走一个人脸识别模型的流程），用了triplet loss，更新识别网络参数，其中两个模态分别有两个识别网络，要分开训练；</p>
+<p>step3：重复上述操作以获得更好的生成模型和识别模型。</p>
+<p>（有问题的点：若第一次生成的质量得不到保证，那低质量的生成图像真的能提升识别模型的acc吗？<strong>互相优化的模型很依赖第一次生成的图像质量</strong>）</p>
+<p>我认为的做法：先简单训练一个识别网络达到一个还行的acc，更新其backbone参数作为生成网络的特征提取器，然后再进行生成网络的训练。</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608135047478.png" alt="image-20220608135047478"></p>
+<h1><span id="实验">实验</span></h1><p>CycleGAN生成—》一阶段vgg fine-tune—》IACycleGAN生成（加入fine-tune的vgg提取的特征做身份保持损失）—》二阶段vgg fine-tune</p>
+<h2><span id="数据集">数据集</span></h2><p>CUFS和CUFSF</p>
+<h3><span id="生成模型实施细节">生成模型实施细节</span></h3><p>对于生成网络的训练，都是从头开始训练，使用instance normalization来实现更好的稳定性和更低的噪声；</p>
+<p>使用Adam优化器，horizontal filp prob&#x3D;0.5用于数据增强；</p>
+<p>前100个epoch设置0.0002的学习率，并在后100个epoch线性下降至0；</p>
+<p>在titian xp上训练了10小时；</p>
+<p>为减小网络震荡，采用存储多个生成图像的图像缓冲区来更新鉴别器，而不是使用最后生成的图像。</p>
+<p>生成使用了SSIM FSIM两个指标</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608152343197.png" alt="image-20220608152343197"></p>
+<h3><span id="识别模型实施细节">识别模型实施细节</span></h3><p>文中用的vggface，caffe上跑的（估计是官方代码）</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608153331083.png" alt="image-20220608153331083"></p>
+<p>在做检索任务时，先做风格模态的迁移，再计算相似度。</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608155946505.png" alt="image-20220608155946505"></p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608160958943.png" alt="image-20220608160958943"></p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>sketch</tag>
+        <tag>synthesis</tag>
+        <tag>GAN</tag>
+        <tag>face recognition</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Learning to Warp for Style Transfer》</title>
+    <url>/2022/06/09/review_7_Learing%20to%20Warp%20for%20Style%20Transfer/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C">相关工作</a><ul>
+<li><a href="#texture-nst">Texture NST</a><ul>
+<li><a href="#%E5%9C%A8%E7%BA%BF%E4%BC%98%E5%8C%96%E7%9A%84%E5%BD%A2%E5%BC%8F">在线优化的形式</a></li>
+<li><a href="#%E7%A6%BB%E7%BA%BF%E4%BC%98%E5%8C%96%E7%9A%84%E5%BD%A2%E5%BC%8F">离线优化的形式</a></li>
+<li><a href="#%E5%85%B6%E4%BB%96%E5%8F%98%E5%BC%8F">其他变式</a></li>
+</ul>
+</li>
+<li><a href="#geometric-nst">Geometric NST</a></li>
+</ul>
+</li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#geometric-stylewarper">Geometric Style（Warper）</a><ul>
+<li><a href="#feature-extraction">Feature Extraction</a></li>
+<li><a href="#feature-correlation">Feature Correlation</a></li>
+<li><a href="#warp-network-training-and-using">Warp Network: Training and Using</a></li>
+</ul>
+</li>
+<li><a href="#texture-stylestyler">Texture Style（Styler）</a></li>
+<li><a href="#%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82">实现细节</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf"><a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Liu_Learning_To_Warp_for_Style_Transfer_CVPR_2021_paper.pdf">Learning To Warp for Style Transfer (thecvf.com)</a></a></p>
+<p>code: <a href="https://github.com/xch-liu/learning-warp-st">https://github.com/xch-liu/learning-warp-st</a></p>
+<span id="more"></span>
+
+<h1><span id="任务">任务</span></h1><p>NST（neural style transfer）</p>
+<h1><span id="出发点">出发点</span></h1><p>大多数风格迁移只考虑了迁移纹理信息，而为关注在艺术层面的几何扭曲。</p>
+<p>本文考虑使用深度神经网络进行图像样式化的问题，特别关注<strong>艺术扭曲</strong>。</p>
+<h1><span id="创新点">创新点</span></h1><p>在CycleGAN上加入了感知损失（perceptual loss）,能更好的关注面部的语义信息（眼睛、鼻子）;</p>
+<p>使生成模型和识别模型相互优化，生成模型迭代生成更好的图像，Triplet Loss训识别模型；</p>
+<p>与其他扭曲迁移模型的区别：</p>
+<p>不同于The face of art: Landmark detection and geometric style in portraits和WarpGAN，其<strong>不限于单个语义类别</strong>；</p>
+<p>不同于Deformable style transfer依赖前向和后向优化，其专门设计了前馈网络，以<strong>输出给定内容和几何图像的扭曲字段</strong>；</p>
+<p>比Deformable style transfer快；</p>
+<p>与Geometric style transfer仅限于参数化扭曲字段不同，其生成的是<strong>非参数化扭曲</strong>；</p>
+<p>与Geometric style transfer以外的其他NST算法不同，其<strong>支持使用两幅图像来指定样式</strong>，这为图像创建增加了其他NST算法所没有的多功能性。</p>
+<h1><span id="相关工作">相关工作</span></h1><h2><span id="texture-nst">Texture NST</span></h2><p>纹理NST一直是NST的主要形式（默认NST都是纹理NST）</p>
+<h3><span id="在线优化的形式">在线优化的形式</span></h3><p>通过迭代优化图像来传递样式。</p>
+<h3><span id="离线优化的形式">离线优化的形式</span></h3><p>离线优化生成模型，并在测试阶段通过一次向前传递生成样式化图像。</p>
+<p>训好的模型一般只能迁移特定样式，有些模型将多种风格融合到一个模型中，或者使用一个模型来传递任意的艺术风格。</p>
+<h3><span id="其他变式">其他变式</span></h3><p>肖像画风格转移、视觉属性转移、语义风格转移、视频风格转移、3D风格转移和照片级真实感风格转移</p>
+<h2><span id="geometric-nst">Geometric NST</span></h2><p>几何形变的艺术风格的迁移越来越重要。</p>
+<p>一些方法仅限于特定的内容域，如面部《The face of art: Landmark detection and geometric style in portraits》和文本。这些方法产生了极好的结果。</p>
+<p>《Deformable style transfer》和《Geometric Style Transfer》描述了在多个类上操作的更通用的方法，增加的灵活性在质量方面似乎成本不高。</p>
+<p>DST速度慢 支持任意形变</p>
+<p>GST速度快 不支持任意形变</p>
+<p>本文方法快且支持任意形变</p>
+<h1><span id="做法">做法</span></h1><p>输入要求：</p>
+<p>1）一张要被迁移的content图像Ic</p>
+<p>2）一张指导几何迁移的图像Ig</p>
+<p>3）一张指导纹理迁移的图像It</p>
+<p>Ig和It可以是同一张</p>
+<p>total pipeline如下（一个warper 一个styler）</p>
+<p><img src="/2022/06/09/review_7_Learing%20to%20Warp%20for%20Style%20Transfer/image-20220609205913858.png" alt="image-20220609205913858"></p>
+<h2><span id="geometric-stylewarper">Geometric Style（Warper）</span></h2><p><img src="/2022/06/09/review_7_Learing%20to%20Warp%20for%20Style%20Transfer/image-20220609210756668.png" alt="image-20220609210756668"></p>
+<p>其关键思想是训练一个能够推断<strong>二维扭曲场w</strong>的神经网络，并创建一个衡量特征相似性的四维标量函数<strong>M</strong>。</p>
+<p>有三个主要组成部分：</p>
+<p>1）特征提取：分别获取 Fg 和 Fc</p>
+<p>2）特征融合：来衡量特征相似度 M(Fc,Fg)</p>
+<p>3）训练warp网络输出函数 f 使得 w &#x3D; f(M)，<strong>一旦训完，网络 f 可以在新输入上使用，无需修改</strong>，（即得到了一个通用的Warp Field Estimation用来估计warp degree）本文所有输出都是单个warper生成的。</p>
+<p>定义warp field的w是非参数化的，不对分布做假设，就是一些统计量，不用网络进行分布的约束。</p>
+<h3><span id="feature-extraction">Feature Extraction</span></h3><p>使用VGG，提取pool4出来的特征，接一个L2 normalization。输出的 F 是 W * H 的特征图，本文中是16 * 16，文中说是平衡了计算效率和扭曲质量得出的结果。</p>
+<h3><span id="feature-correlation">Feature Correlation</span></h3><p>此模块计算feature map在每个pixel上的特征关联分数，结果存储在四维标量函数 M 中,M∈R W×H×W×H，其中的每个元素的计算规则如下：</p>
+<p>Fc 是content图像提取的feature；</p>
+<p>Fg是geometric图像提取的feature；</p>
+<p>i，j 对应Fc中的pix坐标</p>
+<p>k，l 对应Fg中pix的坐标</p>
+<p><img src="/2022/06/09/review_7_Learing%20to%20Warp%20for%20Style%20Transfer/image-20220610101853238.png" alt="image-20220610101853238"></p>
+<p>分母为遍历Fg上的每个pix与Fc( i , j ) 做内积求平方开根；</p>
+<p>分子为Fc（i，j）与Fg（k，l）做内积。</p>
+<p>个人理解：这个统计量表示了每个两个feature间的关联性特征量。</p>
+<h3><span id="warp-network-training-and-using">Warp Network: Training and Using</span></h3><p>本文在技术上的贡献为其训练了一个 f 来输出非参数化的warp field（w）。</p>
+<p>输入feature correlation（M），该步骤可以表示为 w &#x3D; f (M)，形式化定义这层mapping：</p>
+<p><img src="/2022/06/09/review_7_Learing%20to%20Warp%20for%20Style%20Transfer/image-20220610191607879.png" alt="image-20220610191607879"></p>
+<p>W1 , H1是图像尺寸，最终warp module输出根据Ig的几何形变warp后的Ic。</p>
+<p>原则上不需要进行训练，因为如下的优化问题对于任何的图像对的数据都足够解决：</p>
+<p><img src="/2022/06/09/review_7_Learing%20to%20Warp%20for%20Style%20Transfer/image-20220610192737703.png" alt="image-20220610192737703"></p>
+<p>h是一个度量函数。</p>
+<p>此基于优化的方式来自于DST，但与直接从经过训练的网络计算扭曲场相比，单实例优化速度较慢。（本文没采用基于优化的方式，而是单独训练了一个网络）</p>
+<p>本文网络使用<strong>一组语义相关或具有几何相似部分的图像对</strong>进行训练。图像对涵盖了广泛的语义内容：人脸、动物等。为了提高模型在艺术领域的泛化能力，我们使用艺术增强来创建每个训练图像的纹理增强副本。<strong>经过训练后，变形网络可以应用于任何图像，无论其语义内容如何</strong>。</p>
+<p><strong>其基本思想是局部移动内容图像中的像素，并重新计算新扭曲图像中的特征，直到loss收敛</strong></p>
+<p>定义Fm来表示受像素m影响的</p>
+<p><img src="/2022/06/09/review_7_Learing%20to%20Warp%20for%20Style%20Transfer/image-20220610200411017.png" alt="image-20220610200411017"></p>
+<p><img src="/2022/06/09/review_7_Learing%20to%20Warp%20for%20Style%20Transfer/image-20220610200701085.png" alt="image-20220610200701085"></p>
+<p><strong>这个最终的softmax归一化输出代表每个content图像的pixel在每个扭曲图像中的search window中的关联程度</strong></p>
+<p><img src="/2022/06/09/review_7_Learing%20to%20Warp%20for%20Style%20Transfer/image-20220610213521698.png" alt="image-20220610213521698"></p>
+<p>个人最终理解：</p>
+<p><strong>输入扭曲图像和内容图像（待扭曲图像），使用VGG提取feature map，warp field矩阵扭曲Fc矩阵，与Fg矩阵进行feature matching计算一个关联度四维统计量，输入warp field estimator（神经网络），最小化每个pixel和其扭曲图像相应search window的关联度统计量来使得内容图像尽可能扭曲成目标扭曲样式；神经网络更新参数，输出更好的warp field，循环优化网络，直至达到良好的扭曲效果。</strong></p>
+<p>前半部分机器学习，后半部分深度学习，这样warp field可以直接通过网络inference出来，速度提升。</p>
+<h2><span id="texture-stylestyler">Texture Style（Styler）</span></h2><p>最小化content loss 和 texture loss，二者依赖于用于目标检测而训练的模型，本文唯一不同在于采取多尺度策略，<strong>优先将纹理随着细节的增加转移到输出图像的不同区域</strong>。几十年来，这种策略一直用于规定性纹理合成，最近用于仅纹理的NST，有助于改善风格转换结果。在本文工作中，利用它来解决<strong>由于几何扭曲而产生的模糊和其他瑕疵</strong>。</p>
+<p>此部分不做详解</p>
+<h2><span id="实现细节">实现细节</span></h2><p>warper在PF-PASCAL和MS COCO数据集上训练，可训练网络结构不大，单卡训了2小时</p>
+<p><img src="/2022/06/09/review_7_Learing%20to%20Warp%20for%20Style%20Transfer/image-20220611151019063.png" alt="image-20220611151019063"></p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>style transfer</tag>
+        <tag>warp</tag>
       </tags>
   </entry>
   <entry>

@@ -149,7 +149,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -158,7 +158,7 @@
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -196,7 +196,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://mrbananazly.cn/2022/06/08/generation_review_1_IACycleGAN/">
+    <link itemprop="mainEntityOfPage" href="http://mrbananazly.cn/2022/06/09/review_7_Learing%20to%20Warp%20for%20Style%20Transfer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/favicon.png">
@@ -214,7 +214,130 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/06/08/generation_review_1_IACycleGAN/" class="post-title-link" itemprop="url">《IACycleGAN》</a>
+          <a href="/2022/06/09/review_7_Learing%20to%20Warp%20for%20Style%20Transfer/" class="post-title-link" itemprop="url">《Learning to Warp for Style Transfer》</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-06-09 14:09:28" itemprop="dateCreated datePublished" datetime="2022-06-09T14:09:28+08:00">2022-06-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-06-11 15:40:30" itemprop="dateModified" datetime="2022-06-11T15:40:30+08:00">2022-06-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/paper-review/" itemprop="url" rel="index"><span itemprop="name">paper review</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C">相关工作</a><ul>
+<li><a href="#texture-nst">Texture NST</a><ul>
+<li><a href="#%E5%9C%A8%E7%BA%BF%E4%BC%98%E5%8C%96%E7%9A%84%E5%BD%A2%E5%BC%8F">在线优化的形式</a></li>
+<li><a href="#%E7%A6%BB%E7%BA%BF%E4%BC%98%E5%8C%96%E7%9A%84%E5%BD%A2%E5%BC%8F">离线优化的形式</a></li>
+<li><a href="#%E5%85%B6%E4%BB%96%E5%8F%98%E5%BC%8F">其他变式</a></li>
+</ul>
+</li>
+<li><a href="#geometric-nst">Geometric NST</a></li>
+</ul>
+</li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#geometric-stylewarper">Geometric Style（Warper）</a><ul>
+<li><a href="#feature-extraction">Feature Extraction</a></li>
+<li><a href="#feature-correlation">Feature Correlation</a></li>
+<li><a href="#warp-network-training-and-using">Warp Network: Training and Using</a></li>
+</ul>
+</li>
+<li><a href="#texture-stylestyler">Texture Style（Styler）</a></li>
+<li><a href="#%E5%AE%9E%E7%8E%B0%E7%BB%86%E8%8A%82">实现细节</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf"><a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2021/papers/Liu_Learning_To_Warp_for_Style_Transfer_CVPR_2021_paper.pdf">Learning To Warp for Style Transfer (thecvf.com)</a></a></p>
+<p>code: <a target="_blank" rel="noopener" href="https://github.com/xch-liu/learning-warp-st">https://github.com/xch-liu/learning-warp-st</a></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/06/09/review_7_Learing%20to%20Warp%20for%20Style%20Transfer/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://mrbananazly.cn/2022/06/08/review_6_IACycleGAN/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.png">
+      <meta itemprop="name" content="mrbanana_zly">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/08/review_6_IACycleGAN/" class="post-title-link" itemprop="url">《IACycleGAN》</a>
         </h2>
 
         <div class="post-meta-container">
@@ -277,7 +400,7 @@
 <p>code: none</p>
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/2022/06/08/generation_review_1_IACycleGAN/#more" rel="contents">
+              <a class="btn" href="/2022/06/08/review_6_IACycleGAN/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
