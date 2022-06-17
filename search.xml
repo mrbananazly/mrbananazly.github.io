@@ -44,6 +44,75 @@
       </tags>
   </entry>
   <entry>
+    <title>《Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer》</title>
+    <url>/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#visual-context-transformer-encoder">Visual Context Transformer Encoder</a></li>
+<li><a href="#pose-guided-feature-aggregation">Pose-guided Feature Aggregation</a></li>
+<li><a href="#part-view-based-transformer-decoder">Part View Based Transformer Decoder</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://arxiv.org/pdf/2112.02466v2.pdf</a></p>
+<p>code: <a href="https://github.com/WangTaoAs/PFD_Net">WangTaoAs&#x2F;PFD_Net: This is Official implementation for “Pose-guided Feature Disentangling for Occluded Person Re-Identification Based on Transformer” in AAAI2022 (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="出发点">出发点</span></h1><p>存在遮挡的行人重识别（<em>Occluded Person Re-identification</em>），由于遮挡的存在，各种噪声被引入，导致特征不匹配；遮挡可能具有与人体部位相似的特征，导致特征学习失败。</p>
+<p>前人的方法有：使用姿势信息指导特征空间将全局特征划分为局部特征（缺点是需要严格的特征空间对齐）；使用基于图的方法建模拓扑信息（缺点是容易陷入上述的第二种问题）。</p>
+<h1><span id="创新点">创新点</span></h1><p>本文探索了在没有空间对齐的情况下，将附加姿势信息与Transformer相结合的可能性。其使用姿势信息对语义成分（如人体的关节部位）进行分解，并对非遮挡的部位进行选择性匹配；设计了一种<em>Pose-guided Push Loss</em>。</p>
+<h1><span id="做法">做法</span></h1><p>整体框架图：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103047158.png" alt="image-20220329103047158"></p>
+<h2><span id="visual-context-transformer-encoder">Visual Context Transformer Encoder</span></h2><p>首先需要对输入图像划分为固定大小的N块patch，步距大小定义为S，每块patch的尺度定义为P，patch个数N为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103958451.png" alt="image-20220329103958451"></p>
+<p>当S等于P时，划分出来的patch就不重叠；当S&lt;P时，patch重叠，可以减少空间领域信息的丢失。</p>
+<p>将这些patch通过线形层生成一个序列输入transformer encoder，concat一组可训练的<em>Position Encoding</em>，以及<em>Camera Information Embedding</em>（表示该图像所属的摄像头视角信息，标签给定的，相同视角图像有一样的值），最终的输入序列定义为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329104849953.png" alt="image-20220329104849953"></p>
+<p>最后通过Transformer Encoder输出分为两部分的特征，一部分为global feature，一部分为part feature。为进一步区分人体各个部位的特征，part feature又分为K组，每一组都与global feature做cancat送入shared transformer layer学习这些K组融合特征。</p>
+<p><strong>Encoder Supervision Loss</strong></p>
+<p>选用交叉熵损失作为identity loss以及triplet loss来作为这部分的loss：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329110809342.png" alt="image-20220329110809342"></p>
+<h2><span id="pose-guided-feature-aggregation">Pose-guided Feature Aggregation</span></h2><p>被遮挡的人体图像的身体信息较少，而非身体部位的信息可能不明确。本文使用<em>pose estimator</em> 从图像中提取landmark信息。</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112105052.png" alt="image-20220329112105052"></p>
+<p><strong>Pose Estimation</strong></p>
+<p>给定一张图像，估计器从中提取M个landmark，然后利用这些landmark生成一组heatmap <strong>H</strong>，每张heatmap都被下采样到（H&#x2F;4）*（W&#x2F;4），其中最大的response point对应一个joint point，设置了一个阈值γ来滤除高置信度和低置信度的landmark。滤除出的剩余landmark的heatmap并不是将其设为0，而是赋值0&#x2F;1，热图标签可以形式化为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112535277.png" alt="image-20220329112535277"></p>
+<p>ci定义为第i个landmark的置信度分数。</p>
+<p><strong>Pose-guided Feature Aggregation</strong></p>
+<p>将之前的分组数设为K&#x3D;M，使其等于landmark的数量。将生成的一组heatmap <strong>H</strong>后接一层FC，使其尺寸与group part local feature（fgp）相同，得到<strong>H‘</strong>。将<strong>H‘</strong>与<strong>fgp</strong> mutiply element-wisely（向量对应元素相乘，将heatmap的注意力附加在fgp上）获得<strong>P</strong>，其目的是为了从fgp中找到对身体某个部位贡献最大的信息部分。</p>
+<p>为此，本文开发了一种匹配和分布机制，将part local feature和pose-guided feature视为一组相似性度量问题，最终获取一个pose-guided feature集合<strong>S</strong>。</p>
+<p>对于每个<strong>Pi</strong>,在fgp中找到最相似的特征，即<strong>找寻融合了heatmap注意力的序列和原始局部特征的最近距离的局部特征</strong>，以选出优质的局部特征，用余弦距离，形式化定义为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115119956.png" alt="image-20220329115119956"></p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115132888.png" alt="image-20220329115132888"></p>
+<h2><span id="part-view-based-transformer-decoder">Part View Based Transformer Decoder</span></h2><p>将heatmap和fen做点乘送入Decoder学习一系列learnable semantic views以学习有区别的身体部分。其实整个框架的大体思路为一张图片走两路，一路分patch进transformer encoder，一路特征点检测生成heatmap走transformer decoder，再将这两部分的输出进行match，可以得到view feature，取高置信度的view feature采样成与fgb，fgp相同尺寸算triplet loss，再将所有的view feature采样做<em>Pose Guided Push Loss</em>。</p>
+<p><strong>Pose-View Matching Module</strong></p>
+<p>此部分计算patch view和通过Pose-guided Feature Aggregation得到的Set之间的相似度，来获得最终的view feature，用余弦距离，形式化定义为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329151559098.png" alt="image-20220329151559098"></p>
+<p>之前的heatmap通过阈值打好了0&#x2F;1标签，最终的view feature即可通过heatmap标签分为两类。在上述距离置信度较高的view feature中取heatmap label为1的；在置信度较低的view feature中取heatmap label为0的。这样的操作会产生可变长度，需要固定长度补0操作。</p>
+<p><strong>Decoder Supervision Loss</strong></p>
+<p>提出的Pose-guided Push Loss：</p>
+<p>余弦距离：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152506162.png" alt="image-20220329152506162"></p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152517889.png" alt="image-20220329152517889"></p>
+<p>整体的loss定义：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329153030797.png" alt="image-20220329153030797"></p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>ReID</tag>
+        <tag>Transformer</tag>
+        <tag>Landmark</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《DVG-Face:Dual Variational Generation for Heterogeneous Face Recognition》</title>
     <url>/2022/04/09/review_3_DVG-Face/</url>
     <content><![CDATA[<!-- toc -->
@@ -206,135 +275,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer》</title>
-    <url>/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
-<li><a href="#visual-context-transformer-encoder">Visual Context Transformer Encoder</a></li>
-<li><a href="#pose-guided-feature-aggregation">Pose-guided Feature Aggregation</a></li>
-<li><a href="#part-view-based-transformer-decoder">Part View Based Transformer Decoder</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://arxiv.org/pdf/2112.02466v2.pdf</a></p>
-<p>code: <a href="https://github.com/WangTaoAs/PFD_Net">WangTaoAs&#x2F;PFD_Net: This is Official implementation for “Pose-guided Feature Disentangling for Occluded Person Re-Identification Based on Transformer” in AAAI2022 (github.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="出发点">出发点</span></h1><p>存在遮挡的行人重识别（<em>Occluded Person Re-identification</em>），由于遮挡的存在，各种噪声被引入，导致特征不匹配；遮挡可能具有与人体部位相似的特征，导致特征学习失败。</p>
-<p>前人的方法有：使用姿势信息指导特征空间将全局特征划分为局部特征（缺点是需要严格的特征空间对齐）；使用基于图的方法建模拓扑信息（缺点是容易陷入上述的第二种问题）。</p>
-<h1><span id="创新点">创新点</span></h1><p>本文探索了在没有空间对齐的情况下，将附加姿势信息与Transformer相结合的可能性。其使用姿势信息对语义成分（如人体的关节部位）进行分解，并对非遮挡的部位进行选择性匹配；设计了一种<em>Pose-guided Push Loss</em>。</p>
-<h1><span id="做法">做法</span></h1><p>整体框架图：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103047158.png" alt="image-20220329103047158"></p>
-<h2><span id="visual-context-transformer-encoder">Visual Context Transformer Encoder</span></h2><p>首先需要对输入图像划分为固定大小的N块patch，步距大小定义为S，每块patch的尺度定义为P，patch个数N为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103958451.png" alt="image-20220329103958451"></p>
-<p>当S等于P时，划分出来的patch就不重叠；当S&lt;P时，patch重叠，可以减少空间领域信息的丢失。</p>
-<p>将这些patch通过线形层生成一个序列输入transformer encoder，concat一组可训练的<em>Position Encoding</em>，以及<em>Camera Information Embedding</em>（表示该图像所属的摄像头视角信息，标签给定的，相同视角图像有一样的值），最终的输入序列定义为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329104849953.png" alt="image-20220329104849953"></p>
-<p>最后通过Transformer Encoder输出分为两部分的特征，一部分为global feature，一部分为part feature。为进一步区分人体各个部位的特征，part feature又分为K组，每一组都与global feature做cancat送入shared transformer layer学习这些K组融合特征。</p>
-<p><strong>Encoder Supervision Loss</strong></p>
-<p>选用交叉熵损失作为identity loss以及triplet loss来作为这部分的loss：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329110809342.png" alt="image-20220329110809342"></p>
-<h2><span id="pose-guided-feature-aggregation">Pose-guided Feature Aggregation</span></h2><p>被遮挡的人体图像的身体信息较少，而非身体部位的信息可能不明确。本文使用<em>pose estimator</em> 从图像中提取landmark信息。</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112105052.png" alt="image-20220329112105052"></p>
-<p><strong>Pose Estimation</strong></p>
-<p>给定一张图像，估计器从中提取M个landmark，然后利用这些landmark生成一组heatmap <strong>H</strong>，每张heatmap都被下采样到（H&#x2F;4）*（W&#x2F;4），其中最大的response point对应一个joint point，设置了一个阈值γ来滤除高置信度和低置信度的landmark。滤除出的剩余landmark的heatmap并不是将其设为0，而是赋值0&#x2F;1，热图标签可以形式化为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112535277.png" alt="image-20220329112535277"></p>
-<p>ci定义为第i个landmark的置信度分数。</p>
-<p><strong>Pose-guided Feature Aggregation</strong></p>
-<p>将之前的分组数设为K&#x3D;M，使其等于landmark的数量。将生成的一组heatmap <strong>H</strong>后接一层FC，使其尺寸与group part local feature（fgp）相同，得到<strong>H‘</strong>。将<strong>H‘</strong>与<strong>fgp</strong> mutiply element-wisely（向量对应元素相乘，将heatmap的注意力附加在fgp上）获得<strong>P</strong>，其目的是为了从fgp中找到对身体某个部位贡献最大的信息部分。</p>
-<p>为此，本文开发了一种匹配和分布机制，将part local feature和pose-guided feature视为一组相似性度量问题，最终获取一个pose-guided feature集合<strong>S</strong>。</p>
-<p>对于每个<strong>Pi</strong>,在fgp中找到最相似的特征，即<strong>找寻融合了heatmap注意力的序列和原始局部特征的最近距离的局部特征</strong>，以选出优质的局部特征，用余弦距离，形式化定义为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115119956.png" alt="image-20220329115119956"></p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115132888.png" alt="image-20220329115132888"></p>
-<h2><span id="part-view-based-transformer-decoder">Part View Based Transformer Decoder</span></h2><p>将heatmap和fen做点乘送入Decoder学习一系列learnable semantic views以学习有区别的身体部分。其实整个框架的大体思路为一张图片走两路，一路分patch进transformer encoder，一路特征点检测生成heatmap走transformer decoder，再将这两部分的输出进行match，可以得到view feature，取高置信度的view feature采样成与fgb，fgp相同尺寸算triplet loss，再将所有的view feature采样做<em>Pose Guided Push Loss</em>。</p>
-<p><strong>Pose-View Matching Module</strong></p>
-<p>此部分计算patch view和通过Pose-guided Feature Aggregation得到的Set之间的相似度，来获得最终的view feature，用余弦距离，形式化定义为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329151559098.png" alt="image-20220329151559098"></p>
-<p>之前的heatmap通过阈值打好了0&#x2F;1标签，最终的view feature即可通过heatmap标签分为两类。在上述距离置信度较高的view feature中取heatmap label为1的；在置信度较低的view feature中取heatmap label为0的。这样的操作会产生可变长度，需要固定长度补0操作。</p>
-<p><strong>Decoder Supervision Loss</strong></p>
-<p>提出的Pose-guided Push Loss：</p>
-<p>余弦距离：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152506162.png" alt="image-20220329152506162"></p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152517889.png" alt="image-20220329152517889"></p>
-<p>整体的loss定义：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329153030797.png" alt="image-20220329153030797"></p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>ReID</tag>
-        <tag>Transformer</tag>
-        <tag>Landmark</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Clothes-Changing Person Re-identification with RGB Modality Only》</title>
-    <url>/2022/05/02/review_5_Simple-CCReID/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
-<li><a href="#clothes-based-adversarial-loss">Clothes-based Adversarial Loss</a><ul>
-<li><a href="#training-clothes-classifier">Training clothes classifier</a></li>
-<li><a href="#learning-clothes-irrelevant-features">Learning clothes-irrelevant features</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://arxiv.org/pdf/2204.06890v1.pdf</a></p>
-<p>code: <a href="https://github.com/guxinqian/simple-ccreid">guxinqian&#x2F;Simple-CCReID: Pytorch implementation of ‘Clothes-Changing Person Re-identification with RGB Modality Only. In CVPR, 2022.’ (github.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="任务">任务</span></h1><p>换装人员重识别</p>
-<h1><span id="出发点">出发点</span></h1><p><strong>提取与衣服无关的特征</strong>，如脸型、发型、体形和步态。目前大多数工作主要集中在从多模态信息（如剪影和草图）中建模身体形状，但没有充分利用原始 RGB 图像中与衣服无关的信息。</p>
-<h1><span id="创新点">创新点</span></h1><p>文章提出一种基于衣服的<strong>对抗</strong>性损失（CAL），通过惩罚 re-id 模型对衣服的预测能力（其实就是个分类器），从原始 RGB 图像中<strong>挖掘与衣服无关的特征</strong>。</p>
-<h1><span id="做法">做法</span></h1><p>首先通过最小化Lc来优化衣服分类器。然后固定衣服分类器的参数，最小化Lid和Lca，迫使backbone学习与衣服无关的特征。（每张图片对应一个一个身份标签和服装标签，将衣服类定义为细粒度标识类——所有同一身份的样本都根据他们的衣服被划分为属于该身份的不同类别，不同的人即使穿着相同的衣服也不会共享相同的衣服标签）</p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504092335366.png" alt="image-20220504092335366"></p>
-<h2><span id="clothes-based-adversarial-loss">Clothes-based Adversarial Loss</span></h2><h3><span id="training-clothes-classifier">Training clothes classifier</span></h3><p>Lc采用交叉熵损失</p>
-<h3><span id="learning-clothes-irrelevant-features">Learning clothes-irrelevant features</span></h3><p>固定衣服分类器的参数，并强制主干学习与衣服无关的特征。为此，应该<strong>惩罚re-id模型对于衣服的预测能力</strong>。</p>
-<p>然而，由于衣服类被定义为细粒度类，因此惩罚re-id模型对于所有衣服类别的预测能力，也会降低其预测身份的能力，这对re-id是有害的。</p>
-<p>那么最终的目的是使经过训练的<strong>服装分类器无法区分相同身份和不同服装的样本</strong>。</p>
-<p>所以，Lca是一个<em>multi-positive-class classification loss</em>，属于同一个身份的不同服装类互为正类。（把不同衣服的只要是属于同一个id身份的衣服类都视为衣服正类）</p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504101750986.png" alt="image-20220504101750986"></p>
-<p>Si+（Si-)是一个有相同身份的衣服标签fi的集合，K是S中的衣服类别数量，q(c)是第c个衣服类别的交叉熵损失的权重，同一件衣服同一个身份的正例，和不同衣服同一个身份的正例有相同的权重1&#x2F;K。</p>
-<p>同时，为了在不严重降低衣服一致性识别精度的情况下提高模型的换衣识别能力，等式（4）可替换为：</p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105337953.png" alt="image-20220504105337953"></p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105427890.png" alt="image-20220504105427890"></p>
-<p>另外，穿着相同衣服的正例比穿着不同衣服的正例有更大的权重。</p>
-<p>在优化CAL的同时，对身份分类器进行了优化。因此，第二步的优化过程是：</p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105540307.png" alt="image-20220504105540307"></p>
-<p>当仅使用Lid进行训练时，该模型在优化的早期阶段倾向于学习简单样本（具有相同的衣服），然后逐渐学习区分困难样本（具有相同的身份和不同的衣服）。类似课程学习方式，但尽管如此（6）中并未抛弃Lid。其原因是，在优化的早期阶段，只有最小化Lca并迫使模型区分硬样本，才可能导致局部最优。相反，在我们的实验中，在第一次降低学习率后，增加了Lca用于训练。</p>
-<p>&#96;&#96;</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class ClothesBasedAdversarialLoss(nn.Module):</span><br><span class="line">    &quot;&quot;&quot; Clothes-based Adversarial Loss.</span><br><span class="line"></span><br><span class="line">    Reference:</span><br><span class="line">        Gu et al. Clothes-Changing Person Re-identification with RGB Modality Only. In CVPR, 2022.</span><br><span class="line"></span><br><span class="line">    Args:</span><br><span class="line">        scale (float): scaling factor.</span><br><span class="line">        epsilon (float): a trade-off hyper-parameter.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __init__(self, scale=16, epsilon=0.1):</span><br><span class="line">        super().__init__()</span><br><span class="line">        self.scale = scale</span><br><span class="line">        self.epsilon = epsilon</span><br><span class="line"></span><br><span class="line">    def forward(self, inputs, targets, positive_mask):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        Args:</span><br><span class="line">            inputs: prediction matrix (before softmax) with shape (batch_size, num_classes)</span><br><span class="line">            targets: ground truth labels with shape (batch_size)</span><br><span class="line">            positive_mask: positive mask matrix with shape (batch_size, num_classes). The clothes classes with </span><br><span class="line">                the same identity as the anchor sample are defined as positive clothes classes and their mask </span><br><span class="line">                values are 1. The clothes classes with different identities from the anchor sample are defined </span><br><span class="line">                as negative clothes classes and their mask values in positive_mask are 0.</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        inputs = self.scale * inputs</span><br><span class="line">        negtive_mask = 1 - positive_mask</span><br><span class="line">        identity_mask = torch.zeros(inputs.size()).scatter_(1, targets.unsqueeze(1).data.cpu(), 1).cuda()</span><br><span class="line"></span><br><span class="line">        exp_logits = torch.exp(inputs)</span><br><span class="line">        log_sum_exp_pos_and_all_neg = torch.log((exp_logits * negtive_mask).sum(1, keepdim=True) + exp_logits)</span><br><span class="line">        log_prob = inputs - log_sum_exp_pos_and_all_neg</span><br><span class="line"></span><br><span class="line">        mask = (1 - self.epsilon) * identity_mask + self.epsilon / positive_mask.sum(1, keepdim=True) * positive_mask</span><br><span class="line">        loss = (- mask * log_prob).sum(1).mean()</span><br><span class="line"></span><br><span class="line">        return loss</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>ReID</tag>
-        <tag>decouple</tag>
-        <tag>adversarial</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《IACycleGAN》</title>
     <url>/2022/06/08/review_6_IACycleGAN/</url>
     <content><![CDATA[<!-- toc -->
@@ -423,6 +363,66 @@
         <tag>synthesis</tag>
         <tag>GAN</tag>
         <tag>face recognition</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Clothes-Changing Person Re-identification with RGB Modality Only》</title>
+    <url>/2022/05/02/review_5_Simple-CCReID/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#clothes-based-adversarial-loss">Clothes-based Adversarial Loss</a><ul>
+<li><a href="#training-clothes-classifier">Training clothes classifier</a></li>
+<li><a href="#learning-clothes-irrelevant-features">Learning clothes-irrelevant features</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://arxiv.org/pdf/2204.06890v1.pdf</a></p>
+<p>code: <a href="https://github.com/guxinqian/simple-ccreid">guxinqian&#x2F;Simple-CCReID: Pytorch implementation of ‘Clothes-Changing Person Re-identification with RGB Modality Only. In CVPR, 2022.’ (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="任务">任务</span></h1><p>换装人员重识别</p>
+<h1><span id="出发点">出发点</span></h1><p><strong>提取与衣服无关的特征</strong>，如脸型、发型、体形和步态。目前大多数工作主要集中在从多模态信息（如剪影和草图）中建模身体形状，但没有充分利用原始 RGB 图像中与衣服无关的信息。</p>
+<h1><span id="创新点">创新点</span></h1><p>文章提出一种基于衣服的<strong>对抗</strong>性损失（CAL），通过惩罚 re-id 模型对衣服的预测能力（其实就是个分类器），从原始 RGB 图像中<strong>挖掘与衣服无关的特征</strong>。</p>
+<h1><span id="做法">做法</span></h1><p>首先通过最小化Lc来优化衣服分类器。然后固定衣服分类器的参数，最小化Lid和Lca，迫使backbone学习与衣服无关的特征。（每张图片对应一个一个身份标签和服装标签，将衣服类定义为细粒度标识类——所有同一身份的样本都根据他们的衣服被划分为属于该身份的不同类别，不同的人即使穿着相同的衣服也不会共享相同的衣服标签）</p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504092335366.png" alt="image-20220504092335366"></p>
+<h2><span id="clothes-based-adversarial-loss">Clothes-based Adversarial Loss</span></h2><h3><span id="training-clothes-classifier">Training clothes classifier</span></h3><p>Lc采用交叉熵损失</p>
+<h3><span id="learning-clothes-irrelevant-features">Learning clothes-irrelevant features</span></h3><p>固定衣服分类器的参数，并强制主干学习与衣服无关的特征。为此，应该<strong>惩罚re-id模型对于衣服的预测能力</strong>。</p>
+<p>然而，由于衣服类被定义为细粒度类，因此惩罚re-id模型对于所有衣服类别的预测能力，也会降低其预测身份的能力，这对re-id是有害的。</p>
+<p>那么最终的目的是使经过训练的<strong>服装分类器无法区分相同身份和不同服装的样本</strong>。</p>
+<p>所以，Lca是一个<em>multi-positive-class classification loss</em>，属于同一个身份的不同服装类互为正类。（把不同衣服的只要是属于同一个id身份的衣服类都视为衣服正类）</p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504101750986.png" alt="image-20220504101750986"></p>
+<p>Si+（Si-)是一个有相同身份的衣服标签fi的集合，K是S中的衣服类别数量，q(c)是第c个衣服类别的交叉熵损失的权重，同一件衣服同一个身份的正例，和不同衣服同一个身份的正例有相同的权重1&#x2F;K。</p>
+<p>同时，为了在不严重降低衣服一致性识别精度的情况下提高模型的换衣识别能力，等式（4）可替换为：</p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105337953.png" alt="image-20220504105337953"></p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105427890.png" alt="image-20220504105427890"></p>
+<p>另外，穿着相同衣服的正例比穿着不同衣服的正例有更大的权重。</p>
+<p>在优化CAL的同时，对身份分类器进行了优化。因此，第二步的优化过程是：</p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105540307.png" alt="image-20220504105540307"></p>
+<p>当仅使用Lid进行训练时，该模型在优化的早期阶段倾向于学习简单样本（具有相同的衣服），然后逐渐学习区分困难样本（具有相同的身份和不同的衣服）。类似课程学习方式，但尽管如此（6）中并未抛弃Lid。其原因是，在优化的早期阶段，只有最小化Lca并迫使模型区分硬样本，才可能导致局部最优。相反，在我们的实验中，在第一次降低学习率后，增加了Lca用于训练。</p>
+<p>&#96;&#96;</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class ClothesBasedAdversarialLoss(nn.Module):</span><br><span class="line">    &quot;&quot;&quot; Clothes-based Adversarial Loss.</span><br><span class="line"></span><br><span class="line">    Reference:</span><br><span class="line">        Gu et al. Clothes-Changing Person Re-identification with RGB Modality Only. In CVPR, 2022.</span><br><span class="line"></span><br><span class="line">    Args:</span><br><span class="line">        scale (float): scaling factor.</span><br><span class="line">        epsilon (float): a trade-off hyper-parameter.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __init__(self, scale=16, epsilon=0.1):</span><br><span class="line">        super().__init__()</span><br><span class="line">        self.scale = scale</span><br><span class="line">        self.epsilon = epsilon</span><br><span class="line"></span><br><span class="line">    def forward(self, inputs, targets, positive_mask):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        Args:</span><br><span class="line">            inputs: prediction matrix (before softmax) with shape (batch_size, num_classes)</span><br><span class="line">            targets: ground truth labels with shape (batch_size)</span><br><span class="line">            positive_mask: positive mask matrix with shape (batch_size, num_classes). The clothes classes with </span><br><span class="line">                the same identity as the anchor sample are defined as positive clothes classes and their mask </span><br><span class="line">                values are 1. The clothes classes with different identities from the anchor sample are defined </span><br><span class="line">                as negative clothes classes and their mask values in positive_mask are 0.</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        inputs = self.scale * inputs</span><br><span class="line">        negtive_mask = 1 - positive_mask</span><br><span class="line">        identity_mask = torch.zeros(inputs.size()).scatter_(1, targets.unsqueeze(1).data.cpu(), 1).cuda()</span><br><span class="line"></span><br><span class="line">        exp_logits = torch.exp(inputs)</span><br><span class="line">        log_sum_exp_pos_and_all_neg = torch.log((exp_logits * negtive_mask).sum(1, keepdim=True) + exp_logits)</span><br><span class="line">        log_prob = inputs - log_sum_exp_pos_and_all_neg</span><br><span class="line"></span><br><span class="line">        mask = (1 - self.epsilon) * identity_mask + self.epsilon / positive_mask.sum(1, keepdim=True) * positive_mask</span><br><span class="line">        loss = (- mask * log_prob).sum(1).mean()</span><br><span class="line"></span><br><span class="line">        return loss</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>ReID</tag>
+        <tag>decouple</tag>
+        <tag>adversarial</tag>
       </tags>
   </entry>
   <entry>
@@ -537,6 +537,112 @@
       <tags>
         <tag>style transfer</tag>
         <tag>warp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Geometric and Textural Augmentation for Domain Gap Reduction》</title>
+    <url>/2022/06/12/review_8_geom%20tex%20dg/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#idea%E6%A6%82%E8%A7%88">idea概览</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#%E5%87%A0%E4%BD%95%E5%A2%9E%E5%BC%BA">几何增强</a></li>
+<li><a href="#%E7%BA%B9%E7%90%86%E5%A2%9E%E5%BC%BA">纹理增强</a></li>
+<li><a href="#%E7%BB%93%E5%90%88%E5%87%A0%E4%BD%95%E5%92%8C%E7%BA%B9%E7%90%86%E5%A2%9E%E5%BC%BA">结合几何和纹理增强</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AE%9E%E9%AA%8C">实验</a></li>
+<li><a href="#%E7%BB%93%E8%AE%BA">结论</a></li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Liu_Geometric_and_Textural_Augmentation_for_Domain_Gap_Reduction_CVPR_2022_paper.pdf">Geometric and Textural Augmentation for Domain Gap Reduction (thecvf.com)</a></p>
+<p>code: <a href="https://github.com/xch-liu/geom-tex-dg">xch-liu&#x2F;geom-tex-dg: Geometric and Textural Augmentation for Domain Gap Reduction (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="任务">任务</span></h1><p>通过纹理和风格分布采样增强训练数据提升不同风格不同形变物体识别效果。</p>
+<h1><span id="出发点">出发点</span></h1><p>对于艺术品这种具有风格形变的目标识别性能不好；</p>
+<p>有工作人为这是个域泛化的问题，但已被证明的是：<strong>同一个类别但不同样式</strong>的数据往往比<strong>不同类别但相同样式</strong>的数据的差别更大，从而阻碍常规的DG方法；</p>
+<p>此外，照片和艺术品的数量也不尽相同。因此，从几乎完全由照片组成的训练数据转移到包含艺术品的测试集是一个重大挑战。</p>
+<p>最近的工作集中于通过style transfer应用于训练示例来提高模型鲁棒性，减轻过拟合；</p>
+<p><strong>理由为：通过输入不同风格纹理的图像数据，从而使得识别网络被迫关注于物体本身语义特征的学习，如形状等</strong></p>
+<p>但大多数仅关注于纹理的迁移，而忽略了几何形变的迁移；</p>
+<h1><span id="创新点">创新点</span></h1><p>在几何和纹理风格方面弥补了domain的差距，而不仅仅是纹理；</p>
+<p>本文的增强过程不同于现有技术，当前的文献通过使用一组（纹理）风格的样本将照片处理成不同风格艺术品来扩充数据集，相反，本文构建<strong>纹理和几何描述符的独立分布</strong>，并<strong>从中采样</strong>以增加训练数据。我们的实验表明，几何和纹理增强提高了几种常见跨域基准的分类泛化能力。</p>
+<h1><span id="idea概览">idea概览</span></h1><p>本文假设纹理style和对象身份是独立的；（类似 content 和 style 的概念）</p>
+<p>同一身份类别中的图像的扭曲场一般是相似的，而跨身份类别图像的扭曲场存在显著差异；</p>
+<p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220612171213941.png" alt="image-20220612171213941"></p>
+<p>手写数字和马的扭曲场明显是不一样的，</p>
+<p>样式包括纹理和几何。纹理样式与对象类无关：知道图片是水彩或剪贴画并不能预测其对象类（身份类别）。不过，几何样式取决于对象类。使用<strong>learning to warp</strong>（箭头上方的颜色编码扭曲字段和下面相应的变形结果），可以扭曲显示相同对象类但纹理样式不同的源图像。可以看到，对象类中的扭曲场是相似的，但在对象类之间差异很大，马和文字的扭曲场（可视化表示为图中的热力图）明显不一致。</p>
+<h1><span id="做法">做法</span></h1><p>增强通过处理训练输入x来扩展训练数据，以生成新的训练输入A（x）。分为两个步骤：几何增强扭曲图像；纹理增强变更纹理。</p>
+<p>这两步通过独立采样两个分布来执行，<strong>分布构建是采用预先训练好的特征提取器</strong>。</p>
+<p>图示训练集S包含3种风格3个类别</p>
+<p><strong>本文目标为学习一个预测模型，能够很好地泛化到一个unseen style domain，也就是说，使用训练集S构建一个分类器，当图像的style是unseen的时候也能表现得很好。</strong></p>
+<p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220612212437877.png" alt="image-20220612212437877"></p>
+<p><strong>本文默认同一个身份类别的图像有着相近的扭曲场；</strong></p>
+<p><strong>左：一个简化的训练集，包括三个风格（艺术、照片和素描）中的三个对象（狗、长颈鹿、吉他）。</strong></p>
+<p><strong>中：输入同一身份不同风格的图像进行排列组合构成图像对，图中是三种就构建了三种排列组合；然后送入扭曲模块，生成warp field W*；</strong></p>
+<p><em><em>扭曲分布NW</em> 就由每个身份类别的扭曲场 W</em> 构建，并从这些分布中采样扭曲原本的图像，以达到增强效果；**</p>
+<p><strong>右：纹理分布的构造。将训练集输入纹理样式预测网络F以生成纹理表示集V。纹理分布NV是基于V构造的。为了更好地显示，扭曲字段采用颜色编码，NW∗和NV在低维空间中可视化。</strong></p>
+<h2><span id="几何增强">几何增强</span></h2><p>几何增强是通过对训练数据进行随机形变来实现的。每个随机形变都要有以下的几个要求：</p>
+<p>（1）形变速度要足够快，以便再训练期间在线执行；</p>
+<p>（2）形变程度要可控，以避免过度形变；</p>
+<p>（3）最重要的是，形变的类型应该足够丰富，来确保可变性并且足够合理，以避免无意义和误导性的形变（应符合特定的身份类别——比如马不能按照狗形变）</p>
+<p>本文使用了《Learning to Warp》（见上个markdown）的warper来实现上述效果；</p>
+<p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220616212625252.png" alt="image-20220616212625252"></p>
+<p>具体操作：</p>
+<p>例如一个类别 k 中有N张图像，那这<strong>N张图像排列组合成所有的图像对</strong>，<strong>每种图像对都对应了一个的扭曲场，每个类别的扭曲场又构成一组扭曲场</strong>；</p>
+<p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220616212720503.png" alt="image-20220616212720503"></p>
+<p>如何将这些扭曲场施加到训练图像上呢？</p>
+<p>如果直接从Wk（一组扭曲场）中采样，那么扭曲的样式数量就由K的大小限制住了，为了使本文的方法能够支持尽可能广泛的几何样式，<strong>基于Wk构造了一个几何分布，并直接从中采样新的扭曲场</strong>。</p>
+<p>使用多元正态分布对扭曲分布进行建模，计算均值和协方差矩阵：</p>
+<p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220616212437320.png" alt="image-20220616212437320"></p>
+<p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220616212447197.png" alt="image-20220616212447197"></p>
+<p>Wk表示为一个二维的矩阵，每一列代表一个 “矢量化” 的扭曲场。</p>
+<p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220616212739581.png" alt="image-20220616212739581"></p>
+<p>为减少计算均值和协方差矩阵的计算量，对Wk做了一步下采样操作。</p>
+<h2><span id="纹理增强">纹理增强</span></h2><p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220617102147930.png" alt="image-20220617102147930"></p>
+<p>采用Ghiasi的《Exploring the structure of a real-time, arbitrary neural artistic stylization network》，模型代码位置Dassl\dassl\modeling\backbone\styleaugment\styleaug\ghiasi.py</p>
+<p>具体细节：</p>
+<p>模型具体的两个模块：</p>
+<p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220617104416760.png" alt="image-20220617104416760"></p>
+<p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220617104423963.png" alt="image-20220617104423963"></p>
+<p>通过一个纹理样式预测网络，从一个style图像预测一个100维的向量v，（trained on PBN数据集）；</p>
+<p>这些向量组成一个矩阵；</p>
+<p>使用多元正态分布对扭曲分布进行建模，计算均值和协方差矩阵（<strong>同扭曲分布的构建</strong>），不同之处在于，由于纹理央视和对象类的假设是独立的，可以将类别和域标签融合在一起（不细分类别，所有训练数据一起构建）；</p>
+<p>在做纹理增强时，在Nv分布中随机采样v，并通过样式预测网络传输v，再再content图像Ic上来应用这个采样出的纹理v得到Io；</p>
+<p>为了控制风格增强的程度，做了个线性插值：</p>
+<p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220617105954463.png" alt="image-20220617105954463"></p>
+<p>除了增强纹理样式表示之外，上述方法的另一个好处是计算效率。通过对图像进行批处理来构造纹理分布（一个batch先构造好？），然后进行直接表示采样，可以大大减少训练过程中的时间开销。</p>
+<h2><span id="结合几何和纹理增强">结合几何和纹理增强</span></h2><p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220617110427313.png" alt="image-20220617110427313"></p>
+<p>在训练过程中使用几何和纹理分布。在训练过程中，每个图像都可能被从特定类的扭曲分布中采样的扭曲场变形，然后可能使用来自与类无关的纹理分布的样本重新纹理。下面的虚线框中显示了混合几何和纹理样式的一些潜在增强。</p>
+<h1><span id="实验">实验</span></h1><p>在本节中，我们将评估我们的方法在几个基准上的性能，并将其与最新的最先进的方法进行比较。我们还进行了烧蚀研究，以验证我们的识别方法中每个成分的重要性，无论描述风格如何。在每一种情况下，被测试的假设都是，增强通过扩大视觉对象类（VOC）以包括看不见的示例来增强对象分类性能。因此，我们不对任何测试图像应用任何类型的增强：我们的假设是VOC足够宽，可以包含新图像。</p>
+<p>具体数据见代码文件组织结构。</p>
+<p>做了<strong>多源和单源</strong>的域泛化效果对比。</p>
+<h1><span id="结论">结论</span></h1><p><strong>结论1：</strong></p>
+<p>从实验效果可知纹理和几何变换都有效，纹理影响更大；</p>
+<p>证明了：纹理偏移大于几何偏移。根据我们的实验结果和之前一些研究的发现，这种现象可能有一些原因：</p>
+<p>这与CNN对非形状特征的敏感性有关。CNN对范围广泛的图像处理非常敏感，对人类判断几乎没有影响。</p>
+<p>具有纹理偏好的CNN可能表示归纳纹理偏差，这使得模型很难在小数据区域中学习几何相关特征，也很难将其推广到不同的分布，而不是它们所训练的分布。</p>
+<p><strong>结论2：</strong></p>
+<p>我们的实验结果还表明，几何和纹理增强的效果因数据集而异。最大的原因之一是数据集之间的对象和样式差异。</p>
+<p>一些对象类本身具有几何形状差异，例如PACS中的动物和数字DG中的手写数字。相比之下，Office Home中的静态对象具有较少的类内形状变化。这意味着它们对几何样式的依赖不同。</p>
+<p>（几何扭曲越多的数据集，几何增强影响越大）</p>
+<p><strong>局限：</strong></p>
+<p>由于我们的几何和纹理分布是基于源图像的相应特征表示构建的，因此它们强烈<strong>依赖于图像质量</strong>。如果特征表示远远不够好，则扩充空间将是次优的。</p>
+<p><strong>补充：</strong></p>
+<p>此外，对于不同的任务，如场景级分类、多对象图像，我们的纹理增强是适用的，但几何增强不能直接使用，因为它可能会在不考虑场景内容的情况下引入扭曲。一种潜在的改进方法是增加场景中的单个对象，这反过来需要对象检测，这是一个与分类不同的研究领域。这超出了本文的范围，但却是一个很好的未来探索方向。</p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>style transfer</tag>
+        <tag>argument</tag>
       </tags>
   </entry>
   <entry>

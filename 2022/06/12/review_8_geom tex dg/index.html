@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" integrity="sha256-jTIdiMuX/e3DGJUGwl3pKSxuc6YOuqtJYkM0bGQESA4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mrbananazly.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="任务 出发点 创新点 idea概览 做法 几何增强 纹理增强 结合几何和纹理增强   实验 结论    paper: Geometric and Textural Augmentation for Domain Gap Reduction (thecvf.com) code: xch-liu&#x2F;geom-tex-dg: Geometric and Textural Augmentat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Geometric and Textural Augmentation for Domain Gap Reduction》">
+<meta property="og:url" content="http://mrbananazly.cn/2022/06/12/review_8_geom%20tex%20dg/index.html">
+<meta property="og:site_name" content="Road 2 the Final">
+<meta property="og:description" content="任务 出发点 创新点 idea概览 做法 几何增强 纹理增强 结合几何和纹理增强   实验 结论    paper: Geometric and Textural Augmentation for Domain Gap Reduction (thecvf.com) code: xch-liu&#x2F;geom-tex-dg: Geometric and Textural Augmentat">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/12/review_8_geom%20tex%20dg/image-20220612171213941.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/12/review_8_geom%20tex%20dg/image-20220612212437877.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/12/review_8_geom%20tex%20dg/image-20220616212625252.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/12/review_8_geom%20tex%20dg/image-20220616212720503.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/12/review_8_geom%20tex%20dg/image-20220616212437320.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/12/review_8_geom%20tex%20dg/image-20220616212447197.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/12/review_8_geom%20tex%20dg/image-20220616212739581.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/12/review_8_geom%20tex%20dg/image-20220617102147930.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/12/review_8_geom%20tex%20dg/image-20220617104416760.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/12/review_8_geom%20tex%20dg/image-20220617104423963.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/12/review_8_geom%20tex%20dg/image-20220617105954463.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/12/review_8_geom%20tex%20dg/image-20220617110427313.png">
+<meta property="article:published_time" content="2022-06-12T07:06:02.000Z">
+<meta property="article:modified_time" content="2022-06-17T07:12:25.955Z">
+<meta property="article:author" content="mrbanana_zly">
+<meta property="article:tag" content="style transfer">
+<meta property="article:tag" content="argument">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://mrbananazly.cn/2022/06/12/review_8_geom%20tex%20dg/image-20220612171213941.png">
+
+
+<link rel="canonical" href="http://mrbananazly.cn/2022/06/12/review_8_geom%20tex%20dg/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://mrbananazly.cn/2022/06/12/review_8_geom%20tex%20dg/","path":"2022/06/12/review_8_geom tex dg/","title":"《Geometric and Textural Augmentation for Domain Gap Reduction》"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《Geometric and Textural Augmentation for Domain Gap Reduction》 | Road 2 the Final</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Road 2 the Final</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">任务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">出发点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">创新点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">idea概览</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">做法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.1.</span> <span class="nav-text">几何增强</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.2.</span> <span class="nav-text">纹理增强</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.3.</span> <span class="nav-text">结合几何和纹理增强</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">实验</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">结论</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="mrbanana_zly"
+      src="/images/favicon.png">
+  <p class="site-author-name" itemprop="name">mrbanana_zly</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://mrbananazly.cn/2022/06/12/review_8_geom%20tex%20dg/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.png">
+      <meta itemprop="name" content="mrbanana_zly">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="《Geometric and Textural Augmentation for Domain Gap Reduction》 | Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《Geometric and Textural Augmentation for Domain Gap Reduction》
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-06-12 15:06:02" itemprop="dateCreated datePublished" datetime="2022-06-12T15:06:02+08:00">2022-06-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-06-17 15:12:25" itemprop="dateModified" datetime="2022-06-17T15:12:25+08:00">2022-06-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/paper-review/" itemprop="url" rel="index"><span itemprop="name">paper review</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#idea%E6%A6%82%E8%A7%88">idea概览</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#%E5%87%A0%E4%BD%95%E5%A2%9E%E5%BC%BA">几何增强</a></li>
+<li><a href="#%E7%BA%B9%E7%90%86%E5%A2%9E%E5%BC%BA">纹理增强</a></li>
+<li><a href="#%E7%BB%93%E5%90%88%E5%87%A0%E4%BD%95%E5%92%8C%E7%BA%B9%E7%90%86%E5%A2%9E%E5%BC%BA">结合几何和纹理增强</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AE%9E%E9%AA%8C">实验</a></li>
+<li><a href="#%E7%BB%93%E8%AE%BA">结论</a></li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2022/papers/Liu_Geometric_and_Textural_Augmentation_for_Domain_Gap_Reduction_CVPR_2022_paper.pdf">Geometric and Textural Augmentation for Domain Gap Reduction (thecvf.com)</a></p>
+<p>code: <a target="_blank" rel="noopener" href="https://github.com/xch-liu/geom-tex-dg">xch-liu&#x2F;geom-tex-dg: Geometric and Textural Augmentation for Domain Gap Reduction (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="任务">任务</span></h1><p>通过纹理和风格分布采样增强训练数据提升不同风格不同形变物体识别效果。</p>
+<h1><span id="出发点">出发点</span></h1><p>对于艺术品这种具有风格形变的目标识别性能不好；</p>
+<p>有工作人为这是个域泛化的问题，但已被证明的是：<strong>同一个类别但不同样式</strong>的数据往往比<strong>不同类别但相同样式</strong>的数据的差别更大，从而阻碍常规的DG方法；</p>
+<p>此外，照片和艺术品的数量也不尽相同。因此，从几乎完全由照片组成的训练数据转移到包含艺术品的测试集是一个重大挑战。</p>
+<p>最近的工作集中于通过style transfer应用于训练示例来提高模型鲁棒性，减轻过拟合；</p>
+<p><strong>理由为：通过输入不同风格纹理的图像数据，从而使得识别网络被迫关注于物体本身语义特征的学习，如形状等</strong></p>
+<p>但大多数仅关注于纹理的迁移，而忽略了几何形变的迁移；</p>
+<h1><span id="创新点">创新点</span></h1><p>在几何和纹理风格方面弥补了domain的差距，而不仅仅是纹理；</p>
+<p>本文的增强过程不同于现有技术，当前的文献通过使用一组（纹理）风格的样本将照片处理成不同风格艺术品来扩充数据集，相反，本文构建<strong>纹理和几何描述符的独立分布</strong>，并<strong>从中采样</strong>以增加训练数据。我们的实验表明，几何和纹理增强提高了几种常见跨域基准的分类泛化能力。</p>
+<h1><span id="idea概览">idea概览</span></h1><p>本文假设纹理style和对象身份是独立的；（类似 content 和 style 的概念）</p>
+<p>同一身份类别中的图像的扭曲场一般是相似的，而跨身份类别图像的扭曲场存在显著差异；</p>
+<p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220612171213941.png" alt="image-20220612171213941"></p>
+<p>手写数字和马的扭曲场明显是不一样的，</p>
+<p>样式包括纹理和几何。纹理样式与对象类无关：知道图片是水彩或剪贴画并不能预测其对象类（身份类别）。不过，几何样式取决于对象类。使用<strong>learning to warp</strong>（箭头上方的颜色编码扭曲字段和下面相应的变形结果），可以扭曲显示相同对象类但纹理样式不同的源图像。可以看到，对象类中的扭曲场是相似的，但在对象类之间差异很大，马和文字的扭曲场（可视化表示为图中的热力图）明显不一致。</p>
+<h1><span id="做法">做法</span></h1><p>增强通过处理训练输入x来扩展训练数据，以生成新的训练输入A（x）。分为两个步骤：几何增强扭曲图像；纹理增强变更纹理。</p>
+<p>这两步通过独立采样两个分布来执行，<strong>分布构建是采用预先训练好的特征提取器</strong>。</p>
+<p>图示训练集S包含3种风格3个类别</p>
+<p><strong>本文目标为学习一个预测模型，能够很好地泛化到一个unseen style domain，也就是说，使用训练集S构建一个分类器，当图像的style是unseen的时候也能表现得很好。</strong></p>
+<p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220612212437877.png" alt="image-20220612212437877"></p>
+<p><strong>本文默认同一个身份类别的图像有着相近的扭曲场；</strong></p>
+<p><strong>左：一个简化的训练集，包括三个风格（艺术、照片和素描）中的三个对象（狗、长颈鹿、吉他）。</strong></p>
+<p><strong>中：输入同一身份不同风格的图像进行排列组合构成图像对，图中是三种就构建了三种排列组合；然后送入扭曲模块，生成warp field W*；</strong></p>
+<p><em><em>扭曲分布NW</em> 就由每个身份类别的扭曲场 W</em> 构建，并从这些分布中采样扭曲原本的图像，以达到增强效果；**</p>
+<p><strong>右：纹理分布的构造。将训练集输入纹理样式预测网络F以生成纹理表示集V。纹理分布NV是基于V构造的。为了更好地显示，扭曲字段采用颜色编码，NW∗和NV在低维空间中可视化。</strong></p>
+<h2><span id="几何增强">几何增强</span></h2><p>几何增强是通过对训练数据进行随机形变来实现的。每个随机形变都要有以下的几个要求：</p>
+<p>（1）形变速度要足够快，以便再训练期间在线执行；</p>
+<p>（2）形变程度要可控，以避免过度形变；</p>
+<p>（3）最重要的是，形变的类型应该足够丰富，来确保可变性并且足够合理，以避免无意义和误导性的形变（应符合特定的身份类别——比如马不能按照狗形变）</p>
+<p>本文使用了《Learning to Warp》（见上个markdown）的warper来实现上述效果；</p>
+<p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220616212625252.png" alt="image-20220616212625252"></p>
+<p>具体操作：</p>
+<p>例如一个类别 k 中有N张图像，那这<strong>N张图像排列组合成所有的图像对</strong>，<strong>每种图像对都对应了一个的扭曲场，每个类别的扭曲场又构成一组扭曲场</strong>；</p>
+<p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220616212720503.png" alt="image-20220616212720503"></p>
+<p>如何将这些扭曲场施加到训练图像上呢？</p>
+<p>如果直接从Wk（一组扭曲场）中采样，那么扭曲的样式数量就由K的大小限制住了，为了使本文的方法能够支持尽可能广泛的几何样式，<strong>基于Wk构造了一个几何分布，并直接从中采样新的扭曲场</strong>。</p>
+<p>使用多元正态分布对扭曲分布进行建模，计算均值和协方差矩阵：</p>
+<p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220616212437320.png" alt="image-20220616212437320"></p>
+<p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220616212447197.png" alt="image-20220616212447197"></p>
+<p>Wk表示为一个二维的矩阵，每一列代表一个 “矢量化” 的扭曲场。</p>
+<p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220616212739581.png" alt="image-20220616212739581"></p>
+<p>为减少计算均值和协方差矩阵的计算量，对Wk做了一步下采样操作。</p>
+<h2><span id="纹理增强">纹理增强</span></h2><p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220617102147930.png" alt="image-20220617102147930"></p>
+<p>采用Ghiasi的《Exploring the structure of a real-time, arbitrary neural artistic stylization network》，模型代码位置Dassl\dassl\modeling\backbone\styleaugment\styleaug\ghiasi.py</p>
+<p>具体细节：</p>
+<p>模型具体的两个模块：</p>
+<p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220617104416760.png" alt="image-20220617104416760"></p>
+<p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220617104423963.png" alt="image-20220617104423963"></p>
+<p>通过一个纹理样式预测网络，从一个style图像预测一个100维的向量v，（trained on PBN数据集）；</p>
+<p>这些向量组成一个矩阵；</p>
+<p>使用多元正态分布对扭曲分布进行建模，计算均值和协方差矩阵（<strong>同扭曲分布的构建</strong>），不同之处在于，由于纹理央视和对象类的假设是独立的，可以将类别和域标签融合在一起（不细分类别，所有训练数据一起构建）；</p>
+<p>在做纹理增强时，在Nv分布中随机采样v，并通过样式预测网络传输v，再再content图像Ic上来应用这个采样出的纹理v得到Io；</p>
+<p>为了控制风格增强的程度，做了个线性插值：</p>
+<p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220617105954463.png" alt="image-20220617105954463"></p>
+<p>除了增强纹理样式表示之外，上述方法的另一个好处是计算效率。通过对图像进行批处理来构造纹理分布（一个batch先构造好？），然后进行直接表示采样，可以大大减少训练过程中的时间开销。</p>
+<h2><span id="结合几何和纹理增强">结合几何和纹理增强</span></h2><p><img src="/2022/06/12/review_8_geom%20tex%20dg/image-20220617110427313.png" alt="image-20220617110427313"></p>
+<p>在训练过程中使用几何和纹理分布。在训练过程中，每个图像都可能被从特定类的扭曲分布中采样的扭曲场变形，然后可能使用来自与类无关的纹理分布的样本重新纹理。下面的虚线框中显示了混合几何和纹理样式的一些潜在增强。</p>
+<h1><span id="实验">实验</span></h1><p>在本节中，我们将评估我们的方法在几个基准上的性能，并将其与最新的最先进的方法进行比较。我们还进行了烧蚀研究，以验证我们的识别方法中每个成分的重要性，无论描述风格如何。在每一种情况下，被测试的假设都是，增强通过扩大视觉对象类（VOC）以包括看不见的示例来增强对象分类性能。因此，我们不对任何测试图像应用任何类型的增强：我们的假设是VOC足够宽，可以包含新图像。</p>
+<p>具体数据见代码文件组织结构。</p>
+<p>做了<strong>多源和单源</strong>的域泛化效果对比。</p>
+<h1><span id="结论">结论</span></h1><p><strong>结论1：</strong></p>
+<p>从实验效果可知纹理和几何变换都有效，纹理影响更大；</p>
+<p>证明了：纹理偏移大于几何偏移。根据我们的实验结果和之前一些研究的发现，这种现象可能有一些原因：</p>
+<p>这与CNN对非形状特征的敏感性有关。CNN对范围广泛的图像处理非常敏感，对人类判断几乎没有影响。</p>
+<p>具有纹理偏好的CNN可能表示归纳纹理偏差，这使得模型很难在小数据区域中学习几何相关特征，也很难将其推广到不同的分布，而不是它们所训练的分布。</p>
+<p><strong>结论2：</strong></p>
+<p>我们的实验结果还表明，几何和纹理增强的效果因数据集而异。最大的原因之一是数据集之间的对象和样式差异。</p>
+<p>一些对象类本身具有几何形状差异，例如PACS中的动物和数字DG中的手写数字。相比之下，Office Home中的静态对象具有较少的类内形状变化。这意味着它们对几何样式的依赖不同。</p>
+<p>（几何扭曲越多的数据集，几何增强影响越大）</p>
+<p><strong>局限：</strong></p>
+<p>由于我们的几何和纹理分布是基于源图像的相应特征表示构建的，因此它们强烈<strong>依赖于图像质量</strong>。如果特征表示远远不够好，则扩充空间将是次优的。</p>
+<p><strong>补充：</strong></p>
+<p>此外，对于不同的任务，如场景级分类、多对象图像，我们的纹理增强是适用的，但几何增强不能直接使用，因为它可能会在不考虑场景内容的情况下引入扭曲。一种潜在的改进方法是增加场景中的单个对象，这反过来需要对象检测，这是一个与分类不同的研究领域。这超出了本文的范围，但却是一个很好的未来探索方向。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/style-transfer/" rel="tag"># style transfer</a>
+              <a href="/tags/argument/" rel="tag"># argument</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/06/09/review_7_Learing%20to%20Warp%20for%20Style%20Transfer/" rel="prev" title="《Learning to Warp for Style Transfer》">
+                  <i class="fa fa-chevron-left"></i> 《Learning to Warp for Style Transfer》
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mrbanana_zly</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
