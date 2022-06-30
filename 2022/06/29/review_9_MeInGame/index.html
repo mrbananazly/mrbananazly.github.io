@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" integrity="sha256-jTIdiMuX/e3DGJUGwl3pKSxuc6YOuqtJYkM0bGQESA4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mrbananazly.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="任务 出发点 贡献 方法 3D人脸数据集构建方法 人脸形状重建 （Face Shape Reconstruction） 形状转换（Shape Transfer） 损失函数      paper: 2102.02371.pdf (arxiv.org) code: FuxiCV&#x2F;MeInGame: MeInGame: Create a Game Character Face from">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《MeInGame:Create a Game Character Face from a Single Portrait》">
+<meta property="og:url" content="http://mrbananazly.cn/2022/06/29/review_9_MeInGame/index.html">
+<meta property="og:site_name" content="Road 2 the Final">
+<meta property="og:description" content="任务 出发点 贡献 方法 3D人脸数据集构建方法 人脸形状重建 （Face Shape Reconstruction） 形状转换（Shape Transfer） 损失函数      paper: 2102.02371.pdf (arxiv.org) code: FuxiCV&#x2F;MeInGame: MeInGame: Create a Game Character Face from">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/29/review_9_MeInGame/image-20220629143637063.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/29/review_9_MeInGame/image-20220629153338519.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/29/review_9_MeInGame/image-20220629154446786.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/29/review_9_MeInGame/image-20220629160619803.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/29/review_9_MeInGame/image-20220629160626723.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/29/review_9_MeInGame/image-20220629160919834.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/29/review_9_MeInGame/image-20220629161001203.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/29/review_9_MeInGame/image-20220629161825452.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/29/review_9_MeInGame/image-20220629161847549.png">
+<meta property="og:image" content="http://mrbananazly.cn/2022/06/29/review_9_MeInGame/image-20220629161920596.png">
+<meta property="article:published_time" content="2022-06-29T04:26:21.816Z">
+<meta property="article:modified_time" content="2022-06-30T02:18:43.290Z">
+<meta property="article:author" content="mrbanana_zly">
+<meta property="article:tag" content="3DMM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://mrbananazly.cn/2022/06/29/review_9_MeInGame/image-20220629143637063.png">
+
+
+<link rel="canonical" href="http://mrbananazly.cn/2022/06/29/review_9_MeInGame/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://mrbananazly.cn/2022/06/29/review_9_MeInGame/","path":"2022/06/29/review_9_MeInGame/","title":"《MeInGame:Create a Game Character Face from a Single Portrait》"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《MeInGame:Create a Game Character Face from a Single Portrait》 | Road 2 the Final</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Road 2 the Final</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">任务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">出发点</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">贡献</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.1.</span> <span class="nav-text">3D人脸数据集构建方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.2.</span> <span class="nav-text">人脸形状重建 （Face Shape Reconstruction）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.3.</span> <span class="nav-text">形状转换（Shape Transfer）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.4.</span> <span class="nav-text">损失函数</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="mrbanana_zly"
+      src="/images/favicon.png">
+  <p class="site-author-name" itemprop="name">mrbanana_zly</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://mrbananazly.cn/2022/06/29/review_9_MeInGame/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.png">
+      <meta itemprop="name" content="mrbanana_zly">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="《MeInGame:Create a Game Character Face from a Single Portrait》 | Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《MeInGame:Create a Game Character Face from a Single Portrait》
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-06-29 12:26:21" itemprop="dateCreated datePublished" datetime="2022-06-29T12:26:21+08:00">2022-06-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-06-30 10:18:43" itemprop="dateModified" datetime="2022-06-30T10:18:43+08:00">2022-06-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/paper-review/" itemprop="url" rel="index"><span itemprop="name">paper review</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E8%B4%A1%E7%8C%AE">贡献</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95">方法</a><ul>
+<li><a href="#3d%E4%BA%BA%E8%84%B8%E6%95%B0%E6%8D%AE%E9%9B%86%E6%9E%84%E5%BB%BA%E6%96%B9%E6%B3%95">3D人脸数据集构建方法</a></li>
+<li><a href="#%E4%BA%BA%E8%84%B8%E5%BD%A2%E7%8A%B6%E9%87%8D%E5%BB%BA-face-shape-reconstruction">人脸形状重建 （Face Shape Reconstruction）</a></li>
+<li><a href="#%E5%BD%A2%E7%8A%B6%E8%BD%AC%E6%8D%A2shape-transfer">形状转换（Shape Transfer）</a></li>
+<li><a href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0">损失函数</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2022/papers/Liu_Geometric_and_Textural_Augmentation_for_Domain_Gap_Reduction_CVPR_2022_paper.pdf"><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2102.02371.pdf">2102.02371.pdf (arxiv.org)</a></a></p>
+<p>code: <a target="_blank" rel="noopener" href="https://github.com/xch-liu/geom-tex-dg"><a target="_blank" rel="noopener" href="https://github.com/FuxiCV/MeInGame">FuxiCV&#x2F;MeInGame: MeInGame: Create a Game Character Face from a Single Portrait, AAAI 2021 (github.com)</a></a></p>
+<span id="more"></span>
+
+<h1><span id="任务">任务</span></h1><p>从单张真实2D肖像生成武侠风格的3D可形变模型。</p>
+<h1><span id="出发点">出发点</span></h1><p>近年来，人们提出了许多基于深度学习的三维人脸重建方法，但在游戏中应用较少。当前的游戏角色定制系统要么要求玩家手动调整相当多的面部属性以获得所需的面部，要么限制面部形状和纹理的自由度。</p>
+<h1><span id="贡献">贡献</span></h1><p>我们提出了一种低成本的三维人脸数据集创建方法。我们创建的数据集在种族和性别上是平衡的，面部形状和纹理都是从原始图像中创建的。我们将在论文被接受后将其公开。 提出了一种低成本的面部纹理获取方法</p>
+<p>我们提出了一种将重建的3DMM人脸形状转换为游戏网格的方法，可以直接在游戏环境中使用。该方法与网格连通性无关，在实际应用中计算效率较高。 </p>
+<p>为了消除光照和遮挡的影响，我们在对抗性训练范式下训练神经网络，从野外人脸图像中的单个图像预测一个完整的漫反射贴图。 </p>
+<h1><span id="方法">方法</span></h1><p><img src="/2022/06/29/review_9_MeInGame/image-20220629143637063.png" alt="image-20220629143637063"></p>
+<p>Shape Reconstructor pretrain好，获取3DMM系数和姿势系数，通过3DMM网络构成3DMM mesh（只有正面3D人脸），Shape Transfer将3DMM mesh转换成Game mesh（整个3D人头）；</p>
+<p>根据Game mesh将原图uv展开创建一个粗糙纹理贴图，通过encoder decoder进一步细化至细化纹理；</p>
+<p>还引入了一个光照predictor，预测光照系数；</p>
+<p>最后，将预测的形状、纹理和照明系数一起提供给可微分渲染器，并强制渲染输出与输入照片类似。为了进一步改进结果，引入了两个鉴别器。</p>
+<h2><span id="3d人脸数据集构建方法">3D人脸数据集构建方法</span></h2><p>1）给定一张人脸图像，通过预训练好的人脸分割网络检测皮肤区域</p>
+<p>2）计算输入面部皮肤的平均颜色，并将平均皮肤颜色传输到模板纹理贴图（由游戏开发人员提供，是标准3D模型模板对应的标准UV模板） </p>
+<p>3）根据变形的game mesh，将输入人脸图像展开到UV空间</p>
+<p>4）使用Poisson blending（图像融合操作）将展开的贴图与UV模板混合，移除头发和眼镜等非皮肤区域，并尽可能使用对称性修补遮挡区域</p>
+<h2><span id="人脸形状重建-face-shape-reconstruction">人脸形状重建 （Face Shape Reconstruction）</span></h2><p>第一步从输入图像预测3DMM形状和姿势系数。采用了<a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content_CVPRW_2019/papers/AMFG/Deng_Accurate_3D_Face_Reconstruction_With_Weakly-Supervised_Learning_From_Single_Image_CVPRW_2019_paper.pdf">Accurate 3D Face Reconstruction With Weakly-Supervised Learning: From Single Image to Image Set (thecvf.com)</a>的方法，其他3DMM的方法同样适用。</p>
+<h2><span id="形状转换shape-transfer">形状转换（Shape Transfer）</span></h2><p>形状传递模块的目的是将重建的3DMM网格传递到游戏网格。我们设计了基于Radial Basis Function（RBF）插值的形状传递模块。</p>
+<h2><span id="损失函数">损失函数</span></h2><p>我们设计了损失函数来最小化渲染人脸图像和输入人脸照片之间的距离，以及精细纹理贴图和地面真实纹理贴图之间的距离。在渲染循环中，我们设计了四种类型的损失函数，即像素损失、感知损失、皮肤正则化损失和对抗性损失，以从全局外观和局部细节来衡量面部相似性。 </p>
+<p><strong>像素损失（Pixel Loss）</strong></p>
+<p>渲染后的图像R和输入图像I，做pixel loss：</p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629153338519.png" alt="image-20220629153338519"></p>
+<p>GT的UV贴图G和细化的纹理贴图F，做pixel loss：</p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629154446786.png" alt="image-20220629154446786"></p>
+<p><strong>感知损失（Perceptual Loss）</strong></p>
+<p>在感知层面减小重建图像的差异，做法遵循[Structure Guided Img Inpaint using Edge Prediction - 知乎 (zhihu.com)](<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/147654092#:~:text=%E3%80%8AEdgeConnect%3A">https://zhuanlan.zhihu.com/p/147654092#:~:text=《EdgeConnect%3A</a> Structure Guided Image Inpainting using Edge Prediction》,结构信息 中的 边缘信息 来实现图像的修复（类似Free-form的素描信息） 适用于： rectangular masks、irregular masks。)</p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160619803.png" alt="image-20220629160619803"></p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160626723.png" alt="image-20220629160626723"></p>
+<p><strong>皮肤正则化损失 （Skin Regularization Loss）</strong></p>
+<p>为了在整个面部产生恒定的肤色并去除高光和阴影，我们进行了两次损失来调整面部皮肤，即“对称损失”和“标准偏差损失”。与之前将皮肤正则化直接应用于顶点颜色的工作不同，我们对高斯模糊纹理贴图施加惩罚。这是基于一个事实，即一些个性化的细节（例如痣）并不总是对称的，并且与肤色无关。我们将对称损耗定义如下： </p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160919834.png" alt="image-20220629160919834"></p>
+<p>我们将表皮标准偏差损失定义如下： </p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161001203.png" alt="image-20220629161001203"></p>
+<p><strong>对抗损失（Adversarial Loss）</strong></p>
+<p>为了进一步提高重建的逼真度，我们还在训练期间使用对抗性损失。我们引入了两个鉴别器，一个用于渲染人脸，另一个用于生成的UV纹理贴图。我们训练鉴别器来判断生成的输出是真是假，同时，我们训练网络的其他部分来愚弄鉴别器。对抗训练的目标功能定义如下： </p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161825452.png" alt="image-20220629161825452"></p>
+<p><strong>总损失定义</strong></p>
+<p>**<img src="/2022/06/29/review_9_MeInGame/image-20220629161847549.png" alt="image-20220629161847549">    **        </p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161920596.png" alt="image-20220629161920596"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/3DMM/" rel="tag"># 3DMM</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/06/12/review_8_geom%20tex%20dg/" rel="prev" title="《Geometric and Textural Augmentation for Domain Gap Reduction》">
+                  <i class="fa fa-chevron-left"></i> 《Geometric and Textural Augmentation for Domain Gap Reduction》
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mrbanana_zly</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
