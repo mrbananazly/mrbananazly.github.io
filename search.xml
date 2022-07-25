@@ -1,6 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>《Face-to-Parameter Translation for Game Character Auto-Creation》</title>
+    <url>/2022/07/24/review_10_F2P/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95%E7%AE%80%E8%BF%B0">方法简述</a><ul>
+<li><a href="#%E8%B4%A1%E7%8C%AE">贡献</a></li>
+</ul>
+</li>
+<li><a href="#%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3">方法详解</a><ul>
+<li><a href="#1imitator">1.Imitator</a></li>
+<li><a href="#2facial-similarity-measurement">2.Facial Similarity Measurement</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content_ICCV_2019/papers/Shi_Face-to-Parameter_Translation_for_Game_Character_Auto-Creation_ICCV_2019_paper.pdf">Face-to-Parameter Translation for Game Character Auto-Creation (thecvf.com)</a></p>
+<p>code: no code</p>
+<p>reference link: <a href="https://zhuanlan.zhihu.com/p/105037127">【1】伏羲AI lab：脸部照片到脸部参数的游戏角色自动生成 论文笔记 - 知乎 (zhihu.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="出发点">出发点</span></h1><p>RPG游戏中捏脸的标准工作流是从配置大量<strong>面部参数</strong>开始，然后，游戏引擎将这些用户指定的参数作为输入，并生成3D人脸。也可以说游戏人脸定制是一种3DMM的特例或是一种风格迁移问题。</p>
+<p>但遗憾的是，上述方法不能直接应用于游戏环境中。原因有三。首先，这些方法并不是用于生成参数化的角色，而这对于大多数游戏引擎来说是必不可少的，因为它们通常会<strong>接受游戏角色的定制参数</strong>，而不是图像或3D网格。其次，这些方法对用户交互不友好，因为大多数用户很难直接编辑Mesh。最后，给定一组用户指定参数的游戏引擎的渲染过程是不可微分的，这进一步限制了深度学习方法在游戏环境中的适用性。</p>
+<h1><span id="方法简述">方法简述</span></h1><p>针对上述问题，本文提出了一种根据玩家输入的人脸照片自动生成游戏角色的方法，如图所示。</p>
+<p><img src="/2022/07/24/review_10_F2P/image-20220724165007254.png" alt="image-20220724165007254"></p>
+<p>与以往3DMM方法不同，我们的方法通过<strong>预测一组具有明确物理意义的面部参数，为骨骼驱动的模型创建三维轮廓</strong>。在我们的方法中，每个参数控制每个面部组件的一个单独属性，包括位置、方向和比例。更重要的是，我们的方法在创建结果的基础上支持额外的用户交互，玩家可以根据自己的需求进一步改进他们的形象。由于游戏引擎的渲染过程是不可微分的，我们设计了一个生成网络作为“模仿者”来模仿游戏引擎的物理行为，从而可以在神经风格传递框架下实现本文提出的方法，并使用梯度下降法优化面部参数。</p>
+<h2><span id="贡献">贡献</span></h2><p>1)我们提出了一种端到端的人脸参数转换和游戏角色自动生成方法。据我们所知，关于这一主题的研究工作很少。</p>
+<p>2)由于游戏引擎的渲染过程是不可区分的，我们引入了一个模仿者，通过构建一个深度生成网络来模仿游戏引擎的行为。这样，梯度可以平滑地反向传播到输入，从而利用梯度下降法更新人脸参数。</p>
+<p>3)为跨域人脸相似度测量设计了两个损失函数。提出的目标可以在多任务学习框架中联合优化。</p>
+<h1><span id="方法详解">方法详解</span></h1><p><img src="/2022/07/24/review_10_F2P/image-20220724165938954.png" alt="image-20220724165938954"></p>
+<h2><span id="1imitator">1.Imitator</span></h2><p><img src="/2022/07/24/review_10_F2P/image-20220724194516986.png" alt="image-20220724194516986"></p>
+<p>采用类似DCGAN的结构，包含8个反卷积层，用来模拟游戏引擎从脸部参数到脸部图像的映射。然后将真实游戏引擎的渲染结果与模拟器生成的图像算L1 loss。训练用了20000对人脸图像，游戏引擎用的是逆水寒的游戏引擎。</p>
+<p><img src="/2022/07/24/review_10_F2P/image-20220724195638704.png" alt="image-20220724195638704"></p>
+<p>图4显示了我们的模仿者的“渲染”结果的三个示例。这些图像的面部参数是手动创建的。由于训练样本是根据面部参数的统一分布随机生成的，所以对于大多数人物可能看起来很奇怪(请参阅我们的补充资料)。尽管如此，我们仍然可以从图4中看到，生成的人脸图像和渲染的地面真实图像有很高的相似性，即使在一些纹理复杂的区域，如头发。这表明我们的模仿者不仅将训练数据拟合在一个低维的人脸流形中，而且还学会了解耦不同人脸参数之间的相关性。</p>
+<h2><span id="2facial-similarity-measurement">2.Facial Similarity Measurement</span></h2><p>alignment后的真实人脸与Imitator生成的人脸通过预训练好的识别网络算embedding间的余弦相似度。</p>
+<p><img src="/2022/07/24/review_10_F2P/image-20220725143108613.png" alt="image-20220725143108613"></p>
+<p>又采用了一个预训练好的分割网络对两张图像进行分割，在著名的Helen face语义分割数据集上训练该模型。为了提高人脸语义特征的位置敏感性，进一步使用分割结果(分类概率图)作为特征图的像素权值，构建位置敏感的内容丢失函数。通俗点应该就是针对每个部分对feature map做掩码算L1。</p>
+<p><img src="/2022/07/24/review_10_F2P/image-20220725144042722.png" alt="image-20220725144042722"></p>
+<p><img src="/2022/07/24/review_10_F2P/image-20220725143221347.png" alt="image-20220725143221347"></p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>Game Character Create</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</title>
     <url>/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/</url>
     <content><![CDATA[<!-- toc -->
@@ -646,74 +696,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo建站相关</title>
-    <url>/2022/03/25/tools_1_start/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E6%90%AD%E5%BB%BAhexo%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%80%9A%E8%BF%87git%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8">搭建Hexo服务器，通过Git自动部署在阿里云服务器</a><ul>
-<li><a href="#%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%83%A8%E7%BD%B2">搭建及部署</a></li>
-<li><a href="#%E5%8D%9A%E6%96%87%E5%8F%91%E5%B8%83">博文发布</a></li>
-</ul>
-</li>
-<li><a href="#%E4%B8%BB%E9%A2%98%E5%8F%8A%E5%85%B6%E7%BE%8E%E5%8C%96">主题及其美化</a><ul>
-<li><a href="#butterfly">Butterfly</a></li>
-<li><a href="#next">Next</a><ul>
-<li><a href="#%E7%BE%8E%E5%8C%96">美化</a></li>
-<li><a href="#%E6%96%87%E7%AB%A0%E5%90%AF%E7%94%A8tags%E5%92%8Ccategories">文章启用tags和categories</a></li>
-<li><a href="#%E8%AE%BE%E7%BD%AE%E9%98%85%E8%AF%BB%E5%85%A8%E6%96%87">设置阅读全文</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98updating">相关问题（Updating…）</a><ul>
-<li><a href="#%E6%97%A0%E6%B3%95%E6%AD%A3%E7%A1%AE%E6%B8%B2%E6%9F%93markdown%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98">无法正确渲染markdown文件问题</a></li>
-<li><a href="#%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98">插入图片问题</a></li>
-<li><a href="#%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98">目录生成问题</a></li>
-<li><a href="#%E6%B7%BB%E5%8A%A0%E6%9C%AC%E5%9C%B0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD">添加本地搜索功能</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<span id="more"></span>
-
-<h1><span id="搭建hexo服务器通过git自动部署在阿里云服务器">搭建Hexo服务器，通过Git自动部署在阿里云服务器</span></h1><h2><span id="搭建及部署">搭建及部署</span></h2><p>参考博文链接：<a href="https://mp.weixin.qq.com/s/JTTUYJTvtdT6X2fvLUBFZg">Win10下Hexo博客搭建教程，及阿里云服务器部署实战 (qq.com)</a></p>
-<h2><span id="博文发布">博文发布</span></h2><p>在本地机器上部署Hexo相关MyHexoBlogs文件夹下，进入MyHexoBlogs&#x2F;myblogs&#x2F;source&#x2F;_posts目录；</p>
-<p>在当前页进入git bash，输入hexo clean 清除缓存，hexo g 解析静态文件，hexo d 刷新部署新的资源。</p>
-<p>hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</p>
-<h1><span id="主题及其美化">主题及其美化</span></h1><h2><span id="butterfly">Butterfly</span></h2><p>Butterfly主题部署参考博文链接：<a href="https://www.jianshu.com/p/50a565adaf15?ivk_sa=1024320u">hexo框架|butterfly主题配置 - 简书 (jianshu.com)</a></p>
-<p>Butterfly主题官方文档：<a href="https://www.butterfly1.cn/">Hexo-Butterfly主题(🦋 A Hexo Theme: Butterfly-Official website) (butterfly1.cn)</a></p>
-<p>Hexo默认美化项：<a href="https://zhuanlan.zhihu.com/p/369951111">Hexo个性化设置 - 知乎 (zhihu.com)</a></p>
-<h2><span id="next">Next</span></h2><h3><span id="美化">美化</span></h3><p><a href="https://blog.csdn.net/qq_34003239/article/details/100883213">(54条消息) Next主题美化_蜗牛非牛的博客-CSDN博客_next主题美化</a></p>
-<h3><span id="文章启用tags和categories">文章启用tags和categories</span></h3><p><a href="https://blog.csdn.net/Lancis/article/details/118788205">(54条消息) hexo next主题简单美化_Lancis的博客-CSDN博客_next主题美化</a></p>
-<h3><span id="设置阅读全文">设置阅读全文</span></h3><p><a href="https://blog.csdn.net/CHENGXUYUAN09/article/details/103408380">(54条消息) next7.6版本关于设置阅读全文_LIYUANWAISPRING的博客-CSDN博客</a></p>
-<h1><span id="相关问题updating">相关问题（Updating…）</span></h1><h2><span id="无法正确渲染markdown文件问题">无法正确渲染markdown文件问题</span></h2><p>hexo对于md文件的解析规则不是标准规则，有时候在复制论文标题时会有换行符无法正确解析；</p>
-<p>重新手动输入检查标题格式解决问题</p>
-<h2><span id="插入图片问题">插入图片问题</span></h2><p>选择采用hexo官网的解决方式：<a href="https://hexo.io/zh-cn/docs/asset-folders">资源文件夹 | Hexo</a></p>
-<h2><span id="目录生成问题">目录生成问题</span></h2><p>安装插件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-toc --save</span><br></pre></td></tr></table></figure>
-
-<p>hexo的配置文件中设置格式，添加配置代码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">toc:</span><br><span class="line">  maxdepth: 3</span><br></pre></td></tr></table></figure>
-
-<p>在md中使用时</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- toc --&gt;</span><br></pre></td></tr></table></figure>
-
-<h2><span id="添加本地搜索功能">添加本地搜索功能</span></h2><p>与Next官方配置文件中的链接步骤不同的是，还需要修改</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">preload: true</span><br></pre></td></tr></table></figure>
-
-
-
-]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《MeInGame:Create a Game Character Face from a Single Portrait》</title>
     <url>/2022/06/29/review_9_MeInGame/</url>
     <content><![CDATA[<!-- toc -->
@@ -779,6 +761,74 @@
       </categories>
       <tags>
         <tag>3DMM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo建站相关</title>
+    <url>/2022/03/25/tools_1_start/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E6%90%AD%E5%BB%BAhexo%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%80%9A%E8%BF%87git%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8">搭建Hexo服务器，通过Git自动部署在阿里云服务器</a><ul>
+<li><a href="#%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%83%A8%E7%BD%B2">搭建及部署</a></li>
+<li><a href="#%E5%8D%9A%E6%96%87%E5%8F%91%E5%B8%83">博文发布</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%BB%E9%A2%98%E5%8F%8A%E5%85%B6%E7%BE%8E%E5%8C%96">主题及其美化</a><ul>
+<li><a href="#butterfly">Butterfly</a></li>
+<li><a href="#next">Next</a><ul>
+<li><a href="#%E7%BE%8E%E5%8C%96">美化</a></li>
+<li><a href="#%E6%96%87%E7%AB%A0%E5%90%AF%E7%94%A8tags%E5%92%8Ccategories">文章启用tags和categories</a></li>
+<li><a href="#%E8%AE%BE%E7%BD%AE%E9%98%85%E8%AF%BB%E5%85%A8%E6%96%87">设置阅读全文</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98updating">相关问题（Updating…）</a><ul>
+<li><a href="#%E6%97%A0%E6%B3%95%E6%AD%A3%E7%A1%AE%E6%B8%B2%E6%9F%93markdown%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98">无法正确渲染markdown文件问题</a></li>
+<li><a href="#%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98">插入图片问题</a></li>
+<li><a href="#%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98">目录生成问题</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E6%9C%AC%E5%9C%B0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD">添加本地搜索功能</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="搭建hexo服务器通过git自动部署在阿里云服务器">搭建Hexo服务器，通过Git自动部署在阿里云服务器</span></h1><h2><span id="搭建及部署">搭建及部署</span></h2><p>参考博文链接：<a href="https://mp.weixin.qq.com/s/JTTUYJTvtdT6X2fvLUBFZg">Win10下Hexo博客搭建教程，及阿里云服务器部署实战 (qq.com)</a></p>
+<h2><span id="博文发布">博文发布</span></h2><p>在本地机器上部署Hexo相关MyHexoBlogs文件夹下，进入MyHexoBlogs&#x2F;myblogs&#x2F;source&#x2F;_posts目录；</p>
+<p>在当前页进入git bash，输入hexo clean 清除缓存，hexo g 解析静态文件，hexo d 刷新部署新的资源。</p>
+<p>hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</p>
+<h1><span id="主题及其美化">主题及其美化</span></h1><h2><span id="butterfly">Butterfly</span></h2><p>Butterfly主题部署参考博文链接：<a href="https://www.jianshu.com/p/50a565adaf15?ivk_sa=1024320u">hexo框架|butterfly主题配置 - 简书 (jianshu.com)</a></p>
+<p>Butterfly主题官方文档：<a href="https://www.butterfly1.cn/">Hexo-Butterfly主题(🦋 A Hexo Theme: Butterfly-Official website) (butterfly1.cn)</a></p>
+<p>Hexo默认美化项：<a href="https://zhuanlan.zhihu.com/p/369951111">Hexo个性化设置 - 知乎 (zhihu.com)</a></p>
+<h2><span id="next">Next</span></h2><h3><span id="美化">美化</span></h3><p><a href="https://blog.csdn.net/qq_34003239/article/details/100883213">(54条消息) Next主题美化_蜗牛非牛的博客-CSDN博客_next主题美化</a></p>
+<h3><span id="文章启用tags和categories">文章启用tags和categories</span></h3><p><a href="https://blog.csdn.net/Lancis/article/details/118788205">(54条消息) hexo next主题简单美化_Lancis的博客-CSDN博客_next主题美化</a></p>
+<h3><span id="设置阅读全文">设置阅读全文</span></h3><p><a href="https://blog.csdn.net/CHENGXUYUAN09/article/details/103408380">(54条消息) next7.6版本关于设置阅读全文_LIYUANWAISPRING的博客-CSDN博客</a></p>
+<h1><span id="相关问题updating">相关问题（Updating…）</span></h1><h2><span id="无法正确渲染markdown文件问题">无法正确渲染markdown文件问题</span></h2><p>hexo对于md文件的解析规则不是标准规则，有时候在复制论文标题时会有换行符无法正确解析；</p>
+<p>重新手动输入检查标题格式解决问题</p>
+<h2><span id="插入图片问题">插入图片问题</span></h2><p>选择采用hexo官网的解决方式：<a href="https://hexo.io/zh-cn/docs/asset-folders">资源文件夹 | Hexo</a></p>
+<h2><span id="目录生成问题">目录生成问题</span></h2><p>安装插件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-toc --save</span><br></pre></td></tr></table></figure>
+
+<p>hexo的配置文件中设置格式，添加配置代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">toc:</span><br><span class="line">  maxdepth: 3</span><br></pre></td></tr></table></figure>
+
+<p>在md中使用时</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- toc --&gt;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="添加本地搜索功能">添加本地搜索功能</span></h2><p>与Next官方配置文件中的链接步骤不同的是，还需要修改</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">preload: true</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
 </search>
