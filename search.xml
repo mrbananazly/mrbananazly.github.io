@@ -385,97 +385,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《IACycleGAN》</title>
-    <url>/2022/06/08/review_6_IACycleGAN/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
-<li><a href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B">生成模型</a><ul>
-<li><a href="#%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C%E6%95%B4%E4%BD%93loss%E5%9B%BE%E7%A4%BA">生成网络整体loss图示</a></li>
-</ul>
-</li>
-<li><a href="#%E8%AF%86%E5%88%AB%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C%E7%9A%84%E4%BA%92%E7%9B%B8%E4%BC%98%E5%8C%96">识别网络与生成网络的互相优化</a></li>
-</ul>
-</li>
-<li><a href="#%E5%AE%9E%E9%AA%8C">实验</a><ul>
-<li><a href="#%E6%95%B0%E6%8D%AE%E9%9B%86">数据集</a><ul>
-<li><a href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82">生成模型实施细节</a></li>
-<li><a href="#%E8%AF%86%E5%88%AB%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82">识别模型实施细节</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf"><a href="https://arxiv.org/pdf/2103.16019.pdf">Identity-Aware CycleGAN for Face Photo-Sketch Synthesis and Recognition (arxiv.org)</a></a></p>
-<p>code: none</p>
-<span id="more"></span>
-
-<h1><span id="任务">任务</span></h1><p>真人素描生成与识别</p>
-<h1><span id="出发点">出发点</span></h1><p>生成促进识别 识别促进生成；</p>
-<p>大部分生成方法使得合成图像与原始图像在纹理上保持一致，会导致信息丢失；</p>
-<p>大多数生成框架都只能学习两个域之间的关系，其鉴别器只关注照片和草图之间的差异，而不考虑任何特定的识别优化（身份信息）；</p>
-<h1><span id="创新点">创新点</span></h1><p>在CycleGAN上加入了感知损失（perceptual loss）,能更好的关注面部的语义信息（眼睛、鼻子）;</p>
-<p>使生成模型和识别模型相互优化，生成模型迭代生成更好的图像，Triplet Loss训识别模型；</p>
-<h1><span id="做法">做法</span></h1><h2><span id="生成模型">生成模型</span></h2><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608102426736.png" alt="image-20220608102426736"></p>
-<p>分别给出两个domain的照片（这里输入的是paired数据，这里的paired应该身份paired），其训练目的是获得Gx，Gy两个生成器。</p>
-<p>两个识别网络，其目的是使用pretrain好的vggface提取feature做Identity perception loss；</p>
-<p>生成器用了《Perceptual losses for real-time style transfer and super-resolution》中的结构；</p>
-<p>判别器用了PatchGAN的结构；</p>
-<h3><span id="生成网络整体loss图示">生成网络整体loss图示</span></h3><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608105545461.png" alt="image-20220608105545461"></p>
-<h4><span id="对抗损失adversarial-loss">对抗损失（adversarial loss）</span></h4><p>输入图像与生成图像进入判别器进行计算，最小化下式</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608110633855.png" alt="image-20220608110633855"></p>
-<h4><span id="循环一致性损失cycle-consistency-loss">循环一致性损失（cycle consistency loss）</span></h4><p>Gx生成的图像再进入Gy恢复原本domain与最初的输入x计算L1，<strong>此loss为pix级</strong>，最小化下式</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608110959225.png" alt="image-20220608110959225"></p>
-<h4><span id="身份保持损失identity-perception-loss">身份保持损失（identity perception loss）</span></h4><p>仅使用对抗损失会导致伪影和训练不稳定，需要加更强大的监督；</p>
-<p>通过一个pretrain的识别网络（文中选择vggface）分别提取两对（原图与合成图）的feature计算L2，<strong>此loss区别于pix级监督，是feature级</strong>，文中对于此处的解释是：绘制的草图会有夸张成分以扭曲面部纹理信息，夸大面部特征，完全基于pix重建图像效果不会好；CycleGAN的训练需要进行数据增强操作（resize，flip等）难以实施pix级的监督。</p>
-<p>最小化下式</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608111456554.png" alt="image-20220608111456554"></p>
-<h4><span id="身份映射损失identity-mapping-loss">身份映射损失（identity mapping loss）</span></h4><p>常规的pix级的约束，最小化下式</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112212476.png" alt="image-20220608112212476"></p>
-<h4><span id="整体loss">整体loss</span></h4><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112236780.png" alt="image-20220608112236780"></p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112252105.png" alt="image-20220608112252105"></p>
-<p>最小化生成器的loss最大化判别器的loss</p>
-<p>其中超参数lamda分别设为10，30000000，5</p>
-<h2><span id="识别网络与生成网络的互相优化">识别网络与生成网络的互相优化</span></h2><p>许多主做生成的工作都是fix相应的识别网络作为一个特征提取器来附加身份保持损失；</p>
-<p>本文的做法估计是：</p>
-<p>step1：先fix识别网络参数训练生成网络，获得一定量的生成的图片；</p>
-<p>step2：使用生成的图片fine-tune识别网络（单走一个人脸识别模型的流程），用了triplet loss，更新识别网络参数，其中两个模态分别有两个识别网络，要分开训练；</p>
-<p>step3：重复上述操作以获得更好的生成模型和识别模型。</p>
-<p>（有问题的点：若第一次生成的质量得不到保证，那低质量的生成图像真的能提升识别模型的acc吗？<strong>互相优化的模型很依赖第一次生成的图像质量</strong>）</p>
-<p>我认为的做法：先简单训练一个识别网络达到一个还行的acc，更新其backbone参数作为生成网络的特征提取器，然后再进行生成网络的训练。</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608135047478.png" alt="image-20220608135047478"></p>
-<h1><span id="实验">实验</span></h1><p>CycleGAN生成—》一阶段vgg fine-tune—》IACycleGAN生成（加入fine-tune的vgg提取的特征做身份保持损失）—》二阶段vgg fine-tune</p>
-<h2><span id="数据集">数据集</span></h2><p>CUFS和CUFSF</p>
-<h3><span id="生成模型实施细节">生成模型实施细节</span></h3><p>对于生成网络的训练，都是从头开始训练，使用instance normalization来实现更好的稳定性和更低的噪声；</p>
-<p>使用Adam优化器，horizontal filp prob&#x3D;0.5用于数据增强；</p>
-<p>前100个epoch设置0.0002的学习率，并在后100个epoch线性下降至0；</p>
-<p>在titian xp上训练了10小时；</p>
-<p>为减小网络震荡，采用存储多个生成图像的图像缓冲区来更新鉴别器，而不是使用最后生成的图像。</p>
-<p>生成使用了SSIM FSIM两个指标</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608152343197.png" alt="image-20220608152343197"></p>
-<h3><span id="识别模型实施细节">识别模型实施细节</span></h3><p>文中用的vggface，caffe上跑的（估计是官方代码）</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608153331083.png" alt="image-20220608153331083"></p>
-<p>在做检索任务时，先做风格模态的迁移，再计算相似度。</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608155946505.png" alt="image-20220608155946505"></p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608160958943.png" alt="image-20220608160958943"></p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>sketch</tag>
-        <tag>synthesis</tag>
-        <tag>GAN</tag>
-        <tag>face recognition</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Learning to Warp for Style Transfer》</title>
     <url>/2022/06/09/review_7_Learing%20to%20Warp%20for%20Style%20Transfer/</url>
     <content><![CDATA[<!-- toc -->
@@ -590,6 +499,227 @@
       </tags>
   </entry>
   <entry>
+    <title>《IACycleGAN》</title>
+    <url>/2022/06/08/review_6_IACycleGAN/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B">生成模型</a><ul>
+<li><a href="#%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C%E6%95%B4%E4%BD%93loss%E5%9B%BE%E7%A4%BA">生成网络整体loss图示</a></li>
+</ul>
+</li>
+<li><a href="#%E8%AF%86%E5%88%AB%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C%E7%9A%84%E4%BA%92%E7%9B%B8%E4%BC%98%E5%8C%96">识别网络与生成网络的互相优化</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AE%9E%E9%AA%8C">实验</a><ul>
+<li><a href="#%E6%95%B0%E6%8D%AE%E9%9B%86">数据集</a><ul>
+<li><a href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82">生成模型实施细节</a></li>
+<li><a href="#%E8%AF%86%E5%88%AB%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82">识别模型实施细节</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf"><a href="https://arxiv.org/pdf/2103.16019.pdf">Identity-Aware CycleGAN for Face Photo-Sketch Synthesis and Recognition (arxiv.org)</a></a></p>
+<p>code: none</p>
+<span id="more"></span>
+
+<h1><span id="任务">任务</span></h1><p>真人素描生成与识别</p>
+<h1><span id="出发点">出发点</span></h1><p>生成促进识别 识别促进生成；</p>
+<p>大部分生成方法使得合成图像与原始图像在纹理上保持一致，会导致信息丢失；</p>
+<p>大多数生成框架都只能学习两个域之间的关系，其鉴别器只关注照片和草图之间的差异，而不考虑任何特定的识别优化（身份信息）；</p>
+<h1><span id="创新点">创新点</span></h1><p>在CycleGAN上加入了感知损失（perceptual loss）,能更好的关注面部的语义信息（眼睛、鼻子）;</p>
+<p>使生成模型和识别模型相互优化，生成模型迭代生成更好的图像，Triplet Loss训识别模型；</p>
+<h1><span id="做法">做法</span></h1><h2><span id="生成模型">生成模型</span></h2><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608102426736.png" alt="image-20220608102426736"></p>
+<p>分别给出两个domain的照片（这里输入的是paired数据，这里的paired应该身份paired），其训练目的是获得Gx，Gy两个生成器。</p>
+<p>两个识别网络，其目的是使用pretrain好的vggface提取feature做Identity perception loss；</p>
+<p>生成器用了《Perceptual losses for real-time style transfer and super-resolution》中的结构；</p>
+<p>判别器用了PatchGAN的结构；</p>
+<h3><span id="生成网络整体loss图示">生成网络整体loss图示</span></h3><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608105545461.png" alt="image-20220608105545461"></p>
+<h4><span id="对抗损失adversarial-loss">对抗损失（adversarial loss）</span></h4><p>输入图像与生成图像进入判别器进行计算，最小化下式</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608110633855.png" alt="image-20220608110633855"></p>
+<h4><span id="循环一致性损失cycle-consistency-loss">循环一致性损失（cycle consistency loss）</span></h4><p>Gx生成的图像再进入Gy恢复原本domain与最初的输入x计算L1，<strong>此loss为pix级</strong>，最小化下式</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608110959225.png" alt="image-20220608110959225"></p>
+<h4><span id="身份保持损失identity-perception-loss">身份保持损失（identity perception loss）</span></h4><p>仅使用对抗损失会导致伪影和训练不稳定，需要加更强大的监督；</p>
+<p>通过一个pretrain的识别网络（文中选择vggface）分别提取两对（原图与合成图）的feature计算L2，<strong>此loss区别于pix级监督，是feature级</strong>，文中对于此处的解释是：绘制的草图会有夸张成分以扭曲面部纹理信息，夸大面部特征，完全基于pix重建图像效果不会好；CycleGAN的训练需要进行数据增强操作（resize，flip等）难以实施pix级的监督。</p>
+<p>最小化下式</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608111456554.png" alt="image-20220608111456554"></p>
+<h4><span id="身份映射损失identity-mapping-loss">身份映射损失（identity mapping loss）</span></h4><p>常规的pix级的约束，最小化下式</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112212476.png" alt="image-20220608112212476"></p>
+<h4><span id="整体loss">整体loss</span></h4><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112236780.png" alt="image-20220608112236780"></p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112252105.png" alt="image-20220608112252105"></p>
+<p>最小化生成器的loss最大化判别器的loss</p>
+<p>其中超参数lamda分别设为10，30000000，5</p>
+<h2><span id="识别网络与生成网络的互相优化">识别网络与生成网络的互相优化</span></h2><p>许多主做生成的工作都是fix相应的识别网络作为一个特征提取器来附加身份保持损失；</p>
+<p>本文的做法估计是：</p>
+<p>step1：先fix识别网络参数训练生成网络，获得一定量的生成的图片；</p>
+<p>step2：使用生成的图片fine-tune识别网络（单走一个人脸识别模型的流程），用了triplet loss，更新识别网络参数，其中两个模态分别有两个识别网络，要分开训练；</p>
+<p>step3：重复上述操作以获得更好的生成模型和识别模型。</p>
+<p>（有问题的点：若第一次生成的质量得不到保证，那低质量的生成图像真的能提升识别模型的acc吗？<strong>互相优化的模型很依赖第一次生成的图像质量</strong>）</p>
+<p>我认为的做法：先简单训练一个识别网络达到一个还行的acc，更新其backbone参数作为生成网络的特征提取器，然后再进行生成网络的训练。</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608135047478.png" alt="image-20220608135047478"></p>
+<h1><span id="实验">实验</span></h1><p>CycleGAN生成—》一阶段vgg fine-tune—》IACycleGAN生成（加入fine-tune的vgg提取的特征做身份保持损失）—》二阶段vgg fine-tune</p>
+<h2><span id="数据集">数据集</span></h2><p>CUFS和CUFSF</p>
+<h3><span id="生成模型实施细节">生成模型实施细节</span></h3><p>对于生成网络的训练，都是从头开始训练，使用instance normalization来实现更好的稳定性和更低的噪声；</p>
+<p>使用Adam优化器，horizontal filp prob&#x3D;0.5用于数据增强；</p>
+<p>前100个epoch设置0.0002的学习率，并在后100个epoch线性下降至0；</p>
+<p>在titian xp上训练了10小时；</p>
+<p>为减小网络震荡，采用存储多个生成图像的图像缓冲区来更新鉴别器，而不是使用最后生成的图像。</p>
+<p>生成使用了SSIM FSIM两个指标</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608152343197.png" alt="image-20220608152343197"></p>
+<h3><span id="识别模型实施细节">识别模型实施细节</span></h3><p>文中用的vggface，caffe上跑的（估计是官方代码）</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608153331083.png" alt="image-20220608153331083"></p>
+<p>在做检索任务时，先做风格模态的迁移，再计算相似度。</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608155946505.png" alt="image-20220608155946505"></p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608160958943.png" alt="image-20220608160958943"></p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>sketch</tag>
+        <tag>synthesis</tag>
+        <tag>GAN</tag>
+        <tag>face recognition</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《MeInGame:Create a Game Character Face from a Single Portrait》</title>
+    <url>/2022/06/29/review_9_MeInGame/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E8%B4%A1%E7%8C%AE">贡献</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95">方法</a><ul>
+<li><a href="#3d%E4%BA%BA%E8%84%B8%E6%95%B0%E6%8D%AE%E9%9B%86%E6%9E%84%E5%BB%BA%E6%96%B9%E6%B3%95">3D人脸数据集构建方法</a></li>
+<li><a href="#%E4%BA%BA%E8%84%B8%E5%BD%A2%E7%8A%B6%E9%87%8D%E5%BB%BA-face-shape-reconstruction">人脸形状重建 （Face Shape Reconstruction）</a></li>
+<li><a href="#%E5%BD%A2%E7%8A%B6%E8%BD%AC%E6%8D%A2shape-transfer">形状转换（Shape Transfer）</a></li>
+<li><a href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0">损失函数</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Liu_Geometric_and_Textural_Augmentation_for_Domain_Gap_Reduction_CVPR_2022_paper.pdf"><a href="https://arxiv.org/pdf/2102.02371.pdf">2102.02371.pdf (arxiv.org)</a></a></p>
+<p>code: <a href="https://github.com/xch-liu/geom-tex-dg"><a href="https://github.com/FuxiCV/MeInGame">FuxiCV&#x2F;MeInGame: MeInGame: Create a Game Character Face from a Single Portrait, AAAI 2021 (github.com)</a></a></p>
+<span id="more"></span>
+
+<h1><span id="任务">任务</span></h1><p>从单张真实2D肖像生成武侠风格的3D可形变模型。</p>
+<h1><span id="出发点">出发点</span></h1><p>近年来，人们提出了许多基于深度学习的三维人脸重建方法，但在游戏中应用较少。当前的游戏角色定制系统要么要求玩家手动调整相当多的面部属性以获得所需的面部，要么限制面部形状和纹理的自由度。</p>
+<h1><span id="贡献">贡献</span></h1><p>我们提出了一种低成本的三维人脸数据集创建方法。我们创建的数据集在种族和性别上是平衡的，面部形状和纹理都是从原始图像中创建的。我们将在论文被接受后将其公开。 提出了一种低成本的面部纹理获取方法</p>
+<p>我们提出了一种将重建的3DMM人脸形状转换为游戏网格的方法，可以直接在游戏环境中使用。该方法与网格连通性无关，在实际应用中计算效率较高。 </p>
+<p>为了消除光照和遮挡的影响，我们在对抗性训练范式下训练神经网络，从野外人脸图像中的单个图像预测一个完整的漫反射贴图。 </p>
+<h1><span id="方法">方法</span></h1><p><img src="/2022/06/29/review_9_MeInGame/image-20220629143637063.png" alt="image-20220629143637063"></p>
+<p>Shape Reconstructor pretrain好，获取3DMM系数和姿势系数，通过3DMM网络构成3DMM mesh（只有正面3D人脸），Shape Transfer将3DMM mesh转换成Game mesh（整个3D人头）；</p>
+<p>根据Game mesh将原图uv展开创建一个粗糙纹理贴图，通过encoder decoder进一步细化至细化纹理；</p>
+<p>还引入了一个光照predictor，预测光照系数；</p>
+<p>最后，将预测的形状、纹理和照明系数一起提供给可微分渲染器，并强制渲染输出与输入照片类似。为了进一步改进结果，引入了两个鉴别器。</p>
+<h2><span id="3d人脸数据集构建方法">3D人脸数据集构建方法</span></h2><p>1）给定一张人脸图像，通过预训练好的人脸分割网络检测皮肤区域</p>
+<p>2）计算输入面部皮肤的平均颜色，并将平均皮肤颜色传输到模板纹理贴图（由游戏开发人员提供，是标准3D模型模板对应的标准UV模板） </p>
+<p>3）根据变形的game mesh，将输入人脸图像展开到UV空间</p>
+<p>4）使用Poisson blending（图像融合操作）将展开的贴图与UV模板混合，移除头发和眼镜等非皮肤区域，并尽可能使用对称性修补遮挡区域</p>
+<h2><span id="人脸形状重建-face-shape-reconstruction">人脸形状重建 （Face Shape Reconstruction）</span></h2><p>第一步从输入图像预测3DMM形状和姿势系数。采用了<a href="https://openaccess.thecvf.com/content_CVPRW_2019/papers/AMFG/Deng_Accurate_3D_Face_Reconstruction_With_Weakly-Supervised_Learning_From_Single_Image_CVPRW_2019_paper.pdf">Accurate 3D Face Reconstruction With Weakly-Supervised Learning: From Single Image to Image Set (thecvf.com)</a>的方法，其他3DMM的方法同样适用。</p>
+<h2><span id="形状转换shape-transfer">形状转换（Shape Transfer）</span></h2><p>形状传递模块的目的是将重建的3DMM网格传递到游戏网格。我们设计了基于Radial Basis Function（RBF）插值的形状传递模块。</p>
+<h2><span id="损失函数">损失函数</span></h2><p>我们设计了损失函数来最小化渲染人脸图像和输入人脸照片之间的距离，以及精细纹理贴图和地面真实纹理贴图之间的距离。在渲染循环中，我们设计了四种类型的损失函数，即像素损失、感知损失、皮肤正则化损失和对抗性损失，以从全局外观和局部细节来衡量面部相似性。 </p>
+<p><strong>像素损失（Pixel Loss）</strong></p>
+<p>渲染后的图像R和输入图像I，做pixel loss：</p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629153338519.png" alt="image-20220629153338519"></p>
+<p>GT的UV贴图G和细化的纹理贴图F，做pixel loss：</p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629154446786.png" alt="image-20220629154446786"></p>
+<p><strong>感知损失（Perceptual Loss）</strong></p>
+<p>在感知层面减小重建图像的差异，做法遵循[Structure Guided Img Inpaint using Edge Prediction - 知乎 (zhihu.com)](<a href="https://zhuanlan.zhihu.com/p/147654092#:~:text=%E3%80%8AEdgeConnect%3A">https://zhuanlan.zhihu.com/p/147654092#:~:text=《EdgeConnect%3A</a> Structure Guided Image Inpainting using Edge Prediction》,结构信息 中的 边缘信息 来实现图像的修复（类似Free-form的素描信息） 适用于： rectangular masks、irregular masks。)</p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160619803.png" alt="image-20220629160619803"></p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160626723.png" alt="image-20220629160626723"></p>
+<p><strong>皮肤正则化损失 （Skin Regularization Loss）</strong></p>
+<p>为了在整个面部产生恒定的肤色并去除高光和阴影，我们进行了两次损失来调整面部皮肤，即“对称损失”和“标准偏差损失”。与之前将皮肤正则化直接应用于顶点颜色的工作不同，我们对高斯模糊纹理贴图施加惩罚。这是基于一个事实，即一些个性化的细节（例如痣）并不总是对称的，并且与肤色无关。我们将对称损耗定义如下： </p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160919834.png" alt="image-20220629160919834"></p>
+<p>我们将表皮标准偏差损失定义如下： </p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161001203.png" alt="image-20220629161001203"></p>
+<p><strong>对抗损失（Adversarial Loss）</strong></p>
+<p>为了进一步提高重建的逼真度，我们还在训练期间使用对抗性损失。我们引入了两个鉴别器，一个用于渲染人脸，另一个用于生成的UV纹理贴图。我们训练鉴别器来判断生成的输出是真是假，同时，我们训练网络的其他部分来愚弄鉴别器。对抗训练的目标功能定义如下： </p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161825452.png" alt="image-20220629161825452"></p>
+<p><strong>总损失定义</strong></p>
+<p>**<img src="/2022/06/29/review_9_MeInGame/image-20220629161847549.png" alt="image-20220629161847549">    **        </p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161920596.png" alt="image-20220629161920596"></p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>3DMM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RTTO WEEK1</title>
+    <url>/2022/09/19/rtto_1/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#week-1"><strong>WEEK 1</strong></a><ul>
+<li><a href="#209%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84m">209.长度最小的子数组（m）</a></li>
+<li><a href="#904%E6%B0%B4%E6%9E%9C%E6%88%90%E7%AF%AEm">904.水果成篮（m）</a></li>
+<li><a href="#76%E6%9C%80%E5%B0%8F%E8%A6%86%E7%9B%96%E5%AD%90%E4%B8%B2h">76.最小覆盖子串（h）</a></li>
+<li><a href="#59%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5m">59.螺旋矩阵（m）</a></li>
+<li><a href="#203%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0e">203.移除链表元素（e）</a></li>
+<li><a href="#707%E8%AE%BE%E8%AE%A1%E9%93%BE%E8%A1%A8m">707.设计链表（m）</a></li>
+<li><a href="#206%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8e">206.反转链表（e）</a></li>
+<li><a href="#24%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9m">24.两两交换链表中的节点（m）</a></li>
+<li><a href="#19%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%ACn%E5%90%84%E7%BB%93%E7%82%B9m">19.删除链表的倒数第N各结点（m）</a></li>
+<li><a href="#%E9%9D%A2%E8%AF%95%E9%A2%98-0207-%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4e">面试题 02.07. 链表相交（e）</a></li>
+<li><a href="#142%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8iim">142.环形链表Ⅱ（m）</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="week-1"><strong>WEEK 1</strong></span></h1><h2><span id="209长度最小的子数组m">209.长度最小的子数组（m）</span></h2><p>用滑动窗口，动态调整窗口的起始位置，不断比较子序列是否符合条件（sum&gt;&#x3D;s）,取当前子序列的长度，取相对较小的。</p>
+<h2><span id="904水果成篮m">904.水果成篮（m）</span></h2><p>本题的目标是：得到一个最大子串，其中最多含有两种元素；</p>
+<p>用一个hashmap表示fruits[i]类型的水果对应摘了几个；</p>
+<p>用滑动窗口先遍历右边界，记录更新过程中的type值的变化；</p>
+<p>当hashmap中相应类型水果数量为0时，则type++；</p>
+<p>若type&gt;2，则更新左边界，把hashmap中fruits[left]水果的数量–，若该水果在hashmap中的数量为0，则type–；</p>
+<p>判断每次窗口的长度取历次满足条件的窗口的最大值，即为最终结果；</p>
+<h2><span id="76最小覆盖子串h">76.最小覆盖子串（h）</span></h2><p>用滑动窗口，两个hashmap比较各类字符串出现的频率？不会做</p>
+<h2><span id="59螺旋矩阵m">59.螺旋矩阵（m）</span></h2><p>先确定遍历的圈数——n&#x2F;2；</p>
+<p>上右下左分别进行左闭右开的遍历，进行四个for循环，改变i和j；</p>
+<p>如果n是奇数最里面是一个数而不是一个圈，需要单独赋值count；</p>
+<h2><span id="203移除链表元素e">203.移除链表元素（e）</span></h2><p>简单链表数据结构；</p>
+<p>头节点被删除的情况：直接tmp保存原head，head &#x3D; head -&gt; next，然后删除tmp；</p>
+<p>子节点被删除的情况：开辟一个cur节点，遍历链表元素，若cur -&gt;next 为空则停止遍历（尾节点），删除操作同上；</p>
+<h2><span id="707设计链表m">707.设计链表（m）</span></h2><p>简单链表数据结构；</p>
+<p>需要注意的点是选择index位置的元素的while终止条件；</p>
+<p>判断_size异常输入的条件；</p>
+<h2><span id="206反转链表e">206.反转链表（e）</span></h2><p>快慢指针；</p>
+<p>一个在前一个在后，使用一个tmp来记录cur节点的后一个节点，以便循环推进，每次使得快指针指向的节点重新指向慢指针指向的节点；</p>
+<h2><span id="24两两交换链表中的节点m">24.两两交换链表中的节点（m）</span></h2><p>画图！</p>
+<p>三个步骤，要注意先暂存两个值，以及每一步骤都会改变当前链表结构，需要画图一步步看当前链表状态；</p>
+<h2><span id="19删除链表的倒数第n各结点m">19.删除链表的倒数第N各结点（m）</span></h2><p>双指针；</p>
+<p>让fast移动n步；</p>
+<p>然后让fast和slow同时移动，直到fast指向链表末尾；</p>
+<p>删掉slow所指向的节点；</p>
+<h2><span id="面试题-0207-链表相交e">面试题 02.07. 链表相交（e）</span></h2><p>分别求两链表的长度，计算长度差，先把长链表遍历一段长度差，控制两个链表一样长，然后同时开始遍历两个链表，若遍历到了相同节点则找到了交点。</p>
+<h2><span id="142环形链表iim">142.环形链表Ⅱ（m）</span></h2><p>分两步：判断是否有环；若有环判断环的出口；</p>
+<p>是否有环：快慢指针，快指针一次移动两个，慢指针一次移动一个，若有环快慢指针会在不空的节点上相遇；</p>
+<p>环的出口：从头结点出发一个指针，从相遇节点也出发一个指针，这两个指针每次只走一个节点， 那么当这两个指针相遇的时候就是环形入口的节点（这步有点绕）</p>
+]]></content>
+      <categories>
+        <category>RTTO</category>
+      </categories>
+      <tags>
+        <tag>RTTO</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Geometric and Textural Augmentation for Domain Gap Reduction》</title>
     <url>/2022/06/12/review_8_geom%20tex%20dg/</url>
     <content><![CDATA[<!-- toc -->
@@ -693,74 +823,6 @@
       <tags>
         <tag>style transfer</tag>
         <tag>argument</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《MeInGame:Create a Game Character Face from a Single Portrait》</title>
-    <url>/2022/06/29/review_9_MeInGame/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E8%B4%A1%E7%8C%AE">贡献</a></li>
-<li><a href="#%E6%96%B9%E6%B3%95">方法</a><ul>
-<li><a href="#3d%E4%BA%BA%E8%84%B8%E6%95%B0%E6%8D%AE%E9%9B%86%E6%9E%84%E5%BB%BA%E6%96%B9%E6%B3%95">3D人脸数据集构建方法</a></li>
-<li><a href="#%E4%BA%BA%E8%84%B8%E5%BD%A2%E7%8A%B6%E9%87%8D%E5%BB%BA-face-shape-reconstruction">人脸形状重建 （Face Shape Reconstruction）</a></li>
-<li><a href="#%E5%BD%A2%E7%8A%B6%E8%BD%AC%E6%8D%A2shape-transfer">形状转换（Shape Transfer）</a></li>
-<li><a href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0">损失函数</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Liu_Geometric_and_Textural_Augmentation_for_Domain_Gap_Reduction_CVPR_2022_paper.pdf"><a href="https://arxiv.org/pdf/2102.02371.pdf">2102.02371.pdf (arxiv.org)</a></a></p>
-<p>code: <a href="https://github.com/xch-liu/geom-tex-dg"><a href="https://github.com/FuxiCV/MeInGame">FuxiCV&#x2F;MeInGame: MeInGame: Create a Game Character Face from a Single Portrait, AAAI 2021 (github.com)</a></a></p>
-<span id="more"></span>
-
-<h1><span id="任务">任务</span></h1><p>从单张真实2D肖像生成武侠风格的3D可形变模型。</p>
-<h1><span id="出发点">出发点</span></h1><p>近年来，人们提出了许多基于深度学习的三维人脸重建方法，但在游戏中应用较少。当前的游戏角色定制系统要么要求玩家手动调整相当多的面部属性以获得所需的面部，要么限制面部形状和纹理的自由度。</p>
-<h1><span id="贡献">贡献</span></h1><p>我们提出了一种低成本的三维人脸数据集创建方法。我们创建的数据集在种族和性别上是平衡的，面部形状和纹理都是从原始图像中创建的。我们将在论文被接受后将其公开。 提出了一种低成本的面部纹理获取方法</p>
-<p>我们提出了一种将重建的3DMM人脸形状转换为游戏网格的方法，可以直接在游戏环境中使用。该方法与网格连通性无关，在实际应用中计算效率较高。 </p>
-<p>为了消除光照和遮挡的影响，我们在对抗性训练范式下训练神经网络，从野外人脸图像中的单个图像预测一个完整的漫反射贴图。 </p>
-<h1><span id="方法">方法</span></h1><p><img src="/2022/06/29/review_9_MeInGame/image-20220629143637063.png" alt="image-20220629143637063"></p>
-<p>Shape Reconstructor pretrain好，获取3DMM系数和姿势系数，通过3DMM网络构成3DMM mesh（只有正面3D人脸），Shape Transfer将3DMM mesh转换成Game mesh（整个3D人头）；</p>
-<p>根据Game mesh将原图uv展开创建一个粗糙纹理贴图，通过encoder decoder进一步细化至细化纹理；</p>
-<p>还引入了一个光照predictor，预测光照系数；</p>
-<p>最后，将预测的形状、纹理和照明系数一起提供给可微分渲染器，并强制渲染输出与输入照片类似。为了进一步改进结果，引入了两个鉴别器。</p>
-<h2><span id="3d人脸数据集构建方法">3D人脸数据集构建方法</span></h2><p>1）给定一张人脸图像，通过预训练好的人脸分割网络检测皮肤区域</p>
-<p>2）计算输入面部皮肤的平均颜色，并将平均皮肤颜色传输到模板纹理贴图（由游戏开发人员提供，是标准3D模型模板对应的标准UV模板） </p>
-<p>3）根据变形的game mesh，将输入人脸图像展开到UV空间</p>
-<p>4）使用Poisson blending（图像融合操作）将展开的贴图与UV模板混合，移除头发和眼镜等非皮肤区域，并尽可能使用对称性修补遮挡区域</p>
-<h2><span id="人脸形状重建-face-shape-reconstruction">人脸形状重建 （Face Shape Reconstruction）</span></h2><p>第一步从输入图像预测3DMM形状和姿势系数。采用了<a href="https://openaccess.thecvf.com/content_CVPRW_2019/papers/AMFG/Deng_Accurate_3D_Face_Reconstruction_With_Weakly-Supervised_Learning_From_Single_Image_CVPRW_2019_paper.pdf">Accurate 3D Face Reconstruction With Weakly-Supervised Learning: From Single Image to Image Set (thecvf.com)</a>的方法，其他3DMM的方法同样适用。</p>
-<h2><span id="形状转换shape-transfer">形状转换（Shape Transfer）</span></h2><p>形状传递模块的目的是将重建的3DMM网格传递到游戏网格。我们设计了基于Radial Basis Function（RBF）插值的形状传递模块。</p>
-<h2><span id="损失函数">损失函数</span></h2><p>我们设计了损失函数来最小化渲染人脸图像和输入人脸照片之间的距离，以及精细纹理贴图和地面真实纹理贴图之间的距离。在渲染循环中，我们设计了四种类型的损失函数，即像素损失、感知损失、皮肤正则化损失和对抗性损失，以从全局外观和局部细节来衡量面部相似性。 </p>
-<p><strong>像素损失（Pixel Loss）</strong></p>
-<p>渲染后的图像R和输入图像I，做pixel loss：</p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629153338519.png" alt="image-20220629153338519"></p>
-<p>GT的UV贴图G和细化的纹理贴图F，做pixel loss：</p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629154446786.png" alt="image-20220629154446786"></p>
-<p><strong>感知损失（Perceptual Loss）</strong></p>
-<p>在感知层面减小重建图像的差异，做法遵循[Structure Guided Img Inpaint using Edge Prediction - 知乎 (zhihu.com)](<a href="https://zhuanlan.zhihu.com/p/147654092#:~:text=%E3%80%8AEdgeConnect%3A">https://zhuanlan.zhihu.com/p/147654092#:~:text=《EdgeConnect%3A</a> Structure Guided Image Inpainting using Edge Prediction》,结构信息 中的 边缘信息 来实现图像的修复（类似Free-form的素描信息） 适用于： rectangular masks、irregular masks。)</p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160619803.png" alt="image-20220629160619803"></p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160626723.png" alt="image-20220629160626723"></p>
-<p><strong>皮肤正则化损失 （Skin Regularization Loss）</strong></p>
-<p>为了在整个面部产生恒定的肤色并去除高光和阴影，我们进行了两次损失来调整面部皮肤，即“对称损失”和“标准偏差损失”。与之前将皮肤正则化直接应用于顶点颜色的工作不同，我们对高斯模糊纹理贴图施加惩罚。这是基于一个事实，即一些个性化的细节（例如痣）并不总是对称的，并且与肤色无关。我们将对称损耗定义如下： </p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160919834.png" alt="image-20220629160919834"></p>
-<p>我们将表皮标准偏差损失定义如下： </p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161001203.png" alt="image-20220629161001203"></p>
-<p><strong>对抗损失（Adversarial Loss）</strong></p>
-<p>为了进一步提高重建的逼真度，我们还在训练期间使用对抗性损失。我们引入了两个鉴别器，一个用于渲染人脸，另一个用于生成的UV纹理贴图。我们训练鉴别器来判断生成的输出是真是假，同时，我们训练网络的其他部分来愚弄鉴别器。对抗训练的目标功能定义如下： </p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161825452.png" alt="image-20220629161825452"></p>
-<p><strong>总损失定义</strong></p>
-<p>**<img src="/2022/06/29/review_9_MeInGame/image-20220629161847549.png" alt="image-20220629161847549">    **        </p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161920596.png" alt="image-20220629161920596"></p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>3DMM</tag>
       </tags>
   </entry>
   <entry>

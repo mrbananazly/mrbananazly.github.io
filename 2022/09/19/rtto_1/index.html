@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" integrity="sha256-jTIdiMuX/e3DGJUGwl3pKSxuc6YOuqtJYkM0bGQESA4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mrbananazly.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="WEEK 1 209.长度最小的子数组（m） 904.水果成篮（m） 76.最小覆盖子串（h） 59.螺旋矩阵（m） 203.移除链表元素（e） 707.设计链表（m） 206.反转链表（e） 24.两两交换链表中的节点（m） 19.删除链表的倒数第N各结点（m） 面试题 02.07. 链表相交（e） 142.环形链表Ⅱ（m）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RTTO WEEK1">
+<meta property="og:url" content="http://mrbananazly.cn/2022/09/19/rtto_1/index.html">
+<meta property="og:site_name" content="Road 2 the Final">
+<meta property="og:description" content="WEEK 1 209.长度最小的子数组（m） 904.水果成篮（m） 76.最小覆盖子串（h） 59.螺旋矩阵（m） 203.移除链表元素（e） 707.设计链表（m） 206.反转链表（e） 24.两两交换链表中的节点（m） 19.删除链表的倒数第N各结点（m） 面试题 02.07. 链表相交（e） 142.环形链表Ⅱ（m）">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2022-09-19T09:12:32.325Z">
+<meta property="article:modified_time" content="2022-09-19T09:13:58.586Z">
+<meta property="article:author" content="mrbanana_zly">
+<meta property="article:tag" content="RTTO">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://mrbananazly.cn/2022/09/19/rtto_1/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://mrbananazly.cn/2022/09/19/rtto_1/","path":"2022/09/19/rtto_1/","title":"RTTO WEEK1"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>RTTO WEEK1 | Road 2 the Final</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Road 2 the Final</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">WEEK 1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">209.长度最小的子数组（m）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">904.水果成篮（m）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.3.</span> <span class="nav-text">76.最小覆盖子串（h）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.4.</span> <span class="nav-text">59.螺旋矩阵（m）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.5.</span> <span class="nav-text">203.移除链表元素（e）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.6.</span> <span class="nav-text">707.设计链表（m）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.7.</span> <span class="nav-text">206.反转链表（e）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.8.</span> <span class="nav-text">24.两两交换链表中的节点（m）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.9.</span> <span class="nav-text">19.删除链表的倒数第N各结点（m）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.10.</span> <span class="nav-text">面试题 02.07. 链表相交（e）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.11.</span> <span class="nav-text">142.环形链表Ⅱ（m）</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="mrbanana_zly"
+      src="/images/favicon.png">
+  <p class="site-author-name" itemprop="name">mrbanana_zly</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://mrbananazly.cn/2022/09/19/rtto_1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.png">
+      <meta itemprop="name" content="mrbanana_zly">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="RTTO WEEK1 | Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          RTTO WEEK1
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-09-19 17:12:32 / Modified: 17:13:58" itemprop="dateCreated datePublished" datetime="2022-09-19T17:12:32+08:00">2022-09-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/RTTO/" itemprop="url" rel="index"><span itemprop="name">RTTO</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <!-- toc -->
+
+<ul>
+<li><a href="#week-1"><strong>WEEK 1</strong></a><ul>
+<li><a href="#209%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84m">209.长度最小的子数组（m）</a></li>
+<li><a href="#904%E6%B0%B4%E6%9E%9C%E6%88%90%E7%AF%AEm">904.水果成篮（m）</a></li>
+<li><a href="#76%E6%9C%80%E5%B0%8F%E8%A6%86%E7%9B%96%E5%AD%90%E4%B8%B2h">76.最小覆盖子串（h）</a></li>
+<li><a href="#59%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5m">59.螺旋矩阵（m）</a></li>
+<li><a href="#203%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0e">203.移除链表元素（e）</a></li>
+<li><a href="#707%E8%AE%BE%E8%AE%A1%E9%93%BE%E8%A1%A8m">707.设计链表（m）</a></li>
+<li><a href="#206%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8e">206.反转链表（e）</a></li>
+<li><a href="#24%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9m">24.两两交换链表中的节点（m）</a></li>
+<li><a href="#19%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%ACn%E5%90%84%E7%BB%93%E7%82%B9m">19.删除链表的倒数第N各结点（m）</a></li>
+<li><a href="#%E9%9D%A2%E8%AF%95%E9%A2%98-0207-%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4e">面试题 02.07. 链表相交（e）</a></li>
+<li><a href="#142%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8iim">142.环形链表Ⅱ（m）</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="week-1"><strong>WEEK 1</strong></span></h1><h2><span id="209长度最小的子数组m">209.长度最小的子数组（m）</span></h2><p>用滑动窗口，动态调整窗口的起始位置，不断比较子序列是否符合条件（sum&gt;&#x3D;s）,取当前子序列的长度，取相对较小的。</p>
+<h2><span id="904水果成篮m">904.水果成篮（m）</span></h2><p>本题的目标是：得到一个最大子串，其中最多含有两种元素；</p>
+<p>用一个hashmap表示fruits[i]类型的水果对应摘了几个；</p>
+<p>用滑动窗口先遍历右边界，记录更新过程中的type值的变化；</p>
+<p>当hashmap中相应类型水果数量为0时，则type++；</p>
+<p>若type&gt;2，则更新左边界，把hashmap中fruits[left]水果的数量–，若该水果在hashmap中的数量为0，则type–；</p>
+<p>判断每次窗口的长度取历次满足条件的窗口的最大值，即为最终结果；</p>
+<h2><span id="76最小覆盖子串h">76.最小覆盖子串（h）</span></h2><p>用滑动窗口，两个hashmap比较各类字符串出现的频率？不会做</p>
+<h2><span id="59螺旋矩阵m">59.螺旋矩阵（m）</span></h2><p>先确定遍历的圈数——n&#x2F;2；</p>
+<p>上右下左分别进行左闭右开的遍历，进行四个for循环，改变i和j；</p>
+<p>如果n是奇数最里面是一个数而不是一个圈，需要单独赋值count；</p>
+<h2><span id="203移除链表元素e">203.移除链表元素（e）</span></h2><p>简单链表数据结构；</p>
+<p>头节点被删除的情况：直接tmp保存原head，head &#x3D; head -&gt; next，然后删除tmp；</p>
+<p>子节点被删除的情况：开辟一个cur节点，遍历链表元素，若cur -&gt;next 为空则停止遍历（尾节点），删除操作同上；</p>
+<h2><span id="707设计链表m">707.设计链表（m）</span></h2><p>简单链表数据结构；</p>
+<p>需要注意的点是选择index位置的元素的while终止条件；</p>
+<p>判断_size异常输入的条件；</p>
+<h2><span id="206反转链表e">206.反转链表（e）</span></h2><p>快慢指针；</p>
+<p>一个在前一个在后，使用一个tmp来记录cur节点的后一个节点，以便循环推进，每次使得快指针指向的节点重新指向慢指针指向的节点；</p>
+<h2><span id="24两两交换链表中的节点m">24.两两交换链表中的节点（m）</span></h2><p>画图！</p>
+<p>三个步骤，要注意先暂存两个值，以及每一步骤都会改变当前链表结构，需要画图一步步看当前链表状态；</p>
+<h2><span id="19删除链表的倒数第n各结点m">19.删除链表的倒数第N各结点（m）</span></h2><p>双指针；</p>
+<p>让fast移动n步；</p>
+<p>然后让fast和slow同时移动，直到fast指向链表末尾；</p>
+<p>删掉slow所指向的节点；</p>
+<h2><span id="面试题-0207-链表相交e">面试题 02.07. 链表相交（e）</span></h2><p>分别求两链表的长度，计算长度差，先把长链表遍历一段长度差，控制两个链表一样长，然后同时开始遍历两个链表，若遍历到了相同节点则找到了交点。</p>
+<h2><span id="142环形链表iim">142.环形链表Ⅱ（m）</span></h2><p>分两步：判断是否有环；若有环判断环的出口；</p>
+<p>是否有环：快慢指针，快指针一次移动两个，慢指针一次移动一个，若有环快慢指针会在不空的节点上相遇；</p>
+<p>环的出口：从头结点出发一个指针，从相遇节点也出发一个指针，这两个指针每次只走一个节点， 那么当这两个指针相遇的时候就是环形入口的节点（这步有点绕）</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/RTTO/" rel="tag"># RTTO</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/07/24/review_10_F2P/" rel="prev" title="《Face-to-Parameter Translation for Game Character Auto-Creation》">
+                  <i class="fa fa-chevron-left"></i> 《Face-to-Parameter Translation for Game Character Auto-Creation》
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mrbanana_zly</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
