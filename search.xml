@@ -1,99 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>《Face-to-Parameter Translation for Game Character Auto-Creation》</title>
-    <url>/2022/07/24/review_10_F2P/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E6%96%B9%E6%B3%95%E7%AE%80%E8%BF%B0">方法简述</a><ul>
-<li><a href="#%E8%B4%A1%E7%8C%AE">贡献</a></li>
-</ul>
-</li>
-<li><a href="#%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3">方法详解</a><ul>
-<li><a href="#1imitator">1.Imitator</a></li>
-<li><a href="#2facial-similarity-measurement">2.Facial Similarity Measurement</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content_ICCV_2019/papers/Shi_Face-to-Parameter_Translation_for_Game_Character_Auto-Creation_ICCV_2019_paper.pdf">Face-to-Parameter Translation for Game Character Auto-Creation (thecvf.com)</a></p>
-<p>code: no code</p>
-<p>reference link: <a href="https://zhuanlan.zhihu.com/p/105037127">【1】伏羲AI lab：脸部照片到脸部参数的游戏角色自动生成 论文笔记 - 知乎 (zhihu.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="出发点">出发点</span></h1><p>RPG游戏中捏脸的标准工作流是从配置大量<strong>面部参数</strong>开始，然后，游戏引擎将这些用户指定的参数作为输入，并生成3D人脸。也可以说游戏人脸定制是一种3DMM的特例或是一种风格迁移问题。</p>
-<p>但遗憾的是，上述方法不能直接应用于游戏环境中。原因有三。首先，这些方法并不是用于生成参数化的角色，而这对于大多数游戏引擎来说是必不可少的，因为它们通常会<strong>接受游戏角色的定制参数</strong>，而不是图像或3D网格。其次，这些方法对用户交互不友好，因为大多数用户很难直接编辑Mesh。最后，给定一组用户指定参数的游戏引擎的渲染过程是不可微分的，这进一步限制了深度学习方法在游戏环境中的适用性。</p>
-<h1><span id="方法简述">方法简述</span></h1><p>针对上述问题，本文提出了一种根据玩家输入的人脸照片自动生成游戏角色的方法，如图所示。</p>
-<p><img src="/2022/07/24/review_10_F2P/image-20220724165007254.png" alt="image-20220724165007254"></p>
-<p>与以往3DMM方法不同，我们的方法通过<strong>预测一组具有明确物理意义的面部参数，为骨骼驱动的模型创建三维轮廓</strong>。在我们的方法中，每个参数控制每个面部组件的一个单独属性，包括位置、方向和比例。更重要的是，我们的方法在创建结果的基础上支持额外的用户交互，玩家可以根据自己的需求进一步改进他们的形象。由于游戏引擎的渲染过程是不可微分的，我们设计了一个生成网络作为“模仿者”来模仿游戏引擎的物理行为，从而可以在神经风格传递框架下实现本文提出的方法，并使用梯度下降法优化面部参数。</p>
-<h2><span id="贡献">贡献</span></h2><p>1)我们提出了一种端到端的人脸参数转换和游戏角色自动生成方法。据我们所知，关于这一主题的研究工作很少。</p>
-<p>2)由于游戏引擎的渲染过程是不可区分的，我们引入了一个模仿者，通过构建一个深度生成网络来模仿游戏引擎的行为。这样，梯度可以平滑地反向传播到输入，从而利用梯度下降法更新人脸参数。</p>
-<p>3)为跨域人脸相似度测量设计了两个损失函数。提出的目标可以在多任务学习框架中联合优化。</p>
-<h1><span id="方法详解">方法详解</span></h1><p><img src="/2022/07/24/review_10_F2P/image-20220724165938954.png" alt="image-20220724165938954"></p>
-<h2><span id="1imitator">1.Imitator</span></h2><p><img src="/2022/07/24/review_10_F2P/image-20220724194516986.png" alt="image-20220724194516986"></p>
-<p>采用类似DCGAN的结构，包含8个反卷积层，用来模拟游戏引擎从脸部参数到脸部图像的映射。然后将真实游戏引擎的渲染结果与模拟器生成的图像算L1 loss。训练用了20000对人脸图像，游戏引擎用的是逆水寒的游戏引擎。</p>
-<p><img src="/2022/07/24/review_10_F2P/image-20220724195638704.png" alt="image-20220724195638704"></p>
-<p>图4显示了我们的模仿者的“渲染”结果的三个示例。这些图像的面部参数是手动创建的。由于训练样本是根据面部参数的统一分布随机生成的，所以对于大多数人物可能看起来很奇怪(请参阅我们的补充资料)。尽管如此，我们仍然可以从图4中看到，生成的人脸图像和渲染的地面真实图像有很高的相似性，即使在一些纹理复杂的区域，如头发。这表明我们的模仿者不仅将训练数据拟合在一个低维的人脸流形中，而且还学会了解耦不同人脸参数之间的相关性。</p>
-<h2><span id="2facial-similarity-measurement">2.Facial Similarity Measurement</span></h2><p>alignment后的真实人脸与Imitator生成的人脸通过预训练好的识别网络算embedding间的余弦相似度。</p>
-<p><img src="/2022/07/24/review_10_F2P/image-20220725143108613.png" alt="image-20220725143108613"></p>
-<p>又采用了一个预训练好的分割网络对两张图像进行分割，在著名的Helen face语义分割数据集上训练该模型。为了提高人脸语义特征的位置敏感性，进一步使用分割结果(分类概率图)作为特征图的像素权值，构建位置敏感的内容丢失函数。通俗点应该就是针对每个部分对feature map做掩码算L1。</p>
-<p><img src="/2022/07/24/review_10_F2P/image-20220725144042722.png" alt="image-20220725144042722"></p>
-<p><img src="/2022/07/24/review_10_F2P/image-20220725143221347.png" alt="image-20220725143221347"></p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>Game Character Create</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</title>
-    <url>/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a></li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: [<a href="https://arxiv.org/abs/2203.06541">2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org)</a></p>
-<p>code: <a href="https://github.com/Jiahao-UTS/SLPT-master">Jiahao-UTS&#x2F;SLPT-master (github.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="出发点">出发点</span></h1><p>landmark之间的内在联系对于人脸对齐的性能有很大影响，本文重点考虑其内在联系。</p>
-<p>之前的方法有heatmap regression，Coordinate regression，有着不同方面的劣势。</p>
-<h1><span id="创新点">创新点</span></h1><p>提出了SLPT（<em>sparse local patch transformer</em>）来学习<em>query-query</em>和<em>representation-query</em>关系（自适应内在关系）；为了进一步提高SLPT的性能，提出了一种从粗到精的框架，使局部补丁进化为<strong>金字塔形补丁</strong>。</p>
-<h1><span id="做法">做法</span></h1><p>本文的SLPT并非同DETR从完整的feature map中预测坐标，而是首先从局部patch中生成每个landmark的表示特征。</p>
-<p>然后，使用一系列可学习的queries（称为<em>landmark queries</em>）来聚合表示。</p>
-<p>基于Transformer的交叉注意机制，SPLT在每一层学习一个<strong>自适应邻接矩阵</strong>。最后，通过MLP独立预测每个landmark在其对应patch中的subpixel坐标。由于使用了稀疏的局部补丁，与其他ViT相比，输入token的数量显著减少。 </p>
-<p>为了进一步提高性能，引入了从粗到精的框架，以与SLPT结合。下图为所提出的从粗到精的框架利用稀疏的局部面片实现鲁棒的人脸对齐。根据前一阶段的landmarks裁剪稀疏的局部补丁，并将其输入到同一SLPT中以预测面部landmarks。此外，patch大小随着阶段的增加而缩小，以使局部特征演变成金字塔形式。</p>
-<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/1.png" alt="1"></p>
-<p>整体框架图：</p>
-<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/2.png" alt="2"></p>
-<p>分为三部分：</p>
-<p><strong>the patch embedding &amp; structure encoding</strong></p>
-<p>不同于ViT，SLPT先根据landmark裁剪patch，再通过线性插值将patch大小调整为K*K，又使用了结构编码（可学习的参数）来补充表示。每种编码都与相邻地标（如左眼和右眼）的编码有很高的相似性。</p>
-<p>Muti-head Cross-attention（在Vision Transformer基础上的改进）：通过landmark在CNN提取出的feature map上划取局部patch，将这些feature map上的patch排成一个patch embedding，将其视为landmark的表示；紧接着对其进行结构编码（Structure Encodeing）,以获取人脸中的相对位置和patch embedding做concat。输入 landmarks queries ，通过这些MLP，独立预测每个landmark的位置。</p>
-<p><strong>inherent relation layers</strong></p>
-<p>受Transformer启发，每一层由三个块组成，即多头自注意（MSA）块、多头交叉注意（MCA）块和多层感知器（MLP）块，并且在每个块之前应用一个layer norm（LN）。 </p>
-<p><strong>prediction heads</strong></p>
-<p>预测头由一个用于规范化输入的分层模板和一个用于预测结果的MLP层组成。</p>
-<p>最右边的图像显示了不同样本的自适应固有关系。其将每个点连接到第一个内在关系层中交叉注意权重最高的点显示。</p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>Patch-based Transformer</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer》</title>
     <url>/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/</url>
     <content><![CDATA[<!-- toc -->
@@ -160,6 +67,99 @@
         <tag>ReID</tag>
         <tag>Transformer</tag>
         <tag>Landmark</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</title>
+    <url>/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a></li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: [<a href="https://arxiv.org/abs/2203.06541">2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org)</a></p>
+<p>code: <a href="https://github.com/Jiahao-UTS/SLPT-master">Jiahao-UTS&#x2F;SLPT-master (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="出发点">出发点</span></h1><p>landmark之间的内在联系对于人脸对齐的性能有很大影响，本文重点考虑其内在联系。</p>
+<p>之前的方法有heatmap regression，Coordinate regression，有着不同方面的劣势。</p>
+<h1><span id="创新点">创新点</span></h1><p>提出了SLPT（<em>sparse local patch transformer</em>）来学习<em>query-query</em>和<em>representation-query</em>关系（自适应内在关系）；为了进一步提高SLPT的性能，提出了一种从粗到精的框架，使局部补丁进化为<strong>金字塔形补丁</strong>。</p>
+<h1><span id="做法">做法</span></h1><p>本文的SLPT并非同DETR从完整的feature map中预测坐标，而是首先从局部patch中生成每个landmark的表示特征。</p>
+<p>然后，使用一系列可学习的queries（称为<em>landmark queries</em>）来聚合表示。</p>
+<p>基于Transformer的交叉注意机制，SPLT在每一层学习一个<strong>自适应邻接矩阵</strong>。最后，通过MLP独立预测每个landmark在其对应patch中的subpixel坐标。由于使用了稀疏的局部补丁，与其他ViT相比，输入token的数量显著减少。 </p>
+<p>为了进一步提高性能，引入了从粗到精的框架，以与SLPT结合。下图为所提出的从粗到精的框架利用稀疏的局部面片实现鲁棒的人脸对齐。根据前一阶段的landmarks裁剪稀疏的局部补丁，并将其输入到同一SLPT中以预测面部landmarks。此外，patch大小随着阶段的增加而缩小，以使局部特征演变成金字塔形式。</p>
+<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/1.png" alt="1"></p>
+<p>整体框架图：</p>
+<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/2.png" alt="2"></p>
+<p>分为三部分：</p>
+<p><strong>the patch embedding &amp; structure encoding</strong></p>
+<p>不同于ViT，SLPT先根据landmark裁剪patch，再通过线性插值将patch大小调整为K*K，又使用了结构编码（可学习的参数）来补充表示。每种编码都与相邻地标（如左眼和右眼）的编码有很高的相似性。</p>
+<p>Muti-head Cross-attention（在Vision Transformer基础上的改进）：通过landmark在CNN提取出的feature map上划取局部patch，将这些feature map上的patch排成一个patch embedding，将其视为landmark的表示；紧接着对其进行结构编码（Structure Encodeing）,以获取人脸中的相对位置和patch embedding做concat。输入 landmarks queries ，通过这些MLP，独立预测每个landmark的位置。</p>
+<p><strong>inherent relation layers</strong></p>
+<p>受Transformer启发，每一层由三个块组成，即多头自注意（MSA）块、多头交叉注意（MCA）块和多层感知器（MLP）块，并且在每个块之前应用一个layer norm（LN）。 </p>
+<p><strong>prediction heads</strong></p>
+<p>预测头由一个用于规范化输入的分层模板和一个用于预测结果的MLP层组成。</p>
+<p>最右边的图像显示了不同样本的自适应固有关系。其将每个点连接到第一个内在关系层中交叉注意权重最高的点显示。</p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>Patch-based Transformer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Face-to-Parameter Translation for Game Character Auto-Creation》</title>
+    <url>/2022/07/24/review_10_F2P/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95%E7%AE%80%E8%BF%B0">方法简述</a><ul>
+<li><a href="#%E8%B4%A1%E7%8C%AE">贡献</a></li>
+</ul>
+</li>
+<li><a href="#%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3">方法详解</a><ul>
+<li><a href="#1imitator">1.Imitator</a></li>
+<li><a href="#2facial-similarity-measurement">2.Facial Similarity Measurement</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content_ICCV_2019/papers/Shi_Face-to-Parameter_Translation_for_Game_Character_Auto-Creation_ICCV_2019_paper.pdf">Face-to-Parameter Translation for Game Character Auto-Creation (thecvf.com)</a></p>
+<p>code: no code</p>
+<p>reference link: <a href="https://zhuanlan.zhihu.com/p/105037127">【1】伏羲AI lab：脸部照片到脸部参数的游戏角色自动生成 论文笔记 - 知乎 (zhihu.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="出发点">出发点</span></h1><p>RPG游戏中捏脸的标准工作流是从配置大量<strong>面部参数</strong>开始，然后，游戏引擎将这些用户指定的参数作为输入，并生成3D人脸。也可以说游戏人脸定制是一种3DMM的特例或是一种风格迁移问题。</p>
+<p>但遗憾的是，上述方法不能直接应用于游戏环境中。原因有三。首先，这些方法并不是用于生成参数化的角色，而这对于大多数游戏引擎来说是必不可少的，因为它们通常会<strong>接受游戏角色的定制参数</strong>，而不是图像或3D网格。其次，这些方法对用户交互不友好，因为大多数用户很难直接编辑Mesh。最后，给定一组用户指定参数的游戏引擎的渲染过程是不可微分的，这进一步限制了深度学习方法在游戏环境中的适用性。</p>
+<h1><span id="方法简述">方法简述</span></h1><p>针对上述问题，本文提出了一种根据玩家输入的人脸照片自动生成游戏角色的方法，如图所示。</p>
+<p><img src="/2022/07/24/review_10_F2P/image-20220724165007254.png" alt="image-20220724165007254"></p>
+<p>与以往3DMM方法不同，我们的方法通过<strong>预测一组具有明确物理意义的面部参数，为骨骼驱动的模型创建三维轮廓</strong>。在我们的方法中，每个参数控制每个面部组件的一个单独属性，包括位置、方向和比例。更重要的是，我们的方法在创建结果的基础上支持额外的用户交互，玩家可以根据自己的需求进一步改进他们的形象。由于游戏引擎的渲染过程是不可微分的，我们设计了一个生成网络作为“模仿者”来模仿游戏引擎的物理行为，从而可以在神经风格传递框架下实现本文提出的方法，并使用梯度下降法优化面部参数。</p>
+<h2><span id="贡献">贡献</span></h2><p>1)我们提出了一种端到端的人脸参数转换和游戏角色自动生成方法。据我们所知，关于这一主题的研究工作很少。</p>
+<p>2)由于游戏引擎的渲染过程是不可区分的，我们引入了一个模仿者，通过构建一个深度生成网络来模仿游戏引擎的行为。这样，梯度可以平滑地反向传播到输入，从而利用梯度下降法更新人脸参数。</p>
+<p>3)为跨域人脸相似度测量设计了两个损失函数。提出的目标可以在多任务学习框架中联合优化。</p>
+<h1><span id="方法详解">方法详解</span></h1><p><img src="/2022/07/24/review_10_F2P/image-20220724165938954.png" alt="image-20220724165938954"></p>
+<h2><span id="1imitator">1.Imitator</span></h2><p><img src="/2022/07/24/review_10_F2P/image-20220724194516986.png" alt="image-20220724194516986"></p>
+<p>采用类似DCGAN的结构，包含8个反卷积层，用来模拟游戏引擎从脸部参数到脸部图像的映射。然后将真实游戏引擎的渲染结果与模拟器生成的图像算L1 loss。训练用了20000对人脸图像，游戏引擎用的是逆水寒的游戏引擎。</p>
+<p><img src="/2022/07/24/review_10_F2P/image-20220724195638704.png" alt="image-20220724195638704"></p>
+<p>图4显示了我们的模仿者的“渲染”结果的三个示例。这些图像的面部参数是手动创建的。由于训练样本是根据面部参数的统一分布随机生成的，所以对于大多数人物可能看起来很奇怪(请参阅我们的补充资料)。尽管如此，我们仍然可以从图4中看到，生成的人脸图像和渲染的地面真实图像有很高的相似性，即使在一些纹理复杂的区域，如头发。这表明我们的模仿者不仅将训练数据拟合在一个低维的人脸流形中，而且还学会了解耦不同人脸参数之间的相关性。</p>
+<h2><span id="2facial-similarity-measurement">2.Facial Similarity Measurement</span></h2><p>alignment后的真实人脸与Imitator生成的人脸通过预训练好的识别网络算embedding间的余弦相似度。</p>
+<p><img src="/2022/07/24/review_10_F2P/image-20220725143108613.png" alt="image-20220725143108613"></p>
+<p>又采用了一个预训练好的分割网络对两张图像进行分割，在著名的Helen face语义分割数据集上训练该模型。为了提高人脸语义特征的位置敏感性，进一步使用分割结果(分类概率图)作为特征图的像素权值，构建位置敏感的内容丢失函数。通俗点应该就是针对每个部分对feature map做掩码算L1。</p>
+<p><img src="/2022/07/24/review_10_F2P/image-20220725144042722.png" alt="image-20220725144042722"></p>
+<p><img src="/2022/07/24/review_10_F2P/image-20220725143221347.png" alt="image-20220725143221347"></p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>Game Character Create</tag>
       </tags>
   </entry>
   <entry>
@@ -385,6 +385,97 @@
       </tags>
   </entry>
   <entry>
+    <title>《IACycleGAN》</title>
+    <url>/2022/06/08/review_6_IACycleGAN/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B">生成模型</a><ul>
+<li><a href="#%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C%E6%95%B4%E4%BD%93loss%E5%9B%BE%E7%A4%BA">生成网络整体loss图示</a></li>
+</ul>
+</li>
+<li><a href="#%E8%AF%86%E5%88%AB%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C%E7%9A%84%E4%BA%92%E7%9B%B8%E4%BC%98%E5%8C%96">识别网络与生成网络的互相优化</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AE%9E%E9%AA%8C">实验</a><ul>
+<li><a href="#%E6%95%B0%E6%8D%AE%E9%9B%86">数据集</a><ul>
+<li><a href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82">生成模型实施细节</a></li>
+<li><a href="#%E8%AF%86%E5%88%AB%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82">识别模型实施细节</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf"><a href="https://arxiv.org/pdf/2103.16019.pdf">Identity-Aware CycleGAN for Face Photo-Sketch Synthesis and Recognition (arxiv.org)</a></a></p>
+<p>code: none</p>
+<span id="more"></span>
+
+<h1><span id="任务">任务</span></h1><p>真人素描生成与识别</p>
+<h1><span id="出发点">出发点</span></h1><p>生成促进识别 识别促进生成；</p>
+<p>大部分生成方法使得合成图像与原始图像在纹理上保持一致，会导致信息丢失；</p>
+<p>大多数生成框架都只能学习两个域之间的关系，其鉴别器只关注照片和草图之间的差异，而不考虑任何特定的识别优化（身份信息）；</p>
+<h1><span id="创新点">创新点</span></h1><p>在CycleGAN上加入了感知损失（perceptual loss）,能更好的关注面部的语义信息（眼睛、鼻子）;</p>
+<p>使生成模型和识别模型相互优化，生成模型迭代生成更好的图像，Triplet Loss训识别模型；</p>
+<h1><span id="做法">做法</span></h1><h2><span id="生成模型">生成模型</span></h2><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608102426736.png" alt="image-20220608102426736"></p>
+<p>分别给出两个domain的照片（这里输入的是paired数据，这里的paired应该身份paired），其训练目的是获得Gx，Gy两个生成器。</p>
+<p>两个识别网络，其目的是使用pretrain好的vggface提取feature做Identity perception loss；</p>
+<p>生成器用了《Perceptual losses for real-time style transfer and super-resolution》中的结构；</p>
+<p>判别器用了PatchGAN的结构；</p>
+<h3><span id="生成网络整体loss图示">生成网络整体loss图示</span></h3><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608105545461.png" alt="image-20220608105545461"></p>
+<h4><span id="对抗损失adversarial-loss">对抗损失（adversarial loss）</span></h4><p>输入图像与生成图像进入判别器进行计算，最小化下式</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608110633855.png" alt="image-20220608110633855"></p>
+<h4><span id="循环一致性损失cycle-consistency-loss">循环一致性损失（cycle consistency loss）</span></h4><p>Gx生成的图像再进入Gy恢复原本domain与最初的输入x计算L1，<strong>此loss为pix级</strong>，最小化下式</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608110959225.png" alt="image-20220608110959225"></p>
+<h4><span id="身份保持损失identity-perception-loss">身份保持损失（identity perception loss）</span></h4><p>仅使用对抗损失会导致伪影和训练不稳定，需要加更强大的监督；</p>
+<p>通过一个pretrain的识别网络（文中选择vggface）分别提取两对（原图与合成图）的feature计算L2，<strong>此loss区别于pix级监督，是feature级</strong>，文中对于此处的解释是：绘制的草图会有夸张成分以扭曲面部纹理信息，夸大面部特征，完全基于pix重建图像效果不会好；CycleGAN的训练需要进行数据增强操作（resize，flip等）难以实施pix级的监督。</p>
+<p>最小化下式</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608111456554.png" alt="image-20220608111456554"></p>
+<h4><span id="身份映射损失identity-mapping-loss">身份映射损失（identity mapping loss）</span></h4><p>常规的pix级的约束，最小化下式</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112212476.png" alt="image-20220608112212476"></p>
+<h4><span id="整体loss">整体loss</span></h4><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112236780.png" alt="image-20220608112236780"></p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112252105.png" alt="image-20220608112252105"></p>
+<p>最小化生成器的loss最大化判别器的loss</p>
+<p>其中超参数lamda分别设为10，30000000，5</p>
+<h2><span id="识别网络与生成网络的互相优化">识别网络与生成网络的互相优化</span></h2><p>许多主做生成的工作都是fix相应的识别网络作为一个特征提取器来附加身份保持损失；</p>
+<p>本文的做法估计是：</p>
+<p>step1：先fix识别网络参数训练生成网络，获得一定量的生成的图片；</p>
+<p>step2：使用生成的图片fine-tune识别网络（单走一个人脸识别模型的流程），用了triplet loss，更新识别网络参数，其中两个模态分别有两个识别网络，要分开训练；</p>
+<p>step3：重复上述操作以获得更好的生成模型和识别模型。</p>
+<p>（有问题的点：若第一次生成的质量得不到保证，那低质量的生成图像真的能提升识别模型的acc吗？<strong>互相优化的模型很依赖第一次生成的图像质量</strong>）</p>
+<p>我认为的做法：先简单训练一个识别网络达到一个还行的acc，更新其backbone参数作为生成网络的特征提取器，然后再进行生成网络的训练。</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608135047478.png" alt="image-20220608135047478"></p>
+<h1><span id="实验">实验</span></h1><p>CycleGAN生成—》一阶段vgg fine-tune—》IACycleGAN生成（加入fine-tune的vgg提取的特征做身份保持损失）—》二阶段vgg fine-tune</p>
+<h2><span id="数据集">数据集</span></h2><p>CUFS和CUFSF</p>
+<h3><span id="生成模型实施细节">生成模型实施细节</span></h3><p>对于生成网络的训练，都是从头开始训练，使用instance normalization来实现更好的稳定性和更低的噪声；</p>
+<p>使用Adam优化器，horizontal filp prob&#x3D;0.5用于数据增强；</p>
+<p>前100个epoch设置0.0002的学习率，并在后100个epoch线性下降至0；</p>
+<p>在titian xp上训练了10小时；</p>
+<p>为减小网络震荡，采用存储多个生成图像的图像缓冲区来更新鉴别器，而不是使用最后生成的图像。</p>
+<p>生成使用了SSIM FSIM两个指标</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608152343197.png" alt="image-20220608152343197"></p>
+<h3><span id="识别模型实施细节">识别模型实施细节</span></h3><p>文中用的vggface，caffe上跑的（估计是官方代码）</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608153331083.png" alt="image-20220608153331083"></p>
+<p>在做检索任务时，先做风格模态的迁移，再计算相似度。</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608155946505.png" alt="image-20220608155946505"></p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608160958943.png" alt="image-20220608160958943"></p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>sketch</tag>
+        <tag>synthesis</tag>
+        <tag>GAN</tag>
+        <tag>face recognition</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Learning to Warp for Style Transfer》</title>
     <url>/2022/06/09/review_7_Learing%20to%20Warp%20for%20Style%20Transfer/</url>
     <content><![CDATA[<!-- toc -->
@@ -496,227 +587,6 @@
       <tags>
         <tag>style transfer</tag>
         <tag>warp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《IACycleGAN》</title>
-    <url>/2022/06/08/review_6_IACycleGAN/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
-<li><a href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B">生成模型</a><ul>
-<li><a href="#%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C%E6%95%B4%E4%BD%93loss%E5%9B%BE%E7%A4%BA">生成网络整体loss图示</a></li>
-</ul>
-</li>
-<li><a href="#%E8%AF%86%E5%88%AB%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C%E7%9A%84%E4%BA%92%E7%9B%B8%E4%BC%98%E5%8C%96">识别网络与生成网络的互相优化</a></li>
-</ul>
-</li>
-<li><a href="#%E5%AE%9E%E9%AA%8C">实验</a><ul>
-<li><a href="#%E6%95%B0%E6%8D%AE%E9%9B%86">数据集</a><ul>
-<li><a href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82">生成模型实施细节</a></li>
-<li><a href="#%E8%AF%86%E5%88%AB%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82">识别模型实施细节</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf"><a href="https://arxiv.org/pdf/2103.16019.pdf">Identity-Aware CycleGAN for Face Photo-Sketch Synthesis and Recognition (arxiv.org)</a></a></p>
-<p>code: none</p>
-<span id="more"></span>
-
-<h1><span id="任务">任务</span></h1><p>真人素描生成与识别</p>
-<h1><span id="出发点">出发点</span></h1><p>生成促进识别 识别促进生成；</p>
-<p>大部分生成方法使得合成图像与原始图像在纹理上保持一致，会导致信息丢失；</p>
-<p>大多数生成框架都只能学习两个域之间的关系，其鉴别器只关注照片和草图之间的差异，而不考虑任何特定的识别优化（身份信息）；</p>
-<h1><span id="创新点">创新点</span></h1><p>在CycleGAN上加入了感知损失（perceptual loss）,能更好的关注面部的语义信息（眼睛、鼻子）;</p>
-<p>使生成模型和识别模型相互优化，生成模型迭代生成更好的图像，Triplet Loss训识别模型；</p>
-<h1><span id="做法">做法</span></h1><h2><span id="生成模型">生成模型</span></h2><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608102426736.png" alt="image-20220608102426736"></p>
-<p>分别给出两个domain的照片（这里输入的是paired数据，这里的paired应该身份paired），其训练目的是获得Gx，Gy两个生成器。</p>
-<p>两个识别网络，其目的是使用pretrain好的vggface提取feature做Identity perception loss；</p>
-<p>生成器用了《Perceptual losses for real-time style transfer and super-resolution》中的结构；</p>
-<p>判别器用了PatchGAN的结构；</p>
-<h3><span id="生成网络整体loss图示">生成网络整体loss图示</span></h3><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608105545461.png" alt="image-20220608105545461"></p>
-<h4><span id="对抗损失adversarial-loss">对抗损失（adversarial loss）</span></h4><p>输入图像与生成图像进入判别器进行计算，最小化下式</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608110633855.png" alt="image-20220608110633855"></p>
-<h4><span id="循环一致性损失cycle-consistency-loss">循环一致性损失（cycle consistency loss）</span></h4><p>Gx生成的图像再进入Gy恢复原本domain与最初的输入x计算L1，<strong>此loss为pix级</strong>，最小化下式</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608110959225.png" alt="image-20220608110959225"></p>
-<h4><span id="身份保持损失identity-perception-loss">身份保持损失（identity perception loss）</span></h4><p>仅使用对抗损失会导致伪影和训练不稳定，需要加更强大的监督；</p>
-<p>通过一个pretrain的识别网络（文中选择vggface）分别提取两对（原图与合成图）的feature计算L2，<strong>此loss区别于pix级监督，是feature级</strong>，文中对于此处的解释是：绘制的草图会有夸张成分以扭曲面部纹理信息，夸大面部特征，完全基于pix重建图像效果不会好；CycleGAN的训练需要进行数据增强操作（resize，flip等）难以实施pix级的监督。</p>
-<p>最小化下式</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608111456554.png" alt="image-20220608111456554"></p>
-<h4><span id="身份映射损失identity-mapping-loss">身份映射损失（identity mapping loss）</span></h4><p>常规的pix级的约束，最小化下式</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112212476.png" alt="image-20220608112212476"></p>
-<h4><span id="整体loss">整体loss</span></h4><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112236780.png" alt="image-20220608112236780"></p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112252105.png" alt="image-20220608112252105"></p>
-<p>最小化生成器的loss最大化判别器的loss</p>
-<p>其中超参数lamda分别设为10，30000000，5</p>
-<h2><span id="识别网络与生成网络的互相优化">识别网络与生成网络的互相优化</span></h2><p>许多主做生成的工作都是fix相应的识别网络作为一个特征提取器来附加身份保持损失；</p>
-<p>本文的做法估计是：</p>
-<p>step1：先fix识别网络参数训练生成网络，获得一定量的生成的图片；</p>
-<p>step2：使用生成的图片fine-tune识别网络（单走一个人脸识别模型的流程），用了triplet loss，更新识别网络参数，其中两个模态分别有两个识别网络，要分开训练；</p>
-<p>step3：重复上述操作以获得更好的生成模型和识别模型。</p>
-<p>（有问题的点：若第一次生成的质量得不到保证，那低质量的生成图像真的能提升识别模型的acc吗？<strong>互相优化的模型很依赖第一次生成的图像质量</strong>）</p>
-<p>我认为的做法：先简单训练一个识别网络达到一个还行的acc，更新其backbone参数作为生成网络的特征提取器，然后再进行生成网络的训练。</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608135047478.png" alt="image-20220608135047478"></p>
-<h1><span id="实验">实验</span></h1><p>CycleGAN生成—》一阶段vgg fine-tune—》IACycleGAN生成（加入fine-tune的vgg提取的特征做身份保持损失）—》二阶段vgg fine-tune</p>
-<h2><span id="数据集">数据集</span></h2><p>CUFS和CUFSF</p>
-<h3><span id="生成模型实施细节">生成模型实施细节</span></h3><p>对于生成网络的训练，都是从头开始训练，使用instance normalization来实现更好的稳定性和更低的噪声；</p>
-<p>使用Adam优化器，horizontal filp prob&#x3D;0.5用于数据增强；</p>
-<p>前100个epoch设置0.0002的学习率，并在后100个epoch线性下降至0；</p>
-<p>在titian xp上训练了10小时；</p>
-<p>为减小网络震荡，采用存储多个生成图像的图像缓冲区来更新鉴别器，而不是使用最后生成的图像。</p>
-<p>生成使用了SSIM FSIM两个指标</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608152343197.png" alt="image-20220608152343197"></p>
-<h3><span id="识别模型实施细节">识别模型实施细节</span></h3><p>文中用的vggface，caffe上跑的（估计是官方代码）</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608153331083.png" alt="image-20220608153331083"></p>
-<p>在做检索任务时，先做风格模态的迁移，再计算相似度。</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608155946505.png" alt="image-20220608155946505"></p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608160958943.png" alt="image-20220608160958943"></p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>sketch</tag>
-        <tag>synthesis</tag>
-        <tag>GAN</tag>
-        <tag>face recognition</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《MeInGame:Create a Game Character Face from a Single Portrait》</title>
-    <url>/2022/06/29/review_9_MeInGame/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E8%B4%A1%E7%8C%AE">贡献</a></li>
-<li><a href="#%E6%96%B9%E6%B3%95">方法</a><ul>
-<li><a href="#3d%E4%BA%BA%E8%84%B8%E6%95%B0%E6%8D%AE%E9%9B%86%E6%9E%84%E5%BB%BA%E6%96%B9%E6%B3%95">3D人脸数据集构建方法</a></li>
-<li><a href="#%E4%BA%BA%E8%84%B8%E5%BD%A2%E7%8A%B6%E9%87%8D%E5%BB%BA-face-shape-reconstruction">人脸形状重建 （Face Shape Reconstruction）</a></li>
-<li><a href="#%E5%BD%A2%E7%8A%B6%E8%BD%AC%E6%8D%A2shape-transfer">形状转换（Shape Transfer）</a></li>
-<li><a href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0">损失函数</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Liu_Geometric_and_Textural_Augmentation_for_Domain_Gap_Reduction_CVPR_2022_paper.pdf"><a href="https://arxiv.org/pdf/2102.02371.pdf">2102.02371.pdf (arxiv.org)</a></a></p>
-<p>code: <a href="https://github.com/xch-liu/geom-tex-dg"><a href="https://github.com/FuxiCV/MeInGame">FuxiCV&#x2F;MeInGame: MeInGame: Create a Game Character Face from a Single Portrait, AAAI 2021 (github.com)</a></a></p>
-<span id="more"></span>
-
-<h1><span id="任务">任务</span></h1><p>从单张真实2D肖像生成武侠风格的3D可形变模型。</p>
-<h1><span id="出发点">出发点</span></h1><p>近年来，人们提出了许多基于深度学习的三维人脸重建方法，但在游戏中应用较少。当前的游戏角色定制系统要么要求玩家手动调整相当多的面部属性以获得所需的面部，要么限制面部形状和纹理的自由度。</p>
-<h1><span id="贡献">贡献</span></h1><p>我们提出了一种低成本的三维人脸数据集创建方法。我们创建的数据集在种族和性别上是平衡的，面部形状和纹理都是从原始图像中创建的。我们将在论文被接受后将其公开。 提出了一种低成本的面部纹理获取方法</p>
-<p>我们提出了一种将重建的3DMM人脸形状转换为游戏网格的方法，可以直接在游戏环境中使用。该方法与网格连通性无关，在实际应用中计算效率较高。 </p>
-<p>为了消除光照和遮挡的影响，我们在对抗性训练范式下训练神经网络，从野外人脸图像中的单个图像预测一个完整的漫反射贴图。 </p>
-<h1><span id="方法">方法</span></h1><p><img src="/2022/06/29/review_9_MeInGame/image-20220629143637063.png" alt="image-20220629143637063"></p>
-<p>Shape Reconstructor pretrain好，获取3DMM系数和姿势系数，通过3DMM网络构成3DMM mesh（只有正面3D人脸），Shape Transfer将3DMM mesh转换成Game mesh（整个3D人头）；</p>
-<p>根据Game mesh将原图uv展开创建一个粗糙纹理贴图，通过encoder decoder进一步细化至细化纹理；</p>
-<p>还引入了一个光照predictor，预测光照系数；</p>
-<p>最后，将预测的形状、纹理和照明系数一起提供给可微分渲染器，并强制渲染输出与输入照片类似。为了进一步改进结果，引入了两个鉴别器。</p>
-<h2><span id="3d人脸数据集构建方法">3D人脸数据集构建方法</span></h2><p>1）给定一张人脸图像，通过预训练好的人脸分割网络检测皮肤区域</p>
-<p>2）计算输入面部皮肤的平均颜色，并将平均皮肤颜色传输到模板纹理贴图（由游戏开发人员提供，是标准3D模型模板对应的标准UV模板） </p>
-<p>3）根据变形的game mesh，将输入人脸图像展开到UV空间</p>
-<p>4）使用Poisson blending（图像融合操作）将展开的贴图与UV模板混合，移除头发和眼镜等非皮肤区域，并尽可能使用对称性修补遮挡区域</p>
-<h2><span id="人脸形状重建-face-shape-reconstruction">人脸形状重建 （Face Shape Reconstruction）</span></h2><p>第一步从输入图像预测3DMM形状和姿势系数。采用了<a href="https://openaccess.thecvf.com/content_CVPRW_2019/papers/AMFG/Deng_Accurate_3D_Face_Reconstruction_With_Weakly-Supervised_Learning_From_Single_Image_CVPRW_2019_paper.pdf">Accurate 3D Face Reconstruction With Weakly-Supervised Learning: From Single Image to Image Set (thecvf.com)</a>的方法，其他3DMM的方法同样适用。</p>
-<h2><span id="形状转换shape-transfer">形状转换（Shape Transfer）</span></h2><p>形状传递模块的目的是将重建的3DMM网格传递到游戏网格。我们设计了基于Radial Basis Function（RBF）插值的形状传递模块。</p>
-<h2><span id="损失函数">损失函数</span></h2><p>我们设计了损失函数来最小化渲染人脸图像和输入人脸照片之间的距离，以及精细纹理贴图和地面真实纹理贴图之间的距离。在渲染循环中，我们设计了四种类型的损失函数，即像素损失、感知损失、皮肤正则化损失和对抗性损失，以从全局外观和局部细节来衡量面部相似性。 </p>
-<p><strong>像素损失（Pixel Loss）</strong></p>
-<p>渲染后的图像R和输入图像I，做pixel loss：</p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629153338519.png" alt="image-20220629153338519"></p>
-<p>GT的UV贴图G和细化的纹理贴图F，做pixel loss：</p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629154446786.png" alt="image-20220629154446786"></p>
-<p><strong>感知损失（Perceptual Loss）</strong></p>
-<p>在感知层面减小重建图像的差异，做法遵循[Structure Guided Img Inpaint using Edge Prediction - 知乎 (zhihu.com)](<a href="https://zhuanlan.zhihu.com/p/147654092#:~:text=%E3%80%8AEdgeConnect%3A">https://zhuanlan.zhihu.com/p/147654092#:~:text=《EdgeConnect%3A</a> Structure Guided Image Inpainting using Edge Prediction》,结构信息 中的 边缘信息 来实现图像的修复（类似Free-form的素描信息） 适用于： rectangular masks、irregular masks。)</p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160619803.png" alt="image-20220629160619803"></p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160626723.png" alt="image-20220629160626723"></p>
-<p><strong>皮肤正则化损失 （Skin Regularization Loss）</strong></p>
-<p>为了在整个面部产生恒定的肤色并去除高光和阴影，我们进行了两次损失来调整面部皮肤，即“对称损失”和“标准偏差损失”。与之前将皮肤正则化直接应用于顶点颜色的工作不同，我们对高斯模糊纹理贴图施加惩罚。这是基于一个事实，即一些个性化的细节（例如痣）并不总是对称的，并且与肤色无关。我们将对称损耗定义如下： </p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160919834.png" alt="image-20220629160919834"></p>
-<p>我们将表皮标准偏差损失定义如下： </p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161001203.png" alt="image-20220629161001203"></p>
-<p><strong>对抗损失（Adversarial Loss）</strong></p>
-<p>为了进一步提高重建的逼真度，我们还在训练期间使用对抗性损失。我们引入了两个鉴别器，一个用于渲染人脸，另一个用于生成的UV纹理贴图。我们训练鉴别器来判断生成的输出是真是假，同时，我们训练网络的其他部分来愚弄鉴别器。对抗训练的目标功能定义如下： </p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161825452.png" alt="image-20220629161825452"></p>
-<p><strong>总损失定义</strong></p>
-<p>**<img src="/2022/06/29/review_9_MeInGame/image-20220629161847549.png" alt="image-20220629161847549">    **        </p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161920596.png" alt="image-20220629161920596"></p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>3DMM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RTTO WEEK1</title>
-    <url>/2022/09/19/rtto_1/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#week-1"><strong>WEEK 1</strong></a><ul>
-<li><a href="#209%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84m">209.长度最小的子数组（m）</a></li>
-<li><a href="#904%E6%B0%B4%E6%9E%9C%E6%88%90%E7%AF%AEm">904.水果成篮（m）</a></li>
-<li><a href="#76%E6%9C%80%E5%B0%8F%E8%A6%86%E7%9B%96%E5%AD%90%E4%B8%B2h">76.最小覆盖子串（h）</a></li>
-<li><a href="#59%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5m">59.螺旋矩阵（m）</a></li>
-<li><a href="#203%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0e">203.移除链表元素（e）</a></li>
-<li><a href="#707%E8%AE%BE%E8%AE%A1%E9%93%BE%E8%A1%A8m">707.设计链表（m）</a></li>
-<li><a href="#206%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8e">206.反转链表（e）</a></li>
-<li><a href="#24%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9m">24.两两交换链表中的节点（m）</a></li>
-<li><a href="#19%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%ACn%E5%90%84%E7%BB%93%E7%82%B9m">19.删除链表的倒数第N各结点（m）</a></li>
-<li><a href="#%E9%9D%A2%E8%AF%95%E9%A2%98-0207-%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4e">面试题 02.07. 链表相交（e）</a></li>
-<li><a href="#142%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8iim">142.环形链表Ⅱ（m）</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<span id="more"></span>
-
-<h1><span id="week-1"><strong>WEEK 1</strong></span></h1><h2><span id="209长度最小的子数组m">209.长度最小的子数组（m）</span></h2><p>用滑动窗口，动态调整窗口的起始位置，不断比较子序列是否符合条件（sum&gt;&#x3D;s）,取当前子序列的长度，取相对较小的。</p>
-<h2><span id="904水果成篮m">904.水果成篮（m）</span></h2><p>本题的目标是：得到一个最大子串，其中最多含有两种元素；</p>
-<p>用一个hashmap表示fruits[i]类型的水果对应摘了几个；</p>
-<p>用滑动窗口先遍历右边界，记录更新过程中的type值的变化；</p>
-<p>当hashmap中相应类型水果数量为0时，则type++；</p>
-<p>若type&gt;2，则更新左边界，把hashmap中fruits[left]水果的数量–，若该水果在hashmap中的数量为0，则type–；</p>
-<p>判断每次窗口的长度取历次满足条件的窗口的最大值，即为最终结果；</p>
-<h2><span id="76最小覆盖子串h">76.最小覆盖子串（h）</span></h2><p>用滑动窗口，两个hashmap比较各类字符串出现的频率？不会做</p>
-<h2><span id="59螺旋矩阵m">59.螺旋矩阵（m）</span></h2><p>先确定遍历的圈数——n&#x2F;2；</p>
-<p>上右下左分别进行左闭右开的遍历，进行四个for循环，改变i和j；</p>
-<p>如果n是奇数最里面是一个数而不是一个圈，需要单独赋值count；</p>
-<h2><span id="203移除链表元素e">203.移除链表元素（e）</span></h2><p>简单链表数据结构；</p>
-<p>头节点被删除的情况：直接tmp保存原head，head &#x3D; head -&gt; next，然后删除tmp；</p>
-<p>子节点被删除的情况：开辟一个cur节点，遍历链表元素，若cur -&gt;next 为空则停止遍历（尾节点），删除操作同上；</p>
-<h2><span id="707设计链表m">707.设计链表（m）</span></h2><p>简单链表数据结构；</p>
-<p>需要注意的点是选择index位置的元素的while终止条件；</p>
-<p>判断_size异常输入的条件；</p>
-<h2><span id="206反转链表e">206.反转链表（e）</span></h2><p>快慢指针；</p>
-<p>一个在前一个在后，使用一个tmp来记录cur节点的后一个节点，以便循环推进，每次使得快指针指向的节点重新指向慢指针指向的节点；</p>
-<h2><span id="24两两交换链表中的节点m">24.两两交换链表中的节点（m）</span></h2><p>画图！</p>
-<p>三个步骤，要注意先暂存两个值，以及每一步骤都会改变当前链表结构，需要画图一步步看当前链表状态；</p>
-<h2><span id="19删除链表的倒数第n各结点m">19.删除链表的倒数第N各结点（m）</span></h2><p>双指针；</p>
-<p>让fast移动n步；</p>
-<p>然后让fast和slow同时移动，直到fast指向链表末尾；</p>
-<p>删掉slow所指向的节点；</p>
-<h2><span id="面试题-0207-链表相交e">面试题 02.07. 链表相交（e）</span></h2><p>分别求两链表的长度，计算长度差，先把长链表遍历一段长度差，控制两个链表一样长，然后同时开始遍历两个链表，若遍历到了相同节点则找到了交点。</p>
-<h2><span id="142环形链表iim">142.环形链表Ⅱ（m）</span></h2><p>分两步：判断是否有环；若有环判断环的出口；</p>
-<p>是否有环：快慢指针，快指针一次移动两个，慢指针一次移动一个，若有环快慢指针会在不空的节点上相遇；</p>
-<p>环的出口：从头结点出发一个指针，从相遇节点也出发一个指针，这两个指针每次只走一个节点， 那么当这两个指针相遇的时候就是环形入口的节点（这步有点绕）</p>
-]]></content>
-      <categories>
-        <category>RTTO</category>
-      </categories>
-      <tags>
-        <tag>RTTO</tag>
       </tags>
   </entry>
   <entry>
@@ -891,6 +761,415 @@
       </categories>
       <tags>
         <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《MeInGame:Create a Game Character Face from a Single Portrait》</title>
+    <url>/2022/06/29/review_9_MeInGame/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E8%B4%A1%E7%8C%AE">贡献</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95">方法</a><ul>
+<li><a href="#3d%E4%BA%BA%E8%84%B8%E6%95%B0%E6%8D%AE%E9%9B%86%E6%9E%84%E5%BB%BA%E6%96%B9%E6%B3%95">3D人脸数据集构建方法</a></li>
+<li><a href="#%E4%BA%BA%E8%84%B8%E5%BD%A2%E7%8A%B6%E9%87%8D%E5%BB%BA-face-shape-reconstruction">人脸形状重建 （Face Shape Reconstruction）</a></li>
+<li><a href="#%E5%BD%A2%E7%8A%B6%E8%BD%AC%E6%8D%A2shape-transfer">形状转换（Shape Transfer）</a></li>
+<li><a href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0">损失函数</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Liu_Geometric_and_Textural_Augmentation_for_Domain_Gap_Reduction_CVPR_2022_paper.pdf"><a href="https://arxiv.org/pdf/2102.02371.pdf">2102.02371.pdf (arxiv.org)</a></a></p>
+<p>code: <a href="https://github.com/xch-liu/geom-tex-dg"><a href="https://github.com/FuxiCV/MeInGame">FuxiCV&#x2F;MeInGame: MeInGame: Create a Game Character Face from a Single Portrait, AAAI 2021 (github.com)</a></a></p>
+<span id="more"></span>
+
+<h1><span id="任务">任务</span></h1><p>从单张真实2D肖像生成武侠风格的3D可形变模型。</p>
+<h1><span id="出发点">出发点</span></h1><p>近年来，人们提出了许多基于深度学习的三维人脸重建方法，但在游戏中应用较少。当前的游戏角色定制系统要么要求玩家手动调整相当多的面部属性以获得所需的面部，要么限制面部形状和纹理的自由度。</p>
+<h1><span id="贡献">贡献</span></h1><p>我们提出了一种低成本的三维人脸数据集创建方法。我们创建的数据集在种族和性别上是平衡的，面部形状和纹理都是从原始图像中创建的。我们将在论文被接受后将其公开。 提出了一种低成本的面部纹理获取方法</p>
+<p>我们提出了一种将重建的3DMM人脸形状转换为游戏网格的方法，可以直接在游戏环境中使用。该方法与网格连通性无关，在实际应用中计算效率较高。 </p>
+<p>为了消除光照和遮挡的影响，我们在对抗性训练范式下训练神经网络，从野外人脸图像中的单个图像预测一个完整的漫反射贴图。 </p>
+<h1><span id="方法">方法</span></h1><p><img src="/2022/06/29/review_9_MeInGame/image-20220629143637063.png" alt="image-20220629143637063"></p>
+<p>Shape Reconstructor pretrain好，获取3DMM系数和姿势系数，通过3DMM网络构成3DMM mesh（只有正面3D人脸），Shape Transfer将3DMM mesh转换成Game mesh（整个3D人头）；</p>
+<p>根据Game mesh将原图uv展开创建一个粗糙纹理贴图，通过encoder decoder进一步细化至细化纹理；</p>
+<p>还引入了一个光照predictor，预测光照系数；</p>
+<p>最后，将预测的形状、纹理和照明系数一起提供给可微分渲染器，并强制渲染输出与输入照片类似。为了进一步改进结果，引入了两个鉴别器。</p>
+<h2><span id="3d人脸数据集构建方法">3D人脸数据集构建方法</span></h2><p>1）给定一张人脸图像，通过预训练好的人脸分割网络检测皮肤区域</p>
+<p>2）计算输入面部皮肤的平均颜色，并将平均皮肤颜色传输到模板纹理贴图（由游戏开发人员提供，是标准3D模型模板对应的标准UV模板） </p>
+<p>3）根据变形的game mesh，将输入人脸图像展开到UV空间</p>
+<p>4）使用Poisson blending（图像融合操作）将展开的贴图与UV模板混合，移除头发和眼镜等非皮肤区域，并尽可能使用对称性修补遮挡区域</p>
+<h2><span id="人脸形状重建-face-shape-reconstruction">人脸形状重建 （Face Shape Reconstruction）</span></h2><p>第一步从输入图像预测3DMM形状和姿势系数。采用了<a href="https://openaccess.thecvf.com/content_CVPRW_2019/papers/AMFG/Deng_Accurate_3D_Face_Reconstruction_With_Weakly-Supervised_Learning_From_Single_Image_CVPRW_2019_paper.pdf">Accurate 3D Face Reconstruction With Weakly-Supervised Learning: From Single Image to Image Set (thecvf.com)</a>的方法，其他3DMM的方法同样适用。</p>
+<h2><span id="形状转换shape-transfer">形状转换（Shape Transfer）</span></h2><p>形状传递模块的目的是将重建的3DMM网格传递到游戏网格。我们设计了基于Radial Basis Function（RBF）插值的形状传递模块。</p>
+<h2><span id="损失函数">损失函数</span></h2><p>我们设计了损失函数来最小化渲染人脸图像和输入人脸照片之间的距离，以及精细纹理贴图和地面真实纹理贴图之间的距离。在渲染循环中，我们设计了四种类型的损失函数，即像素损失、感知损失、皮肤正则化损失和对抗性损失，以从全局外观和局部细节来衡量面部相似性。 </p>
+<p><strong>像素损失（Pixel Loss）</strong></p>
+<p>渲染后的图像R和输入图像I，做pixel loss：</p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629153338519.png" alt="image-20220629153338519"></p>
+<p>GT的UV贴图G和细化的纹理贴图F，做pixel loss：</p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629154446786.png" alt="image-20220629154446786"></p>
+<p><strong>感知损失（Perceptual Loss）</strong></p>
+<p>在感知层面减小重建图像的差异，做法遵循[Structure Guided Img Inpaint using Edge Prediction - 知乎 (zhihu.com)](<a href="https://zhuanlan.zhihu.com/p/147654092#:~:text=%E3%80%8AEdgeConnect%3A">https://zhuanlan.zhihu.com/p/147654092#:~:text=《EdgeConnect%3A</a> Structure Guided Image Inpainting using Edge Prediction》,结构信息 中的 边缘信息 来实现图像的修复（类似Free-form的素描信息） 适用于： rectangular masks、irregular masks。)</p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160619803.png" alt="image-20220629160619803"></p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160626723.png" alt="image-20220629160626723"></p>
+<p><strong>皮肤正则化损失 （Skin Regularization Loss）</strong></p>
+<p>为了在整个面部产生恒定的肤色并去除高光和阴影，我们进行了两次损失来调整面部皮肤，即“对称损失”和“标准偏差损失”。与之前将皮肤正则化直接应用于顶点颜色的工作不同，我们对高斯模糊纹理贴图施加惩罚。这是基于一个事实，即一些个性化的细节（例如痣）并不总是对称的，并且与肤色无关。我们将对称损耗定义如下： </p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160919834.png" alt="image-20220629160919834"></p>
+<p>我们将表皮标准偏差损失定义如下： </p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161001203.png" alt="image-20220629161001203"></p>
+<p><strong>对抗损失（Adversarial Loss）</strong></p>
+<p>为了进一步提高重建的逼真度，我们还在训练期间使用对抗性损失。我们引入了两个鉴别器，一个用于渲染人脸，另一个用于生成的UV纹理贴图。我们训练鉴别器来判断生成的输出是真是假，同时，我们训练网络的其他部分来愚弄鉴别器。对抗训练的目标功能定义如下： </p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161825452.png" alt="image-20220629161825452"></p>
+<p><strong>总损失定义</strong></p>
+<p>**<img src="/2022/06/29/review_9_MeInGame/image-20220629161847549.png" alt="image-20220629161847549">    **        </p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161920596.png" alt="image-20220629161920596"></p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>3DMM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RTTO WEEK1</title>
+    <url>/2022/09/19/rtto_1/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#week-1"><strong>WEEK 1</strong></a><ul>
+<li><a href="#209%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84m">209.长度最小的子数组（m）</a></li>
+<li><a href="#904%E6%B0%B4%E6%9E%9C%E6%88%90%E7%AF%AEm">904.水果成篮（m）</a></li>
+<li><a href="#76%E6%9C%80%E5%B0%8F%E8%A6%86%E7%9B%96%E5%AD%90%E4%B8%B2h">76.最小覆盖子串（h）</a></li>
+<li><a href="#59%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5m">59.螺旋矩阵（m）</a></li>
+<li><a href="#203%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0e">203.移除链表元素（e）</a></li>
+<li><a href="#707%E8%AE%BE%E8%AE%A1%E9%93%BE%E8%A1%A8m">707.设计链表（m）</a></li>
+<li><a href="#206%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8e">206.反转链表（e）</a></li>
+<li><a href="#24%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9m">24.两两交换链表中的节点（m）</a></li>
+<li><a href="#19%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%ACn%E5%90%84%E7%BB%93%E7%82%B9m">19.删除链表的倒数第N各结点（m）</a></li>
+<li><a href="#%E9%9D%A2%E8%AF%95%E9%A2%98-0207-%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4e">面试题 02.07. 链表相交（e）</a></li>
+<li><a href="#142%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8iim">142.环形链表Ⅱ（m）</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="week-1"><strong>WEEK 1</strong></span></h1><h2><span id="209长度最小的子数组m">209.长度最小的子数组（m）</span></h2><p>用滑动窗口，动态调整窗口的起始位置，不断比较子序列是否符合条件（sum&gt;&#x3D;s）,取当前子序列的长度，取相对较小的。</p>
+<h2><span id="904水果成篮m">904.水果成篮（m）</span></h2><p>本题的目标是：得到一个最大子串，其中最多含有两种元素；</p>
+<p>用一个hashmap表示fruits[i]类型的水果对应摘了几个；</p>
+<p>用滑动窗口先遍历右边界，记录更新过程中的type值的变化；</p>
+<p>当hashmap中相应类型水果数量为0时，则type++；</p>
+<p>若type&gt;2，则更新左边界，把hashmap中fruits[left]水果的数量–，若该水果在hashmap中的数量为0，则type–；</p>
+<p>判断每次窗口的长度取历次满足条件的窗口的最大值，即为最终结果；</p>
+<h2><span id="76最小覆盖子串h">76.最小覆盖子串（h）</span></h2><p>用滑动窗口，两个hashmap比较各类字符串出现的频率？不会做</p>
+<h2><span id="59螺旋矩阵m">59.螺旋矩阵（m）</span></h2><p>先确定遍历的圈数——n&#x2F;2；</p>
+<p>上右下左分别进行左闭右开的遍历，进行四个for循环，改变i和j；</p>
+<p>如果n是奇数最里面是一个数而不是一个圈，需要单独赋值count；</p>
+<h2><span id="203移除链表元素e">203.移除链表元素（e）</span></h2><p>简单链表数据结构；</p>
+<p>头节点被删除的情况：直接tmp保存原head，head &#x3D; head -&gt; next，然后删除tmp；</p>
+<p>子节点被删除的情况：开辟一个cur节点，遍历链表元素，若cur -&gt;next 为空则停止遍历（尾节点），删除操作同上；</p>
+<h2><span id="707设计链表m">707.设计链表（m）</span></h2><p>简单链表数据结构；</p>
+<p>需要注意的点是选择index位置的元素的while终止条件；</p>
+<p>判断_size异常输入的条件；</p>
+<h2><span id="206反转链表e">206.反转链表（e）</span></h2><p>快慢指针；</p>
+<p>一个在前一个在后，使用一个tmp来记录cur节点的后一个节点，以便循环推进，每次使得快指针指向的节点重新指向慢指针指向的节点；</p>
+<h2><span id="24两两交换链表中的节点m">24.两两交换链表中的节点（m）</span></h2><p>画图！</p>
+<p>三个步骤，要注意先暂存两个值，以及每一步骤都会改变当前链表结构，需要画图一步步看当前链表状态；</p>
+<h2><span id="19删除链表的倒数第n各结点m">19.删除链表的倒数第N各结点（m）</span></h2><p>双指针；</p>
+<p>让fast移动n步；</p>
+<p>然后让fast和slow同时移动，直到fast指向链表末尾；</p>
+<p>删掉slow所指向的节点；</p>
+<h2><span id="面试题-0207-链表相交e">面试题 02.07. 链表相交（e）</span></h2><p>分别求两链表的长度，计算长度差，先把长链表遍历一段长度差，控制两个链表一样长，然后同时开始遍历两个链表，若遍历到了相同节点则找到了交点。</p>
+<h2><span id="142环形链表iim">142.环形链表Ⅱ（m）</span></h2><p>分两步：判断是否有环；若有环判断环的出口；</p>
+<p>是否有环：快慢指针，快指针一次移动两个，慢指针一次移动一个，若有环快慢指针会在不空的节点上相遇；</p>
+<p>环的出口：从头结点出发一个指针，从相遇节点也出发一个指针，这两个指针每次只走一个节点， 那么当这两个指针相遇的时候就是环形入口的节点（这步有点绕）</p>
+]]></content>
+      <categories>
+        <category>RTTO</category>
+      </categories>
+      <tags>
+        <tag>RTTO</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Docker学习笔记</title>
+    <url>/2022/09/29/tech_1_docker/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#docker-hello-world">Docker Hello World</a><ul>
+<li><a href="#%E8%BF%90%E8%A1%8C%E4%BA%A4%E4%BA%92%E5%BC%8F%E7%9A%84%E5%AE%B9%E5%99%A8">运行交互式的容器</a></li>
+<li><a href="#%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8%E5%90%8E%E5%8F%B0%E6%A8%A1%E5%BC%8F">启动容器（后台模式）</a></li>
+</ul>
+</li>
+<li><a href="#docker%E5%AE%B9%E5%99%A8%E4%BD%BF%E7%94%A8">Docker容器使用</a><ul>
+<li><a href="#docker%E5%AE%A2%E6%88%B7%E7%AB%AF">Docker客户端</a></li>
+<li><a href="#%E5%AE%B9%E5%99%A8%E4%BD%BF%E7%94%A8">容器使用</a><ul>
+<li><a href="#%E6%8D%A2%E9%BB%98%E8%AE%A4%E6%BA%90">换默认源</a></li>
+<li><a href="#%E8%8E%B7%E5%8F%96%E9%95%9C%E5%83%8F">获取镜像</a></li>
+<li><a href="#%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8">启动容器</a></li>
+<li><a href="#%E5%90%AF%E5%8A%A8%E5%B7%B2%E5%81%9C%E6%AD%A2%E8%BF%90%E8%A1%8C%E7%9A%84%E5%AE%B9%E5%99%A8">启动已停止运行的容器</a></li>
+<li><a href="#%E5%90%8E%E5%8F%B0%E8%BF%90%E8%A1%8C">后台运行</a></li>
+<li><a href="#%E8%BF%9B%E5%85%A5%E5%AE%B9%E5%99%A8">进入容器</a></li>
+<li><a href="#%E5%AF%BC%E5%87%BA%E5%92%8C%E5%AF%BC%E5%85%A5%E5%AE%B9%E5%99%A8">导出和导入容器</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E5%AE%B9%E5%99%A8">删除容器</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#docker%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8">Docker镜像使用</a><ul>
+<li><a href="#%E5%88%97%E5%87%BA%E9%95%9C%E5%83%8F%E5%88%97%E8%A1%A8">列出镜像列表</a></li>
+<li><a href="#%E8%8E%B7%E5%8F%96%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E9%95%9C%E5%83%8F">获取一个新的镜像</a></li>
+<li><a href="#%E6%9F%A5%E6%89%BE%E9%95%9C%E5%83%8F">查找镜像</a></li>
+<li><a href="#%E6%8B%96%E5%8F%96%E9%95%9C%E5%83%8F">拖取镜像</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E9%95%9C%E5%83%8F">删除镜像</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E9%95%9C%E5%83%8F">创建镜像</a><ul>
+<li><a href="#%E6%9B%B4%E6%96%B0%E9%95%9C%E5%83%8F">更新镜像</a></li>
+<li><a href="#%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F">构建镜像</a></li>
+<li><a href="#%E8%AE%BE%E7%BD%AE%E9%95%9C%E5%83%8F%E6%A0%87%E7%AD%BE">设置镜像标签</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#docker%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E4%BB%A5docker-hub%E4%B8%BA%E4%BE%8B">Docker仓库管理（以Docker Hub为例）</a><ul>
+<li><a href="#docker-hub">Docker Hub</a><ul>
+<li><a href="#%E6%B3%A8%E5%86%8C">注册</a></li>
+<li><a href="#%E7%99%BB%E5%BD%95%E5%92%8C%E9%80%80%E5%87%BA">登录和退出</a></li>
+<li><a href="#%E9%80%80%E5%87%BA"><strong>退出</strong></a></li>
+<li><a href="#%E6%8B%89%E5%8F%96%E9%95%9C%E5%83%8F">拉取镜像</a></li>
+<li><a href="#%E6%8E%A8%E9%80%81%E9%95%9C%E5%83%8F">推送镜像</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#dockerfile">Dockerfile</a></li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="docker-hello-world">Docker Hello World</span></h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run ubuntu:20.03 /bin/echo &quot;Hello world&quot;</span><br></pre></td></tr></table></figure>
+
+<p>Docker 以 ubuntu15.10 镜像创建一个新容器，然后在容器里执行 bin&#x2F;echo “Hello world”，然后输出结果。</p>
+<p>（需要sudo权限）</p>
+<h2><span id="运行交互式的容器">运行交互式的容器</span></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -i -t ubuntu:15.10 /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>通过 docker 的两个参数 -i -t，让 docker 运行的容器实现**”对话”**的能力（进入容器的终端）</p>
+<p><img src="/2022/09/29/tech_1_docker/image-20220929141727968.png" alt="image-20220929141727968"></p>
+<p>如需退出容器：输入exit或者使用CTRL+D</p>
+<h2><span id="启动容器后台模式">启动容器（后台模式）</span></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -d ubuntu:20.03 /bin/sh -c &quot;while true; do echo hello world; sleep 1; done&quot;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/09/29/tech_1_docker/image-20220929143428371.png" alt="image-20220929143428371"></p>
+<p>会出现一个长字符串，该字符串为容器的id</p>
+<p>查看当前容器</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker ps</span><br></pre></td></tr></table></figure>
+
+<p>查看容器内的标准输出</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker logs </span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/09/29/tech_1_docker/image-20220929144110987.png" alt="image-20220929144110987"></p>
+<p>停止容器</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker stop</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/09/29/tech_1_docker/image-20220929144204323.png" alt="image-20220929144204323"></p>
+<h1><span id="docker容器使用">Docker容器使用</span></h1><h2><span id="docker客户端">Docker客户端</span></h2><p>查看docker客户端所有命令选项</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker</span><br></pre></td></tr></table></figure>
+
+<h2><span id="容器使用">容器使用</span></h2><h3><span id="换默认源">换默认源</span></h3><p><a href="https://huaweicloud.csdn.net/63311a8dd3efff3090b52222.html">解决docker拉取镜像慢的方法（亲测有效）_docker_阿正的梦工坊-DevPress官方社区 (csdn.net)</a></p>
+<h3><span id="获取镜像">获取镜像</span></h3><p>如果我们本地没有 ubuntu 镜像，我们可以使用 docker pull 命令来载入 ubuntu 镜像</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull ubuntu</span><br></pre></td></tr></table></figure>
+
+<h3><span id="启动容器">启动容器</span></h3><p>以命令行模式启动一个容器</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -it ubuntu /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<ul>
+<li><strong>-i</strong>: 交互式操作。</li>
+<li><strong>-t</strong>: 终端。</li>
+<li><strong>ubuntu</strong>: ubuntu 镜像。</li>
+<li><strong>&#x2F;bin&#x2F;bash</strong>：放在镜像名后的是命令，这里希望有个交互式 Shell，因此用的是 &#x2F;bin&#x2F;bash。</li>
+</ul>
+<h3><span id="启动已停止运行的容器">启动已停止运行的容器</span></h3><p>查看所有的容器命令如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker ps -a</span><br></pre></td></tr></table></figure>
+
+<p>启动一个容器</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker start &lt;容器 ID&gt;</span><br></pre></td></tr></table></figure>
+
+<h3><span id="后台运行">后台运行</span></h3><p>在大部分的场景下，我们希望 docker 的服务是在后台运行的，我们可以过 <strong>-d</strong> 指定容器的运行模式。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -itd --name ubuntu-test ubuntu /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p><strong>-d</strong>只是指定容器的运行模式，而不会默认进入容器</p>
+<p><strong>–name</strong>给容器命名（此处为ubuntu-test）</p>
+<p>停止的容器可以通过 docker restart 重启：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker restart &lt;容器 ID&gt;</span><br></pre></td></tr></table></figure>
+
+<h3><span id="进入容器">进入容器</span></h3><p>在使用 <strong>-d</strong> 参数时，容器启动后会进入后台。此时想要进入容器，可以通过以下指令进入：</p>
+<ul>
+<li><strong>docker attach</strong></li>
+<li><strong>docker exec</strong>：推荐大家使用 docker exec 命令，因为此命令会退出容器终端，但不会导致容器的停止。</li>
+</ul>
+<h4><span id="attach命令">attach命令</span></h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker attach &lt;容器 ID&gt;</span><br></pre></td></tr></table></figure>
+
+<h4><span id="exec命令">exec命令</span></h4><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker exec -it &lt;容器 ID&gt; /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>区别在于attach命令如果退出容器，容器会停止；exec不会；</p>
+<p><img src="/2022/09/29/tech_1_docker/image-20220929155456079.png" alt="image-20220929155456079"></p>
+<h3><span id="导出和导入容器">导出和导入容器</span></h3><p><strong>导出容器</strong></p>
+<p>导出本地某个容器</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker export &lt;容器 ID&gt; &gt; ubuntu.tar</span><br></pre></td></tr></table></figure>
+
+<p><strong>导入容器快照</strong></p>
+<p>使用 docker import 从容器快照文件中再导入为镜像，以下实例将快照文件 ubuntu.tar 导入到镜像 test&#x2F;ubuntu:v1:</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat docker/ubuntu.tar | docker import - test/ubuntu:v1</span><br></pre></td></tr></table></figure>
+
+<p>此外，也可以通过指定 URL 或者某个目录来导入，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker import http://example.com/exampleimage.tgz example/imagerepo</span><br></pre></td></tr></table></figure>
+
+<h3><span id="删除容器">删除容器</span></h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker rm -f &lt;容器 ID&gt;</span><br></pre></td></tr></table></figure>
+
+<h1><span id="docker镜像使用">Docker镜像使用</span></h1><p>当运行容器时，使用的镜像如果在本地中不存在，docker 就会自动从 docker 镜像仓库中下载，默认是从 Docker Hub 公共镜像源下载。</p>
+<h2><span id="列出镜像列表">列出镜像列表</span></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/09/29/tech_1_docker/image-20220929162540821.png" alt="image-20220929162540821"></p>
+<p>各个选项说明:</p>
+<ul>
+<li><strong>REPOSITORY：</strong>表示镜像的仓库源</li>
+<li><strong>TAG：</strong>镜像的标签</li>
+<li><strong>IMAGE ID：</strong>镜像ID</li>
+<li><strong>CREATED：</strong>镜像创建时间</li>
+<li><strong>SIZE：</strong>镜像大小</li>
+</ul>
+<p>如果你不指定一个镜像的版本标签，例如你只使用 ubuntu，docker 将默认使用 ubuntu:latest 镜像。</p>
+<h2><span id="获取一个新的镜像">获取一个新的镜像</span></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull ubuntu:18.04</span><br></pre></td></tr></table></figure>
+
+<h2><span id="查找镜像">查找镜像</span></h2><p>可以从 Docker Hub 网站来搜索镜像，Docker Hub 网址为： **<a href="https://hub.docker.com/**%EF%BC%9B%E6%88%91%E4%BB%AC%E4%B9%9F%E5%8F%AF%E4%BB%A5%E4%BD%BF%E7%94%A8">https://hub.docker.com/**；我们也可以使用</a> docker search 命令来搜索镜像。比如我们需要一个 httpd 的镜像来作为我们的 web 服务。我们可以通过 docker search 命令搜索 httpd 来寻找适合我们的镜像。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker search httpd</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/09/29/tech_1_docker/image-20220929162948690.png" alt="image-20220929162948690"></p>
+<h2><span id="拖取镜像">拖取镜像</span></h2><p>我们决定使用上图中的 httpd 官方版本的镜像，使用命令 docker pull 来下载镜像。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker pull httpd</span><br></pre></td></tr></table></figure>
+
+<h2><span id="删除镜像">删除镜像</span></h2><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker rmi hello-world</span><br></pre></td></tr></table></figure>
+
+<p>首先需要先把相关依赖的容器删除，才能进而删除镜像</p>
+<h2><span id="创建镜像">创建镜像</span></h2><p>当我们从 docker 镜像仓库中下载的镜像不能满足我们的需求时，我们可以通过以下两种方式对镜像进行更改。</p>
+<ul>
+<li>1、从已经创建的容器中更新镜像，并且提交这个镜像</li>
+<li>2、使用 Dockerfile 指令来创建一个新的镜像</li>
+</ul>
+<h3><span id="更新镜像">更新镜像</span></h3><p>更新镜像之前，我们需要使用镜像来创建一个容器。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -t -i ubuntu:15.10 /bin/bash</span><br></pre></td></tr></table></figure>
+
+<p>在容器内进行更新</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
+
+<p>退出容器后</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker commit -m=&quot;has update&quot; -a=&quot;runoob&quot; &lt;容器 ID&gt; runoob/ubuntu:v2</span><br></pre></td></tr></table></figure>
+
+<p>各个参数说明：</p>
+<ul>
+<li><strong>-m:</strong> 提交的描述信息</li>
+<li><strong>-a:</strong> 指定镜像作者</li>
+<li><strong>runoob&#x2F;ubuntu:v2:</strong> 指定要创建的目标镜像名</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/09/29/tech_1_docker/image-20220929164503769.png" alt="image-20220929164503769"></p>
+<h3><span id="构建镜像">构建镜像</span></h3><p>我们使用命令 <strong>docker build</strong> ， 从零开始来创建一个新的镜像。为此，我们需要创建一个 Dockerfile 文件，其中包含一组指令来告诉 Docker 如何构建我们的镜像。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cat Dockerfile </span><br><span class="line"></span><br><span class="line">FROM    centos:6.7</span><br><span class="line">MAINTAINER      Fisher &quot;fisher@sudops.com&quot;</span><br><span class="line"></span><br><span class="line">RUN     /bin/echo &#x27;root:123456&#x27; |chpasswd</span><br><span class="line">RUN     useradd runoob</span><br><span class="line">RUN     /bin/echo &#x27;runoob:123456&#x27; |chpasswd</span><br><span class="line">RUN     /bin/echo -e &quot;LANG=\&quot;en_US.UTF-8\&quot;&quot; &gt;/etc/default/local</span><br><span class="line">EXPOSE  22</span><br><span class="line">EXPOSE  80</span><br><span class="line">CMD     /usr/sbin/sshd -D</span><br></pre></td></tr></table></figure>
+
+<p>每一个指令都会在镜像上创建一个新的层，每一个指令的前缀都必须是大写的。</p>
+<p>第一条FROM，指定使用哪个镜像源</p>
+<p>RUN 指令告诉docker 在镜像内执行命令，安装了什么。。。</p>
+<p>然后，我们使用 Dockerfile 文件，通过 docker build 命令来构建一个镜像。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker build -t runoob/centos:6.7 .</span><br></pre></td></tr></table></figure>
+
+<p>参数说明：</p>
+<ul>
+<li><strong>-t</strong> ：指定要创建的目标镜像名</li>
+<li><strong>.</strong> ：Dockerfile 文件所在目录，可以指定Dockerfile 的绝对路径</li>
+</ul>
+<p>我们可以使用新的镜像来创建容器</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker run -t -i runoob/centos:6.7  /bin/bash</span><br></pre></td></tr></table></figure>
+
+<h3><span id="设置镜像标签">设置镜像标签</span></h3><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker tag 860c279d2fec runoob/centos:dev</span><br></pre></td></tr></table></figure>
+
+<h1><span id="docker仓库管理以docker-hub为例">Docker仓库管理（以Docker Hub为例）</span></h1><h2><span id="docker-hub">Docker Hub</span></h2><h3><span id="注册">注册</span></h3><p>在 <a href="https://hub.docker.com/">https://hub.docker.com</a> 免费注册一个 Docker 账号。</p>
+<h3><span id="登录和退出">登录和退出</span></h3><p>登录需要输入用户名和密码，登录成功后，我们就可以从 docker hub 上拉取自己账号下的全部镜像。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker login</span><br></pre></td></tr></table></figure>
+
+<h3><span id="退出"><strong>退出</strong></span></h3><p>退出 docker hub 可以使用以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker logout</span><br></pre></td></tr></table></figure>
+
+<h3><span id="拉取镜像">拉取镜像</span></h3><p>通过docker search查找官方仓库的镜像，docker pull来拉取</p>
+<h3><span id="推送镜像">推送镜像</span></h3><p>用户登录后，可以通过 docker push 命令将自己的镜像推送到 Docker Hub。</p>
+<p>以下命令中的 username 请替换为你的 Docker 账号用户名。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">docker tag ubuntu:18.04 username/ubuntu:18.04</span><br></pre></td></tr></table></figure>
+
+<h1><span id="dockerfile">Dockerfile</span></h1><ul>
+<li>FROM</li>
+</ul>
+<p>构建镜像基于哪个镜像</p>
+<ul>
+<li>MAINTAINER</li>
+</ul>
+<p>镜像维护者姓名或邮箱地址</p>
+<ul>
+<li>RUN</li>
+</ul>
+<p>构建镜像时运行的指令</p>
+<ul>
+<li>CMD</li>
+</ul>
+<p>运行容器时执行的shell环境</p>
+<ul>
+<li>VOLUME</li>
+</ul>
+<p>指定容器挂载点到宿主机自动生成的目录或其他容器</p>
+<ul>
+<li>USER</li>
+</ul>
+<p>为RUN、CMD、和 ENTRYPOINT 执行命令指定运行用户</p>
+<ul>
+<li>WORKDIR</li>
+</ul>
+<p>为 RUN、CMD、ENTRYPOINT、COPY 和 ADD 设置工作目录，就是切换目录</p>
+<ul>
+<li>HEALTHCHECH</li>
+</ul>
+<p>健康检查</p>
+<ul>
+<li>ARG</li>
+</ul>
+<p>构建时指定的一些参数</p>
+<ul>
+<li>EXPOSE</li>
+</ul>
+<p>声明容器的服务端口（仅仅是声明）</p>
+<ul>
+<li>ENV</li>
+</ul>
+<p>设置容器环境变量</p>
+<ul>
+<li>ADD</li>
+</ul>
+<p>拷贝文件或目录到容器中，如果是URL或压缩包便会自动下载或自动解压</p>
+<ul>
+<li>COPY</li>
+</ul>
+<p>拷贝文件或目录到容器中，跟ADD类似，但不具备自动下载或解压的功能</p>
+<ul>
+<li>ENTRYPOINT</li>
+</ul>
+<p>运行容器时执行的shell命令</p>
+]]></content>
+      <categories>
+        <category>Docker</category>
+      </categories>
+      <tags>
+        <tag>Docker</tag>
       </tags>
   </entry>
 </search>
