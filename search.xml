@@ -1,6 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>《Face-to-Parameter Translation for Game Character Auto-Creation》</title>
+    <url>/2022/07/24/review_10_F2P/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95%E7%AE%80%E8%BF%B0">方法简述</a><ul>
+<li><a href="#%E8%B4%A1%E7%8C%AE">贡献</a></li>
+</ul>
+</li>
+<li><a href="#%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3">方法详解</a><ul>
+<li><a href="#1imitator">1.Imitator</a></li>
+<li><a href="#2facial-similarity-measurement">2.Facial Similarity Measurement</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content_ICCV_2019/papers/Shi_Face-to-Parameter_Translation_for_Game_Character_Auto-Creation_ICCV_2019_paper.pdf">Face-to-Parameter Translation for Game Character Auto-Creation (thecvf.com)</a></p>
+<p>code: no code</p>
+<p>reference link: <a href="https://zhuanlan.zhihu.com/p/105037127">【1】伏羲AI lab：脸部照片到脸部参数的游戏角色自动生成 论文笔记 - 知乎 (zhihu.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="出发点">出发点</span></h1><p>RPG游戏中捏脸的标准工作流是从配置大量<strong>面部参数</strong>开始，然后，游戏引擎将这些用户指定的参数作为输入，并生成3D人脸。也可以说游戏人脸定制是一种3DMM的特例或是一种风格迁移问题。</p>
+<p>但遗憾的是，上述方法不能直接应用于游戏环境中。原因有三。首先，这些方法并不是用于生成参数化的角色，而这对于大多数游戏引擎来说是必不可少的，因为它们通常会<strong>接受游戏角色的定制参数</strong>，而不是图像或3D网格。其次，这些方法对用户交互不友好，因为大多数用户很难直接编辑Mesh。最后，给定一组用户指定参数的游戏引擎的渲染过程是不可微分的，这进一步限制了深度学习方法在游戏环境中的适用性。</p>
+<h1><span id="方法简述">方法简述</span></h1><p>针对上述问题，本文提出了一种根据玩家输入的人脸照片自动生成游戏角色的方法，如图所示。</p>
+<p><img src="/2022/07/24/review_10_F2P/image-20220724165007254.png" alt="image-20220724165007254"></p>
+<p>与以往3DMM方法不同，我们的方法通过<strong>预测一组具有明确物理意义的面部参数，为骨骼驱动的模型创建三维轮廓</strong>。在我们的方法中，每个参数控制每个面部组件的一个单独属性，包括位置、方向和比例。更重要的是，我们的方法在创建结果的基础上支持额外的用户交互，玩家可以根据自己的需求进一步改进他们的形象。由于游戏引擎的渲染过程是不可微分的，我们设计了一个生成网络作为“模仿者”来模仿游戏引擎的物理行为，从而可以在神经风格传递框架下实现本文提出的方法，并使用梯度下降法优化面部参数。</p>
+<h2><span id="贡献">贡献</span></h2><p>1)我们提出了一种端到端的人脸参数转换和游戏角色自动生成方法。据我们所知，关于这一主题的研究工作很少。</p>
+<p>2)由于游戏引擎的渲染过程是不可区分的，我们引入了一个模仿者，通过构建一个深度生成网络来模仿游戏引擎的行为。这样，梯度可以平滑地反向传播到输入，从而利用梯度下降法更新人脸参数。</p>
+<p>3)为跨域人脸相似度测量设计了两个损失函数。提出的目标可以在多任务学习框架中联合优化。</p>
+<h1><span id="方法详解">方法详解</span></h1><p><img src="/2022/07/24/review_10_F2P/image-20220724165938954.png" alt="image-20220724165938954"></p>
+<h2><span id="1imitator">1.Imitator</span></h2><p><img src="/2022/07/24/review_10_F2P/image-20220724194516986.png" alt="image-20220724194516986"></p>
+<p>采用类似DCGAN的结构，包含8个反卷积层，用来模拟游戏引擎从脸部参数到脸部图像的映射。然后将真实游戏引擎的渲染结果与模拟器生成的图像算L1 loss。训练用了20000对人脸图像，游戏引擎用的是逆水寒的游戏引擎。</p>
+<p><img src="/2022/07/24/review_10_F2P/image-20220724195638704.png" alt="image-20220724195638704"></p>
+<p>图4显示了我们的模仿者的“渲染”结果的三个示例。这些图像的面部参数是手动创建的。由于训练样本是根据面部参数的统一分布随机生成的，所以对于大多数人物可能看起来很奇怪(请参阅我们的补充资料)。尽管如此，我们仍然可以从图4中看到，生成的人脸图像和渲染的地面真实图像有很高的相似性，即使在一些纹理复杂的区域，如头发。这表明我们的模仿者不仅将训练数据拟合在一个低维的人脸流形中，而且还学会了解耦不同人脸参数之间的相关性。</p>
+<h2><span id="2facial-similarity-measurement">2.Facial Similarity Measurement</span></h2><p>alignment后的真实人脸与Imitator生成的人脸通过预训练好的识别网络算embedding间的余弦相似度。</p>
+<p><img src="/2022/07/24/review_10_F2P/image-20220725143108613.png" alt="image-20220725143108613"></p>
+<p>又采用了一个预训练好的分割网络对两张图像进行分割，在著名的Helen face语义分割数据集上训练该模型。为了提高人脸语义特征的位置敏感性，进一步使用分割结果(分类概率图)作为特征图的像素权值，构建位置敏感的内容丢失函数。通俗点应该就是针对每个部分对feature map做掩码算L1。</p>
+<p><img src="/2022/07/24/review_10_F2P/image-20220725144042722.png" alt="image-20220725144042722"></p>
+<p><img src="/2022/07/24/review_10_F2P/image-20220725143221347.png" alt="image-20220725143221347"></p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>Game Character Create</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</title>
+    <url>/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a></li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: [<a href="https://arxiv.org/abs/2203.06541">2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org)</a></p>
+<p>code: <a href="https://github.com/Jiahao-UTS/SLPT-master">Jiahao-UTS&#x2F;SLPT-master (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="出发点">出发点</span></h1><p>landmark之间的内在联系对于人脸对齐的性能有很大影响，本文重点考虑其内在联系。</p>
+<p>之前的方法有heatmap regression，Coordinate regression，有着不同方面的劣势。</p>
+<h1><span id="创新点">创新点</span></h1><p>提出了SLPT（<em>sparse local patch transformer</em>）来学习<em>query-query</em>和<em>representation-query</em>关系（自适应内在关系）；为了进一步提高SLPT的性能，提出了一种从粗到精的框架，使局部补丁进化为<strong>金字塔形补丁</strong>。</p>
+<h1><span id="做法">做法</span></h1><p>本文的SLPT并非同DETR从完整的feature map中预测坐标，而是首先从局部patch中生成每个landmark的表示特征。</p>
+<p>然后，使用一系列可学习的queries（称为<em>landmark queries</em>）来聚合表示。</p>
+<p>基于Transformer的交叉注意机制，SPLT在每一层学习一个<strong>自适应邻接矩阵</strong>。最后，通过MLP独立预测每个landmark在其对应patch中的subpixel坐标。由于使用了稀疏的局部补丁，与其他ViT相比，输入token的数量显著减少。 </p>
+<p>为了进一步提高性能，引入了从粗到精的框架，以与SLPT结合。下图为所提出的从粗到精的框架利用稀疏的局部面片实现鲁棒的人脸对齐。根据前一阶段的landmarks裁剪稀疏的局部补丁，并将其输入到同一SLPT中以预测面部landmarks。此外，patch大小随着阶段的增加而缩小，以使局部特征演变成金字塔形式。</p>
+<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/1.png" alt="1"></p>
+<p>整体框架图：</p>
+<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/2.png" alt="2"></p>
+<p>分为三部分：</p>
+<p><strong>the patch embedding &amp; structure encoding</strong></p>
+<p>不同于ViT，SLPT先根据landmark裁剪patch，再通过线性插值将patch大小调整为K*K，又使用了结构编码（可学习的参数）来补充表示。每种编码都与相邻地标（如左眼和右眼）的编码有很高的相似性。</p>
+<p>Muti-head Cross-attention（在Vision Transformer基础上的改进）：通过landmark在CNN提取出的feature map上划取局部patch，将这些feature map上的patch排成一个patch embedding，将其视为landmark的表示；紧接着对其进行结构编码（Structure Encodeing）,以获取人脸中的相对位置和patch embedding做concat。输入 landmarks queries ，通过这些MLP，独立预测每个landmark的位置。</p>
+<p><strong>inherent relation layers</strong></p>
+<p>受Transformer启发，每一层由三个块组成，即多头自注意（MSA）块、多头交叉注意（MCA）块和多层感知器（MLP）块，并且在每个块之前应用一个layer norm（LN）。 </p>
+<p><strong>prediction heads</strong></p>
+<p>预测头由一个用于规范化输入的分层模板和一个用于预测结果的MLP层组成。</p>
+<p>最右边的图像显示了不同样本的自适应固有关系。其将每个点连接到第一个内在关系层中交叉注意权重最高的点显示。</p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>Patch-based Transformer</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer》</title>
     <url>/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/</url>
     <content><![CDATA[<!-- toc -->
@@ -67,99 +160,6 @@
         <tag>ReID</tag>
         <tag>Transformer</tag>
         <tag>Landmark</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</title>
-    <url>/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a></li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: [<a href="https://arxiv.org/abs/2203.06541">2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org)</a></p>
-<p>code: <a href="https://github.com/Jiahao-UTS/SLPT-master">Jiahao-UTS&#x2F;SLPT-master (github.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="出发点">出发点</span></h1><p>landmark之间的内在联系对于人脸对齐的性能有很大影响，本文重点考虑其内在联系。</p>
-<p>之前的方法有heatmap regression，Coordinate regression，有着不同方面的劣势。</p>
-<h1><span id="创新点">创新点</span></h1><p>提出了SLPT（<em>sparse local patch transformer</em>）来学习<em>query-query</em>和<em>representation-query</em>关系（自适应内在关系）；为了进一步提高SLPT的性能，提出了一种从粗到精的框架，使局部补丁进化为<strong>金字塔形补丁</strong>。</p>
-<h1><span id="做法">做法</span></h1><p>本文的SLPT并非同DETR从完整的feature map中预测坐标，而是首先从局部patch中生成每个landmark的表示特征。</p>
-<p>然后，使用一系列可学习的queries（称为<em>landmark queries</em>）来聚合表示。</p>
-<p>基于Transformer的交叉注意机制，SPLT在每一层学习一个<strong>自适应邻接矩阵</strong>。最后，通过MLP独立预测每个landmark在其对应patch中的subpixel坐标。由于使用了稀疏的局部补丁，与其他ViT相比，输入token的数量显著减少。 </p>
-<p>为了进一步提高性能，引入了从粗到精的框架，以与SLPT结合。下图为所提出的从粗到精的框架利用稀疏的局部面片实现鲁棒的人脸对齐。根据前一阶段的landmarks裁剪稀疏的局部补丁，并将其输入到同一SLPT中以预测面部landmarks。此外，patch大小随着阶段的增加而缩小，以使局部特征演变成金字塔形式。</p>
-<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/1.png" alt="1"></p>
-<p>整体框架图：</p>
-<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/2.png" alt="2"></p>
-<p>分为三部分：</p>
-<p><strong>the patch embedding &amp; structure encoding</strong></p>
-<p>不同于ViT，SLPT先根据landmark裁剪patch，再通过线性插值将patch大小调整为K*K，又使用了结构编码（可学习的参数）来补充表示。每种编码都与相邻地标（如左眼和右眼）的编码有很高的相似性。</p>
-<p>Muti-head Cross-attention（在Vision Transformer基础上的改进）：通过landmark在CNN提取出的feature map上划取局部patch，将这些feature map上的patch排成一个patch embedding，将其视为landmark的表示；紧接着对其进行结构编码（Structure Encodeing）,以获取人脸中的相对位置和patch embedding做concat。输入 landmarks queries ，通过这些MLP，独立预测每个landmark的位置。</p>
-<p><strong>inherent relation layers</strong></p>
-<p>受Transformer启发，每一层由三个块组成，即多头自注意（MSA）块、多头交叉注意（MCA）块和多层感知器（MLP）块，并且在每个块之前应用一个layer norm（LN）。 </p>
-<p><strong>prediction heads</strong></p>
-<p>预测头由一个用于规范化输入的分层模板和一个用于预测结果的MLP层组成。</p>
-<p>最右边的图像显示了不同样本的自适应固有关系。其将每个点连接到第一个内在关系层中交叉注意权重最高的点显示。</p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>Patch-based Transformer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Face-to-Parameter Translation for Game Character Auto-Creation》</title>
-    <url>/2022/07/24/review_10_F2P/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E6%96%B9%E6%B3%95%E7%AE%80%E8%BF%B0">方法简述</a><ul>
-<li><a href="#%E8%B4%A1%E7%8C%AE">贡献</a></li>
-</ul>
-</li>
-<li><a href="#%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3">方法详解</a><ul>
-<li><a href="#1imitator">1.Imitator</a></li>
-<li><a href="#2facial-similarity-measurement">2.Facial Similarity Measurement</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content_ICCV_2019/papers/Shi_Face-to-Parameter_Translation_for_Game_Character_Auto-Creation_ICCV_2019_paper.pdf">Face-to-Parameter Translation for Game Character Auto-Creation (thecvf.com)</a></p>
-<p>code: no code</p>
-<p>reference link: <a href="https://zhuanlan.zhihu.com/p/105037127">【1】伏羲AI lab：脸部照片到脸部参数的游戏角色自动生成 论文笔记 - 知乎 (zhihu.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="出发点">出发点</span></h1><p>RPG游戏中捏脸的标准工作流是从配置大量<strong>面部参数</strong>开始，然后，游戏引擎将这些用户指定的参数作为输入，并生成3D人脸。也可以说游戏人脸定制是一种3DMM的特例或是一种风格迁移问题。</p>
-<p>但遗憾的是，上述方法不能直接应用于游戏环境中。原因有三。首先，这些方法并不是用于生成参数化的角色，而这对于大多数游戏引擎来说是必不可少的，因为它们通常会<strong>接受游戏角色的定制参数</strong>，而不是图像或3D网格。其次，这些方法对用户交互不友好，因为大多数用户很难直接编辑Mesh。最后，给定一组用户指定参数的游戏引擎的渲染过程是不可微分的，这进一步限制了深度学习方法在游戏环境中的适用性。</p>
-<h1><span id="方法简述">方法简述</span></h1><p>针对上述问题，本文提出了一种根据玩家输入的人脸照片自动生成游戏角色的方法，如图所示。</p>
-<p><img src="/2022/07/24/review_10_F2P/image-20220724165007254.png" alt="image-20220724165007254"></p>
-<p>与以往3DMM方法不同，我们的方法通过<strong>预测一组具有明确物理意义的面部参数，为骨骼驱动的模型创建三维轮廓</strong>。在我们的方法中，每个参数控制每个面部组件的一个单独属性，包括位置、方向和比例。更重要的是，我们的方法在创建结果的基础上支持额外的用户交互，玩家可以根据自己的需求进一步改进他们的形象。由于游戏引擎的渲染过程是不可微分的，我们设计了一个生成网络作为“模仿者”来模仿游戏引擎的物理行为，从而可以在神经风格传递框架下实现本文提出的方法，并使用梯度下降法优化面部参数。</p>
-<h2><span id="贡献">贡献</span></h2><p>1)我们提出了一种端到端的人脸参数转换和游戏角色自动生成方法。据我们所知，关于这一主题的研究工作很少。</p>
-<p>2)由于游戏引擎的渲染过程是不可区分的，我们引入了一个模仿者，通过构建一个深度生成网络来模仿游戏引擎的行为。这样，梯度可以平滑地反向传播到输入，从而利用梯度下降法更新人脸参数。</p>
-<p>3)为跨域人脸相似度测量设计了两个损失函数。提出的目标可以在多任务学习框架中联合优化。</p>
-<h1><span id="方法详解">方法详解</span></h1><p><img src="/2022/07/24/review_10_F2P/image-20220724165938954.png" alt="image-20220724165938954"></p>
-<h2><span id="1imitator">1.Imitator</span></h2><p><img src="/2022/07/24/review_10_F2P/image-20220724194516986.png" alt="image-20220724194516986"></p>
-<p>采用类似DCGAN的结构，包含8个反卷积层，用来模拟游戏引擎从脸部参数到脸部图像的映射。然后将真实游戏引擎的渲染结果与模拟器生成的图像算L1 loss。训练用了20000对人脸图像，游戏引擎用的是逆水寒的游戏引擎。</p>
-<p><img src="/2022/07/24/review_10_F2P/image-20220724195638704.png" alt="image-20220724195638704"></p>
-<p>图4显示了我们的模仿者的“渲染”结果的三个示例。这些图像的面部参数是手动创建的。由于训练样本是根据面部参数的统一分布随机生成的，所以对于大多数人物可能看起来很奇怪(请参阅我们的补充资料)。尽管如此，我们仍然可以从图4中看到，生成的人脸图像和渲染的地面真实图像有很高的相似性，即使在一些纹理复杂的区域，如头发。这表明我们的模仿者不仅将训练数据拟合在一个低维的人脸流形中，而且还学会了解耦不同人脸参数之间的相关性。</p>
-<h2><span id="2facial-similarity-measurement">2.Facial Similarity Measurement</span></h2><p>alignment后的真实人脸与Imitator生成的人脸通过预训练好的识别网络算embedding间的余弦相似度。</p>
-<p><img src="/2022/07/24/review_10_F2P/image-20220725143108613.png" alt="image-20220725143108613"></p>
-<p>又采用了一个预训练好的分割网络对两张图像进行分割，在著名的Helen face语义分割数据集上训练该模型。为了提高人脸语义特征的位置敏感性，进一步使用分割结果(分类概率图)作为特征图的像素权值，构建位置敏感的内容丢失函数。通俗点应该就是针对每个部分对feature map做掩码算L1。</p>
-<p><img src="/2022/07/24/review_10_F2P/image-20220725144042722.png" alt="image-20220725144042722"></p>
-<p><img src="/2022/07/24/review_10_F2P/image-20220725143221347.png" alt="image-20220725143221347"></p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>Game Character Create</tag>
       </tags>
   </entry>
   <entry>
@@ -696,31 +696,23 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo建站相关</title>
-    <url>/2022/03/25/tools_1_start/</url>
+    <title>RTTO WEEK1</title>
+    <url>/2022/09/19/rtto_1/</url>
     <content><![CDATA[<!-- toc -->
 
 <ul>
-<li><a href="#%E6%90%AD%E5%BB%BAhexo%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%80%9A%E8%BF%87git%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8">搭建Hexo服务器，通过Git自动部署在阿里云服务器</a><ul>
-<li><a href="#%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%83%A8%E7%BD%B2">搭建及部署</a></li>
-<li><a href="#%E5%8D%9A%E6%96%87%E5%8F%91%E5%B8%83">博文发布</a></li>
-</ul>
-</li>
-<li><a href="#%E4%B8%BB%E9%A2%98%E5%8F%8A%E5%85%B6%E7%BE%8E%E5%8C%96">主题及其美化</a><ul>
-<li><a href="#butterfly">Butterfly</a></li>
-<li><a href="#next">Next</a><ul>
-<li><a href="#%E7%BE%8E%E5%8C%96">美化</a></li>
-<li><a href="#%E6%96%87%E7%AB%A0%E5%90%AF%E7%94%A8tags%E5%92%8Ccategories">文章启用tags和categories</a></li>
-<li><a href="#%E8%AE%BE%E7%BD%AE%E9%98%85%E8%AF%BB%E5%85%A8%E6%96%87">设置阅读全文</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98updating">相关问题（Updating…）</a><ul>
-<li><a href="#%E6%97%A0%E6%B3%95%E6%AD%A3%E7%A1%AE%E6%B8%B2%E6%9F%93markdown%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98">无法正确渲染markdown文件问题</a></li>
-<li><a href="#%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98">插入图片问题</a></li>
-<li><a href="#%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98">目录生成问题</a></li>
-<li><a href="#%E6%B7%BB%E5%8A%A0%E6%9C%AC%E5%9C%B0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD">添加本地搜索功能</a></li>
+<li><a href="#week-1"><strong>WEEK 1</strong></a><ul>
+<li><a href="#209%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84m">209.长度最小的子数组（m）</a></li>
+<li><a href="#904%E6%B0%B4%E6%9E%9C%E6%88%90%E7%AF%AEm">904.水果成篮（m）</a></li>
+<li><a href="#76%E6%9C%80%E5%B0%8F%E8%A6%86%E7%9B%96%E5%AD%90%E4%B8%B2h">76.最小覆盖子串（h）</a></li>
+<li><a href="#59%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5m">59.螺旋矩阵（m）</a></li>
+<li><a href="#203%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0e">203.移除链表元素（e）</a></li>
+<li><a href="#707%E8%AE%BE%E8%AE%A1%E9%93%BE%E8%A1%A8m">707.设计链表（m）</a></li>
+<li><a href="#206%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8e">206.反转链表（e）</a></li>
+<li><a href="#24%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9m">24.两两交换链表中的节点（m）</a></li>
+<li><a href="#19%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%ACn%E5%90%84%E7%BB%93%E7%82%B9m">19.删除链表的倒数第N各结点（m）</a></li>
+<li><a href="#%E9%9D%A2%E8%AF%95%E9%A2%98-0207-%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4e">面试题 02.07. 链表相交（e）</a></li>
+<li><a href="#142%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8iim">142.环形链表Ⅱ（m）</a></li>
 </ul>
 </li>
 </ul>
@@ -728,39 +720,41 @@
 
 <span id="more"></span>
 
-<h1><span id="搭建hexo服务器通过git自动部署在阿里云服务器">搭建Hexo服务器，通过Git自动部署在阿里云服务器</span></h1><h2><span id="搭建及部署">搭建及部署</span></h2><p>参考博文链接：<a href="https://mp.weixin.qq.com/s/JTTUYJTvtdT6X2fvLUBFZg">Win10下Hexo博客搭建教程，及阿里云服务器部署实战 (qq.com)</a></p>
-<h2><span id="博文发布">博文发布</span></h2><p>在本地机器上部署Hexo相关MyHexoBlogs文件夹下，进入MyHexoBlogs&#x2F;myblogs&#x2F;source&#x2F;_posts目录；</p>
-<p>在当前页进入git bash，输入hexo clean 清除缓存，hexo g 解析静态文件，hexo d 刷新部署新的资源。</p>
-<p>hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</p>
-<h1><span id="主题及其美化">主题及其美化</span></h1><h2><span id="butterfly">Butterfly</span></h2><p>Butterfly主题部署参考博文链接：<a href="https://www.jianshu.com/p/50a565adaf15?ivk_sa=1024320u">hexo框架|butterfly主题配置 - 简书 (jianshu.com)</a></p>
-<p>Butterfly主题官方文档：<a href="https://www.butterfly1.cn/">Hexo-Butterfly主题(🦋 A Hexo Theme: Butterfly-Official website) (butterfly1.cn)</a></p>
-<p>Hexo默认美化项：<a href="https://zhuanlan.zhihu.com/p/369951111">Hexo个性化设置 - 知乎 (zhihu.com)</a></p>
-<h2><span id="next">Next</span></h2><h3><span id="美化">美化</span></h3><p><a href="https://blog.csdn.net/qq_34003239/article/details/100883213">(54条消息) Next主题美化_蜗牛非牛的博客-CSDN博客_next主题美化</a></p>
-<h3><span id="文章启用tags和categories">文章启用tags和categories</span></h3><p><a href="https://blog.csdn.net/Lancis/article/details/118788205">(54条消息) hexo next主题简单美化_Lancis的博客-CSDN博客_next主题美化</a></p>
-<h3><span id="设置阅读全文">设置阅读全文</span></h3><p><a href="https://blog.csdn.net/CHENGXUYUAN09/article/details/103408380">(54条消息) next7.6版本关于设置阅读全文_LIYUANWAISPRING的博客-CSDN博客</a></p>
-<h1><span id="相关问题updating">相关问题（Updating…）</span></h1><h2><span id="无法正确渲染markdown文件问题">无法正确渲染markdown文件问题</span></h2><p>hexo对于md文件的解析规则不是标准规则，有时候在复制论文标题时会有换行符无法正确解析；</p>
-<p>重新手动输入检查标题格式解决问题</p>
-<h2><span id="插入图片问题">插入图片问题</span></h2><p>选择采用hexo官网的解决方式：<a href="https://hexo.io/zh-cn/docs/asset-folders">资源文件夹 | Hexo</a></p>
-<h2><span id="目录生成问题">目录生成问题</span></h2><p>安装插件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-toc --save</span><br></pre></td></tr></table></figure>
-
-<p>hexo的配置文件中设置格式，添加配置代码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">toc:</span><br><span class="line">  maxdepth: 3</span><br></pre></td></tr></table></figure>
-
-<p>在md中使用时</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- toc --&gt;</span><br></pre></td></tr></table></figure>
-
-<h2><span id="添加本地搜索功能">添加本地搜索功能</span></h2><p>与Next官方配置文件中的链接步骤不同的是，还需要修改</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">preload: true</span><br></pre></td></tr></table></figure>
-
-
-
+<h1><span id="week-1"><strong>WEEK 1</strong></span></h1><h2><span id="209长度最小的子数组m">209.长度最小的子数组（m）</span></h2><p>用滑动窗口，动态调整窗口的起始位置，不断比较子序列是否符合条件（sum&gt;&#x3D;s）,取当前子序列的长度，取相对较小的。</p>
+<h2><span id="904水果成篮m">904.水果成篮（m）</span></h2><p>本题的目标是：得到一个最大子串，其中最多含有两种元素；</p>
+<p>用一个hashmap表示fruits[i]类型的水果对应摘了几个；</p>
+<p>用滑动窗口先遍历右边界，记录更新过程中的type值的变化；</p>
+<p>当hashmap中相应类型水果数量为0时，则type++；</p>
+<p>若type&gt;2，则更新左边界，把hashmap中fruits[left]水果的数量–，若该水果在hashmap中的数量为0，则type–；</p>
+<p>判断每次窗口的长度取历次满足条件的窗口的最大值，即为最终结果；</p>
+<h2><span id="76最小覆盖子串h">76.最小覆盖子串（h）</span></h2><p>用滑动窗口，两个hashmap比较各类字符串出现的频率？不会做</p>
+<h2><span id="59螺旋矩阵m">59.螺旋矩阵（m）</span></h2><p>先确定遍历的圈数——n&#x2F;2；</p>
+<p>上右下左分别进行左闭右开的遍历，进行四个for循环，改变i和j；</p>
+<p>如果n是奇数最里面是一个数而不是一个圈，需要单独赋值count；</p>
+<h2><span id="203移除链表元素e">203.移除链表元素（e）</span></h2><p>简单链表数据结构；</p>
+<p>头节点被删除的情况：直接tmp保存原head，head &#x3D; head -&gt; next，然后删除tmp；</p>
+<p>子节点被删除的情况：开辟一个cur节点，遍历链表元素，若cur -&gt;next 为空则停止遍历（尾节点），删除操作同上；</p>
+<h2><span id="707设计链表m">707.设计链表（m）</span></h2><p>简单链表数据结构；</p>
+<p>需要注意的点是选择index位置的元素的while终止条件；</p>
+<p>判断_size异常输入的条件；</p>
+<h2><span id="206反转链表e">206.反转链表（e）</span></h2><p>快慢指针；</p>
+<p>一个在前一个在后，使用一个tmp来记录cur节点的后一个节点，以便循环推进，每次使得快指针指向的节点重新指向慢指针指向的节点；</p>
+<h2><span id="24两两交换链表中的节点m">24.两两交换链表中的节点（m）</span></h2><p>画图！</p>
+<p>三个步骤，要注意先暂存两个值，以及每一步骤都会改变当前链表结构，需要画图一步步看当前链表状态；</p>
+<h2><span id="19删除链表的倒数第n各结点m">19.删除链表的倒数第N各结点（m）</span></h2><p>双指针；</p>
+<p>让fast移动n步；</p>
+<p>然后让fast和slow同时移动，直到fast指向链表末尾；</p>
+<p>删掉slow所指向的节点；</p>
+<h2><span id="面试题-0207-链表相交e">面试题 02.07. 链表相交（e）</span></h2><p>分别求两链表的长度，计算长度差，先把长链表遍历一段长度差，控制两个链表一样长，然后同时开始遍历两个链表，若遍历到了相同节点则找到了交点。</p>
+<h2><span id="142环形链表iim">142.环形链表Ⅱ（m）</span></h2><p>分两步：判断是否有环；若有环判断环的出口；</p>
+<p>是否有环：快慢指针，快指针一次移动两个，慢指针一次移动一个，若有环快慢指针会在不空的节点上相遇；</p>
+<p>环的出口：从头结点出发一个指针，从相遇节点也出发一个指针，这两个指针每次只走一个节点， 那么当这两个指针相遇的时候就是环形入口的节点（这步有点绕）</p>
 ]]></content>
       <categories>
-        <category>Hexo</category>
+        <category>RTTO</category>
       </categories>
       <tags>
-        <tag>Hexo</tag>
+        <tag>RTTO</tag>
       </tags>
   </entry>
   <entry>
@@ -832,23 +826,31 @@
       </tags>
   </entry>
   <entry>
-    <title>RTTO WEEK1</title>
-    <url>/2022/09/19/rtto_1/</url>
+    <title>Hexo建站相关</title>
+    <url>/2022/03/25/tools_1_start/</url>
     <content><![CDATA[<!-- toc -->
 
 <ul>
-<li><a href="#week-1"><strong>WEEK 1</strong></a><ul>
-<li><a href="#209%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84m">209.长度最小的子数组（m）</a></li>
-<li><a href="#904%E6%B0%B4%E6%9E%9C%E6%88%90%E7%AF%AEm">904.水果成篮（m）</a></li>
-<li><a href="#76%E6%9C%80%E5%B0%8F%E8%A6%86%E7%9B%96%E5%AD%90%E4%B8%B2h">76.最小覆盖子串（h）</a></li>
-<li><a href="#59%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5m">59.螺旋矩阵（m）</a></li>
-<li><a href="#203%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0e">203.移除链表元素（e）</a></li>
-<li><a href="#707%E8%AE%BE%E8%AE%A1%E9%93%BE%E8%A1%A8m">707.设计链表（m）</a></li>
-<li><a href="#206%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8e">206.反转链表（e）</a></li>
-<li><a href="#24%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9m">24.两两交换链表中的节点（m）</a></li>
-<li><a href="#19%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%ACn%E5%90%84%E7%BB%93%E7%82%B9m">19.删除链表的倒数第N各结点（m）</a></li>
-<li><a href="#%E9%9D%A2%E8%AF%95%E9%A2%98-0207-%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4e">面试题 02.07. 链表相交（e）</a></li>
-<li><a href="#142%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8iim">142.环形链表Ⅱ（m）</a></li>
+<li><a href="#%E6%90%AD%E5%BB%BAhexo%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%80%9A%E8%BF%87git%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8">搭建Hexo服务器，通过Git自动部署在阿里云服务器</a><ul>
+<li><a href="#%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%83%A8%E7%BD%B2">搭建及部署</a></li>
+<li><a href="#%E5%8D%9A%E6%96%87%E5%8F%91%E5%B8%83">博文发布</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%BB%E9%A2%98%E5%8F%8A%E5%85%B6%E7%BE%8E%E5%8C%96">主题及其美化</a><ul>
+<li><a href="#butterfly">Butterfly</a></li>
+<li><a href="#next">Next</a><ul>
+<li><a href="#%E7%BE%8E%E5%8C%96">美化</a></li>
+<li><a href="#%E6%96%87%E7%AB%A0%E5%90%AF%E7%94%A8tags%E5%92%8Ccategories">文章启用tags和categories</a></li>
+<li><a href="#%E8%AE%BE%E7%BD%AE%E9%98%85%E8%AF%BB%E5%85%A8%E6%96%87">设置阅读全文</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98updating">相关问题（Updating…）</a><ul>
+<li><a href="#%E6%97%A0%E6%B3%95%E6%AD%A3%E7%A1%AE%E6%B8%B2%E6%9F%93markdown%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98">无法正确渲染markdown文件问题</a></li>
+<li><a href="#%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98">插入图片问题</a></li>
+<li><a href="#%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98">目录生成问题</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E6%9C%AC%E5%9C%B0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD">添加本地搜索功能</a></li>
 </ul>
 </li>
 </ul>
@@ -856,35 +858,112 @@
 
 <span id="more"></span>
 
-<h1><span id="week-1"><strong>WEEK 1</strong></span></h1><h2><span id="209长度最小的子数组m">209.长度最小的子数组（m）</span></h2><p>用滑动窗口，动态调整窗口的起始位置，不断比较子序列是否符合条件（sum&gt;&#x3D;s）,取当前子序列的长度，取相对较小的。</p>
-<h2><span id="904水果成篮m">904.水果成篮（m）</span></h2><p>本题的目标是：得到一个最大子串，其中最多含有两种元素；</p>
-<p>用一个hashmap表示fruits[i]类型的水果对应摘了几个；</p>
-<p>用滑动窗口先遍历右边界，记录更新过程中的type值的变化；</p>
-<p>当hashmap中相应类型水果数量为0时，则type++；</p>
-<p>若type&gt;2，则更新左边界，把hashmap中fruits[left]水果的数量–，若该水果在hashmap中的数量为0，则type–；</p>
-<p>判断每次窗口的长度取历次满足条件的窗口的最大值，即为最终结果；</p>
-<h2><span id="76最小覆盖子串h">76.最小覆盖子串（h）</span></h2><p>用滑动窗口，两个hashmap比较各类字符串出现的频率？不会做</p>
-<h2><span id="59螺旋矩阵m">59.螺旋矩阵（m）</span></h2><p>先确定遍历的圈数——n&#x2F;2；</p>
-<p>上右下左分别进行左闭右开的遍历，进行四个for循环，改变i和j；</p>
-<p>如果n是奇数最里面是一个数而不是一个圈，需要单独赋值count；</p>
-<h2><span id="203移除链表元素e">203.移除链表元素（e）</span></h2><p>简单链表数据结构；</p>
-<p>头节点被删除的情况：直接tmp保存原head，head &#x3D; head -&gt; next，然后删除tmp；</p>
-<p>子节点被删除的情况：开辟一个cur节点，遍历链表元素，若cur -&gt;next 为空则停止遍历（尾节点），删除操作同上；</p>
-<h2><span id="707设计链表m">707.设计链表（m）</span></h2><p>简单链表数据结构；</p>
-<p>需要注意的点是选择index位置的元素的while终止条件；</p>
-<p>判断_size异常输入的条件；</p>
-<h2><span id="206反转链表e">206.反转链表（e）</span></h2><p>快慢指针；</p>
-<p>一个在前一个在后，使用一个tmp来记录cur节点的后一个节点，以便循环推进，每次使得快指针指向的节点重新指向慢指针指向的节点；</p>
-<h2><span id="24两两交换链表中的节点m">24.两两交换链表中的节点（m）</span></h2><p>画图！</p>
-<p>三个步骤，要注意先暂存两个值，以及每一步骤都会改变当前链表结构，需要画图一步步看当前链表状态；</p>
-<h2><span id="19删除链表的倒数第n各结点m">19.删除链表的倒数第N各结点（m）</span></h2><p>双指针；</p>
-<p>让fast移动n步；</p>
-<p>然后让fast和slow同时移动，直到fast指向链表末尾；</p>
-<p>删掉slow所指向的节点；</p>
-<h2><span id="面试题-0207-链表相交e">面试题 02.07. 链表相交（e）</span></h2><p>分别求两链表的长度，计算长度差，先把长链表遍历一段长度差，控制两个链表一样长，然后同时开始遍历两个链表，若遍历到了相同节点则找到了交点。</p>
-<h2><span id="142环形链表iim">142.环形链表Ⅱ（m）</span></h2><p>分两步：判断是否有环；若有环判断环的出口；</p>
-<p>是否有环：快慢指针，快指针一次移动两个，慢指针一次移动一个，若有环快慢指针会在不空的节点上相遇；</p>
-<p>环的出口：从头结点出发一个指针，从相遇节点也出发一个指针，这两个指针每次只走一个节点， 那么当这两个指针相遇的时候就是环形入口的节点（这步有点绕）</p>
+<h1><span id="搭建hexo服务器通过git自动部署在阿里云服务器">搭建Hexo服务器，通过Git自动部署在阿里云服务器</span></h1><h2><span id="搭建及部署">搭建及部署</span></h2><p>参考博文链接：<a href="https://mp.weixin.qq.com/s/JTTUYJTvtdT6X2fvLUBFZg">Win10下Hexo博客搭建教程，及阿里云服务器部署实战 (qq.com)</a></p>
+<h2><span id="博文发布">博文发布</span></h2><p>在本地机器上部署Hexo相关MyHexoBlogs文件夹下，进入MyHexoBlogs&#x2F;myblogs&#x2F;source&#x2F;_posts目录；</p>
+<p>在当前页进入git bash，输入hexo clean 清除缓存，hexo g 解析静态文件，hexo d 刷新部署新的资源。</p>
+<p>hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</p>
+<h1><span id="主题及其美化">主题及其美化</span></h1><h2><span id="butterfly">Butterfly</span></h2><p>Butterfly主题部署参考博文链接：<a href="https://www.jianshu.com/p/50a565adaf15?ivk_sa=1024320u">hexo框架|butterfly主题配置 - 简书 (jianshu.com)</a></p>
+<p>Butterfly主题官方文档：<a href="https://www.butterfly1.cn/">Hexo-Butterfly主题(🦋 A Hexo Theme: Butterfly-Official website) (butterfly1.cn)</a></p>
+<p>Hexo默认美化项：<a href="https://zhuanlan.zhihu.com/p/369951111">Hexo个性化设置 - 知乎 (zhihu.com)</a></p>
+<h2><span id="next">Next</span></h2><h3><span id="美化">美化</span></h3><p><a href="https://blog.csdn.net/qq_34003239/article/details/100883213">(54条消息) Next主题美化_蜗牛非牛的博客-CSDN博客_next主题美化</a></p>
+<h3><span id="文章启用tags和categories">文章启用tags和categories</span></h3><p><a href="https://blog.csdn.net/Lancis/article/details/118788205">(54条消息) hexo next主题简单美化_Lancis的博客-CSDN博客_next主题美化</a></p>
+<h3><span id="设置阅读全文">设置阅读全文</span></h3><p><a href="https://blog.csdn.net/CHENGXUYUAN09/article/details/103408380">(54条消息) next7.6版本关于设置阅读全文_LIYUANWAISPRING的博客-CSDN博客</a></p>
+<h1><span id="相关问题updating">相关问题（Updating…）</span></h1><h2><span id="无法正确渲染markdown文件问题">无法正确渲染markdown文件问题</span></h2><p>hexo对于md文件的解析规则不是标准规则，有时候在复制论文标题时会有换行符无法正确解析；</p>
+<p>重新手动输入检查标题格式解决问题</p>
+<h2><span id="插入图片问题">插入图片问题</span></h2><p>选择采用hexo官网的解决方式：<a href="https://hexo.io/zh-cn/docs/asset-folders">资源文件夹 | Hexo</a></p>
+<h2><span id="目录生成问题">目录生成问题</span></h2><p>安装插件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-toc --save</span><br></pre></td></tr></table></figure>
+
+<p>hexo的配置文件中设置格式，添加配置代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">toc:</span><br><span class="line">  maxdepth: 3</span><br></pre></td></tr></table></figure>
+
+<p>在md中使用时</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- toc --&gt;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="添加本地搜索功能">添加本地搜索功能</span></h2><p>与Next官方配置文件中的链接步骤不同的是，还需要修改</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">preload: true</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RTTO WEEK2</title>
+    <url>/2022/09/30/rtto_2/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#week-2"><strong>WEEK 2</strong></a><ul>
+<li><a href="#242%E6%9C%89%E6%95%88%E7%9A%84%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8De">242.有效的字母异位词（e）</a></li>
+<li><a href="#383%E8%B5%8E%E9%87%91%E4%BF%A1e">383.赎金信（e）</a></li>
+<li><a href="#49%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D%E5%88%86%E7%BB%84m">49.字母异位词分组（m）</a></li>
+<li><a href="#438%E6%89%BE%E5%88%B0%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E6%89%80%E6%9C%89%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8Dm">438.找到字符串中所有字母异位词（m）</a></li>
+<li><a href="#349%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E7%9A%84%E4%BA%A4%E9%9B%86e">349.两个数组的交集（e）</a></li>
+<li><a href="#350%E4%B8%A4%E4%B8%AA%E6%95%B0%E7%BB%84%E7%9A%84%E4%BA%A4%E9%9B%86iie">350.两个数组的交集Ⅱ（e）</a></li>
+<li><a href="#202%E5%BF%AB%E4%B9%90%E6%95%B0e">202.快乐数（e）</a></li>
+<li><a href="#1%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8Ce">1.两数之和（e）</a></li>
+<li><a href="#454%E5%9B%9B%E6%95%B0%E7%9B%B8%E5%8A%A0iim">454.四数相加Ⅱ（m）</a></li>
+<li><a href="#15%E4%B8%89%E6%95%B0%E4%B9%8B%E5%92%8Cm">15.三数之和（m）</a></li>
+<li><a href="#18%E5%9B%9B%E6%95%B0%E4%B9%8B%E5%92%8Cm">18.四数之和（m）</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="week-2"><strong>WEEK 2</strong></span></h1><h2><span id="242有效的字母异位词e">242.有效的字母异位词（e）</span></h2><p>开辟一个record数组size为26；</p>
+<p>首先遍历s，把字母在相应位置进行累加计数；</p>
+<p>其次遍历t，把字母在相应位置进行累减计数；</p>
+<p>最后遍历record数组，若有元素不为0，则返回false；否则返回true；</p>
+<h2><span id="383赎金信e">383.赎金信（e）</span></h2><p>同上，最后判断record数组中是否有-1；</p>
+<h2><span id="49字母异位词分组m">49.字母异位词分组（m）</span></h2><p>该题目标为，给定一个字符串的list，需要把由相同字母构成的字符串自行分组。</p>
+<p>首先遍历整个字符串列表，再将每个字符串自行排序；</p>
+<p>将经过排序后的字符串放入一个哈希表，key为排序后的字符串，value为排序前的原字符串；</p>
+<p>这样拥有相同字符的字符串会共享同一个key，只需取出相同key的vector；</p>
+<p><code>vector&lt;vector&lt;string&gt;&gt;</code>二维string数组</p>
+<p><code>unordered_map&lt;string,vector&lt;string&gt;&gt; map</code>一个无序hashmap，key是string，用于存放正序的素材字符串；value是string list，用于存放key字母构成的字符串</p>
+<h2><span id="438找到字符串中所有字母异位词m">438.找到字符串中所有字母异位词（m）</span></h2><p>构造sCount和pCount两个哈希表（size&#x3D;26）用于存储每个字母分别在s和t中出现的次数；</p>
+<p>保证pLen长度的窗口进行滑动，判断sCount和pCount是否相等；</p>
+<p>两个string先遍历pLen的长度，更新sCount和pCount，若此时sCount &#x3D;&#x3D; pCount，则push_back(0)；</p>
+<p>再从pLen+1个元素开始遍历s，减少滑动窗口第一个元素的出现次数，增加滑动窗口最后一个元素（新遍历的元素）的出现次数，若遍历过程中sCount &#x3D;&#x3D; pCount，则push_back(i+1)；</p>
+<h2><span id="349两个数组的交集e">349.两个数组的交集（e）</span></h2><p>unordered_set 底层哈希表实现；</p>
+<p><code>unordered_set&lt;int&gt; nums_set(nums1.begin(),nums1.end());</code>复制nums1</p>
+<p>unordered_map常用操作详解：<a href="https://blog.csdn.net/weixin_45847364/article/details/121654719">(70条消息) unordered_set中end()与find()的使用_bulangman277的博客-CSDN博客</a></p>
+<p>需要注意的是，使用了一个result_set用于最后结果的去重，最后再从set中取元素到vector中返回；</p>
+<h2><span id="350两个数组的交集iie">350.两个数组的交集Ⅱ（e）</span></h2><p>数据范围合理的情况下可使用hash；</p>
+<p>先构建两个hashmap来存放每种元素的出现次数；</p>
+<p>最后检索两个构建好的hashmap，取同一元素出现次数的最小值m，添加m次该元素到最后的结果上；</p>
+<h2><span id="202快乐数e">202.快乐数（e）</span></h2><p>由于该过程中求和的过程会重复出现，可单独封装一个getSum()方法；</p>
+<p>使用哈希法，来判断这个sum是否重复出现，如果重复了就是return false， 否则一直找到sum为1为止；</p>
+<p>设置一个sum_set来记录出现过的sum值；</p>
+<p>每次getSum进行判断，如果这个sum曾经出现过，说明已经陷入了无限循环了，立刻return false；</p>
+<h2><span id="1两数之和e">1.两数之和（e）</span></h2><p>使用unordered_map数据结构，key为nums[i]，value为i；</p>
+<p>遍历一遍数组，寻找target-num[i]是否在map中；若有返回该map的索引和当前i，若没有，则在map中更新对应的key value；</p>
+<h2><span id="454四数相加iim">454.四数相加Ⅱ（m）</span></h2><p>首先定义 一个unordered_map，key放a和b两数之和，value 放a和b两数之和出现的次数；</p>
+<p>遍历大A和大B数组，统计两个数组元素之和，和出现的次数，放到map中；</p>
+<p>定义int变量count，用来统计 a+b+c+d &#x3D; 0 出现的次数；</p>
+<p>在遍历大C和大D数组，找到如果 0-(c+d) 在map中出现过的话，就用count把map中key对应的value也就是出现次数统计出来；</p>
+<p>最后返回统计值 count 就可以了；</p>
+<h2><span id="15三数之和m">15.三数之和（m）</span></h2><p>本题如果使用哈希会有许多去重的操作，不好写。</p>
+<p>使用双指针法：</p>
+<p>先将数组进行排序；</p>
+<p>从头遍历一个数组选择第一个数i；left指针指向i后一位的数，right指针指向数组最后一位的数；</p>
+<p>若i+left+right&gt;0，则需要将三数之和缩小，此时需要将right向左移动一位；</p>
+<p>若i+left+right&lt;0，则需要将三数之和放大，此时需要将left向右移动一位；</p>
+<p>直到三数之和等于0，然后对所有的组合进行去重；</p>
+<p>最关键的是最后的去重！</p>
+<p>i，left，right三种重复的情况</p>
+<p>i重复的话判断相邻两位是否相等，若等于直接continue循环，进行i++；</p>
+<p>left重复的话，比较left和left+1，直接left++；</p>
+<p>right重复的话，比较right和right-1，直接right–；</p>
+<h2><span id="18四数之和m">18.四数之和（m）</span></h2><p>核心思想和三数之和一样，都是双指针遍历；难的是去重和剪枝；</p>
 ]]></content>
       <categories>
         <category>RTTO</category>
