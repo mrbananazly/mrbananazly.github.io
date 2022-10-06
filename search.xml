@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>《E题1.0》</title>
+    <url>/2022/10/06/HWB/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E9%97%AE%E9%A2%981">问题1</a></li>
+<li><a href="#%E9%97%AE%E9%A2%982">问题2</a></li>
+<li><a href="#%E9%97%AE%E9%A2%983">问题3</a></li>
+<li><a href="#%E9%97%AE%E9%A2%984">问题4</a></li>
+<li><a href="#%E9%97%AE%E9%A2%985">问题5</a></li>
+<li><a href="#%E9%97%AE%E9%A2%986">问题6</a></li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="问题1">问题1</span></h1><h4><span id="从机理分析的角度建立不同放牧策略放牧方式和放牧强度对锡林郭勒草原土壤物理性质主要是土壤湿度和植被生物量影响的数学模型">从机理分析的角度，建立不同放牧策略（放牧方式和放牧强度）对锡林郭勒草原土壤物理性质（主要是土壤湿度）和植被生物量影响的数学模型</span></h4><p>筛选出放牧策略（载畜量）、降水、地表蒸发量数据，套用下方公式</p>
+<p>画出植被生物量和单位时间的曲线，可求出对应的单位时间的斜率，推出该时间S和w的关系；</p>
+<p>土壤含水量同理，但要将α换成w的式子；</p>
+<p>画出土壤含水量和单位时间的曲线，可求出对应的单位时间的斜率，推出该时间S和w的关系；</p>
+<p>E(a)直接使用蒸发量代替</p>
+<p><img src="/2022/10/06/HWB/image-20221006201807430.png" alt="image-20221006201807430"></p>
+<h1><span id="问题2">问题2</span></h1><p>先时间序列自回归预测浅层因子，然后用这些浅层因子做自变量做多元回归；</p>
+<p>其中可以使用前十年的单一月份数据，来预测后一年单一月份数据（建12个模型）</p>
+<h1><span id="问题3">问题3</span></h1><h4><span id="从机理分析的角度建立不同放牧策略放牧方式和放牧强度对锡林郭勒草原土壤化学性质影响的数学模型-并请结合附件14中数据预测锡林郭勒草原监测样地12个放牧小区在不同放牧强度下2022年土壤同期有机碳-无机碳-全n-土壤cx2fn比等值并完成下表">从机理分析的角度，建立不同放牧策略（放牧方式和放牧强度）对锡林郭勒草原土壤化学性质影响的数学模型。并请结合附件14中数据预测锡林郭勒草原监测样地(12个放牧小区)在不同放牧强度下2022年土壤同期有机碳、无机碳、全N、土壤C&#x2F;N比等值,并完成下表。</span></h4><p>时间序列自回归</p>
+<h1><span id="问题4">问题4</span></h1><h4><span id="利用沙漠化程度指数预测模型和附件提供数据包括自己收集的数据确定不同放牧强度下监测点的沙漠化程度指数值">利用沙漠化程度指数预测模型和附件提供数据（包括自己收集的数据）确定不同放牧强度下监测点的沙漠化程度指数值。</span></h4><p>影响因子：风速、降水、气温（气象因素附件8）；植被盖度（附件10或6或5）、地表水资源（附件9）、地下水位（附件9）；人口数量、牲畜数量、社会经济水平（附件2）等等。</p>
+<p>PCA加权累加</p>
+<p><img src="/2022/10/06/HWB/image-20221006191041118.png" alt="image-20221006191041118"></p>
+<h4><span id="并请尝试给出定量的土壤板结化定义">并请尝试给出定量的土壤板结化定义</span></h4><p><img src="/2022/10/06/HWB/image-20221006192120031.png" alt="image-20221006192120031"></p>
+<h4><span id="在建立合理的土壤板结化模型基础上结合问题3给出放牧策略模型使得沙漠化程度指数与板结化程度最小">在建立合理的土壤板结化模型基础上结合问题3，给出放牧策略模型，使得沙漠化程度指数与板结化程度最小。</span></h4><p>带入第一题公式和板结化公式，求解S</p>
+<h1><span id="问题5">问题5</span></h1><h4><span id="锡林郭勒草原近10的年降水量包含降雪通常在300-mm-~1200-mm之间请在给定的降水量300mm600mm-900-mm-和1200mm情形下在保持草原可持续发展情况下对实验草场内附件14-15放牧羊的数量进行求解找到最大阈值-注这里计算结果可以不是正整数">锡林郭勒草原近10的年降水量（包含降雪）通常在300 mm ~1200 mm之间，请在给定的降水量（300mm，600mm、900 mm 和1200mm）情形下，在保持草原可持续发展情况下对实验草场内（附件14、15）放牧羊的数量进行求解，找到最大阈值。（注：这里计算结果可以不是正整数）</span></h4><p>筛选出满足降水条件的年份对应的数据。</p>
+<p><img src="/2022/10/06/HWB/image-20221006193918802.png" alt="image-20221006193918802"></p>
+<h1><span id="问题6">问题6</span></h1><h4><span id="在保持附件13的示范牧户放牧策略不变和问题4中得到的放牧方案两种情况下用图示或者动态演示方式分别预测示范区2023年9月土地状态比如土壤肥力变化-土壤湿度-植被覆盖等">在保持附件13的示范牧户放牧策略不变和问题4中得到的放牧方案两种情况下，用图示或者动态演示方式分别预测示范区2023年9月土地状态（比如土壤肥力变化、土壤湿度、植被覆盖等）</span></h4><p>善男先做</p>
+]]></content>
+      <categories>
+        <category>建模</category>
+      </categories>
+      <tags>
+        <tag>建模</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Face-to-Parameter Translation for Game Character Auto-Creation》</title>
     <url>/2022/07/24/review_10_F2P/</url>
     <content><![CDATA[<!-- toc -->
@@ -48,49 +90,6 @@
       </categories>
       <tags>
         <tag>Game Character Create</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</title>
-    <url>/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a></li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: [<a href="https://arxiv.org/abs/2203.06541">2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org)</a></p>
-<p>code: <a href="https://github.com/Jiahao-UTS/SLPT-master">Jiahao-UTS&#x2F;SLPT-master (github.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="出发点">出发点</span></h1><p>landmark之间的内在联系对于人脸对齐的性能有很大影响，本文重点考虑其内在联系。</p>
-<p>之前的方法有heatmap regression，Coordinate regression，有着不同方面的劣势。</p>
-<h1><span id="创新点">创新点</span></h1><p>提出了SLPT（<em>sparse local patch transformer</em>）来学习<em>query-query</em>和<em>representation-query</em>关系（自适应内在关系）；为了进一步提高SLPT的性能，提出了一种从粗到精的框架，使局部补丁进化为<strong>金字塔形补丁</strong>。</p>
-<h1><span id="做法">做法</span></h1><p>本文的SLPT并非同DETR从完整的feature map中预测坐标，而是首先从局部patch中生成每个landmark的表示特征。</p>
-<p>然后，使用一系列可学习的queries（称为<em>landmark queries</em>）来聚合表示。</p>
-<p>基于Transformer的交叉注意机制，SPLT在每一层学习一个<strong>自适应邻接矩阵</strong>。最后，通过MLP独立预测每个landmark在其对应patch中的subpixel坐标。由于使用了稀疏的局部补丁，与其他ViT相比，输入token的数量显著减少。 </p>
-<p>为了进一步提高性能，引入了从粗到精的框架，以与SLPT结合。下图为所提出的从粗到精的框架利用稀疏的局部面片实现鲁棒的人脸对齐。根据前一阶段的landmarks裁剪稀疏的局部补丁，并将其输入到同一SLPT中以预测面部landmarks。此外，patch大小随着阶段的增加而缩小，以使局部特征演变成金字塔形式。</p>
-<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/1.png" alt="1"></p>
-<p>整体框架图：</p>
-<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/2.png" alt="2"></p>
-<p>分为三部分：</p>
-<p><strong>the patch embedding &amp; structure encoding</strong></p>
-<p>不同于ViT，SLPT先根据landmark裁剪patch，再通过线性插值将patch大小调整为K*K，又使用了结构编码（可学习的参数）来补充表示。每种编码都与相邻地标（如左眼和右眼）的编码有很高的相似性。</p>
-<p>Muti-head Cross-attention（在Vision Transformer基础上的改进）：通过landmark在CNN提取出的feature map上划取局部patch，将这些feature map上的patch排成一个patch embedding，将其视为landmark的表示；紧接着对其进行结构编码（Structure Encodeing）,以获取人脸中的相对位置和patch embedding做concat。输入 landmarks queries ，通过这些MLP，独立预测每个landmark的位置。</p>
-<p><strong>inherent relation layers</strong></p>
-<p>受Transformer启发，每一层由三个块组成，即多头自注意（MSA）块、多头交叉注意（MCA）块和多层感知器（MLP）块，并且在每个块之前应用一个layer norm（LN）。 </p>
-<p><strong>prediction heads</strong></p>
-<p>预测头由一个用于规范化输入的分层模板和一个用于预测结果的MLP层组成。</p>
-<p>最右边的图像显示了不同样本的自适应固有关系。其将每个点连接到第一个内在关系层中交叉注意权重最高的点显示。</p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>Patch-based Transformer</tag>
       </tags>
   </entry>
   <entry>
@@ -160,6 +159,118 @@
         <tag>ReID</tag>
         <tag>Transformer</tag>
         <tag>Landmark</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</title>
+    <url>/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a></li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: [<a href="https://arxiv.org/abs/2203.06541">2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org)</a></p>
+<p>code: <a href="https://github.com/Jiahao-UTS/SLPT-master">Jiahao-UTS&#x2F;SLPT-master (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="出发点">出发点</span></h1><p>landmark之间的内在联系对于人脸对齐的性能有很大影响，本文重点考虑其内在联系。</p>
+<p>之前的方法有heatmap regression，Coordinate regression，有着不同方面的劣势。</p>
+<h1><span id="创新点">创新点</span></h1><p>提出了SLPT（<em>sparse local patch transformer</em>）来学习<em>query-query</em>和<em>representation-query</em>关系（自适应内在关系）；为了进一步提高SLPT的性能，提出了一种从粗到精的框架，使局部补丁进化为<strong>金字塔形补丁</strong>。</p>
+<h1><span id="做法">做法</span></h1><p>本文的SLPT并非同DETR从完整的feature map中预测坐标，而是首先从局部patch中生成每个landmark的表示特征。</p>
+<p>然后，使用一系列可学习的queries（称为<em>landmark queries</em>）来聚合表示。</p>
+<p>基于Transformer的交叉注意机制，SPLT在每一层学习一个<strong>自适应邻接矩阵</strong>。最后，通过MLP独立预测每个landmark在其对应patch中的subpixel坐标。由于使用了稀疏的局部补丁，与其他ViT相比，输入token的数量显著减少。 </p>
+<p>为了进一步提高性能，引入了从粗到精的框架，以与SLPT结合。下图为所提出的从粗到精的框架利用稀疏的局部面片实现鲁棒的人脸对齐。根据前一阶段的landmarks裁剪稀疏的局部补丁，并将其输入到同一SLPT中以预测面部landmarks。此外，patch大小随着阶段的增加而缩小，以使局部特征演变成金字塔形式。</p>
+<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/1.png" alt="1"></p>
+<p>整体框架图：</p>
+<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/2.png" alt="2"></p>
+<p>分为三部分：</p>
+<p><strong>the patch embedding &amp; structure encoding</strong></p>
+<p>不同于ViT，SLPT先根据landmark裁剪patch，再通过线性插值将patch大小调整为K*K，又使用了结构编码（可学习的参数）来补充表示。每种编码都与相邻地标（如左眼和右眼）的编码有很高的相似性。</p>
+<p>Muti-head Cross-attention（在Vision Transformer基础上的改进）：通过landmark在CNN提取出的feature map上划取局部patch，将这些feature map上的patch排成一个patch embedding，将其视为landmark的表示；紧接着对其进行结构编码（Structure Encodeing）,以获取人脸中的相对位置和patch embedding做concat。输入 landmarks queries ，通过这些MLP，独立预测每个landmark的位置。</p>
+<p><strong>inherent relation layers</strong></p>
+<p>受Transformer启发，每一层由三个块组成，即多头自注意（MSA）块、多头交叉注意（MCA）块和多层感知器（MLP）块，并且在每个块之前应用一个layer norm（LN）。 </p>
+<p><strong>prediction heads</strong></p>
+<p>预测头由一个用于规范化输入的分层模板和一个用于预测结果的MLP层组成。</p>
+<p>最右边的图像显示了不同样本的自适应固有关系。其将每个点连接到第一个内在关系层中交叉注意权重最高的点显示。</p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>Patch-based Transformer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《CariMe:Unpaired Caricature Generation with Multiple Exaggerations》</title>
+    <url>/2022/04/13/review_4_CariMe/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#multi-exaggeration-warper">Multi-exaggeration Warper</a><ul>
+<li><a href="#warp-reconstruction-loss">Warp Reconstruction Loss</a></li>
+<li><a href="#photo-reconstruction-loss">Photo Reconstruction Loss</a></li>
+<li><a href="#total-variation-loss">Total Variation Loss</a></li>
+<li><a href="#wrapper-total-loss">Wrapper Total Loss</a></li>
+</ul>
+</li>
+<li><a href="#styler">Styler</a><ul>
+<li><a href="#adversarial-loss">Adversarial Loss</a></li>
+<li><a href="#image-reconstruction-loss">Image Reconstruction Loss</a></li>
+<li><a href="#cycle-consistency-loss">Cycle Consistency Loss</a></li>
+<li><a href="#style-total-loss">Style Total Loss</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://ieeexplore.ieee.org/abstract/document/9454341/</a></p>
+<p>code: <a href="https://github.com/edward3862/CariMe-pytorch">edward3862&#x2F;CariMe-pytorch: Unpaired Caricature Generation with Multiple Exaggerations (TMM 2021) (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="任务">任务</span></h1><p>漫画生成、图像到图像的翻译、图像扭曲、风格转换</p>
+<h1><span id="出发点">出发点</span></h1><p>与一般的image-to-image translation不同，由于各种空间变形的存在，自动绘制漫画是一项更具挑战性的任务。原先的漫画生成方式都是instance-level，本文拓展到distribution-level。</p>
+<h1><span id="创新点">创新点</span></h1><p>CariMe可生成具有<strong>多重</strong>夸张和<strong>多种</strong>风格的漫画</p>
+<p>提出了一种基于变形场（deformation fields）的非成对漫画生成方法，可以有效地学习真实照片到漫画的空间变换分布。还引入了一个辅助内容编码（auxiliary content code），以帮助产生有意义的、特定于照片的夸张。</p>
+<h1><span id="做法">做法</span></h1><p>一个wrapper，一个styler</p>
+<h2><span id="multi-exaggeration-warper">Multi-exaggeration Warper</span></h2><p>分别输入一张漫画脸和真实脸，首先计算所有漫画的平均landmark（代码中的main_cal_wrap_degree.py），<img src="/2022/04/13/review_4_CariMe/image-20220414090134868.png" alt="image-20220414090134868">从每个漫画中得到，表达了该张漫画所表示的特定的夸张模式，然后该特征经过encoder获得低维向量Zw（wrap code)，与此同时引入了对应的真实人脸过另一个encoder提取Zp（auxiliary photo-specific content code)，Zp与Zw都是满足标准正态分布的向量，在测试阶段Zw是从正态分布中随机采样获取，以获得不同的变形编码。down scale和up scale操作文中的解释是给变形场去噪。</p>
+<p><img src="/2022/04/13/review_4_CariMe/image-20220414083337682.png" alt="image-20220414083337682"></p>
+<h3><span id="warp-reconstruction-loss">Warp Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414092823399.png" alt="image-20220414092823399"></p>
+<p>L1正则，旨在拉近reconstruction后的变形场与原变形场的差异。</p>
+<h3><span id="photo-reconstruction-loss">Photo Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414093327113.png" alt="image-20220414093327113"></p>
+<p>L1正则，旨在拉近reconstruction后的真实人脸与输入真实人脸的差异，来鼓励Zp保持对原真是人脸的内容和空间信息。</p>
+<h3><span id="total-variation-loss">Total Variation Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414094156859.png" alt="image-20220414094156859"></p>
+<p>用来给生成的图像去噪。</p>
+<p><a href="https://blog.csdn.net/qq_38406029/article/details/118996415">(54条消息) TV Loss详解_鬼道2022的博客-CSDN博客_tvloss公式</a></p>
+<h3><span id="wrapper-total-loss">Wrapper Total Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414094730445.png" alt="image-20220414094730445"></p>
+<h2><span id="styler">Styler</span></h2><p>旨在做风格迁移，将图像分界为content representation和style code。</p>
+<p>一个style encoder，一个context encoder，一个style decoder（AdaLIN:<a href="https://blog.csdn.net/weixin_43823140/article/details/107840916">(54条消息) 【飞桨】论文解读：U-GAT-IT: Unsupervised Generative Attentional Networks with Adaptive Layer-Instance_目楽 Leo mu的博客-CSDN博客</a>），style输出一个正态分布的style code，context输出feature map。</p>
+<p>将context输出的feature map分别进行instance normalization（styler中常用的一种像素normalization）和layer normalization，combine方式需要到代码中查看，送到AdaLIN中，其范式为：</p>
+<p><img src="/2022/04/13/review_4_CariMe/image-20220414101725797.png" alt="image-20220414101725797"></p>
+<p><img src="/2022/04/13/review_4_CariMe/image-20220414083358409.png"></p>
+<h3><span id="adversarial-loss">Adversarial Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414101755992.png" alt="image-20220414101755992"></p>
+<p>AdaLIN是基于GAN的方法，所以有adversarial loss。</p>
+<h3><span id="image-reconstruction-loss">Image Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414101914719.png" alt="image-20220414101914719"></p>
+<p>L1正则，旨在拉近reconstruction后的图像与原图像的距离。</p>
+<h3><span id="cycle-consistency-loss">Cycle Consistency Loss</span></h3><p>对生成后的图像再次进入encoder，输出特征与之前encoder输出做L1正则，这里的cycle是循环，不是cycle loss！</p>
+<p><img src="/2022/04/13/review_4_CariMe/image-20220414103236545.png" alt="image-20220414103236545"></p>
+<h3><span id="style-total-loss">Style Total Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414103409597.png" alt="image-20220414103409597"></p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>caricature</tag>
+        <tag>generation</tag>
       </tags>
   </entry>
   <entry>
@@ -251,77 +362,8 @@
         <category>paper review</category>
       </categories>
       <tags>
+        <tag>generation</tag>
         <tag>HFR</tag>
-        <tag>generation</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《CariMe:Unpaired Caricature Generation with Multiple Exaggerations》</title>
-    <url>/2022/04/13/review_4_CariMe/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
-<li><a href="#multi-exaggeration-warper">Multi-exaggeration Warper</a><ul>
-<li><a href="#warp-reconstruction-loss">Warp Reconstruction Loss</a></li>
-<li><a href="#photo-reconstruction-loss">Photo Reconstruction Loss</a></li>
-<li><a href="#total-variation-loss">Total Variation Loss</a></li>
-<li><a href="#wrapper-total-loss">Wrapper Total Loss</a></li>
-</ul>
-</li>
-<li><a href="#styler">Styler</a><ul>
-<li><a href="#adversarial-loss">Adversarial Loss</a></li>
-<li><a href="#image-reconstruction-loss">Image Reconstruction Loss</a></li>
-<li><a href="#cycle-consistency-loss">Cycle Consistency Loss</a></li>
-<li><a href="#style-total-loss">Style Total Loss</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://ieeexplore.ieee.org/abstract/document/9454341/</a></p>
-<p>code: <a href="https://github.com/edward3862/CariMe-pytorch">edward3862&#x2F;CariMe-pytorch: Unpaired Caricature Generation with Multiple Exaggerations (TMM 2021) (github.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="任务">任务</span></h1><p>漫画生成、图像到图像的翻译、图像扭曲、风格转换</p>
-<h1><span id="出发点">出发点</span></h1><p>与一般的image-to-image translation不同，由于各种空间变形的存在，自动绘制漫画是一项更具挑战性的任务。原先的漫画生成方式都是instance-level，本文拓展到distribution-level。</p>
-<h1><span id="创新点">创新点</span></h1><p>CariMe可生成具有<strong>多重</strong>夸张和<strong>多种</strong>风格的漫画</p>
-<p>提出了一种基于变形场（deformation fields）的非成对漫画生成方法，可以有效地学习真实照片到漫画的空间变换分布。还引入了一个辅助内容编码（auxiliary content code），以帮助产生有意义的、特定于照片的夸张。</p>
-<h1><span id="做法">做法</span></h1><p>一个wrapper，一个styler</p>
-<h2><span id="multi-exaggeration-warper">Multi-exaggeration Warper</span></h2><p>分别输入一张漫画脸和真实脸，首先计算所有漫画的平均landmark（代码中的main_cal_wrap_degree.py），<img src="/2022/04/13/review_4_CariMe/image-20220414090134868.png" alt="image-20220414090134868">从每个漫画中得到，表达了该张漫画所表示的特定的夸张模式，然后该特征经过encoder获得低维向量Zw（wrap code)，与此同时引入了对应的真实人脸过另一个encoder提取Zp（auxiliary photo-specific content code)，Zp与Zw都是满足标准正态分布的向量，在测试阶段Zw是从正态分布中随机采样获取，以获得不同的变形编码。down scale和up scale操作文中的解释是给变形场去噪。</p>
-<p><img src="/2022/04/13/review_4_CariMe/image-20220414083337682.png" alt="image-20220414083337682"></p>
-<h3><span id="warp-reconstruction-loss">Warp Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414092823399.png" alt="image-20220414092823399"></p>
-<p>L1正则，旨在拉近reconstruction后的变形场与原变形场的差异。</p>
-<h3><span id="photo-reconstruction-loss">Photo Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414093327113.png" alt="image-20220414093327113"></p>
-<p>L1正则，旨在拉近reconstruction后的真实人脸与输入真实人脸的差异，来鼓励Zp保持对原真是人脸的内容和空间信息。</p>
-<h3><span id="total-variation-loss">Total Variation Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414094156859.png" alt="image-20220414094156859"></p>
-<p>用来给生成的图像去噪。</p>
-<p><a href="https://blog.csdn.net/qq_38406029/article/details/118996415">(54条消息) TV Loss详解_鬼道2022的博客-CSDN博客_tvloss公式</a></p>
-<h3><span id="wrapper-total-loss">Wrapper Total Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414094730445.png" alt="image-20220414094730445"></p>
-<h2><span id="styler">Styler</span></h2><p>旨在做风格迁移，将图像分界为content representation和style code。</p>
-<p>一个style encoder，一个context encoder，一个style decoder（AdaLIN:<a href="https://blog.csdn.net/weixin_43823140/article/details/107840916">(54条消息) 【飞桨】论文解读：U-GAT-IT: Unsupervised Generative Attentional Networks with Adaptive Layer-Instance_目楽 Leo mu的博客-CSDN博客</a>），style输出一个正态分布的style code，context输出feature map。</p>
-<p>将context输出的feature map分别进行instance normalization（styler中常用的一种像素normalization）和layer normalization，combine方式需要到代码中查看，送到AdaLIN中，其范式为：</p>
-<p><img src="/2022/04/13/review_4_CariMe/image-20220414101725797.png" alt="image-20220414101725797"></p>
-<p><img src="/2022/04/13/review_4_CariMe/image-20220414083358409.png"></p>
-<h3><span id="adversarial-loss">Adversarial Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414101755992.png" alt="image-20220414101755992"></p>
-<p>AdaLIN是基于GAN的方法，所以有adversarial loss。</p>
-<h3><span id="image-reconstruction-loss">Image Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414101914719.png" alt="image-20220414101914719"></p>
-<p>L1正则，旨在拉近reconstruction后的图像与原图像的距离。</p>
-<h3><span id="cycle-consistency-loss">Cycle Consistency Loss</span></h3><p>对生成后的图像再次进入encoder，输出特征与之前encoder输出做L1正则，这里的cycle是循环，不是cycle loss！</p>
-<p><img src="/2022/04/13/review_4_CariMe/image-20220414103236545.png" alt="image-20220414103236545"></p>
-<h3><span id="style-total-loss">Style Total Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414103409597.png" alt="image-20220414103409597"></p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>generation</tag>
-        <tag>caricature</tag>
       </tags>
   </entry>
   <entry>
@@ -696,68 +738,6 @@
       </tags>
   </entry>
   <entry>
-    <title>RTTO WEEK1</title>
-    <url>/2022/09/19/rtto_1/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#week-1"><strong>WEEK 1</strong></a><ul>
-<li><a href="#209%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84m">209.长度最小的子数组（m）</a></li>
-<li><a href="#904%E6%B0%B4%E6%9E%9C%E6%88%90%E7%AF%AEm">904.水果成篮（m）</a></li>
-<li><a href="#76%E6%9C%80%E5%B0%8F%E8%A6%86%E7%9B%96%E5%AD%90%E4%B8%B2h">76.最小覆盖子串（h）</a></li>
-<li><a href="#59%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5m">59.螺旋矩阵（m）</a></li>
-<li><a href="#203%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0e">203.移除链表元素（e）</a></li>
-<li><a href="#707%E8%AE%BE%E8%AE%A1%E9%93%BE%E8%A1%A8m">707.设计链表（m）</a></li>
-<li><a href="#206%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8e">206.反转链表（e）</a></li>
-<li><a href="#24%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9m">24.两两交换链表中的节点（m）</a></li>
-<li><a href="#19%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%ACn%E5%90%84%E7%BB%93%E7%82%B9m">19.删除链表的倒数第N各结点（m）</a></li>
-<li><a href="#%E9%9D%A2%E8%AF%95%E9%A2%98-0207-%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4e">面试题 02.07. 链表相交（e）</a></li>
-<li><a href="#142%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8iim">142.环形链表Ⅱ（m）</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<span id="more"></span>
-
-<h1><span id="week-1"><strong>WEEK 1</strong></span></h1><h2><span id="209长度最小的子数组m">209.长度最小的子数组（m）</span></h2><p>用滑动窗口，动态调整窗口的起始位置，不断比较子序列是否符合条件（sum&gt;&#x3D;s）,取当前子序列的长度，取相对较小的。</p>
-<h2><span id="904水果成篮m">904.水果成篮（m）</span></h2><p>本题的目标是：得到一个最大子串，其中最多含有两种元素；</p>
-<p>用一个hashmap表示fruits[i]类型的水果对应摘了几个；</p>
-<p>用滑动窗口先遍历右边界，记录更新过程中的type值的变化；</p>
-<p>当hashmap中相应类型水果数量为0时，则type++；</p>
-<p>若type&gt;2，则更新左边界，把hashmap中fruits[left]水果的数量–，若该水果在hashmap中的数量为0，则type–；</p>
-<p>判断每次窗口的长度取历次满足条件的窗口的最大值，即为最终结果；</p>
-<h2><span id="76最小覆盖子串h">76.最小覆盖子串（h）</span></h2><p>用滑动窗口，两个hashmap比较各类字符串出现的频率？不会做</p>
-<h2><span id="59螺旋矩阵m">59.螺旋矩阵（m）</span></h2><p>先确定遍历的圈数——n&#x2F;2；</p>
-<p>上右下左分别进行左闭右开的遍历，进行四个for循环，改变i和j；</p>
-<p>如果n是奇数最里面是一个数而不是一个圈，需要单独赋值count；</p>
-<h2><span id="203移除链表元素e">203.移除链表元素（e）</span></h2><p>简单链表数据结构；</p>
-<p>头节点被删除的情况：直接tmp保存原head，head &#x3D; head -&gt; next，然后删除tmp；</p>
-<p>子节点被删除的情况：开辟一个cur节点，遍历链表元素，若cur -&gt;next 为空则停止遍历（尾节点），删除操作同上；</p>
-<h2><span id="707设计链表m">707.设计链表（m）</span></h2><p>简单链表数据结构；</p>
-<p>需要注意的点是选择index位置的元素的while终止条件；</p>
-<p>判断_size异常输入的条件；</p>
-<h2><span id="206反转链表e">206.反转链表（e）</span></h2><p>快慢指针；</p>
-<p>一个在前一个在后，使用一个tmp来记录cur节点的后一个节点，以便循环推进，每次使得快指针指向的节点重新指向慢指针指向的节点；</p>
-<h2><span id="24两两交换链表中的节点m">24.两两交换链表中的节点（m）</span></h2><p>画图！</p>
-<p>三个步骤，要注意先暂存两个值，以及每一步骤都会改变当前链表结构，需要画图一步步看当前链表状态；</p>
-<h2><span id="19删除链表的倒数第n各结点m">19.删除链表的倒数第N各结点（m）</span></h2><p>双指针；</p>
-<p>让fast移动n步；</p>
-<p>然后让fast和slow同时移动，直到fast指向链表末尾；</p>
-<p>删掉slow所指向的节点；</p>
-<h2><span id="面试题-0207-链表相交e">面试题 02.07. 链表相交（e）</span></h2><p>分别求两链表的长度，计算长度差，先把长链表遍历一段长度差，控制两个链表一样长，然后同时开始遍历两个链表，若遍历到了相同节点则找到了交点。</p>
-<h2><span id="142环形链表iim">142.环形链表Ⅱ（m）</span></h2><p>分两步：判断是否有环；若有环判断环的出口；</p>
-<p>是否有环：快慢指针，快指针一次移动两个，慢指针一次移动一个，若有环快慢指针会在不空的节点上相遇；</p>
-<p>环的出口：从头结点出发一个指针，从相遇节点也出发一个指针，这两个指针每次只走一个节点， 那么当这两个指针相遇的时候就是环形入口的节点（这步有点绕）</p>
-]]></content>
-      <categories>
-        <category>RTTO</category>
-      </categories>
-      <tags>
-        <tag>RTTO</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《MeInGame:Create a Game Character Face from a Single Portrait》</title>
     <url>/2022/06/29/review_9_MeInGame/</url>
     <content><![CDATA[<!-- toc -->
@@ -826,31 +806,13 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo建站相关</title>
-    <url>/2022/03/25/tools_1_start/</url>
+    <title>RTTO WEEK3</title>
+    <url>/2022/09/30/rtto_3/</url>
     <content><![CDATA[<!-- toc -->
 
 <ul>
-<li><a href="#%E6%90%AD%E5%BB%BAhexo%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%80%9A%E8%BF%87git%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8">搭建Hexo服务器，通过Git自动部署在阿里云服务器</a><ul>
-<li><a href="#%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%83%A8%E7%BD%B2">搭建及部署</a></li>
-<li><a href="#%E5%8D%9A%E6%96%87%E5%8F%91%E5%B8%83">博文发布</a></li>
-</ul>
-</li>
-<li><a href="#%E4%B8%BB%E9%A2%98%E5%8F%8A%E5%85%B6%E7%BE%8E%E5%8C%96">主题及其美化</a><ul>
-<li><a href="#butterfly">Butterfly</a></li>
-<li><a href="#next">Next</a><ul>
-<li><a href="#%E7%BE%8E%E5%8C%96">美化</a></li>
-<li><a href="#%E6%96%87%E7%AB%A0%E5%90%AF%E7%94%A8tags%E5%92%8Ccategories">文章启用tags和categories</a></li>
-<li><a href="#%E8%AE%BE%E7%BD%AE%E9%98%85%E8%AF%BB%E5%85%A8%E6%96%87">设置阅读全文</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98updating">相关问题（Updating…）</a><ul>
-<li><a href="#%E6%97%A0%E6%B3%95%E6%AD%A3%E7%A1%AE%E6%B8%B2%E6%9F%93markdown%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98">无法正确渲染markdown文件问题</a></li>
-<li><a href="#%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98">插入图片问题</a></li>
-<li><a href="#%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98">目录生成问题</a></li>
-<li><a href="#%E6%B7%BB%E5%8A%A0%E6%9C%AC%E5%9C%B0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD">添加本地搜索功能</a></li>
+<li><a href="#week-3"><strong>WEEK 3</strong></a><ul>
+<li><a href="#344%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">344.反转字符串（e）</a></li>
 </ul>
 </li>
 </ul>
@@ -858,39 +820,74 @@
 
 <span id="more"></span>
 
-<h1><span id="搭建hexo服务器通过git自动部署在阿里云服务器">搭建Hexo服务器，通过Git自动部署在阿里云服务器</span></h1><h2><span id="搭建及部署">搭建及部署</span></h2><p>参考博文链接：<a href="https://mp.weixin.qq.com/s/JTTUYJTvtdT6X2fvLUBFZg">Win10下Hexo博客搭建教程，及阿里云服务器部署实战 (qq.com)</a></p>
-<h2><span id="博文发布">博文发布</span></h2><p>在本地机器上部署Hexo相关MyHexoBlogs文件夹下，进入MyHexoBlogs&#x2F;myblogs&#x2F;source&#x2F;_posts目录；</p>
-<p>在当前页进入git bash，输入hexo clean 清除缓存，hexo g 解析静态文件，hexo d 刷新部署新的资源。</p>
-<p>hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</p>
-<h1><span id="主题及其美化">主题及其美化</span></h1><h2><span id="butterfly">Butterfly</span></h2><p>Butterfly主题部署参考博文链接：<a href="https://www.jianshu.com/p/50a565adaf15?ivk_sa=1024320u">hexo框架|butterfly主题配置 - 简书 (jianshu.com)</a></p>
-<p>Butterfly主题官方文档：<a href="https://www.butterfly1.cn/">Hexo-Butterfly主题(🦋 A Hexo Theme: Butterfly-Official website) (butterfly1.cn)</a></p>
-<p>Hexo默认美化项：<a href="https://zhuanlan.zhihu.com/p/369951111">Hexo个性化设置 - 知乎 (zhihu.com)</a></p>
-<h2><span id="next">Next</span></h2><h3><span id="美化">美化</span></h3><p><a href="https://blog.csdn.net/qq_34003239/article/details/100883213">(54条消息) Next主题美化_蜗牛非牛的博客-CSDN博客_next主题美化</a></p>
-<h3><span id="文章启用tags和categories">文章启用tags和categories</span></h3><p><a href="https://blog.csdn.net/Lancis/article/details/118788205">(54条消息) hexo next主题简单美化_Lancis的博客-CSDN博客_next主题美化</a></p>
-<h3><span id="设置阅读全文">设置阅读全文</span></h3><p><a href="https://blog.csdn.net/CHENGXUYUAN09/article/details/103408380">(54条消息) next7.6版本关于设置阅读全文_LIYUANWAISPRING的博客-CSDN博客</a></p>
-<h1><span id="相关问题updating">相关问题（Updating…）</span></h1><h2><span id="无法正确渲染markdown文件问题">无法正确渲染markdown文件问题</span></h2><p>hexo对于md文件的解析规则不是标准规则，有时候在复制论文标题时会有换行符无法正确解析；</p>
-<p>重新手动输入检查标题格式解决问题</p>
-<h2><span id="插入图片问题">插入图片问题</span></h2><p>选择采用hexo官网的解决方式：<a href="https://hexo.io/zh-cn/docs/asset-folders">资源文件夹 | Hexo</a></p>
-<h2><span id="目录生成问题">目录生成问题</span></h2><p>安装插件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-toc --save</span><br></pre></td></tr></table></figure>
-
-<p>hexo的配置文件中设置格式，添加配置代码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">toc:</span><br><span class="line">  maxdepth: 3</span><br></pre></td></tr></table></figure>
-
-<p>在md中使用时</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- toc --&gt;</span><br></pre></td></tr></table></figure>
-
-<h2><span id="添加本地搜索功能">添加本地搜索功能</span></h2><p>与Next官方配置文件中的链接步骤不同的是，还需要修改</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">preload: true</span><br></pre></td></tr></table></figure>
-
-
-
-]]></content>
+<h1><span id="week-3"><strong>WEEK 3</strong></span></h1><h2><span id="344反转字符串e">344.反转字符串（e）</span></h2>]]></content>
       <categories>
-        <category>Hexo</category>
+        <category>RTTO</category>
       </categories>
       <tags>
-        <tag>Hexo</tag>
+        <tag>RTTO</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RTTO WEEK1</title>
+    <url>/2022/09/19/rtto_1/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#week-1"><strong>WEEK 1</strong></a><ul>
+<li><a href="#209%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84m">209.长度最小的子数组（m）</a></li>
+<li><a href="#904%E6%B0%B4%E6%9E%9C%E6%88%90%E7%AF%AEm">904.水果成篮（m）</a></li>
+<li><a href="#76%E6%9C%80%E5%B0%8F%E8%A6%86%E7%9B%96%E5%AD%90%E4%B8%B2h">76.最小覆盖子串（h）</a></li>
+<li><a href="#59%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5m">59.螺旋矩阵（m）</a></li>
+<li><a href="#203%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0e">203.移除链表元素（e）</a></li>
+<li><a href="#707%E8%AE%BE%E8%AE%A1%E9%93%BE%E8%A1%A8m">707.设计链表（m）</a></li>
+<li><a href="#206%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8e">206.反转链表（e）</a></li>
+<li><a href="#24%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9m">24.两两交换链表中的节点（m）</a></li>
+<li><a href="#19%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%ACn%E5%90%84%E7%BB%93%E7%82%B9m">19.删除链表的倒数第N各结点（m）</a></li>
+<li><a href="#%E9%9D%A2%E8%AF%95%E9%A2%98-0207-%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4e">面试题 02.07. 链表相交（e）</a></li>
+<li><a href="#142%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8iim">142.环形链表Ⅱ（m）</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="week-1"><strong>WEEK 1</strong></span></h1><h2><span id="209长度最小的子数组m">209.长度最小的子数组（m）</span></h2><p>用滑动窗口，动态调整窗口的起始位置，不断比较子序列是否符合条件（sum&gt;&#x3D;s）,取当前子序列的长度，取相对较小的。</p>
+<h2><span id="904水果成篮m">904.水果成篮（m）</span></h2><p>本题的目标是：得到一个最大子串，其中最多含有两种元素；</p>
+<p>用一个hashmap表示fruits[i]类型的水果对应摘了几个；</p>
+<p>用滑动窗口先遍历右边界，记录更新过程中的type值的变化；</p>
+<p>当hashmap中相应类型水果数量为0时，则type++；</p>
+<p>若type&gt;2，则更新左边界，把hashmap中fruits[left]水果的数量–，若该水果在hashmap中的数量为0，则type–；</p>
+<p>判断每次窗口的长度取历次满足条件的窗口的最大值，即为最终结果；</p>
+<h2><span id="76最小覆盖子串h">76.最小覆盖子串（h）</span></h2><p>用滑动窗口，两个hashmap比较各类字符串出现的频率？不会做</p>
+<h2><span id="59螺旋矩阵m">59.螺旋矩阵（m）</span></h2><p>先确定遍历的圈数——n&#x2F;2；</p>
+<p>上右下左分别进行左闭右开的遍历，进行四个for循环，改变i和j；</p>
+<p>如果n是奇数最里面是一个数而不是一个圈，需要单独赋值count；</p>
+<h2><span id="203移除链表元素e">203.移除链表元素（e）</span></h2><p>简单链表数据结构；</p>
+<p>头节点被删除的情况：直接tmp保存原head，head &#x3D; head -&gt; next，然后删除tmp；</p>
+<p>子节点被删除的情况：开辟一个cur节点，遍历链表元素，若cur -&gt;next 为空则停止遍历（尾节点），删除操作同上；</p>
+<h2><span id="707设计链表m">707.设计链表（m）</span></h2><p>简单链表数据结构；</p>
+<p>需要注意的点是选择index位置的元素的while终止条件；</p>
+<p>判断_size异常输入的条件；</p>
+<h2><span id="206反转链表e">206.反转链表（e）</span></h2><p>快慢指针；</p>
+<p>一个在前一个在后，使用一个tmp来记录cur节点的后一个节点，以便循环推进，每次使得快指针指向的节点重新指向慢指针指向的节点；</p>
+<h2><span id="24两两交换链表中的节点m">24.两两交换链表中的节点（m）</span></h2><p>画图！</p>
+<p>三个步骤，要注意先暂存两个值，以及每一步骤都会改变当前链表结构，需要画图一步步看当前链表状态；</p>
+<h2><span id="19删除链表的倒数第n各结点m">19.删除链表的倒数第N各结点（m）</span></h2><p>双指针；</p>
+<p>让fast移动n步；</p>
+<p>然后让fast和slow同时移动，直到fast指向链表末尾；</p>
+<p>删掉slow所指向的节点；</p>
+<h2><span id="面试题-0207-链表相交e">面试题 02.07. 链表相交（e）</span></h2><p>分别求两链表的长度，计算长度差，先把长链表遍历一段长度差，控制两个链表一样长，然后同时开始遍历两个链表，若遍历到了相同节点则找到了交点。</p>
+<h2><span id="142环形链表iim">142.环形链表Ⅱ（m）</span></h2><p>分两步：判断是否有环；若有环判断环的出口；</p>
+<p>是否有环：快慢指针，快指针一次移动两个，慢指针一次移动一个，若有环快慢指针会在不空的节点上相遇；</p>
+<p>环的出口：从头结点出发一个指针，从相遇节点也出发一个指针，这两个指针每次只走一个节点， 那么当这两个指针相遇的时候就是环形入口的节点（这步有点绕）</p>
+]]></content>
+      <categories>
+        <category>RTTO</category>
+      </categories>
+      <tags>
+        <tag>RTTO</tag>
       </tags>
   </entry>
   <entry>
@@ -970,6 +967,74 @@
       </categories>
       <tags>
         <tag>RTTO</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo建站相关</title>
+    <url>/2022/03/25/tools_1_start/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E6%90%AD%E5%BB%BAhexo%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%80%9A%E8%BF%87git%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8">搭建Hexo服务器，通过Git自动部署在阿里云服务器</a><ul>
+<li><a href="#%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%83%A8%E7%BD%B2">搭建及部署</a></li>
+<li><a href="#%E5%8D%9A%E6%96%87%E5%8F%91%E5%B8%83">博文发布</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%BB%E9%A2%98%E5%8F%8A%E5%85%B6%E7%BE%8E%E5%8C%96">主题及其美化</a><ul>
+<li><a href="#butterfly">Butterfly</a></li>
+<li><a href="#next">Next</a><ul>
+<li><a href="#%E7%BE%8E%E5%8C%96">美化</a></li>
+<li><a href="#%E6%96%87%E7%AB%A0%E5%90%AF%E7%94%A8tags%E5%92%8Ccategories">文章启用tags和categories</a></li>
+<li><a href="#%E8%AE%BE%E7%BD%AE%E9%98%85%E8%AF%BB%E5%85%A8%E6%96%87">设置阅读全文</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98updating">相关问题（Updating…）</a><ul>
+<li><a href="#%E6%97%A0%E6%B3%95%E6%AD%A3%E7%A1%AE%E6%B8%B2%E6%9F%93markdown%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98">无法正确渲染markdown文件问题</a></li>
+<li><a href="#%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98">插入图片问题</a></li>
+<li><a href="#%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98">目录生成问题</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E6%9C%AC%E5%9C%B0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD">添加本地搜索功能</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="搭建hexo服务器通过git自动部署在阿里云服务器">搭建Hexo服务器，通过Git自动部署在阿里云服务器</span></h1><h2><span id="搭建及部署">搭建及部署</span></h2><p>参考博文链接：<a href="https://mp.weixin.qq.com/s/JTTUYJTvtdT6X2fvLUBFZg">Win10下Hexo博客搭建教程，及阿里云服务器部署实战 (qq.com)</a></p>
+<h2><span id="博文发布">博文发布</span></h2><p>在本地机器上部署Hexo相关MyHexoBlogs文件夹下，进入MyHexoBlogs&#x2F;myblogs&#x2F;source&#x2F;_posts目录；</p>
+<p>在当前页进入git bash，输入hexo clean 清除缓存，hexo g 解析静态文件，hexo d 刷新部署新的资源。</p>
+<p>hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</p>
+<h1><span id="主题及其美化">主题及其美化</span></h1><h2><span id="butterfly">Butterfly</span></h2><p>Butterfly主题部署参考博文链接：<a href="https://www.jianshu.com/p/50a565adaf15?ivk_sa=1024320u">hexo框架|butterfly主题配置 - 简书 (jianshu.com)</a></p>
+<p>Butterfly主题官方文档：<a href="https://www.butterfly1.cn/">Hexo-Butterfly主题(🦋 A Hexo Theme: Butterfly-Official website) (butterfly1.cn)</a></p>
+<p>Hexo默认美化项：<a href="https://zhuanlan.zhihu.com/p/369951111">Hexo个性化设置 - 知乎 (zhihu.com)</a></p>
+<h2><span id="next">Next</span></h2><h3><span id="美化">美化</span></h3><p><a href="https://blog.csdn.net/qq_34003239/article/details/100883213">(54条消息) Next主题美化_蜗牛非牛的博客-CSDN博客_next主题美化</a></p>
+<h3><span id="文章启用tags和categories">文章启用tags和categories</span></h3><p><a href="https://blog.csdn.net/Lancis/article/details/118788205">(54条消息) hexo next主题简单美化_Lancis的博客-CSDN博客_next主题美化</a></p>
+<h3><span id="设置阅读全文">设置阅读全文</span></h3><p><a href="https://blog.csdn.net/CHENGXUYUAN09/article/details/103408380">(54条消息) next7.6版本关于设置阅读全文_LIYUANWAISPRING的博客-CSDN博客</a></p>
+<h1><span id="相关问题updating">相关问题（Updating…）</span></h1><h2><span id="无法正确渲染markdown文件问题">无法正确渲染markdown文件问题</span></h2><p>hexo对于md文件的解析规则不是标准规则，有时候在复制论文标题时会有换行符无法正确解析；</p>
+<p>重新手动输入检查标题格式解决问题</p>
+<h2><span id="插入图片问题">插入图片问题</span></h2><p>选择采用hexo官网的解决方式：<a href="https://hexo.io/zh-cn/docs/asset-folders">资源文件夹 | Hexo</a></p>
+<h2><span id="目录生成问题">目录生成问题</span></h2><p>安装插件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-toc --save</span><br></pre></td></tr></table></figure>
+
+<p>hexo的配置文件中设置格式，添加配置代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">toc:</span><br><span class="line">  maxdepth: 3</span><br></pre></td></tr></table></figure>
+
+<p>在md中使用时</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- toc --&gt;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="添加本地搜索功能">添加本地搜索功能</span></h2><p>与Next官方配置文件中的链接步骤不同的是，还需要修改</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">preload: true</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
