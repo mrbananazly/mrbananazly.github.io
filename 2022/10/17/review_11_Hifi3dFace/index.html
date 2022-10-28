@@ -20,12 +20,12 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"mrbananazly.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="1. 实现效果 2. 全部算法总览 2.1 数据集 2.2 目标 2.3 用户输入数据 2.4 处理管线   3. 具体算法 3.1 帧选择 3.1.1 粗筛和预处理 3.1.2 帧选择   3.2 几何生成 3.2.1 初始模型定义 3.2.2 优化框架   3.2.3 可形变模型的增强（扩充3D数据的方法） 3.3 贴图生成 3.3.1 基于区域金字塔的参数表示构造详解（Regional">
+    <meta name="description" content="1. 实现效果 2. 全部算法总览 2.1 数据集 2.2 目标 2.3 用户输入数据 2.4 处理管线   3. 具体算法 3.1 帧选择 3.1.1 粗筛和预处理 3.1.2 帧选择   3.2 几何生成 3.2.1 初始模型定义 3.2.2 优化框架 3.2.3 可形变模型的增强（扩充3D数据的方法）   3.3 贴图生成 3.3.1 基于区域金字塔的参数表示构造详解（Regional">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《High-Fidelity 3D Digital Human Head Creation from RGB-D Selfies》">
 <meta property="og:url" content="http://mrbananazly.cn/2022/10/17/review_11_Hifi3dFace/index.html">
 <meta property="og:site_name" content="Road 2 the Final">
-<meta property="og:description" content="1. 实现效果 2. 全部算法总览 2.1 数据集 2.2 目标 2.3 用户输入数据 2.4 处理管线   3. 具体算法 3.1 帧选择 3.1.1 粗筛和预处理 3.1.2 帧选择   3.2 几何生成 3.2.1 初始模型定义 3.2.2 优化框架   3.2.3 可形变模型的增强（扩充3D数据的方法） 3.3 贴图生成 3.3.1 基于区域金字塔的参数表示构造详解（Regional">
+<meta property="og:description" content="1. 实现效果 2. 全部算法总览 2.1 数据集 2.2 目标 2.3 用户输入数据 2.4 处理管线   3. 具体算法 3.1 帧选择 3.1.1 粗筛和预处理 3.1.2 帧选择   3.2 几何生成 3.2.1 初始模型定义 3.2.2 优化框架 3.2.3 可形变模型的增强（扩充3D数据的方法）   3.3 贴图生成 3.3.1 基于区域金字塔的参数表示构造详解（Regional">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://mrbananazly.cn/2022/10/17/review_11_Hifi3dFace/image-20221023165135058.png">
 <meta property="og:image" content="http://mrbananazly.cn/2022/10/17/review_11_Hifi3dFace/image-20221025151737274.png">
@@ -53,7 +53,7 @@
 <meta property="og:image" content="http://mrbananazly.cn/2022/10/17/review_11_Hifi3dFace/image-20221027160823904.png">
 <meta property="og:image" content="http://mrbananazly.cn/2022/10/17/review_11_Hifi3dFace/image-20221027161429672.png">
 <meta property="article:published_time" content="2022-10-17T08:36:20.681Z">
-<meta property="article:modified_time" content="2022-10-28T02:00:05.012Z">
+<meta property="article:modified_time" content="2022-10-28T02:06:22.073Z">
 <meta property="article:author" content="mrbanana_zly">
 <meta property="article:tag" content="3DMM">
 <meta name="twitter:card" content="summary">
@@ -166,7 +166,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">1. 实现效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">2. 全部算法总览</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 数据集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 用户输入数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 处理管线</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">3. 具体算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 帧选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.1.1 粗筛和预处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.1.2 帧选择</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 几何生成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1 初始模型定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2 优化框架</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.3.</span> <span class="nav-text">3.2.3 可形变模型的增强（扩充3D数据的方法）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.4.</span> <span class="nav-text">3.3 贴图生成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.4.1.</span> <span class="nav-text">3.3.1 基于区域金字塔的参数表示构造详解（Regional Pyramid bases）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.4.2.</span> <span class="nav-text">3.3.2 区域拟合（Regional Fitting）</span></a></li></ol></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">1. 实现效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">2. 全部算法总览</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 数据集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 用户输入数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 处理管线</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">3. 具体算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 帧选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.1.1 粗筛和预处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.1.2 帧选择</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 几何生成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1 初始模型定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2 优化框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.2.3.</span> <span class="nav-text">3.2.3 可形变模型的增强（扩充3D数据的方法）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 贴图生成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.3.1.</span> <span class="nav-text">3.3.1 基于区域金字塔的参数表示构造详解（Regional Pyramid bases）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.3.2.</span> <span class="nav-text">3.3.2 区域拟合（Regional Fitting）</span></a></li></ol></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -265,7 +265,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-10-28 10:00:05" itemprop="dateModified" datetime="2022-10-28T10:00:05+08:00">2022-10-28</time>
+      <time title="Modified: 2022-10-28 10:06:22" itemprop="dateModified" datetime="2022-10-28T10:06:22+08:00">2022-10-28</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -307,9 +307,9 @@
 <li><a href="#32-%E5%87%A0%E4%BD%95%E7%94%9F%E6%88%90">3.2 几何生成</a><ul>
 <li><a href="#321-%E5%88%9D%E5%A7%8B%E6%A8%A1%E5%9E%8B%E5%AE%9A%E4%B9%89">3.2.1 初始模型定义</a></li>
 <li><a href="#322-%E4%BC%98%E5%8C%96%E6%A1%86%E6%9E%B6">3.2.2 优化框架</a></li>
+<li><a href="#323-%E5%8F%AF%E5%BD%A2%E5%8F%98%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%A2%9E%E5%BC%BA%E6%89%A9%E5%85%853d%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E6%B3%95">3.2.3 可形变模型的增强（扩充3D数据的方法）</a></li>
 </ul>
 </li>
-<li><a href="#323-%E5%8F%AF%E5%BD%A2%E5%8F%98%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%A2%9E%E5%BC%BA%E6%89%A9%E5%85%853d%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E6%B3%95">3.2.3 可形变模型的增强（扩充3D数据的方法）</a></li>
 <li><a href="#33-%E8%B4%B4%E5%9B%BE%E7%94%9F%E6%88%90">3.3 贴图生成</a><ul>
 <li><a href="#331-%E5%9F%BA%E4%BA%8E%E5%8C%BA%E5%9F%9F%E9%87%91%E5%AD%97%E5%A1%94%E7%9A%84%E5%8F%82%E6%95%B0%E8%A1%A8%E7%A4%BA%E6%9E%84%E9%80%A0%E8%AF%A6%E8%A7%A3regional-pyramid-bases">3.3.1 基于区域金字塔的参数表示构造详解（Regional Pyramid bases）</a></li>
 <li><a href="#332-%E5%8C%BA%E5%9F%9F%E6%8B%9F%E5%90%88regional-fitting">3.3.2 区域拟合（Regional Fitting）</a></li>
@@ -361,7 +361,7 @@
 <p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025163440791.png" alt="image-20221025163440791"></p>
 <p>Regularization：为了确保重建的合理性，对形状和纹理参数应用正则化</p>
 <p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221026111116994.png" alt="image-20221026111116994"></p>
-<h2><span id="323-可形变模型的增强扩充3d数据的方法">3.2.3 可形变模型的增强（扩充3D数据的方法）</span></h2><p>优化中的约束十分丰富（loss很多），如果使用传统的线性3DMM的表达能力十分有限，为此提出了一种增强方法。</p>
+<h3><span id="323-可形变模型的增强扩充3d数据的方法">3.2.3 可形变模型的增强（扩充3D数据的方法）</span></h3><p>优化中的约束十分丰富（loss很多），如果使用传统的线性3DMM的表达能力十分有限，为此提出了一种增强方法。</p>
 <p>motivation：人脸大多不对称，会在对齐人脸模型时造成歧义， 原因是在两个模型的对齐过程中，它们之间的相对旋转和平移是通过最小化模型上某些参考点的误差来确定的。 不同的参考点可能导致不同的对齐结果。 由于人脸的不对称结构，没有完美的参考点。</p>
 <p>这提醒我们可以扰乱两个对齐模型之间的相对姿势以获得“代替”的对齐。通过这种方式既可以获得额外的PCA样本，因为新的对齐方式引入了新的变形目标。此外，我们可以使用一组扰动操作，包括姿态扰动、镜像、区域替换等，来增强对齐的模型。 基于生成的大量数据，我们提出了一种随机迭代算法来构建一个 3DMM，将更多的容量压缩到基的更低维度。</p>
 <p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221026151445577.png" alt="image-20221026151445577"></p>
