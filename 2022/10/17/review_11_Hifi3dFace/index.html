@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" integrity="sha256-jTIdiMuX/e3DGJUGwl3pKSxuc6YOuqtJYkM0bGQESA4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mrbananazly.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="1. 实现效果 2. 全部算法总览 2.1 数据集 2.2 目标 2.3 用户输入数据 2.4 处理管线   3. 具体算法 3.1 帧选择 3.1.1 粗筛和预处理 3.1.2 帧选择   3.2 几何生成 3.2.1 初始模型定义 3.2.2 优化框架   3.2.3 可形变模型的增强（扩充3D数据的方法） 3.3 贴图生成 3.3.1 基于区域金字塔的参数表示构造详解（Regional">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《High-Fidelity 3D Digital Human Head Creation from RGB-D Selfies》">
+<meta property="og:url" content="http://mrbananazly.cn/2022/10/17/review_11_Hifi3dFace/index.html">
+<meta property="og:site_name" content="Road 2 the Final">
+<meta property="og:description" content="1. 实现效果 2. 全部算法总览 2.1 数据集 2.2 目标 2.3 用户输入数据 2.4 处理管线   3. 具体算法 3.1 帧选择 3.1.1 粗筛和预处理 3.1.2 帧选择   3.2 几何生成 3.2.1 初始模型定义 3.2.2 优化框架   3.2.3 可形变模型的增强（扩充3D数据的方法） 3.3 贴图生成 3.3.1 基于区域金字塔的参数表示构造详解（Regional">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221023165135058.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221025151737274.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221025153015905.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221025153218398.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221025155915049.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221025160858227.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221025160959267.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221025161500643.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221025161600812.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221025162833565.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221025163251941.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221025163440791.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221026111116994.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221026151445577.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221026155015588.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221026163814008.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221026214551913.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221027111816307.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221027150644329.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221027153638981.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221027155829303.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221027155908838.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221027160544519.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221027160823904.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221027161429672.png">
+<meta property="article:published_time" content="2022-10-17T08:36:20.681Z">
+<meta property="article:modified_time" content="2022-10-28T01:54:45.598Z">
+<meta property="article:author" content="mrbanana_zly">
+<meta property="article:tag" content="3DMM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://mrbananazly.cn/review_11_Hifi3dFace/image-20221023165135058.png">
+
+
+<link rel="canonical" href="http://mrbananazly.cn/2022/10/17/review_11_Hifi3dFace/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://mrbananazly.cn/2022/10/17/review_11_Hifi3dFace/","path":"2022/10/17/review_11_Hifi3dFace/","title":"《High-Fidelity 3D Digital Human Head Creation from RGB-D Selfies》"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《High-Fidelity 3D Digital Human Head Creation from RGB-D Selfies》 | Road 2 the Final</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Road 2 the Final</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">1. 实现效果</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">2. 全部算法总览</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 数据集</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 用户输入数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 处理管线</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">3. 具体算法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 帧选择</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.1.1.</span> <span class="nav-text">3.1.1 粗筛和预处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.1.2.</span> <span class="nav-text">3.1.2 帧选择</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 几何生成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.2.1.</span> <span class="nav-text">3.2.1 初始模型定义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.2.2.</span> <span class="nav-text">3.2.2 优化框架</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.3.</span> <span class="nav-text">3.2.3 可形变模型的增强（扩充3D数据的方法）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">3.4.</span> <span class="nav-text">3.3 贴图生成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.4.1.</span> <span class="nav-text">3.3.1 基于区域金字塔的参数表示构造详解（Regional Pyramid bases）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">3.4.2.</span> <span class="nav-text">3.3.2 区域拟合（Regional Fitting）</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="mrbanana_zly"
+      src="/images/favicon.png">
+  <p class="site-author-name" itemprop="name">mrbanana_zly</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://mrbananazly.cn/2022/10/17/review_11_Hifi3dFace/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.png">
+      <meta itemprop="name" content="mrbanana_zly">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="《High-Fidelity 3D Digital Human Head Creation from RGB-D Selfies》 | Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《High-Fidelity 3D Digital Human Head Creation from RGB-D Selfies》
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-10-17 16:36:20" itemprop="dateCreated datePublished" datetime="2022-10-17T16:36:20+08:00">2022-10-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-10-28 09:54:45" itemprop="dateModified" datetime="2022-10-28T09:54:45+08:00">2022-10-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/paper-review/" itemprop="url" rel="index"><span itemprop="name">paper review</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <!-- toc -->
+
+<ul>
+<li><a href="#1-%E5%AE%9E%E7%8E%B0%E6%95%88%E6%9E%9C">1. 实现效果</a></li>
+<li><a href="#2-%E5%85%A8%E9%83%A8%E7%AE%97%E6%B3%95%E6%80%BB%E8%A7%88">2. 全部算法总览</a><ul>
+<li><a href="#21-%E6%95%B0%E6%8D%AE%E9%9B%86">2.1 数据集</a></li>
+<li><a href="#22-%E7%9B%AE%E6%A0%87">2.2 目标</a></li>
+<li><a href="#23-%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E6%95%B0%E6%8D%AE">2.3 用户输入数据</a></li>
+<li><a href="#24-%E5%A4%84%E7%90%86%E7%AE%A1%E7%BA%BF">2.4 处理管线</a></li>
+</ul>
+</li>
+<li><a href="#3-%E5%85%B7%E4%BD%93%E7%AE%97%E6%B3%95">3. 具体算法</a><ul>
+<li><a href="#31-%E5%B8%A7%E9%80%89%E6%8B%A9">3.1 帧选择</a><ul>
+<li><a href="#311-%E7%B2%97%E7%AD%9B%E5%92%8C%E9%A2%84%E5%A4%84%E7%90%86">3.1.1 粗筛和预处理</a></li>
+<li><a href="#312-%E5%B8%A7%E9%80%89%E6%8B%A9">3.1.2 帧选择</a></li>
+</ul>
+</li>
+<li><a href="#32-%E5%87%A0%E4%BD%95%E7%94%9F%E6%88%90">3.2 几何生成</a><ul>
+<li><a href="#321-%E5%88%9D%E5%A7%8B%E6%A8%A1%E5%9E%8B%E5%AE%9A%E4%B9%89">3.2.1 初始模型定义</a></li>
+<li><a href="#322-%E4%BC%98%E5%8C%96%E6%A1%86%E6%9E%B6">3.2.2 优化框架</a></li>
+</ul>
+</li>
+<li><a href="#323-%E5%8F%AF%E5%BD%A2%E5%8F%98%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%A2%9E%E5%BC%BA%E6%89%A9%E5%85%853d%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E6%B3%95">3.2.3 可形变模型的增强（扩充3D数据的方法）</a></li>
+<li><a href="#33-%E8%B4%B4%E5%9B%BE%E7%94%9F%E6%88%90">3.3 贴图生成</a><ul>
+<li><a href="#331-%E5%9F%BA%E4%BA%8E%E5%8C%BA%E5%9F%9F%E9%87%91%E5%AD%97%E5%A1%94%E7%9A%84%E5%8F%82%E6%95%B0%E8%A1%A8%E7%A4%BA%E6%9E%84%E9%80%A0%E8%AF%A6%E8%A7%A3regional-pyramid-bases">3.3.1 基于区域金字塔的参数表示构造详解（Regional Pyramid bases）</a></li>
+<li><a href="#332-%E5%8C%BA%E5%9F%9F%E6%8B%9F%E5%90%88regional-fitting">3.3.2 区域拟合（Regional Fitting）</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content_ICCV_2019/papers/Shi_Face-to-Parameter_Translation_for_Game_Character_Auto-Creation_ICCV_2019_paper.pdf">https://arxiv.org/abs/2010.05562</a></p>
+<p>code: <a target="_blank" rel="noopener" href="https://github.com/tencent-ailab/hifi3dface">tencent-ailab&#x2F;hifi3dface: Code and data for our paper “High-Fidelity 3D Digital Human Creation from RGB-D Selfies”. (github.com)</a></p>
+<p>ref link:<a target="_blank" rel="noopener" href="https://blog.csdn.net/jiafeier_555/article/details/125428388">https://blog.csdn.net/jiafeier_555/article/details/125428388</a></p>
+<span id="more"></span>
+
+<h1><span id="1-实现效果">1. 实现效果</span></h1><p>将用户的RGB-D自拍作为输入，自动生成高保真、可装配的头部模型，以及高分辨率的纹理图和法线图。</p>
+<h1><span id="2-全部算法总览">2. 全部算法总览</span></h1><h2><span id="21-数据集">2.1 数据集</span></h2><p>包含各100名男女性的3D人脸，20481个顶点和40832个面片，每个模型对应2K分辨率的纹理图和法线图。</p>
+<h2><span id="22-目标">2.2 目标</span></h2><p>用RGB-D自拍数据捕捉高保真用户的面部几何形状和反射率，该数据进一步用于创建和渲染全头、逼真的数字人类。<strong>对于几何建模，我们使用3DMM参数来表示一个面，因为它对低级别的输入数据更鲁棒，并且与基于变形的表示形式相比，网格质量更可控</strong>。对于纹理建模，我们合成了2K分辨率的反照率图和法线图，而不考虑输入的RGB-D分辨率。 </p>
+<h2><span id="23-用户输入数据">2.3 用户输入数据</span></h2><p>需要通过带深度相机的手机设备采集RGB-D数据，腾讯其有个采集软件，拍摄界面将引导用户连续向左、向右、向上和向后中间旋转头部。整个采集过程不到10秒，总共采集了200-300帧RGB-D图像，分辨率为640×480。用于计算的面部区域被裁剪（并调整大小）为300×300。相机的固有参数直接从设备读取。 </p>
+<h2><span id="24-处理管线">2.4 处理管线</span></h2><p>我们首先使用自动帧选择算法来选择覆盖用户所有侧面的几个高质量帧（第4节）。然后，使用所选帧中检测到的面部标志计算初始3DMM模型拟合（第5.1节）。从初始拟合开始，应用基于可差分渲染器的多视图RGB-D约束优化（第5.2节）来求解3DMM参数以及照明参数和姿势。根据估计的参数，合成高分辨率反照率法向图（第6节）。最后，可以创建和渲染高质量、逼真的全头像（第7节）。</p>
+<h1><span id="3-具体算法">3. 具体算法</span></h1><h2><span id="31-帧选择">3.1 帧选择</span></h2><p>通常从用户获取200-300帧。为了提高效率和健壮性，我们开发了一个健壮的帧选择程序，以选择几个高质量的帧进行进一步处理，该程序同时考虑了视图覆盖和数据质量。如图2所示，该过程包括如下所述的两个阶段。 </p>
+<p><img src="/review_11_Hifi3dFace/image-20221023165135058.png" alt="image-20221023165135058"></p>
+<h3><span id="311-粗筛和预处理">3.1.1 粗筛和预处理</span></h3><p>首先用了个face landmark的检测（在300W-LP数据集上训练的MobileNet）来检测2D landmark；</p>
+<p>然后，可以使用PnP算法利用模板3D面部模型上的2D地标和3D关键点之间的对应关系有效地计算每个帧的粗略头部姿势；</p>
+<p>使用2D地标和粗略的头部姿势可以很容易地识别和筛选出具有极端无效姿势或闭眼张开嘴表情的帧。我们根据姿势将其余帧分类为组：前、左、右和上；</p>
+<h3><span id="312-帧选择">3.1.2 帧选择</span></h3><p>对于每组，我们进一步根据两个标准选择一个帧：图像质量和刚性。为了测量帧的图像质量，我们计算拉普拉斯高斯（LoG）滤波器响应，并将方差用作运动模糊分数（分数越大的图像越清晰）。首先基于前面组中的运动模糊分数来选择前面帧。然后，我们利用深度数据计算其他组中的每个帧与正面之间的刚度。具体而言，使用深度数据将每个帧的检测到的2D地标从2D提升到3D。请注意，遮挡的界标会根据帧所属的组自动移除，例如，对于左侧组中的帧，面部右侧的界标将被移除。 </p>
+<h2><span id="32-几何生成">3.2 几何生成</span></h2><h3><span id="321-初始模型定义">3.2.1 初始模型定义</span></h3><p>使用基于 PCA 的线性 3DMM 进行参数建模。 人脸模型的形状和反照率纹理表示为：</p>
+<p><img src="/review_11_Hifi3dFace/image-20221025151737274.png" alt="image-20221025151737274"></p>
+<p>其中 s¯ 是平均 3D 人脸形状模型的向量格式，𝑆 是形状身份基础，x𝑠ℎ𝑝 是要估计的相应身份参数向量，a¯ 是平均反照率图的向量格式，𝐴 是反照率图基础颜色，x𝑎𝑙𝑏是要估计的相关反照率参数向量。</p>
+<p>使用岭回归 ，可以通过将形状模型投影到每个输入图像上来提取部分纹理图。 使用从每个视图的地标派生的预定义蒙版（见图 3），然后使用拉普拉斯金字塔混合将部分纹理贴图混合成完整的纹理贴图。（<strong>unwarp操作</strong>） 初始反照率参数可以通过另一个岭回归来获得，以拟合混合纹理图。</p>
+<p><img src="/review_11_Hifi3dFace/image-20221025153015905.png" alt="image-20221025153015905"></p>
+<h3><span id="322-优化框架">3.2.2 优化框架</span></h3><p><img src="/review_11_Hifi3dFace/image-20221025153218398.png" alt="image-20221025153218398"></p>
+<p>优化框架： 要解决的参数包括：用户的 3DMM 参数 x𝑠ℎ𝑝 和 x𝑎𝑙𝑏，每个视图的照明参数 x𝑙𝑖𝑔ℎ𝑡 和姿势 x𝑝𝑜𝑠𝑒。 约束包括：关键点损失𝐿𝑙𝑎𝑛、RGB 照片损失𝐿𝑟𝑔𝑏、深度损失𝐿𝑑𝑒𝑝和身份感知损失𝐿𝑖𝑑。</p>
+<p>优化目标：<img src="/review_11_Hifi3dFace/image-20221025155915049.png" alt="image-20221025155915049"></p>
+<p>对于每个用户的两个3DMM系数是不同的，而光照系数和姿态系数对每个用户都通用。</p>
+<p>目标Loss：</p>
+<p><img src="/review_11_Hifi3dFace/image-20221025160858227.png" alt="image-20221025160858227"></p>
+<p>具体Loss：</p>
+<p><strong>RGB Photo Loss</strong>：L2，输入的RGB图像和渲染的RGB图像做L2</p>
+<p><img src="/review_11_Hifi3dFace/image-20221025160959267.png" alt="image-20221025160959267"></p>
+<p><img src="/review_11_Hifi3dFace/image-20221025161500643.png" alt="image-20221025161500643"></p>
+<p><img src="/review_11_Hifi3dFace/image-20221025161600812.png" alt="image-20221025161600812"></p>
+<p>（下图是真实RGB，上图是mesh和贴图在原图上做渲染后的图像）</p>
+<p><strong>Depth Loss</strong>：L2，ρ是个截断函数，用来限定L2的范围；</p>
+<p><img src="/review_11_Hifi3dFace/image-20221025162833565.png" alt="image-20221025162833565"></p>
+<p><strong>Identity Perceptual Loss</strong>：L2，过VGGFace的fc7后的特征做感知loss；</p>
+<p><img src="/review_11_Hifi3dFace/image-20221025163251941.png" alt="image-20221025163251941"></p>
+<p><strong>Landmark Loss</strong>：每个lankmark做L2（不同位置权重不一样）</p>
+<p><img src="/review_11_Hifi3dFace/image-20221025163440791.png" alt="image-20221025163440791"></p>
+<p>Regularization：为了确保重建的合理性，对形状和纹理参数应用正则化</p>
+<p><img src="/review_11_Hifi3dFace/image-20221026111116994.png" alt="image-20221026111116994"></p>
+<h2><span id="323-可形变模型的增强扩充3d数据的方法">3.2.3 可形变模型的增强（扩充3D数据的方法）</span></h2><p>优化中的约束十分丰富（loss很多），如果使用传统的线性3DMM的表达能力十分有限，为此提出了一种增强方法。</p>
+<p>motivation：人脸大多不对称，会在对齐人脸模型时造成歧义， 原因是在两个模型的对齐过程中，它们之间的相对旋转和平移是通过最小化模型上某些参考点的误差来确定的。 不同的参考点可能导致不同的对齐结果。 由于人脸的不对称结构，没有完美的参考点。</p>
+<p>这提醒我们可以扰乱两个对齐模型之间的相对姿势以获得“代替”的对齐。通过这种方式既可以获得额外的PCA样本，因为新的对齐方式引入了新的变形目标。此外，我们可以使用一组扰动操作，包括姿态扰动、镜像、区域替换等，来增强对齐的模型。 基于生成的大量数据，我们提出了一种随机迭代算法来构建一个 3DMM，将更多的容量压缩到基的更低维度。</p>
+<p><img src="/review_11_Hifi3dFace/image-20221026151445577.png" alt="image-20221026151445577"></p>
+<p><strong>数据生成和扰动具体增强步骤</strong>（从200个对齐后的面部模型开始）</p>
+<p>从 200 个对齐的面部形状模型开始，我们的数据生成和扰动过程包括以下步骤： </p>
+<p>1.使用扰动进行区域替换</p>
+<p>我们首先用其他模型替换每个模型的鼻子区域，沿俯仰角旋转扰动（在±1度内均匀采样）。 嘴部区域也以相同的方式处理。对于眼睛区域，我们在没有扰动的情况下应用替换。通过在处理过程中最小化引入的视觉缺陷来根据经验设计不同的扰动。 <strong>此步骤中使用的面部区域如图 5 所示</strong></p>
+<p>2.刚性变换扰动。 </p>
+<p>然后，我们对每个人脸模型应用刚性变换扰动，其中统一采样范围设置为：沿yam&#x2F;pitch&#x2F;roll的 ±1 度用于旋转，沿三个轴中的每一个轴的 ±1% 用于平移 , ±1% 刻度。</p>
+<p>3.镜像。 </p>
+<p>最后，我们沿模型局部坐标系对所有生成的人脸模型应用镜像。 通过这种方式，我们总共得到了超过 100,000 个人脸模型。</p>
+<p>最后效果表示，拥有大量数据生成和增强所训练出的模型不出意外有更强大的表达能力，拟合得更好。</p>
+<p>迭代增强3DMM构造算法流程：</p>
+<p><img src="/review_11_Hifi3dFace/image-20221026155015588.png" alt="image-20221026155015588"></p>
+<h2><span id="33-贴图生成">3.3 贴图生成</span></h2><p><strong>这一部分参考博客里讲得很好，建议先看参考博客</strong></p>
+<p>提出了一种合成高分辨率反照率和法线贴图的混合方法。</p>
+<p>我们注意到基于超分辨率的方法无法产生高质量的眉毛细节。 另一方面，直接合成高分辨率纹理图可能会导致压倒性的细节，这也使得渲染不真实。 我们的方法在基于金字塔的参数表示的帮助下解决了这些问题。 图 9 显示了我们方法的流程。</p>
+<p><img src="/review_11_Hifi3dFace/image-20221026163814008.png" alt="image-20221026163814008"></p>
+<p>第一步提取纹理（extract）</p>
+<p>第二步通过光照参数调整纹理亮度（delight）</p>
+<p>第三步将3D人脸展开到2D贴图（unwrap），512*512</p>
+<p>unwrap详情见代码，最终效果就是blender里面的展UV</p>
+<p>第四步使用<strong>区域拟合方法</strong>获得2048*2048的反射率贴图和法线贴图（regional fitting）</p>
+<p>第五步通过CNN（具体模型为<strong>pix2pix</strong>）对两个贴图进行细化（refinement）</p>
+<h3><span id="331-基于区域金字塔的参数表示构造详解regional-pyramid-bases">3.3.1 基于区域金字塔的参数表示构造详解（Regional Pyramid bases）</span></h3><p><img src="/review_11_Hifi3dFace/image-20221026214551913.png" alt="image-20221026214551913"></p>
+<p>1.先将unwrap后的贴图resize成512和2048大小的图像，最终要得到上图左边的素材；</p>
+<p>2.使用Mask将脸部分为8个区域，具体规则如下表示</p>
+<p><img src="/review_11_Hifi3dFace/image-20221027111816307.png" alt="image-20221027111816307"></p>
+<p>3.每个样本有三种贴图（512-a，2048-a，2048-g），构成如下三元组</p>
+<p><img src="/review_11_Hifi3dFace/image-20221027150644329.png" alt="image-20221027150644329"></p>
+<p>4.concat到一维，计算PCA，得到主成分</p>
+<p>5.将得到的主成分根据索引，scatter back回图像</p>
+<p>scatter back的操作是tensorflow的scatter_nd()函数实现的。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scatter_nd(indices,updates,shape,name=None)</span><br></pre></td></tr></table></figure>
+
+<p>根据indices将updates散布到新的（初始为零）张量。</p>
+<h3><span id="332-区域拟合regional-fitting">3.3.2 区域拟合（Regional Fitting）</span></h3><p>由于构造了regional pyramid base，不同区域的不同类型皮肤&#x2F;头发细节可以通过高分辨率基分别保存，而低分辨率的拟合过程使算法专注于主要的面部结构，例如，形状眉毛和嘴唇。（<strong>多尺度</strong>）</p>
+<p>区域拟合分为两部分：<strong>参数拟合和高分辨率贴图合成</strong></p>
+<p><strong>参数拟合</strong></p>
+<p><strong>参数拟合部分，就是将生成头模的时候生成的粗略化的Xalb，通过最小化loss，迭代训练得到较优的Xalb。</strong></p>
+<p>参数拟合部分只使用了512的贴图</p>
+<p><img src="/review_11_Hifi3dFace/image-20221027153638981.png" alt="image-20221027153638981"></p>
+<p>变量解释：</p>
+<p><strong>Loss 1</strong></p>
+<p><img src="/review_11_Hifi3dFace/image-20221027155829303.png" alt="image-20221027155829303">为unwrap后的图像；</p>
+<p><img src="/review_11_Hifi3dFace/image-20221027155908838.png" alt="image-20221027155908838">表示将生成头模过程中生成的粗略的颜色贴图参数，与region pyramid bases逐区域相乘拟合再叠加成一张总的颜色贴图；</p>
+<p>然后计算这两张图像之间的L2，记作loss1；</p>
+<p><strong>Loss 2</strong></p>
+<p><img src="/review_11_Hifi3dFace/image-20221027160544519.png" alt="image-20221027160544519"></p>
+<p>主要消除8个区域边界中的伪影。做法是：通过uv_mask将整个颜色贴图分割成边界mask和非边界mask，然后分别计算颜色贴图中的边界距离和非边界距离,将这两种距离相加。记做loss2；</p>
+<p><strong>Loss 3</strong></p>
+<p>对于<img src="/review_11_Hifi3dFace/image-20221027160823904.png" alt="image-20221027160823904">这个颜色贴图参数做L2正则，记作loss3；</p>
+<p>三个Loss相加 使其最小化，迭代更新颜色贴图参数Xalb，直到得到训练好的Xalb。</p>
+<p><strong>高分辨率贴图生成</strong></p>
+<p><img src="/review_11_Hifi3dFace/image-20221027161429672.png" alt="image-20221027161429672"></p>
+<p>将上部分得到的较优的Xalb，分别与区域金字塔生成的A2048（2048* 2048分辨率的颜色贴图基）逐区域相乘拟合再叠加成一张总的颜色贴图，这便是区域拟合部分得到的最终的颜色贴图。<br>将上部分得到的较优的Xalb，分别与区域金字塔生成的G2048（2048* 2048分辨率的法线贴图基）逐区域相乘拟合再叠加成一张总的法线贴图，这便是区域拟合部分得到的最终的法线贴图。</p>
+<p><strong>细节生成</strong></p>
+<p>基于pix2pix模型，进出模型的分辨率是相同的，但细节上会细化；</p>
+<p>在训练过程中，首先使用面部区域替换和肤色转移将200幅高质量反照率&#x2F;法线图（来自构建3DMM的数据集）放大为4000幅图，作为训练两个网络的GT。</p>
+<p>然后，对4000幅图执行区域拟合（Regional Fitting），以获得拟合的反照率&#x2F;法线地图，这些图在训练期间用作网络的输入。只使用整个UV贴图中的面部区域来计算训练损失。</p>
+<p>类似于pix2pix，保持𝐿1损耗和GAN损耗。对于反照率细化，我们还应用总变化损失（total variation loss）来减少伪影并改善皮肤平滑度。对于法线图细化，还使用预测和GT图之间的逐像素余弦距离，以提高正常方向的精度。使用Adam优化器对网络进行75000次迭代。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/3DMM/" rel="tag"># 3DMM</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/10/06/HWB/" rel="prev" title="《E题1.0》">
+                  <i class="fa fa-chevron-left"></i> 《E题1.0》
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2022/10/19/rtto_4/" rel="next" title="RTTO WEEK4">
+                  RTTO WEEK4 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mrbanana_zly</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
