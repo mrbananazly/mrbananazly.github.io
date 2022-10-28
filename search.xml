@@ -1392,40 +1392,40 @@
 <h2><span id="23-用户输入数据">2.3 用户输入数据</span></h2><p>需要通过带深度相机的手机设备采集RGB-D数据，腾讯其有个采集软件，拍摄界面将引导用户连续向左、向右、向上和向后中间旋转头部。整个采集过程不到10秒，总共采集了200-300帧RGB-D图像，分辨率为640×480。用于计算的面部区域被裁剪（并调整大小）为300×300。相机的固有参数直接从设备读取。 </p>
 <h2><span id="24-处理管线">2.4 处理管线</span></h2><p>我们首先使用自动帧选择算法来选择覆盖用户所有侧面的几个高质量帧（第4节）。然后，使用所选帧中检测到的面部标志计算初始3DMM模型拟合（第5.1节）。从初始拟合开始，应用基于可差分渲染器的多视图RGB-D约束优化（第5.2节）来求解3DMM参数以及照明参数和姿势。根据估计的参数，合成高分辨率反照率法向图（第6节）。最后，可以创建和渲染高质量、逼真的全头像（第7节）。</p>
 <h1><span id="3-具体算法">3. 具体算法</span></h1><h2><span id="31-帧选择">3.1 帧选择</span></h2><p>通常从用户获取200-300帧。为了提高效率和健壮性，我们开发了一个健壮的帧选择程序，以选择几个高质量的帧进行进一步处理，该程序同时考虑了视图覆盖和数据质量。如图2所示，该过程包括如下所述的两个阶段。 </p>
-<p><img src="/review_11_Hifi3dFace/image-20221023165135058.png" alt="image-20221023165135058"></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221023165135058.png" alt="image-20221023165135058"></p>
 <h3><span id="311-粗筛和预处理">3.1.1 粗筛和预处理</span></h3><p>首先用了个face landmark的检测（在300W-LP数据集上训练的MobileNet）来检测2D landmark；</p>
 <p>然后，可以使用PnP算法利用模板3D面部模型上的2D地标和3D关键点之间的对应关系有效地计算每个帧的粗略头部姿势；</p>
 <p>使用2D地标和粗略的头部姿势可以很容易地识别和筛选出具有极端无效姿势或闭眼张开嘴表情的帧。我们根据姿势将其余帧分类为组：前、左、右和上；</p>
 <h3><span id="312-帧选择">3.1.2 帧选择</span></h3><p>对于每组，我们进一步根据两个标准选择一个帧：图像质量和刚性。为了测量帧的图像质量，我们计算拉普拉斯高斯（LoG）滤波器响应，并将方差用作运动模糊分数（分数越大的图像越清晰）。首先基于前面组中的运动模糊分数来选择前面帧。然后，我们利用深度数据计算其他组中的每个帧与正面之间的刚度。具体而言，使用深度数据将每个帧的检测到的2D地标从2D提升到3D。请注意，遮挡的界标会根据帧所属的组自动移除，例如，对于左侧组中的帧，面部右侧的界标将被移除。 </p>
 <h2><span id="32-几何生成">3.2 几何生成</span></h2><h3><span id="321-初始模型定义">3.2.1 初始模型定义</span></h3><p>使用基于 PCA 的线性 3DMM 进行参数建模。 人脸模型的形状和反照率纹理表示为：</p>
-<p><img src="/review_11_Hifi3dFace/image-20221025151737274.png" alt="image-20221025151737274"></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025151737274.png" alt="image-20221025151737274"></p>
 <p>其中 s¯ 是平均 3D 人脸形状模型的向量格式，𝑆 是形状身份基础，x𝑠ℎ𝑝 是要估计的相应身份参数向量，a¯ 是平均反照率图的向量格式，𝐴 是反照率图基础颜色，x𝑎𝑙𝑏是要估计的相关反照率参数向量。</p>
 <p>使用岭回归 ，可以通过将形状模型投影到每个输入图像上来提取部分纹理图。 使用从每个视图的地标派生的预定义蒙版（见图 3），然后使用拉普拉斯金字塔混合将部分纹理贴图混合成完整的纹理贴图。（<strong>unwarp操作</strong>） 初始反照率参数可以通过另一个岭回归来获得，以拟合混合纹理图。</p>
-<p><img src="/review_11_Hifi3dFace/image-20221025153015905.png" alt="image-20221025153015905"></p>
-<h3><span id="322-优化框架">3.2.2 优化框架</span></h3><p><img src="/review_11_Hifi3dFace/image-20221025153218398.png" alt="image-20221025153218398"></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025153015905.png" alt="image-20221025153015905"></p>
+<h3><span id="322-优化框架">3.2.2 优化框架</span></h3><p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025153218398.png" alt="image-20221025153218398"></p>
 <p>优化框架： 要解决的参数包括：用户的 3DMM 参数 x𝑠ℎ𝑝 和 x𝑎𝑙𝑏，每个视图的照明参数 x𝑙𝑖𝑔ℎ𝑡 和姿势 x𝑝𝑜𝑠𝑒。 约束包括：关键点损失𝐿𝑙𝑎𝑛、RGB 照片损失𝐿𝑟𝑔𝑏、深度损失𝐿𝑑𝑒𝑝和身份感知损失𝐿𝑖𝑑。</p>
-<p>优化目标：<img src="/review_11_Hifi3dFace/image-20221025155915049.png" alt="image-20221025155915049"></p>
+<p>优化目标：<img src="/2022/10/17/review_11_Hifi3dFace/image-20221025155915049.png" alt="image-20221025155915049"></p>
 <p>对于每个用户的两个3DMM系数是不同的，而光照系数和姿态系数对每个用户都通用。</p>
 <p>目标Loss：</p>
-<p><img src="/review_11_Hifi3dFace/image-20221025160858227.png" alt="image-20221025160858227"></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025160858227.png" alt="image-20221025160858227"></p>
 <p>具体Loss：</p>
 <p><strong>RGB Photo Loss</strong>：L2，输入的RGB图像和渲染的RGB图像做L2</p>
-<p><img src="/review_11_Hifi3dFace/image-20221025160959267.png" alt="image-20221025160959267"></p>
-<p><img src="/review_11_Hifi3dFace/image-20221025161500643.png" alt="image-20221025161500643"></p>
-<p><img src="/review_11_Hifi3dFace/image-20221025161600812.png" alt="image-20221025161600812"></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025160959267.png" alt="image-20221025160959267"></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025161500643.png" alt="image-20221025161500643"></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025161600812.png" alt="image-20221025161600812"></p>
 <p>（下图是真实RGB，上图是mesh和贴图在原图上做渲染后的图像）</p>
 <p><strong>Depth Loss</strong>：L2，ρ是个截断函数，用来限定L2的范围；</p>
-<p><img src="/review_11_Hifi3dFace/image-20221025162833565.png" alt="image-20221025162833565"></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025162833565.png" alt="image-20221025162833565"></p>
 <p><strong>Identity Perceptual Loss</strong>：L2，过VGGFace的fc7后的特征做感知loss；</p>
-<p><img src="/review_11_Hifi3dFace/image-20221025163251941.png" alt="image-20221025163251941"></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025163251941.png" alt="image-20221025163251941"></p>
 <p><strong>Landmark Loss</strong>：每个lankmark做L2（不同位置权重不一样）</p>
-<p><img src="/review_11_Hifi3dFace/image-20221025163440791.png" alt="image-20221025163440791"></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025163440791.png" alt="image-20221025163440791"></p>
 <p>Regularization：为了确保重建的合理性，对形状和纹理参数应用正则化</p>
-<p><img src="/review_11_Hifi3dFace/image-20221026111116994.png" alt="image-20221026111116994"></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221026111116994.png" alt="image-20221026111116994"></p>
 <h2><span id="323-可形变模型的增强扩充3d数据的方法">3.2.3 可形变模型的增强（扩充3D数据的方法）</span></h2><p>优化中的约束十分丰富（loss很多），如果使用传统的线性3DMM的表达能力十分有限，为此提出了一种增强方法。</p>
 <p>motivation：人脸大多不对称，会在对齐人脸模型时造成歧义， 原因是在两个模型的对齐过程中，它们之间的相对旋转和平移是通过最小化模型上某些参考点的误差来确定的。 不同的参考点可能导致不同的对齐结果。 由于人脸的不对称结构，没有完美的参考点。</p>
 <p>这提醒我们可以扰乱两个对齐模型之间的相对姿势以获得“代替”的对齐。通过这种方式既可以获得额外的PCA样本，因为新的对齐方式引入了新的变形目标。此外，我们可以使用一组扰动操作，包括姿态扰动、镜像、区域替换等，来增强对齐的模型。 基于生成的大量数据，我们提出了一种随机迭代算法来构建一个 3DMM，将更多的容量压缩到基的更低维度。</p>
-<p><img src="/review_11_Hifi3dFace/image-20221026151445577.png" alt="image-20221026151445577"></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221026151445577.png" alt="image-20221026151445577"></p>
 <p><strong>数据生成和扰动具体增强步骤</strong>（从200个对齐后的面部模型开始）</p>
 <p>从 200 个对齐的面部形状模型开始，我们的数据生成和扰动过程包括以下步骤： </p>
 <p>1.使用扰动进行区域替换</p>
@@ -1436,23 +1436,23 @@
 <p>最后，我们沿模型局部坐标系对所有生成的人脸模型应用镜像。 通过这种方式，我们总共得到了超过 100,000 个人脸模型。</p>
 <p>最后效果表示，拥有大量数据生成和增强所训练出的模型不出意外有更强大的表达能力，拟合得更好。</p>
 <p>迭代增强3DMM构造算法流程：</p>
-<p><img src="/review_11_Hifi3dFace/image-20221026155015588.png" alt="image-20221026155015588"></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221026155015588.png" alt="image-20221026155015588"></p>
 <h2><span id="33-贴图生成">3.3 贴图生成</span></h2><p><strong>这一部分参考博客里讲得很好，建议先看参考博客</strong></p>
 <p>提出了一种合成高分辨率反照率和法线贴图的混合方法。</p>
 <p>我们注意到基于超分辨率的方法无法产生高质量的眉毛细节。 另一方面，直接合成高分辨率纹理图可能会导致压倒性的细节，这也使得渲染不真实。 我们的方法在基于金字塔的参数表示的帮助下解决了这些问题。 图 9 显示了我们方法的流程。</p>
-<p><img src="/review_11_Hifi3dFace/image-20221026163814008.png" alt="image-20221026163814008"></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221026163814008.png" alt="image-20221026163814008"></p>
 <p>第一步提取纹理（extract）</p>
 <p>第二步通过光照参数调整纹理亮度（delight）</p>
 <p>第三步将3D人脸展开到2D贴图（unwrap），512*512</p>
 <p>unwrap详情见代码，最终效果就是blender里面的展UV</p>
 <p>第四步使用<strong>区域拟合方法</strong>获得2048*2048的反射率贴图和法线贴图（regional fitting）</p>
 <p>第五步通过CNN（具体模型为<strong>pix2pix</strong>）对两个贴图进行细化（refinement）</p>
-<h3><span id="331-基于区域金字塔的参数表示构造详解regional-pyramid-bases">3.3.1 基于区域金字塔的参数表示构造详解（Regional Pyramid bases）</span></h3><p><img src="/review_11_Hifi3dFace/image-20221026214551913.png" alt="image-20221026214551913"></p>
+<h3><span id="331-基于区域金字塔的参数表示构造详解regional-pyramid-bases">3.3.1 基于区域金字塔的参数表示构造详解（Regional Pyramid bases）</span></h3><p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221026214551913.png" alt="image-20221026214551913"></p>
 <p>1.先将unwrap后的贴图resize成512和2048大小的图像，最终要得到上图左边的素材；</p>
 <p>2.使用Mask将脸部分为8个区域，具体规则如下表示</p>
-<p><img src="/review_11_Hifi3dFace/image-20221027111816307.png" alt="image-20221027111816307"></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221027111816307.png" alt="image-20221027111816307"></p>
 <p>3.每个样本有三种贴图（512-a，2048-a，2048-g），构成如下三元组</p>
-<p><img src="/review_11_Hifi3dFace/image-20221027150644329.png" alt="image-20221027150644329"></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221027150644329.png" alt="image-20221027150644329"></p>
 <p>4.concat到一维，计算PCA，得到主成分</p>
 <p>5.将得到的主成分根据索引，scatter back回图像</p>
 <p>scatter back的操作是tensorflow的scatter_nd()函数实现的。</p>
@@ -1464,20 +1464,20 @@
 <p><strong>参数拟合</strong></p>
 <p><strong>参数拟合部分，就是将生成头模的时候生成的粗略化的Xalb，通过最小化loss，迭代训练得到较优的Xalb。</strong></p>
 <p>参数拟合部分只使用了512的贴图</p>
-<p><img src="/review_11_Hifi3dFace/image-20221027153638981.png" alt="image-20221027153638981"></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221027153638981.png" alt="image-20221027153638981"></p>
 <p>变量解释：</p>
 <p><strong>Loss 1</strong></p>
-<p><img src="/review_11_Hifi3dFace/image-20221027155829303.png" alt="image-20221027155829303">为unwrap后的图像；</p>
-<p><img src="/review_11_Hifi3dFace/image-20221027155908838.png" alt="image-20221027155908838">表示将生成头模过程中生成的粗略的颜色贴图参数，与region pyramid bases逐区域相乘拟合再叠加成一张总的颜色贴图；</p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221027155829303.png" alt="image-20221027155829303">为unwrap后的图像；</p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221027155908838.png" alt="image-20221027155908838">表示将生成头模过程中生成的粗略的颜色贴图参数，与region pyramid bases逐区域相乘拟合再叠加成一张总的颜色贴图；</p>
 <p>然后计算这两张图像之间的L2，记作loss1；</p>
 <p><strong>Loss 2</strong></p>
-<p><img src="/review_11_Hifi3dFace/image-20221027160544519.png" alt="image-20221027160544519"></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221027160544519.png" alt="image-20221027160544519"></p>
 <p>主要消除8个区域边界中的伪影。做法是：通过uv_mask将整个颜色贴图分割成边界mask和非边界mask，然后分别计算颜色贴图中的边界距离和非边界距离,将这两种距离相加。记做loss2；</p>
 <p><strong>Loss 3</strong></p>
-<p>对于<img src="/review_11_Hifi3dFace/image-20221027160823904.png" alt="image-20221027160823904">这个颜色贴图参数做L2正则，记作loss3；</p>
+<p>对于<img src="/2022/10/17/review_11_Hifi3dFace/image-20221027160823904.png" alt="image-20221027160823904">这个颜色贴图参数做L2正则，记作loss3；</p>
 <p>三个Loss相加 使其最小化，迭代更新颜色贴图参数Xalb，直到得到训练好的Xalb。</p>
 <p><strong>高分辨率贴图生成</strong></p>
-<p><img src="/review_11_Hifi3dFace/image-20221027161429672.png" alt="image-20221027161429672"></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221027161429672.png" alt="image-20221027161429672"></p>
 <p>将上部分得到的较优的Xalb，分别与区域金字塔生成的A2048（2048* 2048分辨率的颜色贴图基）逐区域相乘拟合再叠加成一张总的颜色贴图，这便是区域拟合部分得到的最终的颜色贴图。<br>将上部分得到的较优的Xalb，分别与区域金字塔生成的G2048（2048* 2048分辨率的法线贴图基）逐区域相乘拟合再叠加成一张总的法线贴图，这便是区域拟合部分得到的最终的法线贴图。</p>
 <p><strong>细节生成</strong></p>
 <p>基于pix2pix模型，进出模型的分辨率是相同的，但细节上会细化；</p>
