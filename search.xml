@@ -43,6 +43,153 @@
       </tags>
   </entry>
   <entry>
+    <title>《High-Fidelity 3D Digital Human Head Creation from RGB-D Selfies》</title>
+    <url>/2022/10/17/review_11_Hifi3dFace/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#1-%E5%AE%9E%E7%8E%B0%E6%95%88%E6%9E%9C">1. 实现效果</a></li>
+<li><a href="#2-%E5%85%A8%E9%83%A8%E7%AE%97%E6%B3%95%E6%80%BB%E8%A7%88">2. 全部算法总览</a><ul>
+<li><a href="#21-%E6%95%B0%E6%8D%AE%E9%9B%86">2.1 数据集</a></li>
+<li><a href="#22-%E7%9B%AE%E6%A0%87">2.2 目标</a></li>
+<li><a href="#23-%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E6%95%B0%E6%8D%AE">2.3 用户输入数据</a></li>
+<li><a href="#24-%E5%A4%84%E7%90%86%E7%AE%A1%E7%BA%BF">2.4 处理管线</a></li>
+</ul>
+</li>
+<li><a href="#3-%E5%85%B7%E4%BD%93%E7%AE%97%E6%B3%95">3. 具体算法</a><ul>
+<li><a href="#31-%E5%B8%A7%E9%80%89%E6%8B%A9">3.1 帧选择</a><ul>
+<li><a href="#311-%E7%B2%97%E7%AD%9B%E5%92%8C%E9%A2%84%E5%A4%84%E7%90%86">3.1.1 粗筛和预处理</a></li>
+<li><a href="#312-%E5%B8%A7%E9%80%89%E6%8B%A9">3.1.2 帧选择</a></li>
+</ul>
+</li>
+<li><a href="#32-%E5%87%A0%E4%BD%95%E7%94%9F%E6%88%90">3.2 几何生成</a><ul>
+<li><a href="#321-%E5%88%9D%E5%A7%8B%E6%A8%A1%E5%9E%8B%E5%AE%9A%E4%B9%89">3.2.1 初始模型定义</a></li>
+<li><a href="#322-%E4%BC%98%E5%8C%96%E6%A1%86%E6%9E%B6">3.2.2 优化框架</a></li>
+<li><a href="#323-%E5%8F%AF%E5%BD%A2%E5%8F%98%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%A2%9E%E5%BC%BA%E6%89%A9%E5%85%853d%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E6%B3%95">3.2.3 可形变模型的增强（扩充3D数据的方法）</a></li>
+</ul>
+</li>
+<li><a href="#33-%E8%B4%B4%E5%9B%BE%E7%94%9F%E6%88%90">3.3 贴图生成</a><ul>
+<li><a href="#331-%E5%9F%BA%E4%BA%8E%E5%8C%BA%E5%9F%9F%E9%87%91%E5%AD%97%E5%A1%94%E7%9A%84%E5%8F%82%E6%95%B0%E8%A1%A8%E7%A4%BA%E6%9E%84%E9%80%A0%E8%AF%A6%E8%A7%A3regional-pyramid-bases">3.3.1 基于区域金字塔的参数表示构造详解（Regional Pyramid bases）</a></li>
+<li><a href="#332-%E5%8C%BA%E5%9F%9F%E6%8B%9F%E5%90%88regional-fitting">3.3.2 区域拟合（Regional Fitting）</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content_ICCV_2019/papers/Shi_Face-to-Parameter_Translation_for_Game_Character_Auto-Creation_ICCV_2019_paper.pdf">https://arxiv.org/abs/2010.05562</a></p>
+<p>code: <a href="https://github.com/tencent-ailab/hifi3dface">tencent-ailab&#x2F;hifi3dface: Code and data for our paper “High-Fidelity 3D Digital Human Creation from RGB-D Selfies”. (github.com)</a></p>
+<p>ref link:<a href="https://blog.csdn.net/jiafeier_555/article/details/125428388">https://blog.csdn.net/jiafeier_555/article/details/125428388</a></p>
+<span id="more"></span>
+
+<h1><span id="1-实现效果">1. 实现效果</span></h1><p>将用户的RGB-D自拍作为输入，自动生成高保真、可装配的头部模型，以及高分辨率的纹理图和法线图。</p>
+<h1><span id="2-全部算法总览">2. 全部算法总览</span></h1><h2><span id="21-数据集">2.1 数据集</span></h2><p>包含各100名男女性的3D人脸，20481个顶点和40832个面片，每个模型对应2K分辨率的纹理图和法线图。</p>
+<h2><span id="22-目标">2.2 目标</span></h2><p>用RGB-D自拍数据捕捉高保真用户的面部几何形状和反射率，该数据进一步用于创建和渲染全头、逼真的数字人类。<strong>对于几何建模，我们使用3DMM参数来表示一个面，因为它对低级别的输入数据更鲁棒，并且与基于变形的表示形式相比，网格质量更可控</strong>。对于纹理建模，我们合成了2K分辨率的反照率图和法线图，而不考虑输入的RGB-D分辨率。 </p>
+<h2><span id="23-用户输入数据">2.3 用户输入数据</span></h2><p>需要通过带深度相机的手机设备采集RGB-D数据，腾讯其有个采集软件，拍摄界面将引导用户连续向左、向右、向上和向后中间旋转头部。整个采集过程不到10秒，总共采集了200-300帧RGB-D图像，分辨率为640×480。用于计算的面部区域被裁剪（并调整大小）为300×300。相机的固有参数直接从设备读取。 </p>
+<h2><span id="24-处理管线">2.4 处理管线</span></h2><p>我们首先使用自动帧选择算法来选择覆盖用户所有侧面的几个高质量帧（第4节）。然后，使用所选帧中检测到的面部标志计算初始3DMM模型拟合（第5.1节）。从初始拟合开始，应用基于可差分渲染器的多视图RGB-D约束优化（第5.2节）来求解3DMM参数以及照明参数和姿势。根据估计的参数，合成高分辨率反照率法向图（第6节）。最后，可以创建和渲染高质量、逼真的全头像（第7节）。</p>
+<h1><span id="3-具体算法">3. 具体算法</span></h1><h2><span id="31-帧选择">3.1 帧选择</span></h2><p>通常从用户获取200-300帧。为了提高效率和健壮性，我们开发了一个健壮的帧选择程序，以选择几个高质量的帧进行进一步处理，该程序同时考虑了视图覆盖和数据质量。如图2所示，该过程包括如下所述的两个阶段。 </p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221023165135058.png" alt="image-20221023165135058"></p>
+<h3><span id="311-粗筛和预处理">3.1.1 粗筛和预处理</span></h3><p>首先用了个face landmark的检测（在300W-LP数据集上训练的MobileNet）来检测2D landmark；</p>
+<p>然后，可以使用PnP算法利用模板3D面部模型上的2D地标和3D关键点之间的对应关系有效地计算每个帧的粗略头部姿势；</p>
+<p>使用2D地标和粗略的头部姿势可以很容易地识别和筛选出具有极端无效姿势或闭眼张开嘴表情的帧。我们根据姿势将其余帧分类为组：前、左、右和上；</p>
+<h3><span id="312-帧选择">3.1.2 帧选择</span></h3><p>对于每组，我们进一步根据两个标准选择一个帧：图像质量和刚性。为了测量帧的图像质量，我们计算拉普拉斯高斯（LoG）滤波器响应，并将方差用作运动模糊分数（分数越大的图像越清晰）。首先基于前面组中的运动模糊分数来选择前面帧。然后，我们利用深度数据计算其他组中的每个帧与正面之间的刚度。具体而言，使用深度数据将每个帧的检测到的2D地标从2D提升到3D。请注意，遮挡的界标会根据帧所属的组自动移除，例如，对于左侧组中的帧，面部右侧的界标将被移除。 </p>
+<h2><span id="32-几何生成">3.2 几何生成</span></h2><h3><span id="321-初始模型定义">3.2.1 初始模型定义</span></h3><p>使用基于 PCA 的线性 3DMM 进行参数建模。 人脸模型的形状和反照率纹理表示为：</p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025151737274.png" alt="image-20221025151737274"></p>
+<p>其中 s¯ 是平均 3D 人脸形状模型的向量格式，𝑆 是形状身份基础，x𝑠ℎ𝑝 是要估计的相应身份参数向量，a¯ 是平均反照率图的向量格式，𝐴 是反照率图基础颜色，x𝑎𝑙𝑏是要估计的相关反照率参数向量。</p>
+<p>使用岭回归 ，可以通过将形状模型投影到每个输入图像上来提取部分纹理图。 使用从每个视图的地标派生的预定义蒙版（见图 3），然后使用拉普拉斯金字塔混合将部分纹理贴图混合成完整的纹理贴图。（<strong>unwarp操作</strong>） 初始反照率参数可以通过另一个岭回归来获得，以拟合混合纹理图。</p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025153015905.png" alt="image-20221025153015905"></p>
+<h3><span id="322-优化框架">3.2.2 优化框架</span></h3><p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025153218398.png" alt="image-20221025153218398"></p>
+<p>优化框架： 要解决的参数包括：用户的 3DMM 参数 x𝑠ℎ𝑝 和 x𝑎𝑙𝑏，每个视图的照明参数 x𝑙𝑖𝑔ℎ𝑡 和姿势 x𝑝𝑜𝑠𝑒。 约束包括：关键点损失𝐿𝑙𝑎𝑛、RGB 照片损失𝐿𝑟𝑔𝑏、深度损失𝐿𝑑𝑒𝑝和身份感知损失𝐿𝑖𝑑。</p>
+<p>优化目标：<img src="/2022/10/17/review_11_Hifi3dFace/image-20221025155915049.png" alt="image-20221025155915049"></p>
+<p>对于每个用户的两个3DMM系数是不同的，而光照系数和姿态系数对每个用户都通用。</p>
+<p>目标Loss：</p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025160858227.png" alt="image-20221025160858227"></p>
+<p>具体Loss：</p>
+<p><strong>RGB Photo Loss</strong>：L2，输入的RGB图像和渲染的RGB图像做L2</p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025160959267.png" alt="image-20221025160959267"></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025161500643.png" alt="image-20221025161500643"></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025161600812.png" alt="image-20221025161600812"></p>
+<p>（下图是真实RGB，上图是mesh和贴图在原图上做渲染后的图像）</p>
+<p><strong>Depth Loss</strong>：L2，ρ是个截断函数，用来限定L2的范围；</p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025162833565.png" alt="image-20221025162833565"></p>
+<p><strong>Identity Perceptual Loss</strong>：L2，过VGGFace的fc7后的特征做感知loss；</p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025163251941.png" alt="image-20221025163251941"></p>
+<p><strong>Landmark Loss</strong>：每个lankmark做L2（不同位置权重不一样）</p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025163440791.png" alt="image-20221025163440791"></p>
+<p>Regularization：为了确保重建的合理性，对形状和纹理参数应用正则化</p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221026111116994.png" alt="image-20221026111116994"></p>
+<h3><span id="323-可形变模型的增强扩充3d数据的方法">3.2.3 可形变模型的增强（扩充3D数据的方法）</span></h3><p>优化中的约束十分丰富（loss很多），如果使用传统的线性3DMM的表达能力十分有限，为此提出了一种增强方法。</p>
+<p>motivation：人脸大多不对称，会在对齐人脸模型时造成歧义， 原因是在两个模型的对齐过程中，它们之间的相对旋转和平移是通过最小化模型上某些参考点的误差来确定的。 不同的参考点可能导致不同的对齐结果。 由于人脸的不对称结构，没有完美的参考点。</p>
+<p>这提醒我们可以扰乱两个对齐模型之间的相对姿势以获得“代替”的对齐。通过这种方式既可以获得额外的PCA样本，因为新的对齐方式引入了新的变形目标。此外，我们可以使用一组扰动操作，包括姿态扰动、镜像、区域替换等，来增强对齐的模型。 基于生成的大量数据，我们提出了一种随机迭代算法来构建一个 3DMM，将更多的容量压缩到基的更低维度。</p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221026151445577.png" alt="image-20221026151445577"></p>
+<p><strong>数据生成和扰动具体增强步骤</strong>（从200个对齐后的面部模型开始）</p>
+<p>从 200 个对齐的面部形状模型开始，我们的数据生成和扰动过程包括以下步骤： </p>
+<p>1.使用扰动进行区域替换</p>
+<p>我们首先用其他模型替换每个模型的鼻子区域，沿俯仰角旋转扰动（在±1度内均匀采样）。 嘴部区域也以相同的方式处理。对于眼睛区域，我们在没有扰动的情况下应用替换。通过在处理过程中最小化引入的视觉缺陷来根据经验设计不同的扰动。 <strong>此步骤中使用的面部区域如图 5 所示</strong></p>
+<p>2.刚性变换扰动。 </p>
+<p>然后，我们对每个人脸模型应用刚性变换扰动，其中统一采样范围设置为：沿yam&#x2F;pitch&#x2F;roll的 ±1 度用于旋转，沿三个轴中的每一个轴的 ±1% 用于平移 , ±1% 刻度。</p>
+<p>3.镜像。 </p>
+<p>最后，我们沿模型局部坐标系对所有生成的人脸模型应用镜像。 通过这种方式，我们总共得到了超过 100,000 个人脸模型。</p>
+<p>最后效果表示，拥有大量数据生成和增强所训练出的模型不出意外有更强大的表达能力，拟合得更好。</p>
+<p>迭代增强3DMM构造算法流程：</p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221026155015588.png" alt="image-20221026155015588"></p>
+<h2><span id="33-贴图生成">3.3 贴图生成</span></h2><p><strong>这一部分参考博客里讲得很好，建议先看参考博客</strong></p>
+<p>提出了一种合成高分辨率反照率和法线贴图的混合方法。</p>
+<p>我们注意到基于超分辨率的方法无法产生高质量的眉毛细节。 另一方面，直接合成高分辨率纹理图可能会导致压倒性的细节，这也使得渲染不真实。 我们的方法在基于金字塔的参数表示的帮助下解决了这些问题。 图 9 显示了我们方法的流程。</p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221026163814008.png" alt="image-20221026163814008"></p>
+<p>第一步提取纹理（extract）</p>
+<p>第二步通过光照参数调整纹理亮度（delight）</p>
+<p>第三步将3D人脸展开到2D贴图（unwrap），512*512</p>
+<p>unwrap详情见代码，最终效果就是blender里面的展UV</p>
+<p>第四步使用<strong>区域拟合方法</strong>获得2048*2048的反射率贴图和法线贴图（regional fitting）</p>
+<p>第五步通过CNN（具体模型为<strong>pix2pix</strong>）对两个贴图进行细化（refinement）</p>
+<h3><span id="331-基于区域金字塔的参数表示构造详解regional-pyramid-bases">3.3.1 基于区域金字塔的参数表示构造详解（Regional Pyramid bases）</span></h3><p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221026214551913.png" alt="image-20221026214551913"></p>
+<p>1.先将unwrap后的贴图resize成512和2048大小的图像，最终要得到上图左边的素材；</p>
+<p>2.使用Mask将脸部分为8个区域，具体规则如下表示</p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221027111816307.png" alt="image-20221027111816307"></p>
+<p>3.每个样本有三种贴图（512-a，2048-a，2048-g），构成如下三元组</p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221027150644329.png" alt="image-20221027150644329"></p>
+<p>4.concat到一维，计算PCA，得到主成分</p>
+<p>5.将得到的主成分根据索引，scatter back回图像</p>
+<p>scatter back的操作是tensorflow的scatter_nd()函数实现的。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">scatter_nd(indices,updates,shape,name=None)</span><br></pre></td></tr></table></figure>
+
+<p>根据indices将updates散布到新的（初始为零）张量。</p>
+<h3><span id="332-区域拟合regional-fitting">3.3.2 区域拟合（Regional Fitting）</span></h3><p>由于构造了regional pyramid base，不同区域的不同类型皮肤&#x2F;头发细节可以通过高分辨率基分别保存，而低分辨率的拟合过程使算法专注于主要的面部结构，例如，形状眉毛和嘴唇。（<strong>多尺度</strong>）</p>
+<p>区域拟合分为两部分：<strong>参数拟合和高分辨率贴图合成</strong></p>
+<p><strong>参数拟合</strong></p>
+<p><strong>参数拟合部分，就是将生成头模的时候生成的粗略化的Xalb，通过最小化loss，迭代训练得到较优的Xalb。</strong></p>
+<p>参数拟合部分只使用了512的贴图</p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221027153638981.png" alt="image-20221027153638981"></p>
+<p>变量解释：</p>
+<p><strong>Loss 1</strong></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221027155829303.png" alt="image-20221027155829303">为unwrap后的图像；</p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221027155908838.png" alt="image-20221027155908838">表示将生成头模过程中生成的粗略的颜色贴图参数，与region pyramid bases逐区域相乘拟合再叠加成一张总的颜色贴图；</p>
+<p>然后计算这两张图像之间的L2，记作loss1；</p>
+<p><strong>Loss 2</strong></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221027160544519.png" alt="image-20221027160544519"></p>
+<p>主要消除8个区域边界中的伪影。做法是：通过uv_mask将整个颜色贴图分割成边界mask和非边界mask，然后分别计算颜色贴图中的边界距离和非边界距离,将这两种距离相加。记做loss2；</p>
+<p><strong>Loss 3</strong></p>
+<p>对于<img src="/2022/10/17/review_11_Hifi3dFace/image-20221027160823904.png" alt="image-20221027160823904">这个颜色贴图参数做L2正则，记作loss3；</p>
+<p>三个Loss相加 使其最小化，迭代更新颜色贴图参数Xalb，直到得到训练好的Xalb。</p>
+<p><strong>高分辨率贴图生成</strong></p>
+<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221027161429672.png" alt="image-20221027161429672"></p>
+<p>将上部分得到的较优的Xalb，分别与区域金字塔生成的A2048（2048* 2048分辨率的颜色贴图基）逐区域相乘拟合再叠加成一张总的颜色贴图，这便是区域拟合部分得到的最终的颜色贴图。<br>将上部分得到的较优的Xalb，分别与区域金字塔生成的G2048（2048* 2048分辨率的法线贴图基）逐区域相乘拟合再叠加成一张总的法线贴图，这便是区域拟合部分得到的最终的法线贴图。</p>
+<p><strong>细节生成</strong></p>
+<p>基于pix2pix模型，进出模型的分辨率是相同的，但细节上会细化；</p>
+<p>在训练过程中，首先使用面部区域替换和肤色转移将200幅高质量反照率&#x2F;法线图（来自构建3DMM的数据集）放大为4000幅图，作为训练两个网络的GT。</p>
+<p>然后，对4000幅图执行区域拟合（Regional Fitting），以获得拟合的反照率&#x2F;法线地图，这些图在训练期间用作网络的输入。只使用整个UV贴图中的面部区域来计算训练损失。</p>
+<p>类似于pix2pix，保持𝐿1损耗和GAN损耗。对于反照率细化，我们还应用总变化损失（total variation loss）来减少伪影并改善皮肤平滑度。对于法线图细化，还使用预测和GT图之间的逐像素余弦距离，以提高正常方向的精度。使用Adam优化器对网络进行75000次迭代。</p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>3DMM</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Face-to-Parameter Translation for Game Character Auto-Creation》</title>
     <url>/2022/07/24/review_10_F2P/</url>
     <content><![CDATA[<!-- toc -->
@@ -90,6 +237,70 @@
       </categories>
       <tags>
         <tag>Game Character Create</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《关于HIFI3DFACE的源码数据说明》</title>
+    <url>/2022/11/02/review_11_add/</url>
+    <content><![CDATA[<!-- toc -->
+
+
+
+<!-- tocstop -->
+
+<span id="more"></span>
+
+
+
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>3DMM</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</title>
+    <url>/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a></li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: [<a href="https://arxiv.org/abs/2203.06541">2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org)</a></p>
+<p>code: <a href="https://github.com/Jiahao-UTS/SLPT-master">Jiahao-UTS&#x2F;SLPT-master (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="出发点">出发点</span></h1><p>landmark之间的内在联系对于人脸对齐的性能有很大影响，本文重点考虑其内在联系。</p>
+<p>之前的方法有heatmap regression，Coordinate regression，有着不同方面的劣势。</p>
+<h1><span id="创新点">创新点</span></h1><p>提出了SLPT（<em>sparse local patch transformer</em>）来学习<em>query-query</em>和<em>representation-query</em>关系（自适应内在关系）；为了进一步提高SLPT的性能，提出了一种从粗到精的框架，使局部补丁进化为<strong>金字塔形补丁</strong>。</p>
+<h1><span id="做法">做法</span></h1><p>本文的SLPT并非同DETR从完整的feature map中预测坐标，而是首先从局部patch中生成每个landmark的表示特征。</p>
+<p>然后，使用一系列可学习的queries（称为<em>landmark queries</em>）来聚合表示。</p>
+<p>基于Transformer的交叉注意机制，SPLT在每一层学习一个<strong>自适应邻接矩阵</strong>。最后，通过MLP独立预测每个landmark在其对应patch中的subpixel坐标。由于使用了稀疏的局部补丁，与其他ViT相比，输入token的数量显著减少。 </p>
+<p>为了进一步提高性能，引入了从粗到精的框架，以与SLPT结合。下图为所提出的从粗到精的框架利用稀疏的局部面片实现鲁棒的人脸对齐。根据前一阶段的landmarks裁剪稀疏的局部补丁，并将其输入到同一SLPT中以预测面部landmarks。此外，patch大小随着阶段的增加而缩小，以使局部特征演变成金字塔形式。</p>
+<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/1.png" alt="1"></p>
+<p>整体框架图：</p>
+<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/2.png" alt="2"></p>
+<p>分为三部分：</p>
+<p><strong>the patch embedding &amp; structure encoding</strong></p>
+<p>不同于ViT，SLPT先根据landmark裁剪patch，再通过线性插值将patch大小调整为K*K，又使用了结构编码（可学习的参数）来补充表示。每种编码都与相邻地标（如左眼和右眼）的编码有很高的相似性。</p>
+<p>Muti-head Cross-attention（在Vision Transformer基础上的改进）：通过landmark在CNN提取出的feature map上划取局部patch，将这些feature map上的patch排成一个patch embedding，将其视为landmark的表示；紧接着对其进行结构编码（Structure Encodeing）,以获取人脸中的相对位置和patch embedding做concat。输入 landmarks queries ，通过这些MLP，独立预测每个landmark的位置。</p>
+<p><strong>inherent relation layers</strong></p>
+<p>受Transformer启发，每一层由三个块组成，即多头自注意（MSA）块、多头交叉注意（MCA）块和多层感知器（MLP）块，并且在每个块之前应用一个layer norm（LN）。 </p>
+<p><strong>prediction heads</strong></p>
+<p>预测头由一个用于规范化输入的分层模板和一个用于预测结果的MLP层组成。</p>
+<p>最右边的图像显示了不同样本的自适应固有关系。其将每个点连接到第一个内在关系层中交叉注意权重最高的点显示。</p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>Patch-based Transformer</tag>
       </tags>
   </entry>
   <entry>
@@ -159,118 +370,6 @@
         <tag>ReID</tag>
         <tag>Transformer</tag>
         <tag>Landmark</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</title>
-    <url>/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a></li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: [<a href="https://arxiv.org/abs/2203.06541">2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org)</a></p>
-<p>code: <a href="https://github.com/Jiahao-UTS/SLPT-master">Jiahao-UTS&#x2F;SLPT-master (github.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="出发点">出发点</span></h1><p>landmark之间的内在联系对于人脸对齐的性能有很大影响，本文重点考虑其内在联系。</p>
-<p>之前的方法有heatmap regression，Coordinate regression，有着不同方面的劣势。</p>
-<h1><span id="创新点">创新点</span></h1><p>提出了SLPT（<em>sparse local patch transformer</em>）来学习<em>query-query</em>和<em>representation-query</em>关系（自适应内在关系）；为了进一步提高SLPT的性能，提出了一种从粗到精的框架，使局部补丁进化为<strong>金字塔形补丁</strong>。</p>
-<h1><span id="做法">做法</span></h1><p>本文的SLPT并非同DETR从完整的feature map中预测坐标，而是首先从局部patch中生成每个landmark的表示特征。</p>
-<p>然后，使用一系列可学习的queries（称为<em>landmark queries</em>）来聚合表示。</p>
-<p>基于Transformer的交叉注意机制，SPLT在每一层学习一个<strong>自适应邻接矩阵</strong>。最后，通过MLP独立预测每个landmark在其对应patch中的subpixel坐标。由于使用了稀疏的局部补丁，与其他ViT相比，输入token的数量显著减少。 </p>
-<p>为了进一步提高性能，引入了从粗到精的框架，以与SLPT结合。下图为所提出的从粗到精的框架利用稀疏的局部面片实现鲁棒的人脸对齐。根据前一阶段的landmarks裁剪稀疏的局部补丁，并将其输入到同一SLPT中以预测面部landmarks。此外，patch大小随着阶段的增加而缩小，以使局部特征演变成金字塔形式。</p>
-<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/1.png" alt="1"></p>
-<p>整体框架图：</p>
-<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/2.png" alt="2"></p>
-<p>分为三部分：</p>
-<p><strong>the patch embedding &amp; structure encoding</strong></p>
-<p>不同于ViT，SLPT先根据landmark裁剪patch，再通过线性插值将patch大小调整为K*K，又使用了结构编码（可学习的参数）来补充表示。每种编码都与相邻地标（如左眼和右眼）的编码有很高的相似性。</p>
-<p>Muti-head Cross-attention（在Vision Transformer基础上的改进）：通过landmark在CNN提取出的feature map上划取局部patch，将这些feature map上的patch排成一个patch embedding，将其视为landmark的表示；紧接着对其进行结构编码（Structure Encodeing）,以获取人脸中的相对位置和patch embedding做concat。输入 landmarks queries ，通过这些MLP，独立预测每个landmark的位置。</p>
-<p><strong>inherent relation layers</strong></p>
-<p>受Transformer启发，每一层由三个块组成，即多头自注意（MSA）块、多头交叉注意（MCA）块和多层感知器（MLP）块，并且在每个块之前应用一个layer norm（LN）。 </p>
-<p><strong>prediction heads</strong></p>
-<p>预测头由一个用于规范化输入的分层模板和一个用于预测结果的MLP层组成。</p>
-<p>最右边的图像显示了不同样本的自适应固有关系。其将每个点连接到第一个内在关系层中交叉注意权重最高的点显示。</p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>Patch-based Transformer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《CariMe:Unpaired Caricature Generation with Multiple Exaggerations》</title>
-    <url>/2022/04/13/review_4_CariMe/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
-<li><a href="#multi-exaggeration-warper">Multi-exaggeration Warper</a><ul>
-<li><a href="#warp-reconstruction-loss">Warp Reconstruction Loss</a></li>
-<li><a href="#photo-reconstruction-loss">Photo Reconstruction Loss</a></li>
-<li><a href="#total-variation-loss">Total Variation Loss</a></li>
-<li><a href="#wrapper-total-loss">Wrapper Total Loss</a></li>
-</ul>
-</li>
-<li><a href="#styler">Styler</a><ul>
-<li><a href="#adversarial-loss">Adversarial Loss</a></li>
-<li><a href="#image-reconstruction-loss">Image Reconstruction Loss</a></li>
-<li><a href="#cycle-consistency-loss">Cycle Consistency Loss</a></li>
-<li><a href="#style-total-loss">Style Total Loss</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://ieeexplore.ieee.org/abstract/document/9454341/</a></p>
-<p>code: <a href="https://github.com/edward3862/CariMe-pytorch">edward3862&#x2F;CariMe-pytorch: Unpaired Caricature Generation with Multiple Exaggerations (TMM 2021) (github.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="任务">任务</span></h1><p>漫画生成、图像到图像的翻译、图像扭曲、风格转换</p>
-<h1><span id="出发点">出发点</span></h1><p>与一般的image-to-image translation不同，由于各种空间变形的存在，自动绘制漫画是一项更具挑战性的任务。原先的漫画生成方式都是instance-level，本文拓展到distribution-level。</p>
-<h1><span id="创新点">创新点</span></h1><p>CariMe可生成具有<strong>多重</strong>夸张和<strong>多种</strong>风格的漫画</p>
-<p>提出了一种基于变形场（deformation fields）的非成对漫画生成方法，可以有效地学习真实照片到漫画的空间变换分布。还引入了一个辅助内容编码（auxiliary content code），以帮助产生有意义的、特定于照片的夸张。</p>
-<h1><span id="做法">做法</span></h1><p>一个wrapper，一个styler</p>
-<h2><span id="multi-exaggeration-warper">Multi-exaggeration Warper</span></h2><p>分别输入一张漫画脸和真实脸，首先计算所有漫画的平均landmark（代码中的main_cal_wrap_degree.py），<img src="/2022/04/13/review_4_CariMe/image-20220414090134868.png" alt="image-20220414090134868">从每个漫画中得到，表达了该张漫画所表示的特定的夸张模式，然后该特征经过encoder获得低维向量Zw（wrap code)，与此同时引入了对应的真实人脸过另一个encoder提取Zp（auxiliary photo-specific content code)，Zp与Zw都是满足标准正态分布的向量，在测试阶段Zw是从正态分布中随机采样获取，以获得不同的变形编码。down scale和up scale操作文中的解释是给变形场去噪。</p>
-<p><img src="/2022/04/13/review_4_CariMe/image-20220414083337682.png" alt="image-20220414083337682"></p>
-<h3><span id="warp-reconstruction-loss">Warp Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414092823399.png" alt="image-20220414092823399"></p>
-<p>L1正则，旨在拉近reconstruction后的变形场与原变形场的差异。</p>
-<h3><span id="photo-reconstruction-loss">Photo Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414093327113.png" alt="image-20220414093327113"></p>
-<p>L1正则，旨在拉近reconstruction后的真实人脸与输入真实人脸的差异，来鼓励Zp保持对原真是人脸的内容和空间信息。</p>
-<h3><span id="total-variation-loss">Total Variation Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414094156859.png" alt="image-20220414094156859"></p>
-<p>用来给生成的图像去噪。</p>
-<p><a href="https://blog.csdn.net/qq_38406029/article/details/118996415">(54条消息) TV Loss详解_鬼道2022的博客-CSDN博客_tvloss公式</a></p>
-<h3><span id="wrapper-total-loss">Wrapper Total Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414094730445.png" alt="image-20220414094730445"></p>
-<h2><span id="styler">Styler</span></h2><p>旨在做风格迁移，将图像分界为content representation和style code。</p>
-<p>一个style encoder，一个context encoder，一个style decoder（AdaLIN:<a href="https://blog.csdn.net/weixin_43823140/article/details/107840916">(54条消息) 【飞桨】论文解读：U-GAT-IT: Unsupervised Generative Attentional Networks with Adaptive Layer-Instance_目楽 Leo mu的博客-CSDN博客</a>），style输出一个正态分布的style code，context输出feature map。</p>
-<p>将context输出的feature map分别进行instance normalization（styler中常用的一种像素normalization）和layer normalization，combine方式需要到代码中查看，送到AdaLIN中，其范式为：</p>
-<p><img src="/2022/04/13/review_4_CariMe/image-20220414101725797.png" alt="image-20220414101725797"></p>
-<p><img src="/2022/04/13/review_4_CariMe/image-20220414083358409.png"></p>
-<h3><span id="adversarial-loss">Adversarial Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414101755992.png" alt="image-20220414101755992"></p>
-<p>AdaLIN是基于GAN的方法，所以有adversarial loss。</p>
-<h3><span id="image-reconstruction-loss">Image Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414101914719.png" alt="image-20220414101914719"></p>
-<p>L1正则，旨在拉近reconstruction后的图像与原图像的距离。</p>
-<h3><span id="cycle-consistency-loss">Cycle Consistency Loss</span></h3><p>对生成后的图像再次进入encoder，输出特征与之前encoder输出做L1正则，这里的cycle是循环，不是cycle loss！</p>
-<p><img src="/2022/04/13/review_4_CariMe/image-20220414103236545.png" alt="image-20220414103236545"></p>
-<h3><span id="style-total-loss">Style Total Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414103409597.png" alt="image-20220414103409597"></p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>caricature</tag>
-        <tag>generation</tag>
       </tags>
   </entry>
   <entry>
@@ -362,8 +461,77 @@
         <category>paper review</category>
       </categories>
       <tags>
-        <tag>generation</tag>
         <tag>HFR</tag>
+        <tag>generation</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《CariMe:Unpaired Caricature Generation with Multiple Exaggerations》</title>
+    <url>/2022/04/13/review_4_CariMe/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#multi-exaggeration-warper">Multi-exaggeration Warper</a><ul>
+<li><a href="#warp-reconstruction-loss">Warp Reconstruction Loss</a></li>
+<li><a href="#photo-reconstruction-loss">Photo Reconstruction Loss</a></li>
+<li><a href="#total-variation-loss">Total Variation Loss</a></li>
+<li><a href="#wrapper-total-loss">Wrapper Total Loss</a></li>
+</ul>
+</li>
+<li><a href="#styler">Styler</a><ul>
+<li><a href="#adversarial-loss">Adversarial Loss</a></li>
+<li><a href="#image-reconstruction-loss">Image Reconstruction Loss</a></li>
+<li><a href="#cycle-consistency-loss">Cycle Consistency Loss</a></li>
+<li><a href="#style-total-loss">Style Total Loss</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://ieeexplore.ieee.org/abstract/document/9454341/</a></p>
+<p>code: <a href="https://github.com/edward3862/CariMe-pytorch">edward3862&#x2F;CariMe-pytorch: Unpaired Caricature Generation with Multiple Exaggerations (TMM 2021) (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="任务">任务</span></h1><p>漫画生成、图像到图像的翻译、图像扭曲、风格转换</p>
+<h1><span id="出发点">出发点</span></h1><p>与一般的image-to-image translation不同，由于各种空间变形的存在，自动绘制漫画是一项更具挑战性的任务。原先的漫画生成方式都是instance-level，本文拓展到distribution-level。</p>
+<h1><span id="创新点">创新点</span></h1><p>CariMe可生成具有<strong>多重</strong>夸张和<strong>多种</strong>风格的漫画</p>
+<p>提出了一种基于变形场（deformation fields）的非成对漫画生成方法，可以有效地学习真实照片到漫画的空间变换分布。还引入了一个辅助内容编码（auxiliary content code），以帮助产生有意义的、特定于照片的夸张。</p>
+<h1><span id="做法">做法</span></h1><p>一个wrapper，一个styler</p>
+<h2><span id="multi-exaggeration-warper">Multi-exaggeration Warper</span></h2><p>分别输入一张漫画脸和真实脸，首先计算所有漫画的平均landmark（代码中的main_cal_wrap_degree.py），<img src="/2022/04/13/review_4_CariMe/image-20220414090134868.png" alt="image-20220414090134868">从每个漫画中得到，表达了该张漫画所表示的特定的夸张模式，然后该特征经过encoder获得低维向量Zw（wrap code)，与此同时引入了对应的真实人脸过另一个encoder提取Zp（auxiliary photo-specific content code)，Zp与Zw都是满足标准正态分布的向量，在测试阶段Zw是从正态分布中随机采样获取，以获得不同的变形编码。down scale和up scale操作文中的解释是给变形场去噪。</p>
+<p><img src="/2022/04/13/review_4_CariMe/image-20220414083337682.png" alt="image-20220414083337682"></p>
+<h3><span id="warp-reconstruction-loss">Warp Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414092823399.png" alt="image-20220414092823399"></p>
+<p>L1正则，旨在拉近reconstruction后的变形场与原变形场的差异。</p>
+<h3><span id="photo-reconstruction-loss">Photo Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414093327113.png" alt="image-20220414093327113"></p>
+<p>L1正则，旨在拉近reconstruction后的真实人脸与输入真实人脸的差异，来鼓励Zp保持对原真是人脸的内容和空间信息。</p>
+<h3><span id="total-variation-loss">Total Variation Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414094156859.png" alt="image-20220414094156859"></p>
+<p>用来给生成的图像去噪。</p>
+<p><a href="https://blog.csdn.net/qq_38406029/article/details/118996415">(54条消息) TV Loss详解_鬼道2022的博客-CSDN博客_tvloss公式</a></p>
+<h3><span id="wrapper-total-loss">Wrapper Total Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414094730445.png" alt="image-20220414094730445"></p>
+<h2><span id="styler">Styler</span></h2><p>旨在做风格迁移，将图像分界为content representation和style code。</p>
+<p>一个style encoder，一个context encoder，一个style decoder（AdaLIN:<a href="https://blog.csdn.net/weixin_43823140/article/details/107840916">(54条消息) 【飞桨】论文解读：U-GAT-IT: Unsupervised Generative Attentional Networks with Adaptive Layer-Instance_目楽 Leo mu的博客-CSDN博客</a>），style输出一个正态分布的style code，context输出feature map。</p>
+<p>将context输出的feature map分别进行instance normalization（styler中常用的一种像素normalization）和layer normalization，combine方式需要到代码中查看，送到AdaLIN中，其范式为：</p>
+<p><img src="/2022/04/13/review_4_CariMe/image-20220414101725797.png" alt="image-20220414101725797"></p>
+<p><img src="/2022/04/13/review_4_CariMe/image-20220414083358409.png"></p>
+<h3><span id="adversarial-loss">Adversarial Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414101755992.png" alt="image-20220414101755992"></p>
+<p>AdaLIN是基于GAN的方法，所以有adversarial loss。</p>
+<h3><span id="image-reconstruction-loss">Image Reconstruction Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414101914719.png" alt="image-20220414101914719"></p>
+<p>L1正则，旨在拉近reconstruction后的图像与原图像的距离。</p>
+<h3><span id="cycle-consistency-loss">Cycle Consistency Loss</span></h3><p>对生成后的图像再次进入encoder，输出特征与之前encoder输出做L1正则，这里的cycle是循环，不是cycle loss！</p>
+<p><img src="/2022/04/13/review_4_CariMe/image-20220414103236545.png" alt="image-20220414103236545"></p>
+<h3><span id="style-total-loss">Style Total Loss</span></h3><p><img src="/2022/04/13/review_4_CariMe/image-20220414103409597.png" alt="image-20220414103409597"></p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>generation</tag>
+        <tag>caricature</tag>
       </tags>
   </entry>
   <entry>
@@ -806,58 +974,6 @@
       </tags>
   </entry>
   <entry>
-    <title>RTTO WEEK3</title>
-    <url>/2022/09/30/rtto_3/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#week-3"><strong>WEEK 3</strong></a><ul>
-<li><a href="#344%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">344.反转字符串（e）</a></li>
-<li><a href="#541%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2iie">541.反转字符串Ⅱ（e）</a></li>
-<li><a href="#%E5%89%91%E6%8C%87offer-05%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BCe">剑指Offer 05.替换空格（e）</a></li>
-<li><a href="#151%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%8D%95%E8%AF%8Dm">151.反转字符串中的单词（m）</a></li>
-<li><a href="#%E5%89%91%E6%8C%87offer-58-ii%E5%B7%A6%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">剑指Offer 58 - Ⅱ.左旋转字符串（e）</a></li>
-<li><a href="#28%E6%89%BE%E5%87%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8C%B9%E9%85%8D%E9%A1%B9%E7%9A%84%E4%B8%8B%E6%A0%87m">28.找出字符串中第一个匹配项的下标（m）</a></li>
-<li><a href="#459%E9%87%8D%E5%A4%8D%E7%9A%84%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2e">459.重复的子字符串（e）</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<span id="more"></span>
-
-<h1><span id="week-3"><strong>WEEK 3</strong></span></h1><h2><span id="344反转字符串e">344.反转字符串（e）</span></h2><p> 前一半后一半做个swap，没啥好说的。</p>
-<h2><span id="541反转字符串iie">541.反转字符串Ⅱ（e）</span></h2><p>每次遍历2k的距离，如果有k个字符（size能容纳当前遍历的k个字符），则reverse前k个，否则，反转全部字符。</p>
-<h2><span id="剑指offer-05替换空格e">剑指Offer 05.替换空格（e）</span></h2><p>简单遍历改字符需要进行字符串空间上的扩容；</p>
-<p>1.首先遍历一遍原字符串计算出所含空格的个数；</p>
-<p>2.resize原字符串，+2*count；</p>
-<p>3.使用双指针法，j指向原字符串最后一位，i指向扩充后字符串最后一位，同时向前遍历新字符串；若碰到非空位置，则更新非空字符在新字符串中的位置；若碰到空位置，此时的i即对应新字符串中0的位置，前一位为2，前前位为%；</p>
-<h2><span id="151反转字符串中的单词m">151.反转字符串中的单词（m）</span></h2><p>两个关键操作：字符串逆置reverse；去除多余空格，保证两个单词之间仅存在一个空格；</p>
-<p>1.将原字符串去除多余空格；</p>
-<p>2.将去重后的原字符串整个逆置；</p>
-<p>3.遍历逆置后的字符串，碰到空格则将空格前的字符逆置；</p>
-<h2><span id="剑指offer-58-ii左旋转字符串e">剑指Offer 58 - Ⅱ.左旋转字符串（e）</span></h2><p>默认不开辟额外空间；</p>
-<p>reverse前n个；</p>
-<p>reverse剩下的；</p>
-<p>reverse全部的；</p>
-<h2><span id="28找出字符串中第一个匹配项的下标m">28.找出字符串中第一个匹配项的下标（m）</span></h2><p>KMP算法</p>
-<p><a href="https://programmercarl.com/0028.%E5%AE%9E%E7%8E%B0strStr.html">代码随想录 (programmercarl.com)</a></p>
-<h2><span id="459重复的子字符串e">459.重复的子字符串（e）</span></h2><p>解法一：移动匹配</p>
-<p>任何一个重复子字符串构成的字符串，其前半部分和后半部分都是相等的；</p>
-<p>那么s+s中就一定存在一个新s；</p>
-<p>掐头去尾（erase去首尾字母），这样才能找到拼接而成的新s，而不是原本头尾的老s；</p>
-<p>若存在新s，则返回true，否则false；</p>
-<p>解法二：KMP法</p>
-<p>核心：最长相等前后缀不包含的子串就是最小重复子串</p>
-]]></content>
-      <categories>
-        <category>RTTO</category>
-      </categories>
-      <tags>
-        <tag>RTTO</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>RTTO WEEK1</title>
     <url>/2022/09/19/rtto_1/</url>
     <content><![CDATA[<!-- toc -->
@@ -911,6 +1027,84 @@
 <h2><span id="142环形链表iim">142.环形链表Ⅱ（m）</span></h2><p>分两步：判断是否有环；若有环判断环的出口；</p>
 <p>是否有环：快慢指针，快指针一次移动两个，慢指针一次移动一个，若有环快慢指针会在不空的节点上相遇；</p>
 <p>环的出口：从头结点出发一个指针，从相遇节点也出发一个指针，这两个指针每次只走一个节点， 那么当这两个指针相遇的时候就是环形入口的节点（这步有点绕）</p>
+]]></content>
+      <categories>
+        <category>RTTO</category>
+      </categories>
+      <tags>
+        <tag>RTTO</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RTTO WEEK3</title>
+    <url>/2022/09/30/rtto_3/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#week-3"><strong>WEEK 3</strong></a><ul>
+<li><a href="#344%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">344.反转字符串（e）</a></li>
+<li><a href="#541%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2iie">541.反转字符串Ⅱ（e）</a></li>
+<li><a href="#%E5%89%91%E6%8C%87offer-05%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BCe">剑指Offer 05.替换空格（e）</a></li>
+<li><a href="#151%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%8D%95%E8%AF%8Dm">151.反转字符串中的单词（m）</a></li>
+<li><a href="#%E5%89%91%E6%8C%87offer-58-ii%E5%B7%A6%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">剑指Offer 58 - Ⅱ.左旋转字符串（e）</a></li>
+<li><a href="#28%E6%89%BE%E5%87%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8C%B9%E9%85%8D%E9%A1%B9%E7%9A%84%E4%B8%8B%E6%A0%87m">28.找出字符串中第一个匹配项的下标（m）</a></li>
+<li><a href="#459%E9%87%8D%E5%A4%8D%E7%9A%84%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2e">459.重复的子字符串（e）</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="week-3"><strong>WEEK 3</strong></span></h1><h2><span id="344反转字符串e">344.反转字符串（e）</span></h2><p> 前一半后一半做个swap，没啥好说的。</p>
+<h2><span id="541反转字符串iie">541.反转字符串Ⅱ（e）</span></h2><p>每次遍历2k的距离，如果有k个字符（size能容纳当前遍历的k个字符），则reverse前k个，否则，反转全部字符。</p>
+<h2><span id="剑指offer-05替换空格e">剑指Offer 05.替换空格（e）</span></h2><p>简单遍历改字符需要进行字符串空间上的扩容；</p>
+<p>1.首先遍历一遍原字符串计算出所含空格的个数；</p>
+<p>2.resize原字符串，+2*count；</p>
+<p>3.使用双指针法，j指向原字符串最后一位，i指向扩充后字符串最后一位，同时向前遍历新字符串；若碰到非空位置，则更新非空字符在新字符串中的位置；若碰到空位置，此时的i即对应新字符串中0的位置，前一位为2，前前位为%；</p>
+<h2><span id="151反转字符串中的单词m">151.反转字符串中的单词（m）</span></h2><p>两个关键操作：字符串逆置reverse；去除多余空格，保证两个单词之间仅存在一个空格；</p>
+<p>1.将原字符串去除多余空格；</p>
+<p>2.将去重后的原字符串整个逆置；</p>
+<p>3.遍历逆置后的字符串，碰到空格则将空格前的字符逆置；</p>
+<h2><span id="剑指offer-58-ii左旋转字符串e">剑指Offer 58 - Ⅱ.左旋转字符串（e）</span></h2><p>默认不开辟额外空间；</p>
+<p>reverse前n个；</p>
+<p>reverse剩下的；</p>
+<p>reverse全部的；</p>
+<h2><span id="28找出字符串中第一个匹配项的下标m">28.找出字符串中第一个匹配项的下标（m）</span></h2><p>KMP算法</p>
+<p><a href="https://programmercarl.com/0028.%E5%AE%9E%E7%8E%B0strStr.html">代码随想录 (programmercarl.com)</a></p>
+<h2><span id="459重复的子字符串e">459.重复的子字符串（e）</span></h2><p>解法一：移动匹配</p>
+<p>任何一个重复子字符串构成的字符串，其前半部分和后半部分都是相等的；</p>
+<p>那么s+s中就一定存在一个新s；</p>
+<p>掐头去尾（erase去首尾字母），这样才能找到拼接而成的新s，而不是原本头尾的老s；</p>
+<p>若存在新s，则返回true，否则false；</p>
+<p>解法二：KMP法</p>
+<p>核心：最长相等前后缀不包含的子串就是最小重复子串</p>
+]]></content>
+      <categories>
+        <category>RTTO</category>
+      </categories>
+      <tags>
+        <tag>RTTO</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RTTO WEEK4</title>
+    <url>/2022/10/19/rtto_4/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#week-4"><strong>WEEK 4</strong></a><ul>
+<li><a href="#27%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0e">27.移除元素（e）</a></li>
+<li><a href="#344%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">344.反转字符串（e）</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="week-4"><strong>WEEK 4</strong></span></h1><h2><span id="27移除元素e">27.移除元素（e）</span></h2><p>slow用于赋值符合条件的fast位置数据，fast碰到不与val相等的则赋值，碰到与val相等的则++</p>
+<h2><span id="344反转字符串e">344.反转字符串（e）</span></h2><p>上周做过了</p>
 ]]></content>
       <categories>
         <category>RTTO</category>
@@ -1343,179 +1537,6 @@
       </categories>
       <tags>
         <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《High-Fidelity 3D Digital Human Head Creation from RGB-D Selfies》</title>
-    <url>/2022/10/17/review_11_Hifi3dFace/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#1-%E5%AE%9E%E7%8E%B0%E6%95%88%E6%9E%9C">1. 实现效果</a></li>
-<li><a href="#2-%E5%85%A8%E9%83%A8%E7%AE%97%E6%B3%95%E6%80%BB%E8%A7%88">2. 全部算法总览</a><ul>
-<li><a href="#21-%E6%95%B0%E6%8D%AE%E9%9B%86">2.1 数据集</a></li>
-<li><a href="#22-%E7%9B%AE%E6%A0%87">2.2 目标</a></li>
-<li><a href="#23-%E7%94%A8%E6%88%B7%E8%BE%93%E5%85%A5%E6%95%B0%E6%8D%AE">2.3 用户输入数据</a></li>
-<li><a href="#24-%E5%A4%84%E7%90%86%E7%AE%A1%E7%BA%BF">2.4 处理管线</a></li>
-</ul>
-</li>
-<li><a href="#3-%E5%85%B7%E4%BD%93%E7%AE%97%E6%B3%95">3. 具体算法</a><ul>
-<li><a href="#31-%E5%B8%A7%E9%80%89%E6%8B%A9">3.1 帧选择</a><ul>
-<li><a href="#311-%E7%B2%97%E7%AD%9B%E5%92%8C%E9%A2%84%E5%A4%84%E7%90%86">3.1.1 粗筛和预处理</a></li>
-<li><a href="#312-%E5%B8%A7%E9%80%89%E6%8B%A9">3.1.2 帧选择</a></li>
-</ul>
-</li>
-<li><a href="#32-%E5%87%A0%E4%BD%95%E7%94%9F%E6%88%90">3.2 几何生成</a><ul>
-<li><a href="#321-%E5%88%9D%E5%A7%8B%E6%A8%A1%E5%9E%8B%E5%AE%9A%E4%B9%89">3.2.1 初始模型定义</a></li>
-<li><a href="#322-%E4%BC%98%E5%8C%96%E6%A1%86%E6%9E%B6">3.2.2 优化框架</a></li>
-<li><a href="#323-%E5%8F%AF%E5%BD%A2%E5%8F%98%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%A2%9E%E5%BC%BA%E6%89%A9%E5%85%853d%E6%95%B0%E6%8D%AE%E7%9A%84%E6%96%B9%E6%B3%95">3.2.3 可形变模型的增强（扩充3D数据的方法）</a></li>
-</ul>
-</li>
-<li><a href="#33-%E8%B4%B4%E5%9B%BE%E7%94%9F%E6%88%90">3.3 贴图生成</a><ul>
-<li><a href="#331-%E5%9F%BA%E4%BA%8E%E5%8C%BA%E5%9F%9F%E9%87%91%E5%AD%97%E5%A1%94%E7%9A%84%E5%8F%82%E6%95%B0%E8%A1%A8%E7%A4%BA%E6%9E%84%E9%80%A0%E8%AF%A6%E8%A7%A3regional-pyramid-bases">3.3.1 基于区域金字塔的参数表示构造详解（Regional Pyramid bases）</a></li>
-<li><a href="#332-%E5%8C%BA%E5%9F%9F%E6%8B%9F%E5%90%88regional-fitting">3.3.2 区域拟合（Regional Fitting）</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content_ICCV_2019/papers/Shi_Face-to-Parameter_Translation_for_Game_Character_Auto-Creation_ICCV_2019_paper.pdf">https://arxiv.org/abs/2010.05562</a></p>
-<p>code: <a href="https://github.com/tencent-ailab/hifi3dface">tencent-ailab&#x2F;hifi3dface: Code and data for our paper “High-Fidelity 3D Digital Human Creation from RGB-D Selfies”. (github.com)</a></p>
-<p>ref link:<a href="https://blog.csdn.net/jiafeier_555/article/details/125428388">https://blog.csdn.net/jiafeier_555/article/details/125428388</a></p>
-<span id="more"></span>
-
-<h1><span id="1-实现效果">1. 实现效果</span></h1><p>将用户的RGB-D自拍作为输入，自动生成高保真、可装配的头部模型，以及高分辨率的纹理图和法线图。</p>
-<h1><span id="2-全部算法总览">2. 全部算法总览</span></h1><h2><span id="21-数据集">2.1 数据集</span></h2><p>包含各100名男女性的3D人脸，20481个顶点和40832个面片，每个模型对应2K分辨率的纹理图和法线图。</p>
-<h2><span id="22-目标">2.2 目标</span></h2><p>用RGB-D自拍数据捕捉高保真用户的面部几何形状和反射率，该数据进一步用于创建和渲染全头、逼真的数字人类。<strong>对于几何建模，我们使用3DMM参数来表示一个面，因为它对低级别的输入数据更鲁棒，并且与基于变形的表示形式相比，网格质量更可控</strong>。对于纹理建模，我们合成了2K分辨率的反照率图和法线图，而不考虑输入的RGB-D分辨率。 </p>
-<h2><span id="23-用户输入数据">2.3 用户输入数据</span></h2><p>需要通过带深度相机的手机设备采集RGB-D数据，腾讯其有个采集软件，拍摄界面将引导用户连续向左、向右、向上和向后中间旋转头部。整个采集过程不到10秒，总共采集了200-300帧RGB-D图像，分辨率为640×480。用于计算的面部区域被裁剪（并调整大小）为300×300。相机的固有参数直接从设备读取。 </p>
-<h2><span id="24-处理管线">2.4 处理管线</span></h2><p>我们首先使用自动帧选择算法来选择覆盖用户所有侧面的几个高质量帧（第4节）。然后，使用所选帧中检测到的面部标志计算初始3DMM模型拟合（第5.1节）。从初始拟合开始，应用基于可差分渲染器的多视图RGB-D约束优化（第5.2节）来求解3DMM参数以及照明参数和姿势。根据估计的参数，合成高分辨率反照率法向图（第6节）。最后，可以创建和渲染高质量、逼真的全头像（第7节）。</p>
-<h1><span id="3-具体算法">3. 具体算法</span></h1><h2><span id="31-帧选择">3.1 帧选择</span></h2><p>通常从用户获取200-300帧。为了提高效率和健壮性，我们开发了一个健壮的帧选择程序，以选择几个高质量的帧进行进一步处理，该程序同时考虑了视图覆盖和数据质量。如图2所示，该过程包括如下所述的两个阶段。 </p>
-<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221023165135058.png" alt="image-20221023165135058"></p>
-<h3><span id="311-粗筛和预处理">3.1.1 粗筛和预处理</span></h3><p>首先用了个face landmark的检测（在300W-LP数据集上训练的MobileNet）来检测2D landmark；</p>
-<p>然后，可以使用PnP算法利用模板3D面部模型上的2D地标和3D关键点之间的对应关系有效地计算每个帧的粗略头部姿势；</p>
-<p>使用2D地标和粗略的头部姿势可以很容易地识别和筛选出具有极端无效姿势或闭眼张开嘴表情的帧。我们根据姿势将其余帧分类为组：前、左、右和上；</p>
-<h3><span id="312-帧选择">3.1.2 帧选择</span></h3><p>对于每组，我们进一步根据两个标准选择一个帧：图像质量和刚性。为了测量帧的图像质量，我们计算拉普拉斯高斯（LoG）滤波器响应，并将方差用作运动模糊分数（分数越大的图像越清晰）。首先基于前面组中的运动模糊分数来选择前面帧。然后，我们利用深度数据计算其他组中的每个帧与正面之间的刚度。具体而言，使用深度数据将每个帧的检测到的2D地标从2D提升到3D。请注意，遮挡的界标会根据帧所属的组自动移除，例如，对于左侧组中的帧，面部右侧的界标将被移除。 </p>
-<h2><span id="32-几何生成">3.2 几何生成</span></h2><h3><span id="321-初始模型定义">3.2.1 初始模型定义</span></h3><p>使用基于 PCA 的线性 3DMM 进行参数建模。 人脸模型的形状和反照率纹理表示为：</p>
-<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025151737274.png" alt="image-20221025151737274"></p>
-<p>其中 s¯ 是平均 3D 人脸形状模型的向量格式，𝑆 是形状身份基础，x𝑠ℎ𝑝 是要估计的相应身份参数向量，a¯ 是平均反照率图的向量格式，𝐴 是反照率图基础颜色，x𝑎𝑙𝑏是要估计的相关反照率参数向量。</p>
-<p>使用岭回归 ，可以通过将形状模型投影到每个输入图像上来提取部分纹理图。 使用从每个视图的地标派生的预定义蒙版（见图 3），然后使用拉普拉斯金字塔混合将部分纹理贴图混合成完整的纹理贴图。（<strong>unwarp操作</strong>） 初始反照率参数可以通过另一个岭回归来获得，以拟合混合纹理图。</p>
-<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025153015905.png" alt="image-20221025153015905"></p>
-<h3><span id="322-优化框架">3.2.2 优化框架</span></h3><p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025153218398.png" alt="image-20221025153218398"></p>
-<p>优化框架： 要解决的参数包括：用户的 3DMM 参数 x𝑠ℎ𝑝 和 x𝑎𝑙𝑏，每个视图的照明参数 x𝑙𝑖𝑔ℎ𝑡 和姿势 x𝑝𝑜𝑠𝑒。 约束包括：关键点损失𝐿𝑙𝑎𝑛、RGB 照片损失𝐿𝑟𝑔𝑏、深度损失𝐿𝑑𝑒𝑝和身份感知损失𝐿𝑖𝑑。</p>
-<p>优化目标：<img src="/2022/10/17/review_11_Hifi3dFace/image-20221025155915049.png" alt="image-20221025155915049"></p>
-<p>对于每个用户的两个3DMM系数是不同的，而光照系数和姿态系数对每个用户都通用。</p>
-<p>目标Loss：</p>
-<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025160858227.png" alt="image-20221025160858227"></p>
-<p>具体Loss：</p>
-<p><strong>RGB Photo Loss</strong>：L2，输入的RGB图像和渲染的RGB图像做L2</p>
-<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025160959267.png" alt="image-20221025160959267"></p>
-<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025161500643.png" alt="image-20221025161500643"></p>
-<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025161600812.png" alt="image-20221025161600812"></p>
-<p>（下图是真实RGB，上图是mesh和贴图在原图上做渲染后的图像）</p>
-<p><strong>Depth Loss</strong>：L2，ρ是个截断函数，用来限定L2的范围；</p>
-<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025162833565.png" alt="image-20221025162833565"></p>
-<p><strong>Identity Perceptual Loss</strong>：L2，过VGGFace的fc7后的特征做感知loss；</p>
-<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025163251941.png" alt="image-20221025163251941"></p>
-<p><strong>Landmark Loss</strong>：每个lankmark做L2（不同位置权重不一样）</p>
-<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221025163440791.png" alt="image-20221025163440791"></p>
-<p>Regularization：为了确保重建的合理性，对形状和纹理参数应用正则化</p>
-<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221026111116994.png" alt="image-20221026111116994"></p>
-<h3><span id="323-可形变模型的增强扩充3d数据的方法">3.2.3 可形变模型的增强（扩充3D数据的方法）</span></h3><p>优化中的约束十分丰富（loss很多），如果使用传统的线性3DMM的表达能力十分有限，为此提出了一种增强方法。</p>
-<p>motivation：人脸大多不对称，会在对齐人脸模型时造成歧义， 原因是在两个模型的对齐过程中，它们之间的相对旋转和平移是通过最小化模型上某些参考点的误差来确定的。 不同的参考点可能导致不同的对齐结果。 由于人脸的不对称结构，没有完美的参考点。</p>
-<p>这提醒我们可以扰乱两个对齐模型之间的相对姿势以获得“代替”的对齐。通过这种方式既可以获得额外的PCA样本，因为新的对齐方式引入了新的变形目标。此外，我们可以使用一组扰动操作，包括姿态扰动、镜像、区域替换等，来增强对齐的模型。 基于生成的大量数据，我们提出了一种随机迭代算法来构建一个 3DMM，将更多的容量压缩到基的更低维度。</p>
-<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221026151445577.png" alt="image-20221026151445577"></p>
-<p><strong>数据生成和扰动具体增强步骤</strong>（从200个对齐后的面部模型开始）</p>
-<p>从 200 个对齐的面部形状模型开始，我们的数据生成和扰动过程包括以下步骤： </p>
-<p>1.使用扰动进行区域替换</p>
-<p>我们首先用其他模型替换每个模型的鼻子区域，沿俯仰角旋转扰动（在±1度内均匀采样）。 嘴部区域也以相同的方式处理。对于眼睛区域，我们在没有扰动的情况下应用替换。通过在处理过程中最小化引入的视觉缺陷来根据经验设计不同的扰动。 <strong>此步骤中使用的面部区域如图 5 所示</strong></p>
-<p>2.刚性变换扰动。 </p>
-<p>然后，我们对每个人脸模型应用刚性变换扰动，其中统一采样范围设置为：沿yam&#x2F;pitch&#x2F;roll的 ±1 度用于旋转，沿三个轴中的每一个轴的 ±1% 用于平移 , ±1% 刻度。</p>
-<p>3.镜像。 </p>
-<p>最后，我们沿模型局部坐标系对所有生成的人脸模型应用镜像。 通过这种方式，我们总共得到了超过 100,000 个人脸模型。</p>
-<p>最后效果表示，拥有大量数据生成和增强所训练出的模型不出意外有更强大的表达能力，拟合得更好。</p>
-<p>迭代增强3DMM构造算法流程：</p>
-<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221026155015588.png" alt="image-20221026155015588"></p>
-<h2><span id="33-贴图生成">3.3 贴图生成</span></h2><p><strong>这一部分参考博客里讲得很好，建议先看参考博客</strong></p>
-<p>提出了一种合成高分辨率反照率和法线贴图的混合方法。</p>
-<p>我们注意到基于超分辨率的方法无法产生高质量的眉毛细节。 另一方面，直接合成高分辨率纹理图可能会导致压倒性的细节，这也使得渲染不真实。 我们的方法在基于金字塔的参数表示的帮助下解决了这些问题。 图 9 显示了我们方法的流程。</p>
-<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221026163814008.png" alt="image-20221026163814008"></p>
-<p>第一步提取纹理（extract）</p>
-<p>第二步通过光照参数调整纹理亮度（delight）</p>
-<p>第三步将3D人脸展开到2D贴图（unwrap），512*512</p>
-<p>unwrap详情见代码，最终效果就是blender里面的展UV</p>
-<p>第四步使用<strong>区域拟合方法</strong>获得2048*2048的反射率贴图和法线贴图（regional fitting）</p>
-<p>第五步通过CNN（具体模型为<strong>pix2pix</strong>）对两个贴图进行细化（refinement）</p>
-<h3><span id="331-基于区域金字塔的参数表示构造详解regional-pyramid-bases">3.3.1 基于区域金字塔的参数表示构造详解（Regional Pyramid bases）</span></h3><p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221026214551913.png" alt="image-20221026214551913"></p>
-<p>1.先将unwrap后的贴图resize成512和2048大小的图像，最终要得到上图左边的素材；</p>
-<p>2.使用Mask将脸部分为8个区域，具体规则如下表示</p>
-<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221027111816307.png" alt="image-20221027111816307"></p>
-<p>3.每个样本有三种贴图（512-a，2048-a，2048-g），构成如下三元组</p>
-<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221027150644329.png" alt="image-20221027150644329"></p>
-<p>4.concat到一维，计算PCA，得到主成分</p>
-<p>5.将得到的主成分根据索引，scatter back回图像</p>
-<p>scatter back的操作是tensorflow的scatter_nd()函数实现的。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">scatter_nd(indices,updates,shape,name=None)</span><br></pre></td></tr></table></figure>
-
-<p>根据indices将updates散布到新的（初始为零）张量。</p>
-<h3><span id="332-区域拟合regional-fitting">3.3.2 区域拟合（Regional Fitting）</span></h3><p>由于构造了regional pyramid base，不同区域的不同类型皮肤&#x2F;头发细节可以通过高分辨率基分别保存，而低分辨率的拟合过程使算法专注于主要的面部结构，例如，形状眉毛和嘴唇。（<strong>多尺度</strong>）</p>
-<p>区域拟合分为两部分：<strong>参数拟合和高分辨率贴图合成</strong></p>
-<p><strong>参数拟合</strong></p>
-<p><strong>参数拟合部分，就是将生成头模的时候生成的粗略化的Xalb，通过最小化loss，迭代训练得到较优的Xalb。</strong></p>
-<p>参数拟合部分只使用了512的贴图</p>
-<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221027153638981.png" alt="image-20221027153638981"></p>
-<p>变量解释：</p>
-<p><strong>Loss 1</strong></p>
-<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221027155829303.png" alt="image-20221027155829303">为unwrap后的图像；</p>
-<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221027155908838.png" alt="image-20221027155908838">表示将生成头模过程中生成的粗略的颜色贴图参数，与region pyramid bases逐区域相乘拟合再叠加成一张总的颜色贴图；</p>
-<p>然后计算这两张图像之间的L2，记作loss1；</p>
-<p><strong>Loss 2</strong></p>
-<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221027160544519.png" alt="image-20221027160544519"></p>
-<p>主要消除8个区域边界中的伪影。做法是：通过uv_mask将整个颜色贴图分割成边界mask和非边界mask，然后分别计算颜色贴图中的边界距离和非边界距离,将这两种距离相加。记做loss2；</p>
-<p><strong>Loss 3</strong></p>
-<p>对于<img src="/2022/10/17/review_11_Hifi3dFace/image-20221027160823904.png" alt="image-20221027160823904">这个颜色贴图参数做L2正则，记作loss3；</p>
-<p>三个Loss相加 使其最小化，迭代更新颜色贴图参数Xalb，直到得到训练好的Xalb。</p>
-<p><strong>高分辨率贴图生成</strong></p>
-<p><img src="/2022/10/17/review_11_Hifi3dFace/image-20221027161429672.png" alt="image-20221027161429672"></p>
-<p>将上部分得到的较优的Xalb，分别与区域金字塔生成的A2048（2048* 2048分辨率的颜色贴图基）逐区域相乘拟合再叠加成一张总的颜色贴图，这便是区域拟合部分得到的最终的颜色贴图。<br>将上部分得到的较优的Xalb，分别与区域金字塔生成的G2048（2048* 2048分辨率的法线贴图基）逐区域相乘拟合再叠加成一张总的法线贴图，这便是区域拟合部分得到的最终的法线贴图。</p>
-<p><strong>细节生成</strong></p>
-<p>基于pix2pix模型，进出模型的分辨率是相同的，但细节上会细化；</p>
-<p>在训练过程中，首先使用面部区域替换和肤色转移将200幅高质量反照率&#x2F;法线图（来自构建3DMM的数据集）放大为4000幅图，作为训练两个网络的GT。</p>
-<p>然后，对4000幅图执行区域拟合（Regional Fitting），以获得拟合的反照率&#x2F;法线地图，这些图在训练期间用作网络的输入。只使用整个UV贴图中的面部区域来计算训练损失。</p>
-<p>类似于pix2pix，保持𝐿1损耗和GAN损耗。对于反照率细化，我们还应用总变化损失（total variation loss）来减少伪影并改善皮肤平滑度。对于法线图细化，还使用预测和GT图之间的逐像素余弦距离，以提高正常方向的精度。使用Adam优化器对网络进行75000次迭代。</p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>3DMM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RTTO WEEK4</title>
-    <url>/2022/10/19/rtto_4/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#week-4"><strong>WEEK 4</strong></a><ul>
-<li><a href="#27%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0e">27.移除元素（e）</a></li>
-<li><a href="#344%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">344.反转字符串（e）</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<span id="more"></span>
-
-<h1><span id="week-4"><strong>WEEK 4</strong></span></h1><h2><span id="27移除元素e">27.移除元素（e）</span></h2><p>slow用于赋值符合条件的fast位置数据，fast碰到不与val相等的则赋值，碰到与val相等的则++</p>
-<h2><span id="344反转字符串e">344.反转字符串（e）</span></h2><p>上周做过了</p>
-]]></content>
-      <categories>
-        <category>RTTO</category>
-      </categories>
-      <tags>
-        <tag>RTTO</tag>
       </tags>
   </entry>
 </search>
