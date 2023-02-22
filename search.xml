@@ -93,6 +93,75 @@
       </tags>
   </entry>
   <entry>
+    <title>《Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer》</title>
+    <url>/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#visual-context-transformer-encoder">Visual Context Transformer Encoder</a></li>
+<li><a href="#pose-guided-feature-aggregation">Pose-guided Feature Aggregation</a></li>
+<li><a href="#part-view-based-transformer-decoder">Part View Based Transformer Decoder</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://arxiv.org/pdf/2112.02466v2.pdf</a></p>
+<p>code: <a href="https://github.com/WangTaoAs/PFD_Net">WangTaoAs&#x2F;PFD_Net: This is Official implementation for “Pose-guided Feature Disentangling for Occluded Person Re-Identification Based on Transformer” in AAAI2022 (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="出发点">出发点</span></h1><p>存在遮挡的行人重识别（<em>Occluded Person Re-identification</em>），由于遮挡的存在，各种噪声被引入，导致特征不匹配；遮挡可能具有与人体部位相似的特征，导致特征学习失败。</p>
+<p>前人的方法有：使用姿势信息指导特征空间将全局特征划分为局部特征（缺点是需要严格的特征空间对齐）；使用基于图的方法建模拓扑信息（缺点是容易陷入上述的第二种问题）。</p>
+<h1><span id="创新点">创新点</span></h1><p>本文探索了在没有空间对齐的情况下，将附加姿势信息与Transformer相结合的可能性。其使用姿势信息对语义成分（如人体的关节部位）进行分解，并对非遮挡的部位进行选择性匹配；设计了一种<em>Pose-guided Push Loss</em>。</p>
+<h1><span id="做法">做法</span></h1><p>整体框架图：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103047158.png" alt="image-20220329103047158"></p>
+<h2><span id="visual-context-transformer-encoder">Visual Context Transformer Encoder</span></h2><p>首先需要对输入图像划分为固定大小的N块patch，步距大小定义为S，每块patch的尺度定义为P，patch个数N为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103958451.png" alt="image-20220329103958451"></p>
+<p>当S等于P时，划分出来的patch就不重叠；当S&lt;P时，patch重叠，可以减少空间领域信息的丢失。</p>
+<p>将这些patch通过线形层生成一个序列输入transformer encoder，concat一组可训练的<em>Position Encoding</em>，以及<em>Camera Information Embedding</em>（表示该图像所属的摄像头视角信息，标签给定的，相同视角图像有一样的值），最终的输入序列定义为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329104849953.png" alt="image-20220329104849953"></p>
+<p>最后通过Transformer Encoder输出分为两部分的特征，一部分为global feature，一部分为part feature。为进一步区分人体各个部位的特征，part feature又分为K组，每一组都与global feature做cancat送入shared transformer layer学习这些K组融合特征。</p>
+<p><strong>Encoder Supervision Loss</strong></p>
+<p>选用交叉熵损失作为identity loss以及triplet loss来作为这部分的loss：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329110809342.png" alt="image-20220329110809342"></p>
+<h2><span id="pose-guided-feature-aggregation">Pose-guided Feature Aggregation</span></h2><p>被遮挡的人体图像的身体信息较少，而非身体部位的信息可能不明确。本文使用<em>pose estimator</em> 从图像中提取landmark信息。</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112105052.png" alt="image-20220329112105052"></p>
+<p><strong>Pose Estimation</strong></p>
+<p>给定一张图像，估计器从中提取M个landmark，然后利用这些landmark生成一组heatmap <strong>H</strong>，每张heatmap都被下采样到（H&#x2F;4）*（W&#x2F;4），其中最大的response point对应一个joint point，设置了一个阈值γ来滤除高置信度和低置信度的landmark。滤除出的剩余landmark的heatmap并不是将其设为0，而是赋值0&#x2F;1，热图标签可以形式化为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112535277.png" alt="image-20220329112535277"></p>
+<p>ci定义为第i个landmark的置信度分数。</p>
+<p><strong>Pose-guided Feature Aggregation</strong></p>
+<p>将之前的分组数设为K&#x3D;M，使其等于landmark的数量。将生成的一组heatmap <strong>H</strong>后接一层FC，使其尺寸与group part local feature（fgp）相同，得到<strong>H‘</strong>。将<strong>H‘</strong>与<strong>fgp</strong> mutiply element-wisely（向量对应元素相乘，将heatmap的注意力附加在fgp上）获得<strong>P</strong>，其目的是为了从fgp中找到对身体某个部位贡献最大的信息部分。</p>
+<p>为此，本文开发了一种匹配和分布机制，将part local feature和pose-guided feature视为一组相似性度量问题，最终获取一个pose-guided feature集合<strong>S</strong>。</p>
+<p>对于每个<strong>Pi</strong>,在fgp中找到最相似的特征，即<strong>找寻融合了heatmap注意力的序列和原始局部特征的最近距离的局部特征</strong>，以选出优质的局部特征，用余弦距离，形式化定义为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115119956.png" alt="image-20220329115119956"></p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115132888.png" alt="image-20220329115132888"></p>
+<h2><span id="part-view-based-transformer-decoder">Part View Based Transformer Decoder</span></h2><p>将heatmap和fen做点乘送入Decoder学习一系列learnable semantic views以学习有区别的身体部分。其实整个框架的大体思路为一张图片走两路，一路分patch进transformer encoder，一路特征点检测生成heatmap走transformer decoder，再将这两部分的输出进行match，可以得到view feature，取高置信度的view feature采样成与fgb，fgp相同尺寸算triplet loss，再将所有的view feature采样做<em>Pose Guided Push Loss</em>。</p>
+<p><strong>Pose-View Matching Module</strong></p>
+<p>此部分计算patch view和通过Pose-guided Feature Aggregation得到的Set之间的相似度，来获得最终的view feature，用余弦距离，形式化定义为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329151559098.png" alt="image-20220329151559098"></p>
+<p>之前的heatmap通过阈值打好了0&#x2F;1标签，最终的view feature即可通过heatmap标签分为两类。在上述距离置信度较高的view feature中取heatmap label为1的；在置信度较低的view feature中取heatmap label为0的。这样的操作会产生可变长度，需要固定长度补0操作。</p>
+<p><strong>Decoder Supervision Loss</strong></p>
+<p>提出的Pose-guided Push Loss：</p>
+<p>余弦距离：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152506162.png" alt="image-20220329152506162"></p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152517889.png" alt="image-20220329152517889"></p>
+<p>整体的loss定义：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329153030797.png" alt="image-20220329153030797"></p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>ReID</tag>
+        <tag>Transformer</tag>
+        <tag>Landmark</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《High-Fidelity 3D Digital Human Head Creation from RGB-D Selfies》</title>
     <url>/2022/10/17/review_11_Hifi3dFace/</url>
     <content><![CDATA[<!-- toc -->
@@ -280,75 +349,6 @@
       </categories>
       <tags>
         <tag>Patch-based Transformer</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer》</title>
-    <url>/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
-<li><a href="#visual-context-transformer-encoder">Visual Context Transformer Encoder</a></li>
-<li><a href="#pose-guided-feature-aggregation">Pose-guided Feature Aggregation</a></li>
-<li><a href="#part-view-based-transformer-decoder">Part View Based Transformer Decoder</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://arxiv.org/pdf/2112.02466v2.pdf</a></p>
-<p>code: <a href="https://github.com/WangTaoAs/PFD_Net">WangTaoAs&#x2F;PFD_Net: This is Official implementation for “Pose-guided Feature Disentangling for Occluded Person Re-Identification Based on Transformer” in AAAI2022 (github.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="出发点">出发点</span></h1><p>存在遮挡的行人重识别（<em>Occluded Person Re-identification</em>），由于遮挡的存在，各种噪声被引入，导致特征不匹配；遮挡可能具有与人体部位相似的特征，导致特征学习失败。</p>
-<p>前人的方法有：使用姿势信息指导特征空间将全局特征划分为局部特征（缺点是需要严格的特征空间对齐）；使用基于图的方法建模拓扑信息（缺点是容易陷入上述的第二种问题）。</p>
-<h1><span id="创新点">创新点</span></h1><p>本文探索了在没有空间对齐的情况下，将附加姿势信息与Transformer相结合的可能性。其使用姿势信息对语义成分（如人体的关节部位）进行分解，并对非遮挡的部位进行选择性匹配；设计了一种<em>Pose-guided Push Loss</em>。</p>
-<h1><span id="做法">做法</span></h1><p>整体框架图：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103047158.png" alt="image-20220329103047158"></p>
-<h2><span id="visual-context-transformer-encoder">Visual Context Transformer Encoder</span></h2><p>首先需要对输入图像划分为固定大小的N块patch，步距大小定义为S，每块patch的尺度定义为P，patch个数N为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103958451.png" alt="image-20220329103958451"></p>
-<p>当S等于P时，划分出来的patch就不重叠；当S&lt;P时，patch重叠，可以减少空间领域信息的丢失。</p>
-<p>将这些patch通过线形层生成一个序列输入transformer encoder，concat一组可训练的<em>Position Encoding</em>，以及<em>Camera Information Embedding</em>（表示该图像所属的摄像头视角信息，标签给定的，相同视角图像有一样的值），最终的输入序列定义为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329104849953.png" alt="image-20220329104849953"></p>
-<p>最后通过Transformer Encoder输出分为两部分的特征，一部分为global feature，一部分为part feature。为进一步区分人体各个部位的特征，part feature又分为K组，每一组都与global feature做cancat送入shared transformer layer学习这些K组融合特征。</p>
-<p><strong>Encoder Supervision Loss</strong></p>
-<p>选用交叉熵损失作为identity loss以及triplet loss来作为这部分的loss：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329110809342.png" alt="image-20220329110809342"></p>
-<h2><span id="pose-guided-feature-aggregation">Pose-guided Feature Aggregation</span></h2><p>被遮挡的人体图像的身体信息较少，而非身体部位的信息可能不明确。本文使用<em>pose estimator</em> 从图像中提取landmark信息。</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112105052.png" alt="image-20220329112105052"></p>
-<p><strong>Pose Estimation</strong></p>
-<p>给定一张图像，估计器从中提取M个landmark，然后利用这些landmark生成一组heatmap <strong>H</strong>，每张heatmap都被下采样到（H&#x2F;4）*（W&#x2F;4），其中最大的response point对应一个joint point，设置了一个阈值γ来滤除高置信度和低置信度的landmark。滤除出的剩余landmark的heatmap并不是将其设为0，而是赋值0&#x2F;1，热图标签可以形式化为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112535277.png" alt="image-20220329112535277"></p>
-<p>ci定义为第i个landmark的置信度分数。</p>
-<p><strong>Pose-guided Feature Aggregation</strong></p>
-<p>将之前的分组数设为K&#x3D;M，使其等于landmark的数量。将生成的一组heatmap <strong>H</strong>后接一层FC，使其尺寸与group part local feature（fgp）相同，得到<strong>H‘</strong>。将<strong>H‘</strong>与<strong>fgp</strong> mutiply element-wisely（向量对应元素相乘，将heatmap的注意力附加在fgp上）获得<strong>P</strong>，其目的是为了从fgp中找到对身体某个部位贡献最大的信息部分。</p>
-<p>为此，本文开发了一种匹配和分布机制，将part local feature和pose-guided feature视为一组相似性度量问题，最终获取一个pose-guided feature集合<strong>S</strong>。</p>
-<p>对于每个<strong>Pi</strong>,在fgp中找到最相似的特征，即<strong>找寻融合了heatmap注意力的序列和原始局部特征的最近距离的局部特征</strong>，以选出优质的局部特征，用余弦距离，形式化定义为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115119956.png" alt="image-20220329115119956"></p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115132888.png" alt="image-20220329115132888"></p>
-<h2><span id="part-view-based-transformer-decoder">Part View Based Transformer Decoder</span></h2><p>将heatmap和fen做点乘送入Decoder学习一系列learnable semantic views以学习有区别的身体部分。其实整个框架的大体思路为一张图片走两路，一路分patch进transformer encoder，一路特征点检测生成heatmap走transformer decoder，再将这两部分的输出进行match，可以得到view feature，取高置信度的view feature采样成与fgb，fgp相同尺寸算triplet loss，再将所有的view feature采样做<em>Pose Guided Push Loss</em>。</p>
-<p><strong>Pose-View Matching Module</strong></p>
-<p>此部分计算patch view和通过Pose-guided Feature Aggregation得到的Set之间的相似度，来获得最终的view feature，用余弦距离，形式化定义为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329151559098.png" alt="image-20220329151559098"></p>
-<p>之前的heatmap通过阈值打好了0&#x2F;1标签，最终的view feature即可通过heatmap标签分为两类。在上述距离置信度较高的view feature中取heatmap label为1的；在置信度较低的view feature中取heatmap label为0的。这样的操作会产生可变长度，需要固定长度补0操作。</p>
-<p><strong>Decoder Supervision Loss</strong></p>
-<p>提出的Pose-guided Push Loss：</p>
-<p>余弦距离：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152506162.png" alt="image-20220329152506162"></p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152517889.png" alt="image-20220329152517889"></p>
-<p>整体的loss定义：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329153030797.png" alt="image-20220329153030797"></p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>ReID</tag>
-        <tag>Transformer</tag>
-        <tag>Landmark</tag>
       </tags>
   </entry>
   <entry>
@@ -1015,6 +1015,58 @@
       </tags>
   </entry>
   <entry>
+    <title>RTTO WEEK3</title>
+    <url>/2022/09/30/rtto_3/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#week-3"><strong>WEEK 3</strong></a><ul>
+<li><a href="#344%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">344.反转字符串（e）</a></li>
+<li><a href="#541%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2iie">541.反转字符串Ⅱ（e）</a></li>
+<li><a href="#%E5%89%91%E6%8C%87offer-05%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BCe">剑指Offer 05.替换空格（e）</a></li>
+<li><a href="#151%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%8D%95%E8%AF%8Dm">151.反转字符串中的单词（m）</a></li>
+<li><a href="#%E5%89%91%E6%8C%87offer-58-ii%E5%B7%A6%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">剑指Offer 58 - Ⅱ.左旋转字符串（e）</a></li>
+<li><a href="#28%E6%89%BE%E5%87%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8C%B9%E9%85%8D%E9%A1%B9%E7%9A%84%E4%B8%8B%E6%A0%87m">28.找出字符串中第一个匹配项的下标（m）</a></li>
+<li><a href="#459%E9%87%8D%E5%A4%8D%E7%9A%84%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2e">459.重复的子字符串（e）</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="week-3"><strong>WEEK 3</strong></span></h1><h2><span id="344反转字符串e">344.反转字符串（e）</span></h2><p> 前一半后一半做个swap，没啥好说的。</p>
+<h2><span id="541反转字符串iie">541.反转字符串Ⅱ（e）</span></h2><p>每次遍历2k的距离，如果有k个字符（size能容纳当前遍历的k个字符），则reverse前k个，否则，反转全部字符。</p>
+<h2><span id="剑指offer-05替换空格e">剑指Offer 05.替换空格（e）</span></h2><p>简单遍历改字符需要进行字符串空间上的扩容；</p>
+<p>1.首先遍历一遍原字符串计算出所含空格的个数；</p>
+<p>2.resize原字符串，+2*count；</p>
+<p>3.使用双指针法，j指向原字符串最后一位，i指向扩充后字符串最后一位，同时向前遍历新字符串；若碰到非空位置，则更新非空字符在新字符串中的位置；若碰到空位置，此时的i即对应新字符串中0的位置，前一位为2，前前位为%；</p>
+<h2><span id="151反转字符串中的单词m">151.反转字符串中的单词（m）</span></h2><p>两个关键操作：字符串逆置reverse；去除多余空格，保证两个单词之间仅存在一个空格；</p>
+<p>1.将原字符串去除多余空格；</p>
+<p>2.将去重后的原字符串整个逆置；</p>
+<p>3.遍历逆置后的字符串，碰到空格则将空格前的字符逆置；</p>
+<h2><span id="剑指offer-58-ii左旋转字符串e">剑指Offer 58 - Ⅱ.左旋转字符串（e）</span></h2><p>默认不开辟额外空间；</p>
+<p>reverse前n个；</p>
+<p>reverse剩下的；</p>
+<p>reverse全部的；</p>
+<h2><span id="28找出字符串中第一个匹配项的下标m">28.找出字符串中第一个匹配项的下标（m）</span></h2><p>KMP算法</p>
+<p><a href="https://programmercarl.com/0028.%E5%AE%9E%E7%8E%B0strStr.html">代码随想录 (programmercarl.com)</a></p>
+<h2><span id="459重复的子字符串e">459.重复的子字符串（e）</span></h2><p>解法一：移动匹配</p>
+<p>任何一个重复子字符串构成的字符串，其前半部分和后半部分都是相等的；</p>
+<p>那么s+s中就一定存在一个新s；</p>
+<p>掐头去尾（erase去首尾字母），这样才能找到拼接而成的新s，而不是原本头尾的老s；</p>
+<p>若存在新s，则返回true，否则false；</p>
+<p>解法二：KMP法</p>
+<p>核心：最长相等前后缀不包含的子串就是最小重复子串</p>
+]]></content>
+      <categories>
+        <category>RTTO</category>
+      </categories>
+      <tags>
+        <tag>RTTO</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>RTTO WEEK2</title>
     <url>/2022/09/30/rtto_2/</url>
     <content><![CDATA[<!-- toc -->
@@ -1094,83 +1146,6 @@
       </tags>
   </entry>
   <entry>
-    <title>RTTO WEEK3</title>
-    <url>/2022/09/30/rtto_3/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#week-3"><strong>WEEK 3</strong></a><ul>
-<li><a href="#344%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">344.反转字符串（e）</a></li>
-<li><a href="#541%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2iie">541.反转字符串Ⅱ（e）</a></li>
-<li><a href="#%E5%89%91%E6%8C%87offer-05%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BCe">剑指Offer 05.替换空格（e）</a></li>
-<li><a href="#151%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%8D%95%E8%AF%8Dm">151.反转字符串中的单词（m）</a></li>
-<li><a href="#%E5%89%91%E6%8C%87offer-58-ii%E5%B7%A6%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">剑指Offer 58 - Ⅱ.左旋转字符串（e）</a></li>
-<li><a href="#28%E6%89%BE%E5%87%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8C%B9%E9%85%8D%E9%A1%B9%E7%9A%84%E4%B8%8B%E6%A0%87m">28.找出字符串中第一个匹配项的下标（m）</a></li>
-<li><a href="#459%E9%87%8D%E5%A4%8D%E7%9A%84%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2e">459.重复的子字符串（e）</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<span id="more"></span>
-
-<h1><span id="week-3"><strong>WEEK 3</strong></span></h1><h2><span id="344反转字符串e">344.反转字符串（e）</span></h2><p> 前一半后一半做个swap，没啥好说的。</p>
-<h2><span id="541反转字符串iie">541.反转字符串Ⅱ（e）</span></h2><p>每次遍历2k的距离，如果有k个字符（size能容纳当前遍历的k个字符），则reverse前k个，否则，反转全部字符。</p>
-<h2><span id="剑指offer-05替换空格e">剑指Offer 05.替换空格（e）</span></h2><p>简单遍历改字符需要进行字符串空间上的扩容；</p>
-<p>1.首先遍历一遍原字符串计算出所含空格的个数；</p>
-<p>2.resize原字符串，+2*count；</p>
-<p>3.使用双指针法，j指向原字符串最后一位，i指向扩充后字符串最后一位，同时向前遍历新字符串；若碰到非空位置，则更新非空字符在新字符串中的位置；若碰到空位置，此时的i即对应新字符串中0的位置，前一位为2，前前位为%；</p>
-<h2><span id="151反转字符串中的单词m">151.反转字符串中的单词（m）</span></h2><p>两个关键操作：字符串逆置reverse；去除多余空格，保证两个单词之间仅存在一个空格；</p>
-<p>1.将原字符串去除多余空格；</p>
-<p>2.将去重后的原字符串整个逆置；</p>
-<p>3.遍历逆置后的字符串，碰到空格则将空格前的字符逆置；</p>
-<h2><span id="剑指offer-58-ii左旋转字符串e">剑指Offer 58 - Ⅱ.左旋转字符串（e）</span></h2><p>默认不开辟额外空间；</p>
-<p>reverse前n个；</p>
-<p>reverse剩下的；</p>
-<p>reverse全部的；</p>
-<h2><span id="28找出字符串中第一个匹配项的下标m">28.找出字符串中第一个匹配项的下标（m）</span></h2><p>KMP算法</p>
-<p><a href="https://programmercarl.com/0028.%E5%AE%9E%E7%8E%B0strStr.html">代码随想录 (programmercarl.com)</a></p>
-<h2><span id="459重复的子字符串e">459.重复的子字符串（e）</span></h2><p>解法一：移动匹配</p>
-<p>任何一个重复子字符串构成的字符串，其前半部分和后半部分都是相等的；</p>
-<p>那么s+s中就一定存在一个新s；</p>
-<p>掐头去尾（erase去首尾字母），这样才能找到拼接而成的新s，而不是原本头尾的老s；</p>
-<p>若存在新s，则返回true，否则false；</p>
-<p>解法二：KMP法</p>
-<p>核心：最长相等前后缀不包含的子串就是最小重复子串</p>
-]]></content>
-      <categories>
-        <category>RTTO</category>
-      </categories>
-      <tags>
-        <tag>RTTO</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RTTO WEEK5</title>
-    <url>/2023/02/22/rtto_5/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#week-5"><strong>WEEK 5</strong></a><ul>
-<li><a href="#144%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86e">144.二叉树的前序遍历（e）</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<span id="more"></span>
-
-<h1><span id="week-5"><strong>WEEK 5</strong></span></h1><h2><span id="144二叉树的前序遍历e">144.二叉树的前序遍历（e）</span></h2><p>递归法：中前后</p>
-<p>非递归法：</p>
-]]></content>
-      <categories>
-        <category>RTTO</category>
-      </categories>
-      <tags>
-        <tag>RTTO</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>RTTO WEEK4</title>
     <url>/2022/10/19/rtto_4/</url>
     <content><![CDATA[<!-- toc -->
@@ -1208,6 +1183,31 @@
 
 <h2><span id="71简化路径m">71.简化路径（m）</span></h2><p>使用栈</p>
 <p><img src="/2022/10/19/rtto_4/image-20230222104900412.png" alt="image-20230222104900412"></p>
+]]></content>
+      <categories>
+        <category>RTTO</category>
+      </categories>
+      <tags>
+        <tag>RTTO</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RTTO WEEK5</title>
+    <url>/2023/02/22/rtto_5/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#week-5"><strong>WEEK 5</strong></a><ul>
+<li><a href="#144%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86e">144.二叉树的前序遍历（e）</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="week-5"><strong>WEEK 5</strong></span></h1><h2><span id="144二叉树的前序遍历e">144.二叉树的前序遍历（e）</span></h2><p>递归法：中前后</p>
+<p>非递归法：</p>
 ]]></content>
       <categories>
         <category>RTTO</category>
