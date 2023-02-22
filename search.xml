@@ -43,6 +43,56 @@
       </tags>
   </entry>
   <entry>
+    <title>《Face-to-Parameter Translation for Game Character Auto-Creation》</title>
+    <url>/2022/07/24/review_10_F2P/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95%E7%AE%80%E8%BF%B0">方法简述</a><ul>
+<li><a href="#%E8%B4%A1%E7%8C%AE">贡献</a></li>
+</ul>
+</li>
+<li><a href="#%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3">方法详解</a><ul>
+<li><a href="#1imitator">1.Imitator</a></li>
+<li><a href="#2facial-similarity-measurement">2.Facial Similarity Measurement</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content_ICCV_2019/papers/Shi_Face-to-Parameter_Translation_for_Game_Character_Auto-Creation_ICCV_2019_paper.pdf">Face-to-Parameter Translation for Game Character Auto-Creation (thecvf.com)</a></p>
+<p>code: no code</p>
+<p>reference link: <a href="https://zhuanlan.zhihu.com/p/105037127">【1】伏羲AI lab：脸部照片到脸部参数的游戏角色自动生成 论文笔记 - 知乎 (zhihu.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="出发点">出发点</span></h1><p>RPG游戏中捏脸的标准工作流是从配置大量<strong>面部参数</strong>开始，然后，游戏引擎将这些用户指定的参数作为输入，并生成3D人脸。也可以说游戏人脸定制是一种3DMM的特例或是一种风格迁移问题。</p>
+<p>但遗憾的是，上述方法不能直接应用于游戏环境中。原因有三。首先，这些方法并不是用于生成参数化的角色，而这对于大多数游戏引擎来说是必不可少的，因为它们通常会<strong>接受游戏角色的定制参数</strong>，而不是图像或3D网格。其次，这些方法对用户交互不友好，因为大多数用户很难直接编辑Mesh。最后，给定一组用户指定参数的游戏引擎的渲染过程是不可微分的，这进一步限制了深度学习方法在游戏环境中的适用性。</p>
+<h1><span id="方法简述">方法简述</span></h1><p>针对上述问题，本文提出了一种根据玩家输入的人脸照片自动生成游戏角色的方法，如图所示。</p>
+<p><img src="/2022/07/24/review_10_F2P/image-20220724165007254.png" alt="image-20220724165007254"></p>
+<p>与以往3DMM方法不同，我们的方法通过<strong>预测一组具有明确物理意义的面部参数，为骨骼驱动的模型创建三维轮廓</strong>。在我们的方法中，每个参数控制每个面部组件的一个单独属性，包括位置、方向和比例。更重要的是，我们的方法在创建结果的基础上支持额外的用户交互，玩家可以根据自己的需求进一步改进他们的形象。由于游戏引擎的渲染过程是不可微分的，我们设计了一个生成网络作为“模仿者”来模仿游戏引擎的物理行为，从而可以在神经风格传递框架下实现本文提出的方法，并使用梯度下降法优化面部参数。</p>
+<h2><span id="贡献">贡献</span></h2><p>1)我们提出了一种端到端的人脸参数转换和游戏角色自动生成方法。据我们所知，关于这一主题的研究工作很少。</p>
+<p>2)由于游戏引擎的渲染过程是不可区分的，我们引入了一个模仿者，通过构建一个深度生成网络来模仿游戏引擎的行为。这样，梯度可以平滑地反向传播到输入，从而利用梯度下降法更新人脸参数。</p>
+<p>3)为跨域人脸相似度测量设计了两个损失函数。提出的目标可以在多任务学习框架中联合优化。</p>
+<h1><span id="方法详解">方法详解</span></h1><p><img src="/2022/07/24/review_10_F2P/image-20220724165938954.png" alt="image-20220724165938954"></p>
+<h2><span id="1imitator">1.Imitator</span></h2><p><img src="/2022/07/24/review_10_F2P/image-20220724194516986.png" alt="image-20220724194516986"></p>
+<p>采用类似DCGAN的结构，包含8个反卷积层，用来模拟游戏引擎从脸部参数到脸部图像的映射。然后将真实游戏引擎的渲染结果与模拟器生成的图像算L1 loss。训练用了20000对人脸图像，游戏引擎用的是逆水寒的游戏引擎。</p>
+<p><img src="/2022/07/24/review_10_F2P/image-20220724195638704.png" alt="image-20220724195638704"></p>
+<p>图4显示了我们的模仿者的“渲染”结果的三个示例。这些图像的面部参数是手动创建的。由于训练样本是根据面部参数的统一分布随机生成的，所以对于大多数人物可能看起来很奇怪(请参阅我们的补充资料)。尽管如此，我们仍然可以从图4中看到，生成的人脸图像和渲染的地面真实图像有很高的相似性，即使在一些纹理复杂的区域，如头发。这表明我们的模仿者不仅将训练数据拟合在一个低维的人脸流形中，而且还学会了解耦不同人脸参数之间的相关性。</p>
+<h2><span id="2facial-similarity-measurement">2.Facial Similarity Measurement</span></h2><p>alignment后的真实人脸与Imitator生成的人脸通过预训练好的识别网络算embedding间的余弦相似度。</p>
+<p><img src="/2022/07/24/review_10_F2P/image-20220725143108613.png" alt="image-20220725143108613"></p>
+<p>又采用了一个预训练好的分割网络对两张图像进行分割，在著名的Helen face语义分割数据集上训练该模型。为了提高人脸语义特征的位置敏感性，进一步使用分割结果(分类概率图)作为特征图的像素权值，构建位置敏感的内容丢失函数。通俗点应该就是针对每个部分对feature map做掩码算L1。</p>
+<p><img src="/2022/07/24/review_10_F2P/image-20220725144042722.png" alt="image-20220725144042722"></p>
+<p><img src="/2022/07/24/review_10_F2P/image-20220725143221347.png" alt="image-20220725143221347"></p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>Game Character Create</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《High-Fidelity 3D Digital Human Head Creation from RGB-D Selfies》</title>
     <url>/2022/10/17/review_11_Hifi3dFace/</url>
     <content><![CDATA[<!-- toc -->
@@ -181,77 +231,6 @@
 <p>在训练过程中，首先使用面部区域替换和肤色转移将200幅高质量反照率&#x2F;法线图（来自构建3DMM的数据集）放大为4000幅图，作为训练两个网络的GT。</p>
 <p>然后，对4000幅图执行区域拟合（Regional Fitting），以获得拟合的反照率&#x2F;法线地图，这些图在训练期间用作网络的输入。只使用整个UV贴图中的面部区域来计算训练损失。</p>
 <p>类似于pix2pix，保持𝐿1损耗和GAN损耗。对于反照率细化，我们还应用总变化损失（total variation loss）来减少伪影并改善皮肤平滑度。对于法线图细化，还使用预测和GT图之间的逐像素余弦距离，以提高正常方向的精度。使用Adam优化器对网络进行75000次迭代。</p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>3DMM</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Face-to-Parameter Translation for Game Character Auto-Creation》</title>
-    <url>/2022/07/24/review_10_F2P/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E6%96%B9%E6%B3%95%E7%AE%80%E8%BF%B0">方法简述</a><ul>
-<li><a href="#%E8%B4%A1%E7%8C%AE">贡献</a></li>
-</ul>
-</li>
-<li><a href="#%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3">方法详解</a><ul>
-<li><a href="#1imitator">1.Imitator</a></li>
-<li><a href="#2facial-similarity-measurement">2.Facial Similarity Measurement</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content_ICCV_2019/papers/Shi_Face-to-Parameter_Translation_for_Game_Character_Auto-Creation_ICCV_2019_paper.pdf">Face-to-Parameter Translation for Game Character Auto-Creation (thecvf.com)</a></p>
-<p>code: no code</p>
-<p>reference link: <a href="https://zhuanlan.zhihu.com/p/105037127">【1】伏羲AI lab：脸部照片到脸部参数的游戏角色自动生成 论文笔记 - 知乎 (zhihu.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="出发点">出发点</span></h1><p>RPG游戏中捏脸的标准工作流是从配置大量<strong>面部参数</strong>开始，然后，游戏引擎将这些用户指定的参数作为输入，并生成3D人脸。也可以说游戏人脸定制是一种3DMM的特例或是一种风格迁移问题。</p>
-<p>但遗憾的是，上述方法不能直接应用于游戏环境中。原因有三。首先，这些方法并不是用于生成参数化的角色，而这对于大多数游戏引擎来说是必不可少的，因为它们通常会<strong>接受游戏角色的定制参数</strong>，而不是图像或3D网格。其次，这些方法对用户交互不友好，因为大多数用户很难直接编辑Mesh。最后，给定一组用户指定参数的游戏引擎的渲染过程是不可微分的，这进一步限制了深度学习方法在游戏环境中的适用性。</p>
-<h1><span id="方法简述">方法简述</span></h1><p>针对上述问题，本文提出了一种根据玩家输入的人脸照片自动生成游戏角色的方法，如图所示。</p>
-<p><img src="/2022/07/24/review_10_F2P/image-20220724165007254.png" alt="image-20220724165007254"></p>
-<p>与以往3DMM方法不同，我们的方法通过<strong>预测一组具有明确物理意义的面部参数，为骨骼驱动的模型创建三维轮廓</strong>。在我们的方法中，每个参数控制每个面部组件的一个单独属性，包括位置、方向和比例。更重要的是，我们的方法在创建结果的基础上支持额外的用户交互，玩家可以根据自己的需求进一步改进他们的形象。由于游戏引擎的渲染过程是不可微分的，我们设计了一个生成网络作为“模仿者”来模仿游戏引擎的物理行为，从而可以在神经风格传递框架下实现本文提出的方法，并使用梯度下降法优化面部参数。</p>
-<h2><span id="贡献">贡献</span></h2><p>1)我们提出了一种端到端的人脸参数转换和游戏角色自动生成方法。据我们所知，关于这一主题的研究工作很少。</p>
-<p>2)由于游戏引擎的渲染过程是不可区分的，我们引入了一个模仿者，通过构建一个深度生成网络来模仿游戏引擎的行为。这样，梯度可以平滑地反向传播到输入，从而利用梯度下降法更新人脸参数。</p>
-<p>3)为跨域人脸相似度测量设计了两个损失函数。提出的目标可以在多任务学习框架中联合优化。</p>
-<h1><span id="方法详解">方法详解</span></h1><p><img src="/2022/07/24/review_10_F2P/image-20220724165938954.png" alt="image-20220724165938954"></p>
-<h2><span id="1imitator">1.Imitator</span></h2><p><img src="/2022/07/24/review_10_F2P/image-20220724194516986.png" alt="image-20220724194516986"></p>
-<p>采用类似DCGAN的结构，包含8个反卷积层，用来模拟游戏引擎从脸部参数到脸部图像的映射。然后将真实游戏引擎的渲染结果与模拟器生成的图像算L1 loss。训练用了20000对人脸图像，游戏引擎用的是逆水寒的游戏引擎。</p>
-<p><img src="/2022/07/24/review_10_F2P/image-20220724195638704.png" alt="image-20220724195638704"></p>
-<p>图4显示了我们的模仿者的“渲染”结果的三个示例。这些图像的面部参数是手动创建的。由于训练样本是根据面部参数的统一分布随机生成的，所以对于大多数人物可能看起来很奇怪(请参阅我们的补充资料)。尽管如此，我们仍然可以从图4中看到，生成的人脸图像和渲染的地面真实图像有很高的相似性，即使在一些纹理复杂的区域，如头发。这表明我们的模仿者不仅将训练数据拟合在一个低维的人脸流形中，而且还学会了解耦不同人脸参数之间的相关性。</p>
-<h2><span id="2facial-similarity-measurement">2.Facial Similarity Measurement</span></h2><p>alignment后的真实人脸与Imitator生成的人脸通过预训练好的识别网络算embedding间的余弦相似度。</p>
-<p><img src="/2022/07/24/review_10_F2P/image-20220725143108613.png" alt="image-20220725143108613"></p>
-<p>又采用了一个预训练好的分割网络对两张图像进行分割，在著名的Helen face语义分割数据集上训练该模型。为了提高人脸语义特征的位置敏感性，进一步使用分割结果(分类概率图)作为特征图的像素权值，构建位置敏感的内容丢失函数。通俗点应该就是针对每个部分对feature map做掩码算L1。</p>
-<p><img src="/2022/07/24/review_10_F2P/image-20220725144042722.png" alt="image-20220725144042722"></p>
-<p><img src="/2022/07/24/review_10_F2P/image-20220725143221347.png" alt="image-20220725143221347"></p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>Game Character Create</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《关于HIFI3DFACE的源码数据说明》</title>
-    <url>/2022/11/02/review_11_add/</url>
-    <content><![CDATA[<!-- toc -->
-
-
-
-<!-- tocstop -->
-
-<span id="more"></span>
-
-
-
 ]]></content>
       <categories>
         <category>paper review</category>
@@ -1036,84 +1015,6 @@
       </tags>
   </entry>
   <entry>
-    <title>RTTO WEEK3</title>
-    <url>/2022/09/30/rtto_3/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#week-3"><strong>WEEK 3</strong></a><ul>
-<li><a href="#344%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">344.反转字符串（e）</a></li>
-<li><a href="#541%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2iie">541.反转字符串Ⅱ（e）</a></li>
-<li><a href="#%E5%89%91%E6%8C%87offer-05%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BCe">剑指Offer 05.替换空格（e）</a></li>
-<li><a href="#151%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%8D%95%E8%AF%8Dm">151.反转字符串中的单词（m）</a></li>
-<li><a href="#%E5%89%91%E6%8C%87offer-58-ii%E5%B7%A6%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">剑指Offer 58 - Ⅱ.左旋转字符串（e）</a></li>
-<li><a href="#28%E6%89%BE%E5%87%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8C%B9%E9%85%8D%E9%A1%B9%E7%9A%84%E4%B8%8B%E6%A0%87m">28.找出字符串中第一个匹配项的下标（m）</a></li>
-<li><a href="#459%E9%87%8D%E5%A4%8D%E7%9A%84%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2e">459.重复的子字符串（e）</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<span id="more"></span>
-
-<h1><span id="week-3"><strong>WEEK 3</strong></span></h1><h2><span id="344反转字符串e">344.反转字符串（e）</span></h2><p> 前一半后一半做个swap，没啥好说的。</p>
-<h2><span id="541反转字符串iie">541.反转字符串Ⅱ（e）</span></h2><p>每次遍历2k的距离，如果有k个字符（size能容纳当前遍历的k个字符），则reverse前k个，否则，反转全部字符。</p>
-<h2><span id="剑指offer-05替换空格e">剑指Offer 05.替换空格（e）</span></h2><p>简单遍历改字符需要进行字符串空间上的扩容；</p>
-<p>1.首先遍历一遍原字符串计算出所含空格的个数；</p>
-<p>2.resize原字符串，+2*count；</p>
-<p>3.使用双指针法，j指向原字符串最后一位，i指向扩充后字符串最后一位，同时向前遍历新字符串；若碰到非空位置，则更新非空字符在新字符串中的位置；若碰到空位置，此时的i即对应新字符串中0的位置，前一位为2，前前位为%；</p>
-<h2><span id="151反转字符串中的单词m">151.反转字符串中的单词（m）</span></h2><p>两个关键操作：字符串逆置reverse；去除多余空格，保证两个单词之间仅存在一个空格；</p>
-<p>1.将原字符串去除多余空格；</p>
-<p>2.将去重后的原字符串整个逆置；</p>
-<p>3.遍历逆置后的字符串，碰到空格则将空格前的字符逆置；</p>
-<h2><span id="剑指offer-58-ii左旋转字符串e">剑指Offer 58 - Ⅱ.左旋转字符串（e）</span></h2><p>默认不开辟额外空间；</p>
-<p>reverse前n个；</p>
-<p>reverse剩下的；</p>
-<p>reverse全部的；</p>
-<h2><span id="28找出字符串中第一个匹配项的下标m">28.找出字符串中第一个匹配项的下标（m）</span></h2><p>KMP算法</p>
-<p><a href="https://programmercarl.com/0028.%E5%AE%9E%E7%8E%B0strStr.html">代码随想录 (programmercarl.com)</a></p>
-<h2><span id="459重复的子字符串e">459.重复的子字符串（e）</span></h2><p>解法一：移动匹配</p>
-<p>任何一个重复子字符串构成的字符串，其前半部分和后半部分都是相等的；</p>
-<p>那么s+s中就一定存在一个新s；</p>
-<p>掐头去尾（erase去首尾字母），这样才能找到拼接而成的新s，而不是原本头尾的老s；</p>
-<p>若存在新s，则返回true，否则false；</p>
-<p>解法二：KMP法</p>
-<p>核心：最长相等前后缀不包含的子串就是最小重复子串</p>
-]]></content>
-      <categories>
-        <category>RTTO</category>
-      </categories>
-      <tags>
-        <tag>RTTO</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RTTO WEEK4</title>
-    <url>/2022/10/19/rtto_4/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#week-4"><strong>WEEK 4</strong></a><ul>
-<li><a href="#27%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0e">27.移除元素（e）</a></li>
-<li><a href="#344%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">344.反转字符串（e）</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<span id="more"></span>
-
-<h1><span id="week-4"><strong>WEEK 4</strong></span></h1><h2><span id="27移除元素e">27.移除元素（e）</span></h2><p>slow用于赋值符合条件的fast位置数据，fast碰到不与val相等的则赋值，碰到与val相等的则++</p>
-<h2><span id="344反转字符串e">344.反转字符串（e）</span></h2><p>上周做过了</p>
-]]></content>
-      <categories>
-        <category>RTTO</category>
-      </categories>
-      <tags>
-        <tag>RTTO</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>RTTO WEEK2</title>
     <url>/2022/09/30/rtto_2/</url>
     <content><![CDATA[<!-- toc -->
@@ -1193,31 +1094,19 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo建站相关</title>
-    <url>/2022/03/25/tools_1_start/</url>
+    <title>RTTO WEEK3</title>
+    <url>/2022/09/30/rtto_3/</url>
     <content><![CDATA[<!-- toc -->
 
 <ul>
-<li><a href="#%E6%90%AD%E5%BB%BAhexo%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%80%9A%E8%BF%87git%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8">搭建Hexo服务器，通过Git自动部署在阿里云服务器</a><ul>
-<li><a href="#%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%83%A8%E7%BD%B2">搭建及部署</a></li>
-<li><a href="#%E5%8D%9A%E6%96%87%E5%8F%91%E5%B8%83">博文发布</a></li>
-</ul>
-</li>
-<li><a href="#%E4%B8%BB%E9%A2%98%E5%8F%8A%E5%85%B6%E7%BE%8E%E5%8C%96">主题及其美化</a><ul>
-<li><a href="#butterfly">Butterfly</a></li>
-<li><a href="#next">Next</a><ul>
-<li><a href="#%E7%BE%8E%E5%8C%96">美化</a></li>
-<li><a href="#%E6%96%87%E7%AB%A0%E5%90%AF%E7%94%A8tags%E5%92%8Ccategories">文章启用tags和categories</a></li>
-<li><a href="#%E8%AE%BE%E7%BD%AE%E9%98%85%E8%AF%BB%E5%85%A8%E6%96%87">设置阅读全文</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98updating">相关问题（Updating…）</a><ul>
-<li><a href="#%E6%97%A0%E6%B3%95%E6%AD%A3%E7%A1%AE%E6%B8%B2%E6%9F%93markdown%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98">无法正确渲染markdown文件问题</a></li>
-<li><a href="#%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98">插入图片问题</a></li>
-<li><a href="#%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98">目录生成问题</a></li>
-<li><a href="#%E6%B7%BB%E5%8A%A0%E6%9C%AC%E5%9C%B0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD">添加本地搜索功能</a></li>
+<li><a href="#week-3"><strong>WEEK 3</strong></a><ul>
+<li><a href="#344%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">344.反转字符串（e）</a></li>
+<li><a href="#541%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2iie">541.反转字符串Ⅱ（e）</a></li>
+<li><a href="#%E5%89%91%E6%8C%87offer-05%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BCe">剑指Offer 05.替换空格（e）</a></li>
+<li><a href="#151%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%8D%95%E8%AF%8Dm">151.反转字符串中的单词（m）</a></li>
+<li><a href="#%E5%89%91%E6%8C%87offer-58-ii%E5%B7%A6%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">剑指Offer 58 - Ⅱ.左旋转字符串（e）</a></li>
+<li><a href="#28%E6%89%BE%E5%87%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8C%B9%E9%85%8D%E9%A1%B9%E7%9A%84%E4%B8%8B%E6%A0%87m">28.找出字符串中第一个匹配项的下标（m）</a></li>
+<li><a href="#459%E9%87%8D%E5%A4%8D%E7%9A%84%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2e">459.重复的子字符串（e）</a></li>
 </ul>
 </li>
 </ul>
@@ -1225,39 +1114,106 @@
 
 <span id="more"></span>
 
-<h1><span id="搭建hexo服务器通过git自动部署在阿里云服务器">搭建Hexo服务器，通过Git自动部署在阿里云服务器</span></h1><h2><span id="搭建及部署">搭建及部署</span></h2><p>参考博文链接：<a href="https://mp.weixin.qq.com/s/JTTUYJTvtdT6X2fvLUBFZg">Win10下Hexo博客搭建教程，及阿里云服务器部署实战 (qq.com)</a></p>
-<h2><span id="博文发布">博文发布</span></h2><p>在本地机器上部署Hexo相关MyHexoBlogs文件夹下，进入MyHexoBlogs&#x2F;myblogs&#x2F;source&#x2F;_posts目录；</p>
-<p>在当前页进入git bash，输入hexo clean 清除缓存，hexo g 解析静态文件，hexo d 刷新部署新的资源。</p>
-<p>hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</p>
-<h1><span id="主题及其美化">主题及其美化</span></h1><h2><span id="butterfly">Butterfly</span></h2><p>Butterfly主题部署参考博文链接：<a href="https://www.jianshu.com/p/50a565adaf15?ivk_sa=1024320u">hexo框架|butterfly主题配置 - 简书 (jianshu.com)</a></p>
-<p>Butterfly主题官方文档：<a href="https://www.butterfly1.cn/">Hexo-Butterfly主题(🦋 A Hexo Theme: Butterfly-Official website) (butterfly1.cn)</a></p>
-<p>Hexo默认美化项：<a href="https://zhuanlan.zhihu.com/p/369951111">Hexo个性化设置 - 知乎 (zhihu.com)</a></p>
-<h2><span id="next">Next</span></h2><h3><span id="美化">美化</span></h3><p><a href="https://blog.csdn.net/qq_34003239/article/details/100883213">(54条消息) Next主题美化_蜗牛非牛的博客-CSDN博客_next主题美化</a></p>
-<h3><span id="文章启用tags和categories">文章启用tags和categories</span></h3><p><a href="https://blog.csdn.net/Lancis/article/details/118788205">(54条消息) hexo next主题简单美化_Lancis的博客-CSDN博客_next主题美化</a></p>
-<h3><span id="设置阅读全文">设置阅读全文</span></h3><p><a href="https://blog.csdn.net/CHENGXUYUAN09/article/details/103408380">(54条消息) next7.6版本关于设置阅读全文_LIYUANWAISPRING的博客-CSDN博客</a></p>
-<h1><span id="相关问题updating">相关问题（Updating…）</span></h1><h2><span id="无法正确渲染markdown文件问题">无法正确渲染markdown文件问题</span></h2><p>hexo对于md文件的解析规则不是标准规则，有时候在复制论文标题时会有换行符无法正确解析；</p>
-<p>重新手动输入检查标题格式解决问题</p>
-<h2><span id="插入图片问题">插入图片问题</span></h2><p>选择采用hexo官网的解决方式：<a href="https://hexo.io/zh-cn/docs/asset-folders">资源文件夹 | Hexo</a></p>
-<h2><span id="目录生成问题">目录生成问题</span></h2><p>安装插件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-toc --save</span><br></pre></td></tr></table></figure>
-
-<p>hexo的配置文件中设置格式，添加配置代码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">toc:</span><br><span class="line">  maxdepth: 3</span><br></pre></td></tr></table></figure>
-
-<p>在md中使用时</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- toc --&gt;</span><br></pre></td></tr></table></figure>
-
-<h2><span id="添加本地搜索功能">添加本地搜索功能</span></h2><p>与Next官方配置文件中的链接步骤不同的是，还需要修改</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">preload: true</span><br></pre></td></tr></table></figure>
-
-
-
+<h1><span id="week-3"><strong>WEEK 3</strong></span></h1><h2><span id="344反转字符串e">344.反转字符串（e）</span></h2><p> 前一半后一半做个swap，没啥好说的。</p>
+<h2><span id="541反转字符串iie">541.反转字符串Ⅱ（e）</span></h2><p>每次遍历2k的距离，如果有k个字符（size能容纳当前遍历的k个字符），则reverse前k个，否则，反转全部字符。</p>
+<h2><span id="剑指offer-05替换空格e">剑指Offer 05.替换空格（e）</span></h2><p>简单遍历改字符需要进行字符串空间上的扩容；</p>
+<p>1.首先遍历一遍原字符串计算出所含空格的个数；</p>
+<p>2.resize原字符串，+2*count；</p>
+<p>3.使用双指针法，j指向原字符串最后一位，i指向扩充后字符串最后一位，同时向前遍历新字符串；若碰到非空位置，则更新非空字符在新字符串中的位置；若碰到空位置，此时的i即对应新字符串中0的位置，前一位为2，前前位为%；</p>
+<h2><span id="151反转字符串中的单词m">151.反转字符串中的单词（m）</span></h2><p>两个关键操作：字符串逆置reverse；去除多余空格，保证两个单词之间仅存在一个空格；</p>
+<p>1.将原字符串去除多余空格；</p>
+<p>2.将去重后的原字符串整个逆置；</p>
+<p>3.遍历逆置后的字符串，碰到空格则将空格前的字符逆置；</p>
+<h2><span id="剑指offer-58-ii左旋转字符串e">剑指Offer 58 - Ⅱ.左旋转字符串（e）</span></h2><p>默认不开辟额外空间；</p>
+<p>reverse前n个；</p>
+<p>reverse剩下的；</p>
+<p>reverse全部的；</p>
+<h2><span id="28找出字符串中第一个匹配项的下标m">28.找出字符串中第一个匹配项的下标（m）</span></h2><p>KMP算法</p>
+<p><a href="https://programmercarl.com/0028.%E5%AE%9E%E7%8E%B0strStr.html">代码随想录 (programmercarl.com)</a></p>
+<h2><span id="459重复的子字符串e">459.重复的子字符串（e）</span></h2><p>解法一：移动匹配</p>
+<p>任何一个重复子字符串构成的字符串，其前半部分和后半部分都是相等的；</p>
+<p>那么s+s中就一定存在一个新s；</p>
+<p>掐头去尾（erase去首尾字母），这样才能找到拼接而成的新s，而不是原本头尾的老s；</p>
+<p>若存在新s，则返回true，否则false；</p>
+<p>解法二：KMP法</p>
+<p>核心：最长相等前后缀不包含的子串就是最小重复子串</p>
 ]]></content>
       <categories>
-        <category>Hexo</category>
+        <category>RTTO</category>
       </categories>
       <tags>
-        <tag>Hexo</tag>
+        <tag>RTTO</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RTTO WEEK5</title>
+    <url>/2023/02/22/rtto_5/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#week-5"><strong>WEEK 5</strong></a><ul>
+<li><a href="#144%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86e">144.二叉树的前序遍历（e）</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="week-5"><strong>WEEK 5</strong></span></h1><h2><span id="144二叉树的前序遍历e">144.二叉树的前序遍历（e）</span></h2><p>递归法：中前后</p>
+<p>非递归法：</p>
+]]></content>
+      <categories>
+        <category>RTTO</category>
+      </categories>
+      <tags>
+        <tag>RTTO</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RTTO WEEK4</title>
+    <url>/2022/10/19/rtto_4/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#week-4"><strong>WEEK 4</strong></a><ul>
+<li><a href="#27%E7%A7%BB%E9%99%A4%E5%85%83%E7%B4%A0e">27.移除元素（e）</a></li>
+<li><a href="#344%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">344.反转字符串（e）</a></li>
+<li><a href="#236%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E6%9C%80%E5%A4%A7%E5%80%BCh">236.滑动窗口最大值（h）</a></li>
+<li><a href="#347%E5%89%8Dk%E4%B8%AA%E9%AB%98%E9%A2%91%E5%85%83%E7%B4%A0m">347.前k个高频元素（m）</a></li>
+<li><a href="#71%E7%AE%80%E5%8C%96%E8%B7%AF%E5%BE%84m">71.简化路径（m）</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="week-4"><strong>WEEK 4</strong></span></h1><h2><span id="27移除元素e">27.移除元素（e）</span></h2><p>slow用于赋值符合条件的fast位置数据，fast碰到不与val相等的则赋值，碰到与val相等的则++</p>
+<h2><span id="344反转字符串e">344.反转字符串（e）</span></h2><p>上周做过了</p>
+<h2><span id="236滑动窗口最大值h">236.滑动窗口最大值（h）</span></h2><p>需要重写单调队列（由于是求max，入队元素必须遵从单调递减）</p>
+<p>三个功能 由STL中deque双端队列容器构造</p>
+<p>front()    查询当前单调队列中最大值，由于构造的是单调递减，所以最大值为队首元素 直接front</p>
+<p>pop()    查询当前单调队列中需要弹出的值是否是队首的值，若是则pop_front</p>
+<p>push()    将不满足单调递减要求的数 pop_back出；若满足单调递减要求，循环push_back直至不满足要求————即要保持单调队列中元素始终单调</p>
+<p>使用单调队列时</p>
+<p>首先将前k个元素放进队列，res中记录前k个最大值；</p>
+<p>后遍历k个后的元素，单调队列pop出首部元素，push入新元素，后进行front计算最大值push_back入res vector直至循环结束；</p>
+<h2><span id="347前k个高频元素m">347.前k个高频元素（m）</span></h2><p>涉及到STL库优先队列</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">priority_queue&lt;Type, Container, Functional&gt;</span><br></pre></td></tr></table></figure>
+
+<p>Type 是数据类型，Container 是容器类型（Container必须是用数组实现的容器，比如vector,deque等等，但不能用 list。STL里面默认用的是vector），Functional 是比较的方式。</p>
+<p>当需要用自定义的数据类型时才需要传入这三个参数，使用基本数据类型时，只需要传入数据类型，<strong>默认是大顶堆</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">//升序队列，小顶堆</span><br><span class="line">priority_queue &lt;int,vector&lt;int&gt;,greater&lt;int&gt; &gt; q;</span><br><span class="line">//降序队列，大顶堆</span><br><span class="line">priority_queue &lt;int,vector&lt;int&gt;,less&lt;int&gt; &gt;q;</span><br><span class="line"></span><br><span class="line">//greater和less是std实现的两个仿函数（就是使一个类的使用看上去像一个函数。其实现就是类中实现一个operator()，这个类就有了类似函数的行为，就是一个仿函数类了）</span><br></pre></td></tr></table></figure>
+
+<h2><span id="71简化路径m">71.简化路径（m）</span></h2><p>使用栈</p>
+<p><img src="/2022/10/19/rtto_4/image-20230222104900412.png" alt="image-20230222104900412"></p>
+]]></content>
+      <categories>
+        <category>RTTO</category>
+      </categories>
+      <tags>
+        <tag>RTTO</tag>
       </tags>
   </entry>
   <entry>
@@ -1537,6 +1493,74 @@
       </categories>
       <tags>
         <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo建站相关</title>
+    <url>/2022/03/25/tools_1_start/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E6%90%AD%E5%BB%BAhexo%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%80%9A%E8%BF%87git%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8">搭建Hexo服务器，通过Git自动部署在阿里云服务器</a><ul>
+<li><a href="#%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%83%A8%E7%BD%B2">搭建及部署</a></li>
+<li><a href="#%E5%8D%9A%E6%96%87%E5%8F%91%E5%B8%83">博文发布</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%BB%E9%A2%98%E5%8F%8A%E5%85%B6%E7%BE%8E%E5%8C%96">主题及其美化</a><ul>
+<li><a href="#butterfly">Butterfly</a></li>
+<li><a href="#next">Next</a><ul>
+<li><a href="#%E7%BE%8E%E5%8C%96">美化</a></li>
+<li><a href="#%E6%96%87%E7%AB%A0%E5%90%AF%E7%94%A8tags%E5%92%8Ccategories">文章启用tags和categories</a></li>
+<li><a href="#%E8%AE%BE%E7%BD%AE%E9%98%85%E8%AF%BB%E5%85%A8%E6%96%87">设置阅读全文</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98updating">相关问题（Updating…）</a><ul>
+<li><a href="#%E6%97%A0%E6%B3%95%E6%AD%A3%E7%A1%AE%E6%B8%B2%E6%9F%93markdown%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98">无法正确渲染markdown文件问题</a></li>
+<li><a href="#%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98">插入图片问题</a></li>
+<li><a href="#%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98">目录生成问题</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E6%9C%AC%E5%9C%B0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD">添加本地搜索功能</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="搭建hexo服务器通过git自动部署在阿里云服务器">搭建Hexo服务器，通过Git自动部署在阿里云服务器</span></h1><h2><span id="搭建及部署">搭建及部署</span></h2><p>参考博文链接：<a href="https://mp.weixin.qq.com/s/JTTUYJTvtdT6X2fvLUBFZg">Win10下Hexo博客搭建教程，及阿里云服务器部署实战 (qq.com)</a></p>
+<h2><span id="博文发布">博文发布</span></h2><p>在本地机器上部署Hexo相关MyHexoBlogs文件夹下，进入MyHexoBlogs&#x2F;myblogs&#x2F;source&#x2F;_posts目录；</p>
+<p>在当前页进入git bash，输入hexo clean 清除缓存，hexo g 解析静态文件，hexo d 刷新部署新的资源。</p>
+<p>hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</p>
+<h1><span id="主题及其美化">主题及其美化</span></h1><h2><span id="butterfly">Butterfly</span></h2><p>Butterfly主题部署参考博文链接：<a href="https://www.jianshu.com/p/50a565adaf15?ivk_sa=1024320u">hexo框架|butterfly主题配置 - 简书 (jianshu.com)</a></p>
+<p>Butterfly主题官方文档：<a href="https://www.butterfly1.cn/">Hexo-Butterfly主题(🦋 A Hexo Theme: Butterfly-Official website) (butterfly1.cn)</a></p>
+<p>Hexo默认美化项：<a href="https://zhuanlan.zhihu.com/p/369951111">Hexo个性化设置 - 知乎 (zhihu.com)</a></p>
+<h2><span id="next">Next</span></h2><h3><span id="美化">美化</span></h3><p><a href="https://blog.csdn.net/qq_34003239/article/details/100883213">(54条消息) Next主题美化_蜗牛非牛的博客-CSDN博客_next主题美化</a></p>
+<h3><span id="文章启用tags和categories">文章启用tags和categories</span></h3><p><a href="https://blog.csdn.net/Lancis/article/details/118788205">(54条消息) hexo next主题简单美化_Lancis的博客-CSDN博客_next主题美化</a></p>
+<h3><span id="设置阅读全文">设置阅读全文</span></h3><p><a href="https://blog.csdn.net/CHENGXUYUAN09/article/details/103408380">(54条消息) next7.6版本关于设置阅读全文_LIYUANWAISPRING的博客-CSDN博客</a></p>
+<h1><span id="相关问题updating">相关问题（Updating…）</span></h1><h2><span id="无法正确渲染markdown文件问题">无法正确渲染markdown文件问题</span></h2><p>hexo对于md文件的解析规则不是标准规则，有时候在复制论文标题时会有换行符无法正确解析；</p>
+<p>重新手动输入检查标题格式解决问题</p>
+<h2><span id="插入图片问题">插入图片问题</span></h2><p>选择采用hexo官网的解决方式：<a href="https://hexo.io/zh-cn/docs/asset-folders">资源文件夹 | Hexo</a></p>
+<h2><span id="目录生成问题">目录生成问题</span></h2><p>安装插件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-toc --save</span><br></pre></td></tr></table></figure>
+
+<p>hexo的配置文件中设置格式，添加配置代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">toc:</span><br><span class="line">  maxdepth: 3</span><br></pre></td></tr></table></figure>
+
+<p>在md中使用时</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- toc --&gt;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="添加本地搜索功能">添加本地搜索功能</span></h2><p>与Next官方配置文件中的链接步骤不同的是，还需要修改</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">preload: true</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
 </search>
