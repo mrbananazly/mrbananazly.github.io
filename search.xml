@@ -1,6 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>《E题1.0》</title>
+    <url>/2022/10/06/HWB/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E9%97%AE%E9%A2%981">问题1</a></li>
+<li><a href="#%E9%97%AE%E9%A2%982">问题2</a></li>
+<li><a href="#%E9%97%AE%E9%A2%983">问题3</a></li>
+<li><a href="#%E9%97%AE%E9%A2%984">问题4</a></li>
+<li><a href="#%E9%97%AE%E9%A2%985">问题5</a></li>
+<li><a href="#%E9%97%AE%E9%A2%986">问题6</a></li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="问题1">问题1</span></h1><h4><span id="从机理分析的角度建立不同放牧策略放牧方式和放牧强度对锡林郭勒草原土壤物理性质主要是土壤湿度和植被生物量影响的数学模型">从机理分析的角度，建立不同放牧策略（放牧方式和放牧强度）对锡林郭勒草原土壤物理性质（主要是土壤湿度）和植被生物量影响的数学模型</span></h4><p>筛选出放牧策略（载畜量）、降水、地表蒸发量数据，套用下方公式</p>
+<p>画出植被生物量和单位时间的曲线，可求出对应的单位时间的斜率，推出该时间S和w的关系；</p>
+<p>土壤含水量同理，但要将α换成w的式子；</p>
+<p>画出土壤含水量和单位时间的曲线，可求出对应的单位时间的斜率，推出该时间S和w的关系；</p>
+<p>E(a)直接使用蒸发量代替</p>
+<p><img src="/2022/10/06/HWB/image-20221006201807430.png" alt="image-20221006201807430"></p>
+<h1><span id="问题2">问题2</span></h1><p>先时间序列自回归预测浅层因子，然后用这些浅层因子做自变量做多元回归；</p>
+<p>其中可以使用前十年的单一月份数据，来预测后一年单一月份数据（建12个模型）</p>
+<h1><span id="问题3">问题3</span></h1><h4><span id="从机理分析的角度建立不同放牧策略放牧方式和放牧强度对锡林郭勒草原土壤化学性质影响的数学模型-并请结合附件14中数据预测锡林郭勒草原监测样地12个放牧小区在不同放牧强度下2022年土壤同期有机碳-无机碳-全n-土壤cx2fn比等值并完成下表">从机理分析的角度，建立不同放牧策略（放牧方式和放牧强度）对锡林郭勒草原土壤化学性质影响的数学模型。并请结合附件14中数据预测锡林郭勒草原监测样地(12个放牧小区)在不同放牧强度下2022年土壤同期有机碳、无机碳、全N、土壤C&#x2F;N比等值,并完成下表。</span></h4><p>时间序列自回归</p>
+<h1><span id="问题4">问题4</span></h1><h4><span id="利用沙漠化程度指数预测模型和附件提供数据包括自己收集的数据确定不同放牧强度下监测点的沙漠化程度指数值">利用沙漠化程度指数预测模型和附件提供数据（包括自己收集的数据）确定不同放牧强度下监测点的沙漠化程度指数值。</span></h4><p>影响因子：风速、降水、气温（气象因素附件8）；植被盖度（附件10或6或5）、地表水资源（附件9）、地下水位（附件9）；人口数量、牲畜数量、社会经济水平（附件2）等等。</p>
+<p>PCA加权累加</p>
+<p><img src="/2022/10/06/HWB/image-20221006191041118.png" alt="image-20221006191041118"></p>
+<h4><span id="并请尝试给出定量的土壤板结化定义">并请尝试给出定量的土壤板结化定义</span></h4><p><img src="/2022/10/06/HWB/image-20221006192120031.png" alt="image-20221006192120031"></p>
+<h4><span id="在建立合理的土壤板结化模型基础上结合问题3给出放牧策略模型使得沙漠化程度指数与板结化程度最小">在建立合理的土壤板结化模型基础上结合问题3，给出放牧策略模型，使得沙漠化程度指数与板结化程度最小。</span></h4><p>带入第一题公式和板结化公式，求解S</p>
+<h1><span id="问题5">问题5</span></h1><h4><span id="锡林郭勒草原近10的年降水量包含降雪通常在300-mm-~1200-mm之间请在给定的降水量300mm600mm-900-mm-和1200mm情形下在保持草原可持续发展情况下对实验草场内附件14-15放牧羊的数量进行求解找到最大阈值-注这里计算结果可以不是正整数">锡林郭勒草原近10的年降水量（包含降雪）通常在300 mm ~1200 mm之间，请在给定的降水量（300mm，600mm、900 mm 和1200mm）情形下，在保持草原可持续发展情况下对实验草场内（附件14、15）放牧羊的数量进行求解，找到最大阈值。（注：这里计算结果可以不是正整数）</span></h4><p>筛选出满足降水条件的年份对应的数据。</p>
+<p><img src="/2022/10/06/HWB/image-20221006193918802.png" alt="image-20221006193918802"></p>
+<h1><span id="问题6">问题6</span></h1><h4><span id="在保持附件13的示范牧户放牧策略不变和问题4中得到的放牧方案两种情况下用图示或者动态演示方式分别预测示范区2023年9月土地状态比如土壤肥力变化-土壤湿度-植被覆盖等">在保持附件13的示范牧户放牧策略不变和问题4中得到的放牧方案两种情况下，用图示或者动态演示方式分别预测示范区2023年9月土地状态（比如土壤肥力变化、土壤湿度、植被覆盖等）</span></h4><p>善男先做</p>
+]]></content>
+      <categories>
+        <category>建模</category>
+      </categories>
+      <tags>
+        <tag>建模</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>施磊C++初级STL笔记</title>
     <url>/2023/03/22/cpp_STL_note/</url>
     <content><![CDATA[<!-- toc -->
@@ -73,48 +115,6 @@
       </categories>
       <tags>
         <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《E题1.0》</title>
-    <url>/2022/10/06/HWB/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E9%97%AE%E9%A2%981">问题1</a></li>
-<li><a href="#%E9%97%AE%E9%A2%982">问题2</a></li>
-<li><a href="#%E9%97%AE%E9%A2%983">问题3</a></li>
-<li><a href="#%E9%97%AE%E9%A2%984">问题4</a></li>
-<li><a href="#%E9%97%AE%E9%A2%985">问题5</a></li>
-<li><a href="#%E9%97%AE%E9%A2%986">问题6</a></li>
-</ul>
-<!-- tocstop -->
-
-<span id="more"></span>
-
-<h1><span id="问题1">问题1</span></h1><h4><span id="从机理分析的角度建立不同放牧策略放牧方式和放牧强度对锡林郭勒草原土壤物理性质主要是土壤湿度和植被生物量影响的数学模型">从机理分析的角度，建立不同放牧策略（放牧方式和放牧强度）对锡林郭勒草原土壤物理性质（主要是土壤湿度）和植被生物量影响的数学模型</span></h4><p>筛选出放牧策略（载畜量）、降水、地表蒸发量数据，套用下方公式</p>
-<p>画出植被生物量和单位时间的曲线，可求出对应的单位时间的斜率，推出该时间S和w的关系；</p>
-<p>土壤含水量同理，但要将α换成w的式子；</p>
-<p>画出土壤含水量和单位时间的曲线，可求出对应的单位时间的斜率，推出该时间S和w的关系；</p>
-<p>E(a)直接使用蒸发量代替</p>
-<p><img src="/2022/10/06/HWB/image-20221006201807430.png" alt="image-20221006201807430"></p>
-<h1><span id="问题2">问题2</span></h1><p>先时间序列自回归预测浅层因子，然后用这些浅层因子做自变量做多元回归；</p>
-<p>其中可以使用前十年的单一月份数据，来预测后一年单一月份数据（建12个模型）</p>
-<h1><span id="问题3">问题3</span></h1><h4><span id="从机理分析的角度建立不同放牧策略放牧方式和放牧强度对锡林郭勒草原土壤化学性质影响的数学模型-并请结合附件14中数据预测锡林郭勒草原监测样地12个放牧小区在不同放牧强度下2022年土壤同期有机碳-无机碳-全n-土壤cx2fn比等值并完成下表">从机理分析的角度，建立不同放牧策略（放牧方式和放牧强度）对锡林郭勒草原土壤化学性质影响的数学模型。并请结合附件14中数据预测锡林郭勒草原监测样地(12个放牧小区)在不同放牧强度下2022年土壤同期有机碳、无机碳、全N、土壤C&#x2F;N比等值,并完成下表。</span></h4><p>时间序列自回归</p>
-<h1><span id="问题4">问题4</span></h1><h4><span id="利用沙漠化程度指数预测模型和附件提供数据包括自己收集的数据确定不同放牧强度下监测点的沙漠化程度指数值">利用沙漠化程度指数预测模型和附件提供数据（包括自己收集的数据）确定不同放牧强度下监测点的沙漠化程度指数值。</span></h4><p>影响因子：风速、降水、气温（气象因素附件8）；植被盖度（附件10或6或5）、地表水资源（附件9）、地下水位（附件9）；人口数量、牲畜数量、社会经济水平（附件2）等等。</p>
-<p>PCA加权累加</p>
-<p><img src="/2022/10/06/HWB/image-20221006191041118.png" alt="image-20221006191041118"></p>
-<h4><span id="并请尝试给出定量的土壤板结化定义">并请尝试给出定量的土壤板结化定义</span></h4><p><img src="/2022/10/06/HWB/image-20221006192120031.png" alt="image-20221006192120031"></p>
-<h4><span id="在建立合理的土壤板结化模型基础上结合问题3给出放牧策略模型使得沙漠化程度指数与板结化程度最小">在建立合理的土壤板结化模型基础上结合问题3，给出放牧策略模型，使得沙漠化程度指数与板结化程度最小。</span></h4><p>带入第一题公式和板结化公式，求解S</p>
-<h1><span id="问题5">问题5</span></h1><h4><span id="锡林郭勒草原近10的年降水量包含降雪通常在300-mm-~1200-mm之间请在给定的降水量300mm600mm-900-mm-和1200mm情形下在保持草原可持续发展情况下对实验草场内附件14-15放牧羊的数量进行求解找到最大阈值-注这里计算结果可以不是正整数">锡林郭勒草原近10的年降水量（包含降雪）通常在300 mm ~1200 mm之间，请在给定的降水量（300mm，600mm、900 mm 和1200mm）情形下，在保持草原可持续发展情况下对实验草场内（附件14、15）放牧羊的数量进行求解，找到最大阈值。（注：这里计算结果可以不是正整数）</span></h4><p>筛选出满足降水条件的年份对应的数据。</p>
-<p><img src="/2022/10/06/HWB/image-20221006193918802.png" alt="image-20221006193918802"></p>
-<h1><span id="问题6">问题6</span></h1><h4><span id="在保持附件13的示范牧户放牧策略不变和问题4中得到的放牧方案两种情况下用图示或者动态演示方式分别预测示范区2023年9月土地状态比如土壤肥力变化-土壤湿度-植被覆盖等">在保持附件13的示范牧户放牧策略不变和问题4中得到的放牧方案两种情况下，用图示或者动态演示方式分别预测示范区2023年9月土地状态（比如土壤肥力变化、土壤湿度、植被覆盖等）</span></h4><p>善男先做</p>
-]]></content>
-      <categories>
-        <category>建模</category>
-      </categories>
-      <tags>
-        <tag>建模</tag>
       </tags>
   </entry>
   <entry>
@@ -246,141 +246,6 @@
       </categories>
       <tags>
         <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《High-Fidelity 3D Digital Human Head Creation from RGB-D Selfies》</title>
-    <url>/2023/06/01/review_12_REALY/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#1-%E8%B4%A1%E7%8C%AE">1. 贡献</a></li>
-<li><a href="#2-%E5%8A%A8%E6%9C%BA">2. 动机</a></li>
-<li><a href="#3-%E7%AE%80%E4%BB%8B">3. 简介</a></li>
-<li><a href="#4-%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86">4. 预备知识</a><ul>
-<li><a href="#%E7%AC%A6%E5%8F%B7%E5%AE%9A%E4%B9%89"><strong>符号定义</strong></a></li>
-<li><a href="#3dmm%E8%A1%A5%E5%85%85">3DMM补充</a></li>
-<li><a href="#%E4%B8%80%E4%BA%9B%E6%A0%87%E5%87%86%E7%9A%84evaluation-pipeline">一些标准的evaluation pipeline</a></li>
-<li><a href="#motivation">motivation</a></li>
-</ul>
-</li>
-<li><a href="#5-realya-new-3d-face-benchmark">5. REALY：A New 3D Face Benchmark</a><ul>
-<li><a href="#%E9%80%89%E6%8B%A9hifi3d%E5%9F%BA%E5%BA%95%E4%BD%9C%E4%B8%BA%E7%9B%AE%E6%A0%87%E6%8B%93%E6%89%91%E7%9A%84%E5%8E%9F%E5%9B%A0">选择HIFI3D基底作为目标拓扑的原因</a></li>
-<li><a href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E6%9E%84%E5%BB%BA%E6%AD%A5%E9%AA%A4">数据集构建步骤</a></li>
-<li><a href="#%E6%8C%91%E6%88%98%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">挑战与解决方案</a><ul>
-<li><a href="#%E6%8C%91%E6%88%98%E4%B8%80%E5%8E%9F%E5%A7%8B%E6%89%AB%E6%8F%8F%E5%85%B7%E6%9C%89%E4%B8%8D%E5%90%8C%E7%9A%84%E6%AF%94%E4%BE%8B%E5%92%8C%E5%A7%BF%E5%8A%BF%E5%85%B7%E6%9C%89%E4%B8%8D%E5%87%86%E7%A1%AE%E7%9A%84%E7%A8%80%E7%96%8Fkeypoints%E8%BF%99%E4%BD%BF%E5%BE%97%E5%AE%83%E4%BB%AC%E9%9A%BE%E4%BB%A5%E4%B8%80%E8%87%B4%E5%9C%B0%E5%AF%B9%E9%BD%90">挑战一：原始扫描具有不同的比例和姿势，具有不准确的稀疏keypoints，这使得它们难以一致地对齐。</a></li>
-<li><a href="#%E6%8C%91%E6%88%98%E4%BA%8C%E5%BE%97%E5%88%B0%E9%87%8D%E6%96%B0%E6%8B%93%E6%89%91%E7%9A%84-sl-%E4%B9%8B%E5%90%8E%E5%A6%82%E4%BD%95%E5%87%86%E7%A1%AE%E5%9C%B0%E5%B0%86region-masks%E4%BB%8E-sl%E7%BB%A7%E6%89%BF%E8%87%AA-stemp%E8%BD%AC%E7%A7%BB%E5%88%B0sh">挑战二：得到重新拓扑的 SL 之后，如何准确地将region masks从 SL（继承自 Stemp）转移到SH</a></li>
-</ul>
-</li>
-<li><a href="#hifi3d">HIFI3D++</a></li>
-</ul>
-</li>
-<li><a href="#6-%E5%88%9B%E6%96%B0%E7%9A%84evaluation-pipeline">6 创新的Evaluation pipeline</a></li>
-<li><a href="#7-%E5%AE%9E%E9%AA%8C">7. 实验</a><ul>
-<li><a href="#%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8Cbicp-vs-gicp">消融实验：bICP VS gICP</a></li>
-<li><a href="#%E4%B8%8D%E5%90%8C%E6%96%B9%E6%B3%95%E5%9C%A8realy-benchmark%E4%B8%8A%E7%9A%84%E8%A1%A8%E7%8E%B0">不同方法在REALY benchmark上的表现</a></li>
-<li><a href="#%E4%B8%8D%E5%90%8C3dmm%E5%9C%A8realy%E4%B8%8A%E7%9A%84%E8%A1%A8%E7%8E%B0">不同3DMM在REALY上的表现</a></li>
-</ul>
-</li>
-<li><a href="#8-%E6%80%BB%E7%BB%93">8. 总结</a></li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://realy3dface.com/">REALY (realy3dface.com)</a></p>
-<p>code: <a href="https://github.com/tencent-ailab/hifi3dface"><a href="https://github.com/czh-98/REALY">czh-98&#x2F;REALY: REALY: Rethinking the Evaluation of 3D Face Reconstruction (ECCV 2022) (github.com)</a></a></p>
-<p>ref link:<a href="https://blog.csdn.net/jiafeier_555/article/details/125428388">https://blog.csdn.net/jiafeier_555/article/details/125428388</a></p>
-<span id="more"></span>
-
-<h1><span id="1-贡献">1. 贡献</span></h1><p>提出一个3D face reconstruction的benchmark REALY（Region-aware benchmark based on the LYHM Benchmark）</p>
-<p>REALY，HIFI3D++（3DMM），本文的新evaluation pipeline以开源。</p>
-<h1><span id="2-动机">2. 动机</span></h1><p>人脸重建任务中，不同的数据集，会制约重建方法、评估方法、3DMM基底的发展。</p>
-<p>现有的开源 3D 人脸数据集存在一些不可忽视的缺陷。 例如，面部扫描具有不同的比例和随机姿势，并且提供的关键点不够准确或辨别力不够，这使得将输入形状与预测面部对齐以进行评估变得极其困难。 此外，由于原始面部扫描中缺乏真实标注，标准评估管道依赖于最近邻对应来衡量扫描与估计面部形状之间的相似性，这完全忽略了实体特征并丢弃了人体的几何形状面孔。</p>
-<h1><span id="3-简介">3. 简介</span></h1><p>为了填补这一空白，提出了一个名为 REALY 的新基准，用于评估 3D 人脸重建方法。  REALY 包含来自 <strong>LYHM 数据集</strong>的 100 个人的 3D 人脸扫描，其中人脸扫描被一致地<strong>重新缩放、全局对齐，并展开成拓扑结构一致的mesh</strong>。 更重要的是，由于本文已经<strong>预定义了重新拓扑网格模板的面部关键点keypoints和掩码masks</strong>，因此<strong>可以将keypoints和masks转移到原始面部扫描结构</strong>中。 在这种情况下，本文即获得了原始原始面部扫描的高质量面部关键点和蒙版，这使我们能够对估计的 3D 面部形状执行更准确的对齐和细粒度的区域评估。</p>
-<p>我们的基准包含来自不同种族、年龄和性别群体的个体。 利用为 REALY 构建的<strong>重新拓扑步骤（已开源）</strong>，我们通过对齐和重新拓扑多个 3D 人脸数据集，进一步提供了一个名为 HIFI3D++ 的 3DMM 基底。 我们进行了广泛的实验来评估最先进的 3D 人脸重建方法和 3DMM 基底。</p>
-<p><img src="/2023/06/01/review_12_REALY/image-20230601193651526.png" alt="image-20230601193651526"></p>
-<h1><span id="4-预备知识">4. 预备知识</span></h1><h2><span id="符号定义"><strong>符号定义</strong></span></h2><p><img src="/2023/06/01/review_12_REALY/image-20230601201029200.png" alt="image-20230601201029200"></p>
-<p>三个特殊的face shape，以及在不同face shape上的keypoints和regions</p>
-<p><img src="/review_12_REALY/image-20230601201913382.png" alt="image-20230601201913382"></p>
-<p><img src="/review_12_REALY/image-20230601201923089.png" alt="image-20230601201923089"></p>
-<p><img src="/2023/06/01/review_12_REALY/image-20230601202527762.png" alt="image-20230601202527762"></p>
-<p><strong>NMSE用于度量两个surfaces之间的距离</strong></p>
-<p><img src="/2023/06/01/review_12_REALY/image-20230601202606377.png" alt="image-20230601202606377"></p>
-<p><strong>ICP可用于通过迭代求解刚性变换和最近邻映射来对齐两个shape，以最小化NMSE</strong></p>
-<h2><span id="3dmm补充">3DMM补充</span></h2><p>一些开源的3DMM数据：</p>
-<p><img src="/2023/06/01/review_12_REALY/image-20230601202856040.png" alt="image-20230601202856040"></p>
-<h2><span id="一些标准的evaluation-pipeline">一些标准的evaluation pipeline</span></h2><p>一些数据集还提供ground truth scan数据</p>
-<p><img src="/2023/06/01/review_12_REALY/image-20230601203122686.png" alt="image-20230601203122686"></p>
-<h2><span id="motivation">motivation</span></h2><h4><span id="传统standard-evaluation-pipeline的缺陷">传统standard evaluation pipeline的缺陷</span></h4><p><img src="/2023/06/01/review_12_REALY/image-20230601204718654.png" alt="image-20230601204718654"></p>
-<p>如上图，使用standard evalution pipeline，高分辨的shape和gt shape的差异反而要比低分辨率的shape的高。所以<strong>考虑regions的对齐</strong>比较合理。</p>
-<p><img src="/2023/06/01/review_12_REALY/image-20230601210609441.png" alt="image-20230601210609441"></p>
-<p>如上图，x对应的最近邻点是y1，而根据语义x应该与语义y2计算NMSE。</p>
-<p><strong>结论</strong></p>
-<p><strong>需要考虑基于region和双向对齐</strong></p>
-<p>&#x3D;》提出真实语义区域的region masks的shape进行度量&#x3D;》现存数据集都未设定这样的规则&#x3D;》本文方法</p>
-<h1><span id="5-realya-new-3d-face-benchmark">5. REALY：A New 3D Face Benchmark</span></h1><p>100个个体</p>
-<p>每个个体包含高分辨率shape（来自LYHN的aligned 3D scan）和低分辨率shape（使用HIFI3D基底拓扑进行重新拓扑化）</p>
-<p>所有shape始终等比例缩放对齐，</p>
-<p>同时每个shape都有68个keypoints和4个region masks</p>
-<p>对于每个个体，使用精心设计的照明条件和gt相机参数渲染出5张高质量的多视图图像（包括1张正面图像）</p>
-<p><img src="/2023/06/01/review_12_REALY/image-20230601212010004.png" alt="image-20230601212010004"></p>
-<h2><span id="选择hifi3d基底作为目标拓扑的原因">选择HIFI3D基底作为目标拓扑的原因</span></h2><p>LYHM 在眼睛和嘴巴的边界处有过密的采样；</p>
-<p>LSFM 没有边缘循环来定义眼睛和嘴巴的轮廓；</p>
-<p>FLAME的三角剖分不自然，无法模拟一些逼真的肌肉动作，比如抬眉毛。 作为比较，HIFI3D 具有更好的三角剖分和平衡采样，可以做出逼真和细腻的表达。 </p>
-<p>此外，HIFI3D还有眼球、嘴巴内部结构、肩部区域等，这些都将有利于下游应用。</p>
-<p><img src="/2023/06/01/review_12_REALY/image-20230601220745894.png" alt="image-20230601220745894"></p>
-<h2><span id="数据集构建步骤">数据集构建步骤</span></h2><p>第一，从 LYHM 收集 1235 个scans数据，并在 HIFI3D 拓扑中准备<strong>模板形状 Stemp</strong>，其中<strong>预定义了 68 个关键点 Ktemp 和 4 个区域掩码 Rtemp</strong>（包括鼻子、嘴巴、前额和脸颊区域）。</p>
-<p>第二，将输入扫描重新缩放并严格对齐到模板形状 Stemp，从而生成我们的真实高分辨率网格 SH（即<strong>对齐扫描</strong>）。 </p>
-<p>第三，定义一个评估区域（有相关论文），该区域是一个以鼻尖为中心的圆盘。</p>
-<p>第四，将 Stemp“包装”（即<strong>执行非刚性配准</strong>）到每个 SH 以获得重新拓扑化的 SL，使得 SL 具有与 Stemp 相同的拓扑但反映 SH 的形状。（<strong>高分配准低分</strong>） 请注意，我们有关键点 KL &#x3D; Ktemp 和区域 RL &#x3D; Rtemp，因为 <strong>SL 和 Stemp 共享相同的 HIFI3D 拓扑</strong></p>
-<p>第五，将每个人的 KL 和 RL 从 SL 转移到 SH。（<strong>低分的region和mask转移到高分</strong>） 我们还设置了一个渲染管道，用于为带纹理的高分辨率网格 SH 合成多视图图像。 这种受控环境使REALY能够专注于反映不同方法的重建能力。<br>第六，过滤掉wrapping error（这里不理解）大于 0.2mm 的样本，并请具有 3 年建模经验的专家艺术家从所有处理过的扫描中选择 100 个具有最高模型质量的个体，跨越不同的性别、种族和年龄，以获得我们的真正的基准（<strong>最终人工筛选高质量模型</strong>）。</p>
-<p><img src="/2023/06/01/review_12_REALY/image-20230601220904606.png" alt="image-20230601220904606"></p>
-<p><img src="/2023/06/01/review_12_REALY/image-20230601212947987.png" alt="image-20230601212947987"></p>
-<h2><span id="挑战与解决方案">挑战与解决方案</span></h2><h3><span id="挑战一原始扫描具有不同的比例和姿势具有不准确的稀疏keypoints这使得它们难以一致地对齐">挑战一：原始扫描具有不同的比例和姿势，具有不准确的稀疏keypoints，这使得它们难以一致地对齐。</span></h3><p>为了解决这个问题，我们迭代以下步骤直到收敛：</p>
-<p>第一，渲染一张高分shape的前脸、带纹理的图像（使用initial&#x2F;estimated transformation）来对齐SH到Stemp（注意正面姿势需要alignment transformation，因为对于给定的scan数据，正面姿势是未知的需要进行统一对齐）；</p>
-<p>第二，使用sota的landmark detector来检测这张渲染图像的2D 面部keypoints；</p>
-<p>第三，使用渲染相机视角将 2D 关键点投影到 3D； </p>
-<p>第四，使用 SH 上的投影 3D 关键点与 Stemp 上已知的 3D 关键点之间的对应关系，更新从 SH 到 Stemp 的对齐变换。</p>
-<h3><span id="挑战二得到重新拓扑的-sl-之后如何准确地将region-masks从-sl继承自-stemp转移到sh">挑战二：得到重新拓扑的 SL 之后，如何准确地将region masks从 SL（继承自 Stemp）转移到SH</span></h3><p> 一种天真的解决方案是使用从 SL 到 SH 的最近邻映射来传输区域掩码。 然而，由于 SH 的分辨率可以比 SL 的分辨率大 50 倍，这种天真的解决方案将引入断开连接和嘈杂的区域掩码。 为避免此类缺陷，我们从两个方向使用顶点到点映射来查找 SH 上的候选区域。<br>由于在从 SH 到 SL 的映射过程中可以建立更多的对应关系，因此可以获得更高质量、更平滑的区域掩码。 最后，我们过滤掉噪声区域（例如，鼻孔、眼球）并返回最大的连接区域。</p>
-<h2><span id="hifi3d">HIFI3D++</span></h2><p>通过以上过程，我们可以通过对更多的3D人脸模型进行重新拓扑来进一步构建新的3DMM基底。</p>
-<p>具体来说，基于来自 HIFI3D 的 200 个个体，我们另外处理和重新拓扑来自 FaceScape 数据集的 846 个个体的 3D 人脸模型到 HIFI3D 拓扑中。 连同上述来自 LYHM 的 1235 个个体的处理模型，我们收集并选择了 1957 个最具代表性的mesh数据。 </p>
-<p>然后，我们应用 PCA 获得我们的新基底，包含 526 个 PC（具有 99.9% 的累积解释方差），我们将其命名为 HIFI3D++。</p>
-<p>下图显示了 HIFI3D++ 与其他 3DMM 的比较。 请注意，以前的 3DMM 或多或少存在种族偏见。 例如，BFM  主要由欧洲人构建，FLAME 由美国和欧洲的扫描构建，而 HIFI3D 和 FS 由亚洲人的扫描构建。<br>LSFM 和 FLAME 分别包含 50 : 1 和 12 : 1 的白种人和亚洲人。 相比之下，HIFI3D++ 由跨越更平衡的种族群体的高质量模型构建，确保白种人和亚洲人（加上来自其他种族的一些受试者）之间的比例为 1：1。</p>
-<p><img src="/2023/06/01/review_12_REALY/image-20230601222014228.png" alt="image-20230601222014228"></p>
-<h1><span id="6-创新的evaluation-pipeline">6 创新的Evaluation pipeline</span></h1><p><strong>本文提出的pipeline就是采用rICP+bICP取代standard pipeline的直接gICP</strong></p>
-<p>在REALY的基础上，我们提出一个新的评价流程避免先前评价流程的问题，具体而言，我们的评价流程包含如下两个步骤：</p>
-<p><strong>（该两步分别对应上文的motivation）</strong></p>
-<p><strong>第一，局部区域的对齐 region-aware ICP（对齐region）</strong></p>
-<p>考虑到不同区域的重建质量会影响全局的对齐结果，由于我们的benchmark得到了不同脸部区域的mask，因此我们可以借助这个信息将predicted mesh对齐到ground-truth scan的特定区域，在error计算时只计算ground-truth scan上的特定区域与predicted mesh之间的误差，而不考虑脸部其他区域对于对齐结果以及误差计算的影响。</p>
-<p><img src="/2023/06/01/review_12_REALY/image-20230601223856306.png" alt="image-20230601223856306"></p>
-<p><strong>第二，对应关系的建立 non-rigid and bidirectional ICP（构建点对）</strong></p>
-<p>在局部对齐的基础上，我们需要建立ground-truth scan某一区域上的每一个点与predicted mesh之间的对应点并计算两者的误差。考虑到先前基于最近点的方式存在的问题，我们提出一个新的对应关系的建立方法，提高了关键点语义信息的一致性。</p>
-<p><img src="/2023/06/01/review_12_REALY/image-20230601223904991.png" alt="image-20230601223904991"></p>
-<p>具体而言，我们<strong>首先通过最近点建立初步的对应关系（region-aware ICP）</strong>；随后<strong>借助non-rigid ICP将ground-truth scan某一区域变形到predicted mesh</strong>上，由于变形后的区域与predicted mesh已经贴合，因为在变形过程中考虑了具备语义信息的关键点损失，所以这时的对应关系相比于原始的最近点的对应关系具有更好的语义关系的一致性（如，图3中脸部关键点的一致性），从而我们<strong>对初始的对应关系进行更新</strong>；最后，由于变形前后的拓扑形状的一致性，我们能够<strong>借助更新后的对应关系计算原始的ground-truth scan区域与局部对齐的mesh之间的最终误差</strong>。</p>
-<p><strong>下图为三种ICP后gt和predicted的关联度</strong></p>
-<p><img src="/2023/06/01/review_12_REALY/image-20230601223102196.png" alt="image-20230601223102196"></p>
-<h1><span id="7-实验">7. 实验</span></h1><h2><span id="消融实验bicp-vs-gicp">消融实验：bICP VS gICP</span></h2><p><img src="/2023/06/01/review_12_REALY/image-20230604150316983.png" alt="image-20230604150316983"></p>
-<p>从图4来看，全局的对齐策略由于局部区域的改变容易导致全局误差的变化，而我们的对齐策略则只聚焦于特定区域，其中对角线的error map表明误差较大的区域，而非对角线的error map的误差较小，对应没有发生变化的区域。</p>
-<p><img src="/2023/06/01/review_12_REALY/image-20230604150534367.png" alt="image-20230604150534367"></p>
-<p>从表2来看，我们的对齐结果通过ground-truth的对应点计算得到的误差与真实的误差更为接近，而全局的对齐策略则导致误差与真实误差不匹配。</p>
-<p>从表3来看，我们的对应点计算策略带来的误差要显著小于全局对齐后最近点获得的对应点。实验结果表明，我们的评价流程不仅能够聚焦到脸部区域有差异的部分(图4和表2的对角线)，并且我们的对应关系建立更加准确(表3)。</p>
-<h2><span id="不同方法在realy-benchmark上的表现">不同方法在REALY benchmark上的表现</span></h2><p>具体可见REALY官网列表</p>
-<p>我们对比了先前的评价流程与我们提出的评价流程在REALY benchmark上的表现。对于先前的评价方法，我们从两个方向(即ground-truth scan的每个点与predicted mesh建立对应关系，以及predicted mesh每个点与ground-truth scan建立对应关系)作为对比，定量与定性的比较如表4和图5所示。</p>
-<p><img src="/2023/06/01/review_12_REALY/image-20230604151228612.png" alt="image-20230604151228612"></p>
-<p><img src="/2023/06/01/review_12_REALY/image-20230604151250890.png" alt="image-20230604151250890"></p>
-<p>我们通过user study投票选出各组最好(*)&#x2F;次好(†)的人脸，通过比较不同评价流程选出的最好的人脸(橙、蓝、紫框)可以发现，我们的评价流程（橙框）选出的最好的人脸与user study的投票结果匹配程度更高。并且，我们的评价流程给出了细粒度的评测结果，即：对不同的人脸区域都能进行定量的评价和比较。</p>
-<h2><span id="不同3dmm在realy上的表现">不同3DMM在REALY上的表现</span></h2><p>借助REALY benchmark，本文采用RGB(-D) Fitting的方式对不同3DMM的表达能力进行了评价，定量与定性的比较如表5和图8所示</p>
-<p><img src="/2023/06/01/review_12_REALY/image-20230604151640859.png" alt="image-20230604151640859"></p>
-<p><img src="/2023/06/01/review_12_REALY/image-20230604151657772.png" alt="image-20230604151657772"></p>
-<p>定量和定性的结果表明，我们的3DMM在REALY上取得了更优的重建效果，并且，通过不同方法的比较表明，RGB-D Fitting的结果要显著优于目前最好的重建算法，3D人脸重建任务仍有很大的提升空间。</p>
-<p>为了进一步证明HIFI3D++的表达能力，我们只用顶点损失，根据最小二乘的方式拟合一组mesh，对HIFI3D&#x2F;HIFI3D(A)&#x2F;HIFI3D++进行比较，如图9所示。</p>
-<p><img src="/2023/06/01/review_12_REALY/image-20230604151756157.png" alt="image-20230604151756157"></p>
-<h1><span id="8-总结">8. 总结</span></h1><p>本文是我们对3D人脸重建评价的重新思考和探索。针对先前的评价指标无法准确衡量重建mesh与ground-truth相似性的问题，我们构建了一个新的数据集——REALY，包含更加丰富以及高质量的脸部区域信息，并借助新的评价流程对先前的数十个重建算法、3DMM进行了评价。</p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>3DMM</tag>
       </tags>
   </entry>
   <entry>
@@ -581,6 +446,141 @@
       </tags>
   </entry>
   <entry>
+    <title>《High-Fidelity 3D Digital Human Head Creation from RGB-D Selfies》</title>
+    <url>/2023/06/01/review_12_REALY/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#1-%E8%B4%A1%E7%8C%AE">1. 贡献</a></li>
+<li><a href="#2-%E5%8A%A8%E6%9C%BA">2. 动机</a></li>
+<li><a href="#3-%E7%AE%80%E4%BB%8B">3. 简介</a></li>
+<li><a href="#4-%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86">4. 预备知识</a><ul>
+<li><a href="#%E7%AC%A6%E5%8F%B7%E5%AE%9A%E4%B9%89"><strong>符号定义</strong></a></li>
+<li><a href="#3dmm%E8%A1%A5%E5%85%85">3DMM补充</a></li>
+<li><a href="#%E4%B8%80%E4%BA%9B%E6%A0%87%E5%87%86%E7%9A%84evaluation-pipeline">一些标准的evaluation pipeline</a></li>
+<li><a href="#motivation">motivation</a></li>
+</ul>
+</li>
+<li><a href="#5-realya-new-3d-face-benchmark">5. REALY：A New 3D Face Benchmark</a><ul>
+<li><a href="#%E9%80%89%E6%8B%A9hifi3d%E5%9F%BA%E5%BA%95%E4%BD%9C%E4%B8%BA%E7%9B%AE%E6%A0%87%E6%8B%93%E6%89%91%E7%9A%84%E5%8E%9F%E5%9B%A0">选择HIFI3D基底作为目标拓扑的原因</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E6%9E%84%E5%BB%BA%E6%AD%A5%E9%AA%A4">数据集构建步骤</a></li>
+<li><a href="#%E6%8C%91%E6%88%98%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">挑战与解决方案</a><ul>
+<li><a href="#%E6%8C%91%E6%88%98%E4%B8%80%E5%8E%9F%E5%A7%8B%E6%89%AB%E6%8F%8F%E5%85%B7%E6%9C%89%E4%B8%8D%E5%90%8C%E7%9A%84%E6%AF%94%E4%BE%8B%E5%92%8C%E5%A7%BF%E5%8A%BF%E5%85%B7%E6%9C%89%E4%B8%8D%E5%87%86%E7%A1%AE%E7%9A%84%E7%A8%80%E7%96%8Fkeypoints%E8%BF%99%E4%BD%BF%E5%BE%97%E5%AE%83%E4%BB%AC%E9%9A%BE%E4%BB%A5%E4%B8%80%E8%87%B4%E5%9C%B0%E5%AF%B9%E9%BD%90">挑战一：原始扫描具有不同的比例和姿势，具有不准确的稀疏keypoints，这使得它们难以一致地对齐。</a></li>
+<li><a href="#%E6%8C%91%E6%88%98%E4%BA%8C%E5%BE%97%E5%88%B0%E9%87%8D%E6%96%B0%E6%8B%93%E6%89%91%E7%9A%84-sl-%E4%B9%8B%E5%90%8E%E5%A6%82%E4%BD%95%E5%87%86%E7%A1%AE%E5%9C%B0%E5%B0%86region-masks%E4%BB%8E-sl%E7%BB%A7%E6%89%BF%E8%87%AA-stemp%E8%BD%AC%E7%A7%BB%E5%88%B0sh">挑战二：得到重新拓扑的 SL 之后，如何准确地将region masks从 SL（继承自 Stemp）转移到SH</a></li>
+</ul>
+</li>
+<li><a href="#hifi3d">HIFI3D++</a></li>
+</ul>
+</li>
+<li><a href="#6-%E5%88%9B%E6%96%B0%E7%9A%84evaluation-pipeline">6 创新的Evaluation pipeline</a></li>
+<li><a href="#7-%E5%AE%9E%E9%AA%8C">7. 实验</a><ul>
+<li><a href="#%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8Cbicp-vs-gicp">消融实验：bICP VS gICP</a></li>
+<li><a href="#%E4%B8%8D%E5%90%8C%E6%96%B9%E6%B3%95%E5%9C%A8realy-benchmark%E4%B8%8A%E7%9A%84%E8%A1%A8%E7%8E%B0">不同方法在REALY benchmark上的表现</a></li>
+<li><a href="#%E4%B8%8D%E5%90%8C3dmm%E5%9C%A8realy%E4%B8%8A%E7%9A%84%E8%A1%A8%E7%8E%B0">不同3DMM在REALY上的表现</a></li>
+</ul>
+</li>
+<li><a href="#8-%E6%80%BB%E7%BB%93">8. 总结</a></li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://realy3dface.com/">REALY (realy3dface.com)</a></p>
+<p>code: <a href="https://github.com/tencent-ailab/hifi3dface"><a href="https://github.com/czh-98/REALY">czh-98&#x2F;REALY: REALY: Rethinking the Evaluation of 3D Face Reconstruction (ECCV 2022) (github.com)</a></a></p>
+<p>ref link:<a href="https://blog.csdn.net/jiafeier_555/article/details/125428388">https://blog.csdn.net/jiafeier_555/article/details/125428388</a></p>
+<span id="more"></span>
+
+<h1><span id="1-贡献">1. 贡献</span></h1><p>提出一个3D face reconstruction的benchmark REALY（Region-aware benchmark based on the LYHM Benchmark）</p>
+<p>REALY，HIFI3D++（3DMM），本文的新evaluation pipeline以开源。</p>
+<h1><span id="2-动机">2. 动机</span></h1><p>人脸重建任务中，不同的数据集，会制约重建方法、评估方法、3DMM基底的发展。</p>
+<p>现有的开源 3D 人脸数据集存在一些不可忽视的缺陷。 例如，面部扫描具有不同的比例和随机姿势，并且提供的关键点不够准确或辨别力不够，这使得将输入形状与预测面部对齐以进行评估变得极其困难。 此外，由于原始面部扫描中缺乏真实标注，标准评估管道依赖于最近邻对应来衡量扫描与估计面部形状之间的相似性，这完全忽略了实体特征并丢弃了人体的几何形状面孔。</p>
+<h1><span id="3-简介">3. 简介</span></h1><p>为了填补这一空白，提出了一个名为 REALY 的新基准，用于评估 3D 人脸重建方法。  REALY 包含来自 <strong>LYHM 数据集</strong>的 100 个人的 3D 人脸扫描，其中人脸扫描被一致地<strong>重新缩放、全局对齐，并展开成拓扑结构一致的mesh</strong>。 更重要的是，由于本文已经<strong>预定义了重新拓扑网格模板的面部关键点keypoints和掩码masks</strong>，因此<strong>可以将keypoints和masks转移到原始面部扫描结构</strong>中。 在这种情况下，本文即获得了原始原始面部扫描的高质量面部关键点和蒙版，这使我们能够对估计的 3D 面部形状执行更准确的对齐和细粒度的区域评估。</p>
+<p>我们的基准包含来自不同种族、年龄和性别群体的个体。 利用为 REALY 构建的<strong>重新拓扑步骤（已开源）</strong>，我们通过对齐和重新拓扑多个 3D 人脸数据集，进一步提供了一个名为 HIFI3D++ 的 3DMM 基底。 我们进行了广泛的实验来评估最先进的 3D 人脸重建方法和 3DMM 基底。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601193651526.png" alt="image-20230601193651526"></p>
+<h1><span id="4-预备知识">4. 预备知识</span></h1><h2><span id="符号定义"><strong>符号定义</strong></span></h2><p><img src="/2023/06/01/review_12_REALY/image-20230601201029200.png" alt="image-20230601201029200"></p>
+<p>三个特殊的face shape，以及在不同face shape上的keypoints和regions</p>
+<p><img src="/review_12_REALY/image-20230601201913382.png" alt="image-20230601201913382"></p>
+<p><img src="/review_12_REALY/image-20230601201923089.png" alt="image-20230601201923089"></p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601202527762.png" alt="image-20230601202527762"></p>
+<p><strong>NMSE用于度量两个surfaces之间的距离</strong></p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601202606377.png" alt="image-20230601202606377"></p>
+<p><strong>ICP可用于通过迭代求解刚性变换和最近邻映射来对齐两个shape，以最小化NMSE</strong></p>
+<h2><span id="3dmm补充">3DMM补充</span></h2><p>一些开源的3DMM数据：</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601202856040.png" alt="image-20230601202856040"></p>
+<h2><span id="一些标准的evaluation-pipeline">一些标准的evaluation pipeline</span></h2><p>一些数据集还提供ground truth scan数据</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601203122686.png" alt="image-20230601203122686"></p>
+<h2><span id="motivation">motivation</span></h2><h4><span id="传统standard-evaluation-pipeline的缺陷">传统standard evaluation pipeline的缺陷</span></h4><p><img src="/2023/06/01/review_12_REALY/image-20230601204718654.png" alt="image-20230601204718654"></p>
+<p>如上图，使用standard evalution pipeline，高分辨的shape和gt shape的差异反而要比低分辨率的shape的高。所以<strong>考虑regions的对齐</strong>比较合理。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601210609441.png" alt="image-20230601210609441"></p>
+<p>如上图，x对应的最近邻点是y1，而根据语义x应该与语义y2计算NMSE。</p>
+<p><strong>结论</strong></p>
+<p><strong>需要考虑基于region和双向对齐</strong></p>
+<p>&#x3D;》提出真实语义区域的region masks的shape进行度量&#x3D;》现存数据集都未设定这样的规则&#x3D;》本文方法</p>
+<h1><span id="5-realya-new-3d-face-benchmark">5. REALY：A New 3D Face Benchmark</span></h1><p>100个个体</p>
+<p>每个个体包含高分辨率shape（来自LYHN的aligned 3D scan）和低分辨率shape（使用HIFI3D基底拓扑进行重新拓扑化）</p>
+<p>所有shape始终等比例缩放对齐，</p>
+<p>同时每个shape都有68个keypoints和4个region masks</p>
+<p>对于每个个体，使用精心设计的照明条件和gt相机参数渲染出5张高质量的多视图图像（包括1张正面图像）</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601212010004.png" alt="image-20230601212010004"></p>
+<h2><span id="选择hifi3d基底作为目标拓扑的原因">选择HIFI3D基底作为目标拓扑的原因</span></h2><p>LYHM 在眼睛和嘴巴的边界处有过密的采样；</p>
+<p>LSFM 没有边缘循环来定义眼睛和嘴巴的轮廓；</p>
+<p>FLAME的三角剖分不自然，无法模拟一些逼真的肌肉动作，比如抬眉毛。 作为比较，HIFI3D 具有更好的三角剖分和平衡采样，可以做出逼真和细腻的表达。 </p>
+<p>此外，HIFI3D还有眼球、嘴巴内部结构、肩部区域等，这些都将有利于下游应用。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601220745894.png" alt="image-20230601220745894"></p>
+<h2><span id="数据集构建步骤">数据集构建步骤</span></h2><p>第一，从 LYHM 收集 1235 个scans数据，并在 HIFI3D 拓扑中准备<strong>模板形状 Stemp</strong>，其中<strong>预定义了 68 个关键点 Ktemp 和 4 个区域掩码 Rtemp</strong>（包括鼻子、嘴巴、前额和脸颊区域）。</p>
+<p>第二，将输入扫描重新缩放并严格对齐到模板形状 Stemp，从而生成我们的真实高分辨率网格 SH（即<strong>对齐扫描</strong>）。 </p>
+<p>第三，定义一个评估区域（有相关论文），该区域是一个以鼻尖为中心的圆盘。</p>
+<p>第四，将 Stemp“包装”（即<strong>执行非刚性配准</strong>）到每个 SH 以获得重新拓扑化的 SL，使得 SL 具有与 Stemp 相同的拓扑但反映 SH 的形状。（<strong>高分配准低分</strong>） 请注意，我们有关键点 KL &#x3D; Ktemp 和区域 RL &#x3D; Rtemp，因为 <strong>SL 和 Stemp 共享相同的 HIFI3D 拓扑</strong></p>
+<p>第五，将每个人的 KL 和 RL 从 SL 转移到 SH。（<strong>低分的region和mask转移到高分</strong>） 我们还设置了一个渲染管道，用于为带纹理的高分辨率网格 SH 合成多视图图像。 这种受控环境使REALY能够专注于反映不同方法的重建能力。<br>第六，过滤掉wrapping error（这里不理解）大于 0.2mm 的样本，并请具有 3 年建模经验的专家艺术家从所有处理过的扫描中选择 100 个具有最高模型质量的个体，跨越不同的性别、种族和年龄，以获得我们的真正的基准（<strong>最终人工筛选高质量模型</strong>）。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601220904606.png" alt="image-20230601220904606"></p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601212947987.png" alt="image-20230601212947987"></p>
+<h2><span id="挑战与解决方案">挑战与解决方案</span></h2><h3><span id="挑战一原始扫描具有不同的比例和姿势具有不准确的稀疏keypoints这使得它们难以一致地对齐">挑战一：原始扫描具有不同的比例和姿势，具有不准确的稀疏keypoints，这使得它们难以一致地对齐。</span></h3><p>为了解决这个问题，我们迭代以下步骤直到收敛：</p>
+<p>第一，渲染一张高分shape的前脸、带纹理的图像（使用initial&#x2F;estimated transformation）来对齐SH到Stemp（注意正面姿势需要alignment transformation，因为对于给定的scan数据，正面姿势是未知的需要进行统一对齐）；</p>
+<p>第二，使用sota的landmark detector来检测这张渲染图像的2D 面部keypoints；</p>
+<p>第三，使用渲染相机视角将 2D 关键点投影到 3D； </p>
+<p>第四，使用 SH 上的投影 3D 关键点与 Stemp 上已知的 3D 关键点之间的对应关系，更新从 SH 到 Stemp 的对齐变换。</p>
+<h3><span id="挑战二得到重新拓扑的-sl-之后如何准确地将region-masks从-sl继承自-stemp转移到sh">挑战二：得到重新拓扑的 SL 之后，如何准确地将region masks从 SL（继承自 Stemp）转移到SH</span></h3><p> 一种天真的解决方案是使用从 SL 到 SH 的最近邻映射来传输区域掩码。 然而，由于 SH 的分辨率可以比 SL 的分辨率大 50 倍，这种天真的解决方案将引入断开连接和嘈杂的区域掩码。 为避免此类缺陷，我们从两个方向使用顶点到点映射来查找 SH 上的候选区域。<br>由于在从 SH 到 SL 的映射过程中可以建立更多的对应关系，因此可以获得更高质量、更平滑的区域掩码。 最后，我们过滤掉噪声区域（例如，鼻孔、眼球）并返回最大的连接区域。</p>
+<h2><span id="hifi3d">HIFI3D++</span></h2><p>通过以上过程，我们可以通过对更多的3D人脸模型进行重新拓扑来进一步构建新的3DMM基底。</p>
+<p>具体来说，基于来自 HIFI3D 的 200 个个体，我们另外处理和重新拓扑来自 FaceScape 数据集的 846 个个体的 3D 人脸模型到 HIFI3D 拓扑中。 连同上述来自 LYHM 的 1235 个个体的处理模型，我们收集并选择了 1957 个最具代表性的mesh数据。 </p>
+<p>然后，我们应用 PCA 获得我们的新基底，包含 526 个 PC（具有 99.9% 的累积解释方差），我们将其命名为 HIFI3D++。</p>
+<p>下图显示了 HIFI3D++ 与其他 3DMM 的比较。 请注意，以前的 3DMM 或多或少存在种族偏见。 例如，BFM  主要由欧洲人构建，FLAME 由美国和欧洲的扫描构建，而 HIFI3D 和 FS 由亚洲人的扫描构建。<br>LSFM 和 FLAME 分别包含 50 : 1 和 12 : 1 的白种人和亚洲人。 相比之下，HIFI3D++ 由跨越更平衡的种族群体的高质量模型构建，确保白种人和亚洲人（加上来自其他种族的一些受试者）之间的比例为 1：1。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601222014228.png" alt="image-20230601222014228"></p>
+<h1><span id="6-创新的evaluation-pipeline">6 创新的Evaluation pipeline</span></h1><p><strong>本文提出的pipeline就是采用rICP+bICP取代standard pipeline的直接gICP</strong></p>
+<p>在REALY的基础上，我们提出一个新的评价流程避免先前评价流程的问题，具体而言，我们的评价流程包含如下两个步骤：</p>
+<p><strong>（该两步分别对应上文的motivation）</strong></p>
+<p><strong>第一，局部区域的对齐 region-aware ICP（对齐region）</strong></p>
+<p>考虑到不同区域的重建质量会影响全局的对齐结果，由于我们的benchmark得到了不同脸部区域的mask，因此我们可以借助这个信息将predicted mesh对齐到ground-truth scan的特定区域，在error计算时只计算ground-truth scan上的特定区域与predicted mesh之间的误差，而不考虑脸部其他区域对于对齐结果以及误差计算的影响。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601223856306.png" alt="image-20230601223856306"></p>
+<p><strong>第二，对应关系的建立 non-rigid and bidirectional ICP（构建点对）</strong></p>
+<p>在局部对齐的基础上，我们需要建立ground-truth scan某一区域上的每一个点与predicted mesh之间的对应点并计算两者的误差。考虑到先前基于最近点的方式存在的问题，我们提出一个新的对应关系的建立方法，提高了关键点语义信息的一致性。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601223904991.png" alt="image-20230601223904991"></p>
+<p>具体而言，我们<strong>首先通过最近点建立初步的对应关系（region-aware ICP）</strong>；随后<strong>借助non-rigid ICP将ground-truth scan某一区域变形到predicted mesh</strong>上，由于变形后的区域与predicted mesh已经贴合，因为在变形过程中考虑了具备语义信息的关键点损失，所以这时的对应关系相比于原始的最近点的对应关系具有更好的语义关系的一致性（如，图3中脸部关键点的一致性），从而我们<strong>对初始的对应关系进行更新</strong>；最后，由于变形前后的拓扑形状的一致性，我们能够<strong>借助更新后的对应关系计算原始的ground-truth scan区域与局部对齐的mesh之间的最终误差</strong>。</p>
+<p><strong>下图为三种ICP后gt和predicted的关联度</strong></p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601223102196.png" alt="image-20230601223102196"></p>
+<h1><span id="7-实验">7. 实验</span></h1><h2><span id="消融实验bicp-vs-gicp">消融实验：bICP VS gICP</span></h2><p><img src="/2023/06/01/review_12_REALY/image-20230604150316983.png" alt="image-20230604150316983"></p>
+<p>从图4来看，全局的对齐策略由于局部区域的改变容易导致全局误差的变化，而我们的对齐策略则只聚焦于特定区域，其中对角线的error map表明误差较大的区域，而非对角线的error map的误差较小，对应没有发生变化的区域。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230604150534367.png" alt="image-20230604150534367"></p>
+<p>从表2来看，我们的对齐结果通过ground-truth的对应点计算得到的误差与真实的误差更为接近，而全局的对齐策略则导致误差与真实误差不匹配。</p>
+<p>从表3来看，我们的对应点计算策略带来的误差要显著小于全局对齐后最近点获得的对应点。实验结果表明，我们的评价流程不仅能够聚焦到脸部区域有差异的部分(图4和表2的对角线)，并且我们的对应关系建立更加准确(表3)。</p>
+<h2><span id="不同方法在realy-benchmark上的表现">不同方法在REALY benchmark上的表现</span></h2><p>具体可见REALY官网列表</p>
+<p>我们对比了先前的评价流程与我们提出的评价流程在REALY benchmark上的表现。对于先前的评价方法，我们从两个方向(即ground-truth scan的每个点与predicted mesh建立对应关系，以及predicted mesh每个点与ground-truth scan建立对应关系)作为对比，定量与定性的比较如表4和图5所示。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230604151228612.png" alt="image-20230604151228612"></p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230604151250890.png" alt="image-20230604151250890"></p>
+<p>我们通过user study投票选出各组最好(*)&#x2F;次好(†)的人脸，通过比较不同评价流程选出的最好的人脸(橙、蓝、紫框)可以发现，我们的评价流程（橙框）选出的最好的人脸与user study的投票结果匹配程度更高。并且，我们的评价流程给出了细粒度的评测结果，即：对不同的人脸区域都能进行定量的评价和比较。</p>
+<h2><span id="不同3dmm在realy上的表现">不同3DMM在REALY上的表现</span></h2><p>借助REALY benchmark，本文采用RGB(-D) Fitting的方式对不同3DMM的表达能力进行了评价，定量与定性的比较如表5和图8所示</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230604151640859.png" alt="image-20230604151640859"></p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230604151657772.png" alt="image-20230604151657772"></p>
+<p>定量和定性的结果表明，我们的3DMM在REALY上取得了更优的重建效果，并且，通过不同方法的比较表明，RGB-D Fitting的结果要显著优于目前最好的重建算法，3D人脸重建任务仍有很大的提升空间。</p>
+<p>为了进一步证明HIFI3D++的表达能力，我们只用顶点损失，根据最小二乘的方式拟合一组mesh，对HIFI3D&#x2F;HIFI3D(A)&#x2F;HIFI3D++进行比较，如图9所示。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230604151756157.png" alt="image-20230604151756157"></p>
+<h1><span id="8-总结">8. 总结</span></h1><p>本文是我们对3D人脸重建评价的重新思考和探索。针对先前的评价指标无法准确衡量重建mesh与ground-truth相似性的问题，我们构建了一个新的数据集——REALY，包含更加丰富以及高质量的脸部区域信息，并借助新的评价流程对先前的数十个重建算法、3DMM进行了评价。</p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>3DMM</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</title>
     <url>/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/</url>
     <content><![CDATA[<!-- toc -->
@@ -693,97 +693,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《IACycleGAN》</title>
-    <url>/2022/06/08/review_6_IACycleGAN/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
-<li><a href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B">生成模型</a><ul>
-<li><a href="#%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C%E6%95%B4%E4%BD%93loss%E5%9B%BE%E7%A4%BA">生成网络整体loss图示</a></li>
-</ul>
-</li>
-<li><a href="#%E8%AF%86%E5%88%AB%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C%E7%9A%84%E4%BA%92%E7%9B%B8%E4%BC%98%E5%8C%96">识别网络与生成网络的互相优化</a></li>
-</ul>
-</li>
-<li><a href="#%E5%AE%9E%E9%AA%8C">实验</a><ul>
-<li><a href="#%E6%95%B0%E6%8D%AE%E9%9B%86">数据集</a><ul>
-<li><a href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82">生成模型实施细节</a></li>
-<li><a href="#%E8%AF%86%E5%88%AB%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82">识别模型实施细节</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf"><a href="https://arxiv.org/pdf/2103.16019.pdf">Identity-Aware CycleGAN for Face Photo-Sketch Synthesis and Recognition (arxiv.org)</a></a></p>
-<p>code: none</p>
-<span id="more"></span>
-
-<h1><span id="任务">任务</span></h1><p>真人素描生成与识别</p>
-<h1><span id="出发点">出发点</span></h1><p>生成促进识别 识别促进生成；</p>
-<p>大部分生成方法使得合成图像与原始图像在纹理上保持一致，会导致信息丢失；</p>
-<p>大多数生成框架都只能学习两个域之间的关系，其鉴别器只关注照片和草图之间的差异，而不考虑任何特定的识别优化（身份信息）；</p>
-<h1><span id="创新点">创新点</span></h1><p>在CycleGAN上加入了感知损失（perceptual loss）,能更好的关注面部的语义信息（眼睛、鼻子）;</p>
-<p>使生成模型和识别模型相互优化，生成模型迭代生成更好的图像，Triplet Loss训识别模型；</p>
-<h1><span id="做法">做法</span></h1><h2><span id="生成模型">生成模型</span></h2><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608102426736.png" alt="image-20220608102426736"></p>
-<p>分别给出两个domain的照片（这里输入的是paired数据，这里的paired应该身份paired），其训练目的是获得Gx，Gy两个生成器。</p>
-<p>两个识别网络，其目的是使用pretrain好的vggface提取feature做Identity perception loss；</p>
-<p>生成器用了《Perceptual losses for real-time style transfer and super-resolution》中的结构；</p>
-<p>判别器用了PatchGAN的结构；</p>
-<h3><span id="生成网络整体loss图示">生成网络整体loss图示</span></h3><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608105545461.png" alt="image-20220608105545461"></p>
-<h4><span id="对抗损失adversarial-loss">对抗损失（adversarial loss）</span></h4><p>输入图像与生成图像进入判别器进行计算，最小化下式</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608110633855.png" alt="image-20220608110633855"></p>
-<h4><span id="循环一致性损失cycle-consistency-loss">循环一致性损失（cycle consistency loss）</span></h4><p>Gx生成的图像再进入Gy恢复原本domain与最初的输入x计算L1，<strong>此loss为pix级</strong>，最小化下式</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608110959225.png" alt="image-20220608110959225"></p>
-<h4><span id="身份保持损失identity-perception-loss">身份保持损失（identity perception loss）</span></h4><p>仅使用对抗损失会导致伪影和训练不稳定，需要加更强大的监督；</p>
-<p>通过一个pretrain的识别网络（文中选择vggface）分别提取两对（原图与合成图）的feature计算L2，<strong>此loss区别于pix级监督，是feature级</strong>，文中对于此处的解释是：绘制的草图会有夸张成分以扭曲面部纹理信息，夸大面部特征，完全基于pix重建图像效果不会好；CycleGAN的训练需要进行数据增强操作（resize，flip等）难以实施pix级的监督。</p>
-<p>最小化下式</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608111456554.png" alt="image-20220608111456554"></p>
-<h4><span id="身份映射损失identity-mapping-loss">身份映射损失（identity mapping loss）</span></h4><p>常规的pix级的约束，最小化下式</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112212476.png" alt="image-20220608112212476"></p>
-<h4><span id="整体loss">整体loss</span></h4><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112236780.png" alt="image-20220608112236780"></p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112252105.png" alt="image-20220608112252105"></p>
-<p>最小化生成器的loss最大化判别器的loss</p>
-<p>其中超参数lamda分别设为10，30000000，5</p>
-<h2><span id="识别网络与生成网络的互相优化">识别网络与生成网络的互相优化</span></h2><p>许多主做生成的工作都是fix相应的识别网络作为一个特征提取器来附加身份保持损失；</p>
-<p>本文的做法估计是：</p>
-<p>step1：先fix识别网络参数训练生成网络，获得一定量的生成的图片；</p>
-<p>step2：使用生成的图片fine-tune识别网络（单走一个人脸识别模型的流程），用了triplet loss，更新识别网络参数，其中两个模态分别有两个识别网络，要分开训练；</p>
-<p>step3：重复上述操作以获得更好的生成模型和识别模型。</p>
-<p>（有问题的点：若第一次生成的质量得不到保证，那低质量的生成图像真的能提升识别模型的acc吗？<strong>互相优化的模型很依赖第一次生成的图像质量</strong>）</p>
-<p>我认为的做法：先简单训练一个识别网络达到一个还行的acc，更新其backbone参数作为生成网络的特征提取器，然后再进行生成网络的训练。</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608135047478.png" alt="image-20220608135047478"></p>
-<h1><span id="实验">实验</span></h1><p>CycleGAN生成—》一阶段vgg fine-tune—》IACycleGAN生成（加入fine-tune的vgg提取的特征做身份保持损失）—》二阶段vgg fine-tune</p>
-<h2><span id="数据集">数据集</span></h2><p>CUFS和CUFSF</p>
-<h3><span id="生成模型实施细节">生成模型实施细节</span></h3><p>对于生成网络的训练，都是从头开始训练，使用instance normalization来实现更好的稳定性和更低的噪声；</p>
-<p>使用Adam优化器，horizontal filp prob&#x3D;0.5用于数据增强；</p>
-<p>前100个epoch设置0.0002的学习率，并在后100个epoch线性下降至0；</p>
-<p>在titian xp上训练了10小时；</p>
-<p>为减小网络震荡，采用存储多个生成图像的图像缓冲区来更新鉴别器，而不是使用最后生成的图像。</p>
-<p>生成使用了SSIM FSIM两个指标</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608152343197.png" alt="image-20220608152343197"></p>
-<h3><span id="识别模型实施细节">识别模型实施细节</span></h3><p>文中用的vggface，caffe上跑的（估计是官方代码）</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608153331083.png" alt="image-20220608153331083"></p>
-<p>在做检索任务时，先做风格模态的迁移，再计算相似度。</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608155946505.png" alt="image-20220608155946505"></p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608160958943.png" alt="image-20220608160958943"></p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>sketch</tag>
-        <tag>synthesis</tag>
-        <tag>GAN</tag>
-        <tag>face recognition</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《DVG-Face:Dual Variational Generation for Heterogeneous Face Recognition》</title>
     <url>/2022/04/09/review_3_DVG-Face/</url>
     <content><![CDATA[<!-- toc -->
@@ -877,6 +786,66 @@
       </tags>
   </entry>
   <entry>
+    <title>《Clothes-Changing Person Re-identification with RGB Modality Only》</title>
+    <url>/2022/05/02/review_5_Simple-CCReID/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#clothes-based-adversarial-loss">Clothes-based Adversarial Loss</a><ul>
+<li><a href="#training-clothes-classifier">Training clothes classifier</a></li>
+<li><a href="#learning-clothes-irrelevant-features">Learning clothes-irrelevant features</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://arxiv.org/pdf/2204.06890v1.pdf</a></p>
+<p>code: <a href="https://github.com/guxinqian/simple-ccreid">guxinqian&#x2F;Simple-CCReID: Pytorch implementation of ‘Clothes-Changing Person Re-identification with RGB Modality Only. In CVPR, 2022.’ (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="任务">任务</span></h1><p>换装人员重识别</p>
+<h1><span id="出发点">出发点</span></h1><p><strong>提取与衣服无关的特征</strong>，如脸型、发型、体形和步态。目前大多数工作主要集中在从多模态信息（如剪影和草图）中建模身体形状，但没有充分利用原始 RGB 图像中与衣服无关的信息。</p>
+<h1><span id="创新点">创新点</span></h1><p>文章提出一种基于衣服的<strong>对抗</strong>性损失（CAL），通过惩罚 re-id 模型对衣服的预测能力（其实就是个分类器），从原始 RGB 图像中<strong>挖掘与衣服无关的特征</strong>。</p>
+<h1><span id="做法">做法</span></h1><p>首先通过最小化Lc来优化衣服分类器。然后固定衣服分类器的参数，最小化Lid和Lca，迫使backbone学习与衣服无关的特征。（每张图片对应一个一个身份标签和服装标签，将衣服类定义为细粒度标识类——所有同一身份的样本都根据他们的衣服被划分为属于该身份的不同类别，不同的人即使穿着相同的衣服也不会共享相同的衣服标签）</p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504092335366.png" alt="image-20220504092335366"></p>
+<h2><span id="clothes-based-adversarial-loss">Clothes-based Adversarial Loss</span></h2><h3><span id="training-clothes-classifier">Training clothes classifier</span></h3><p>Lc采用交叉熵损失</p>
+<h3><span id="learning-clothes-irrelevant-features">Learning clothes-irrelevant features</span></h3><p>固定衣服分类器的参数，并强制主干学习与衣服无关的特征。为此，应该<strong>惩罚re-id模型对于衣服的预测能力</strong>。</p>
+<p>然而，由于衣服类被定义为细粒度类，因此惩罚re-id模型对于所有衣服类别的预测能力，也会降低其预测身份的能力，这对re-id是有害的。</p>
+<p>那么最终的目的是使经过训练的<strong>服装分类器无法区分相同身份和不同服装的样本</strong>。</p>
+<p>所以，Lca是一个<em>multi-positive-class classification loss</em>，属于同一个身份的不同服装类互为正类。（把不同衣服的只要是属于同一个id身份的衣服类都视为衣服正类）</p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504101750986.png" alt="image-20220504101750986"></p>
+<p>Si+（Si-)是一个有相同身份的衣服标签fi的集合，K是S中的衣服类别数量，q(c)是第c个衣服类别的交叉熵损失的权重，同一件衣服同一个身份的正例，和不同衣服同一个身份的正例有相同的权重1&#x2F;K。</p>
+<p>同时，为了在不严重降低衣服一致性识别精度的情况下提高模型的换衣识别能力，等式（4）可替换为：</p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105337953.png" alt="image-20220504105337953"></p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105427890.png" alt="image-20220504105427890"></p>
+<p>另外，穿着相同衣服的正例比穿着不同衣服的正例有更大的权重。</p>
+<p>在优化CAL的同时，对身份分类器进行了优化。因此，第二步的优化过程是：</p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105540307.png" alt="image-20220504105540307"></p>
+<p>当仅使用Lid进行训练时，该模型在优化的早期阶段倾向于学习简单样本（具有相同的衣服），然后逐渐学习区分困难样本（具有相同的身份和不同的衣服）。类似课程学习方式，但尽管如此（6）中并未抛弃Lid。其原因是，在优化的早期阶段，只有最小化Lca并迫使模型区分硬样本，才可能导致局部最优。相反，在我们的实验中，在第一次降低学习率后，增加了Lca用于训练。</p>
+<p>&#96;&#96;</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class ClothesBasedAdversarialLoss(nn.Module):</span><br><span class="line">    &quot;&quot;&quot; Clothes-based Adversarial Loss.</span><br><span class="line"></span><br><span class="line">    Reference:</span><br><span class="line">        Gu et al. Clothes-Changing Person Re-identification with RGB Modality Only. In CVPR, 2022.</span><br><span class="line"></span><br><span class="line">    Args:</span><br><span class="line">        scale (float): scaling factor.</span><br><span class="line">        epsilon (float): a trade-off hyper-parameter.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __init__(self, scale=16, epsilon=0.1):</span><br><span class="line">        super().__init__()</span><br><span class="line">        self.scale = scale</span><br><span class="line">        self.epsilon = epsilon</span><br><span class="line"></span><br><span class="line">    def forward(self, inputs, targets, positive_mask):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        Args:</span><br><span class="line">            inputs: prediction matrix (before softmax) with shape (batch_size, num_classes)</span><br><span class="line">            targets: ground truth labels with shape (batch_size)</span><br><span class="line">            positive_mask: positive mask matrix with shape (batch_size, num_classes). The clothes classes with </span><br><span class="line">                the same identity as the anchor sample are defined as positive clothes classes and their mask </span><br><span class="line">                values are 1. The clothes classes with different identities from the anchor sample are defined </span><br><span class="line">                as negative clothes classes and their mask values in positive_mask are 0.</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        inputs = self.scale * inputs</span><br><span class="line">        negtive_mask = 1 - positive_mask</span><br><span class="line">        identity_mask = torch.zeros(inputs.size()).scatter_(1, targets.unsqueeze(1).data.cpu(), 1).cuda()</span><br><span class="line"></span><br><span class="line">        exp_logits = torch.exp(inputs)</span><br><span class="line">        log_sum_exp_pos_and_all_neg = torch.log((exp_logits * negtive_mask).sum(1, keepdim=True) + exp_logits)</span><br><span class="line">        log_prob = inputs - log_sum_exp_pos_and_all_neg</span><br><span class="line"></span><br><span class="line">        mask = (1 - self.epsilon) * identity_mask + self.epsilon / positive_mask.sum(1, keepdim=True) * positive_mask</span><br><span class="line">        loss = (- mask * log_prob).sum(1).mean()</span><br><span class="line"></span><br><span class="line">        return loss</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>ReID</tag>
+        <tag>decouple</tag>
+        <tag>adversarial</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《CariMe:Unpaired Caricature Generation with Multiple Exaggerations》</title>
     <url>/2022/04/13/review_4_CariMe/</url>
     <content><![CDATA[<!-- toc -->
@@ -946,8 +915,8 @@
       </tags>
   </entry>
   <entry>
-    <title>《Clothes-Changing Person Re-identification with RGB Modality Only》</title>
-    <url>/2022/05/02/review_5_Simple-CCReID/</url>
+    <title>《IACycleGAN》</title>
+    <url>/2022/06/08/review_6_IACycleGAN/</url>
     <content><![CDATA[<!-- toc -->
 
 <ul>
@@ -955,9 +924,17 @@
 <li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
 <li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
 <li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
-<li><a href="#clothes-based-adversarial-loss">Clothes-based Adversarial Loss</a><ul>
-<li><a href="#training-clothes-classifier">Training clothes classifier</a></li>
-<li><a href="#learning-clothes-irrelevant-features">Learning clothes-irrelevant features</a></li>
+<li><a href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B">生成模型</a><ul>
+<li><a href="#%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C%E6%95%B4%E4%BD%93loss%E5%9B%BE%E7%A4%BA">生成网络整体loss图示</a></li>
+</ul>
+</li>
+<li><a href="#%E8%AF%86%E5%88%AB%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C%E7%9A%84%E4%BA%92%E7%9B%B8%E4%BC%98%E5%8C%96">识别网络与生成网络的互相优化</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AE%9E%E9%AA%8C">实验</a><ul>
+<li><a href="#%E6%95%B0%E6%8D%AE%E9%9B%86">数据集</a><ul>
+<li><a href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82">生成模型实施细节</a></li>
+<li><a href="#%E8%AF%86%E5%88%AB%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82">识别模型实施细节</a></li>
 </ul>
 </li>
 </ul>
@@ -965,44 +942,67 @@
 </ul>
 <!-- tocstop -->
 
-<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://arxiv.org/pdf/2204.06890v1.pdf</a></p>
-<p>code: <a href="https://github.com/guxinqian/simple-ccreid">guxinqian&#x2F;Simple-CCReID: Pytorch implementation of ‘Clothes-Changing Person Re-identification with RGB Modality Only. In CVPR, 2022.’ (github.com)</a></p>
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf"><a href="https://arxiv.org/pdf/2103.16019.pdf">Identity-Aware CycleGAN for Face Photo-Sketch Synthesis and Recognition (arxiv.org)</a></a></p>
+<p>code: none</p>
 <span id="more"></span>
 
-<h1><span id="任务">任务</span></h1><p>换装人员重识别</p>
-<h1><span id="出发点">出发点</span></h1><p><strong>提取与衣服无关的特征</strong>，如脸型、发型、体形和步态。目前大多数工作主要集中在从多模态信息（如剪影和草图）中建模身体形状，但没有充分利用原始 RGB 图像中与衣服无关的信息。</p>
-<h1><span id="创新点">创新点</span></h1><p>文章提出一种基于衣服的<strong>对抗</strong>性损失（CAL），通过惩罚 re-id 模型对衣服的预测能力（其实就是个分类器），从原始 RGB 图像中<strong>挖掘与衣服无关的特征</strong>。</p>
-<h1><span id="做法">做法</span></h1><p>首先通过最小化Lc来优化衣服分类器。然后固定衣服分类器的参数，最小化Lid和Lca，迫使backbone学习与衣服无关的特征。（每张图片对应一个一个身份标签和服装标签，将衣服类定义为细粒度标识类——所有同一身份的样本都根据他们的衣服被划分为属于该身份的不同类别，不同的人即使穿着相同的衣服也不会共享相同的衣服标签）</p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504092335366.png" alt="image-20220504092335366"></p>
-<h2><span id="clothes-based-adversarial-loss">Clothes-based Adversarial Loss</span></h2><h3><span id="training-clothes-classifier">Training clothes classifier</span></h3><p>Lc采用交叉熵损失</p>
-<h3><span id="learning-clothes-irrelevant-features">Learning clothes-irrelevant features</span></h3><p>固定衣服分类器的参数，并强制主干学习与衣服无关的特征。为此，应该<strong>惩罚re-id模型对于衣服的预测能力</strong>。</p>
-<p>然而，由于衣服类被定义为细粒度类，因此惩罚re-id模型对于所有衣服类别的预测能力，也会降低其预测身份的能力，这对re-id是有害的。</p>
-<p>那么最终的目的是使经过训练的<strong>服装分类器无法区分相同身份和不同服装的样本</strong>。</p>
-<p>所以，Lca是一个<em>multi-positive-class classification loss</em>，属于同一个身份的不同服装类互为正类。（把不同衣服的只要是属于同一个id身份的衣服类都视为衣服正类）</p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504101750986.png" alt="image-20220504101750986"></p>
-<p>Si+（Si-)是一个有相同身份的衣服标签fi的集合，K是S中的衣服类别数量，q(c)是第c个衣服类别的交叉熵损失的权重，同一件衣服同一个身份的正例，和不同衣服同一个身份的正例有相同的权重1&#x2F;K。</p>
-<p>同时，为了在不严重降低衣服一致性识别精度的情况下提高模型的换衣识别能力，等式（4）可替换为：</p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105337953.png" alt="image-20220504105337953"></p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105427890.png" alt="image-20220504105427890"></p>
-<p>另外，穿着相同衣服的正例比穿着不同衣服的正例有更大的权重。</p>
-<p>在优化CAL的同时，对身份分类器进行了优化。因此，第二步的优化过程是：</p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105540307.png" alt="image-20220504105540307"></p>
-<p>当仅使用Lid进行训练时，该模型在优化的早期阶段倾向于学习简单样本（具有相同的衣服），然后逐渐学习区分困难样本（具有相同的身份和不同的衣服）。类似课程学习方式，但尽管如此（6）中并未抛弃Lid。其原因是，在优化的早期阶段，只有最小化Lca并迫使模型区分硬样本，才可能导致局部最优。相反，在我们的实验中，在第一次降低学习率后，增加了Lca用于训练。</p>
-<p>&#96;&#96;</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class ClothesBasedAdversarialLoss(nn.Module):</span><br><span class="line">    &quot;&quot;&quot; Clothes-based Adversarial Loss.</span><br><span class="line"></span><br><span class="line">    Reference:</span><br><span class="line">        Gu et al. Clothes-Changing Person Re-identification with RGB Modality Only. In CVPR, 2022.</span><br><span class="line"></span><br><span class="line">    Args:</span><br><span class="line">        scale (float): scaling factor.</span><br><span class="line">        epsilon (float): a trade-off hyper-parameter.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __init__(self, scale=16, epsilon=0.1):</span><br><span class="line">        super().__init__()</span><br><span class="line">        self.scale = scale</span><br><span class="line">        self.epsilon = epsilon</span><br><span class="line"></span><br><span class="line">    def forward(self, inputs, targets, positive_mask):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        Args:</span><br><span class="line">            inputs: prediction matrix (before softmax) with shape (batch_size, num_classes)</span><br><span class="line">            targets: ground truth labels with shape (batch_size)</span><br><span class="line">            positive_mask: positive mask matrix with shape (batch_size, num_classes). The clothes classes with </span><br><span class="line">                the same identity as the anchor sample are defined as positive clothes classes and their mask </span><br><span class="line">                values are 1. The clothes classes with different identities from the anchor sample are defined </span><br><span class="line">                as negative clothes classes and their mask values in positive_mask are 0.</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        inputs = self.scale * inputs</span><br><span class="line">        negtive_mask = 1 - positive_mask</span><br><span class="line">        identity_mask = torch.zeros(inputs.size()).scatter_(1, targets.unsqueeze(1).data.cpu(), 1).cuda()</span><br><span class="line"></span><br><span class="line">        exp_logits = torch.exp(inputs)</span><br><span class="line">        log_sum_exp_pos_and_all_neg = torch.log((exp_logits * negtive_mask).sum(1, keepdim=True) + exp_logits)</span><br><span class="line">        log_prob = inputs - log_sum_exp_pos_and_all_neg</span><br><span class="line"></span><br><span class="line">        mask = (1 - self.epsilon) * identity_mask + self.epsilon / positive_mask.sum(1, keepdim=True) * positive_mask</span><br><span class="line">        loss = (- mask * log_prob).sum(1).mean()</span><br><span class="line"></span><br><span class="line">        return loss</span><br></pre></td></tr></table></figure>
-
-
-
-
-
+<h1><span id="任务">任务</span></h1><p>真人素描生成与识别</p>
+<h1><span id="出发点">出发点</span></h1><p>生成促进识别 识别促进生成；</p>
+<p>大部分生成方法使得合成图像与原始图像在纹理上保持一致，会导致信息丢失；</p>
+<p>大多数生成框架都只能学习两个域之间的关系，其鉴别器只关注照片和草图之间的差异，而不考虑任何特定的识别优化（身份信息）；</p>
+<h1><span id="创新点">创新点</span></h1><p>在CycleGAN上加入了感知损失（perceptual loss）,能更好的关注面部的语义信息（眼睛、鼻子）;</p>
+<p>使生成模型和识别模型相互优化，生成模型迭代生成更好的图像，Triplet Loss训识别模型；</p>
+<h1><span id="做法">做法</span></h1><h2><span id="生成模型">生成模型</span></h2><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608102426736.png" alt="image-20220608102426736"></p>
+<p>分别给出两个domain的照片（这里输入的是paired数据，这里的paired应该身份paired），其训练目的是获得Gx，Gy两个生成器。</p>
+<p>两个识别网络，其目的是使用pretrain好的vggface提取feature做Identity perception loss；</p>
+<p>生成器用了《Perceptual losses for real-time style transfer and super-resolution》中的结构；</p>
+<p>判别器用了PatchGAN的结构；</p>
+<h3><span id="生成网络整体loss图示">生成网络整体loss图示</span></h3><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608105545461.png" alt="image-20220608105545461"></p>
+<h4><span id="对抗损失adversarial-loss">对抗损失（adversarial loss）</span></h4><p>输入图像与生成图像进入判别器进行计算，最小化下式</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608110633855.png" alt="image-20220608110633855"></p>
+<h4><span id="循环一致性损失cycle-consistency-loss">循环一致性损失（cycle consistency loss）</span></h4><p>Gx生成的图像再进入Gy恢复原本domain与最初的输入x计算L1，<strong>此loss为pix级</strong>，最小化下式</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608110959225.png" alt="image-20220608110959225"></p>
+<h4><span id="身份保持损失identity-perception-loss">身份保持损失（identity perception loss）</span></h4><p>仅使用对抗损失会导致伪影和训练不稳定，需要加更强大的监督；</p>
+<p>通过一个pretrain的识别网络（文中选择vggface）分别提取两对（原图与合成图）的feature计算L2，<strong>此loss区别于pix级监督，是feature级</strong>，文中对于此处的解释是：绘制的草图会有夸张成分以扭曲面部纹理信息，夸大面部特征，完全基于pix重建图像效果不会好；CycleGAN的训练需要进行数据增强操作（resize，flip等）难以实施pix级的监督。</p>
+<p>最小化下式</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608111456554.png" alt="image-20220608111456554"></p>
+<h4><span id="身份映射损失identity-mapping-loss">身份映射损失（identity mapping loss）</span></h4><p>常规的pix级的约束，最小化下式</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112212476.png" alt="image-20220608112212476"></p>
+<h4><span id="整体loss">整体loss</span></h4><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112236780.png" alt="image-20220608112236780"></p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112252105.png" alt="image-20220608112252105"></p>
+<p>最小化生成器的loss最大化判别器的loss</p>
+<p>其中超参数lamda分别设为10，30000000，5</p>
+<h2><span id="识别网络与生成网络的互相优化">识别网络与生成网络的互相优化</span></h2><p>许多主做生成的工作都是fix相应的识别网络作为一个特征提取器来附加身份保持损失；</p>
+<p>本文的做法估计是：</p>
+<p>step1：先fix识别网络参数训练生成网络，获得一定量的生成的图片；</p>
+<p>step2：使用生成的图片fine-tune识别网络（单走一个人脸识别模型的流程），用了triplet loss，更新识别网络参数，其中两个模态分别有两个识别网络，要分开训练；</p>
+<p>step3：重复上述操作以获得更好的生成模型和识别模型。</p>
+<p>（有问题的点：若第一次生成的质量得不到保证，那低质量的生成图像真的能提升识别模型的acc吗？<strong>互相优化的模型很依赖第一次生成的图像质量</strong>）</p>
+<p>我认为的做法：先简单训练一个识别网络达到一个还行的acc，更新其backbone参数作为生成网络的特征提取器，然后再进行生成网络的训练。</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608135047478.png" alt="image-20220608135047478"></p>
+<h1><span id="实验">实验</span></h1><p>CycleGAN生成—》一阶段vgg fine-tune—》IACycleGAN生成（加入fine-tune的vgg提取的特征做身份保持损失）—》二阶段vgg fine-tune</p>
+<h2><span id="数据集">数据集</span></h2><p>CUFS和CUFSF</p>
+<h3><span id="生成模型实施细节">生成模型实施细节</span></h3><p>对于生成网络的训练，都是从头开始训练，使用instance normalization来实现更好的稳定性和更低的噪声；</p>
+<p>使用Adam优化器，horizontal filp prob&#x3D;0.5用于数据增强；</p>
+<p>前100个epoch设置0.0002的学习率，并在后100个epoch线性下降至0；</p>
+<p>在titian xp上训练了10小时；</p>
+<p>为减小网络震荡，采用存储多个生成图像的图像缓冲区来更新鉴别器，而不是使用最后生成的图像。</p>
+<p>生成使用了SSIM FSIM两个指标</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608152343197.png" alt="image-20220608152343197"></p>
+<h3><span id="识别模型实施细节">识别模型实施细节</span></h3><p>文中用的vggface，caffe上跑的（估计是官方代码）</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608153331083.png" alt="image-20220608153331083"></p>
+<p>在做检索任务时，先做风格模态的迁移，再计算相似度。</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608155946505.png" alt="image-20220608155946505"></p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608160958943.png" alt="image-20220608160958943"></p>
 ]]></content>
       <categories>
         <category>paper review</category>
       </categories>
       <tags>
-        <tag>ReID</tag>
-        <tag>decouple</tag>
-        <tag>adversarial</tag>
+        <tag>sketch</tag>
+        <tag>synthesis</tag>
+        <tag>GAN</tag>
+        <tag>face recognition</tag>
       </tags>
   </entry>
   <entry>
@@ -1226,6 +1226,74 @@
       </tags>
   </entry>
   <entry>
+    <title>《MeInGame:Create a Game Character Face from a Single Portrait》</title>
+    <url>/2022/06/29/review_9_MeInGame/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E8%B4%A1%E7%8C%AE">贡献</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95">方法</a><ul>
+<li><a href="#3d%E4%BA%BA%E8%84%B8%E6%95%B0%E6%8D%AE%E9%9B%86%E6%9E%84%E5%BB%BA%E6%96%B9%E6%B3%95">3D人脸数据集构建方法</a></li>
+<li><a href="#%E4%BA%BA%E8%84%B8%E5%BD%A2%E7%8A%B6%E9%87%8D%E5%BB%BA-face-shape-reconstruction">人脸形状重建 （Face Shape Reconstruction）</a></li>
+<li><a href="#%E5%BD%A2%E7%8A%B6%E8%BD%AC%E6%8D%A2shape-transfer">形状转换（Shape Transfer）</a></li>
+<li><a href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0">损失函数</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Liu_Geometric_and_Textural_Augmentation_for_Domain_Gap_Reduction_CVPR_2022_paper.pdf"><a href="https://arxiv.org/pdf/2102.02371.pdf">2102.02371.pdf (arxiv.org)</a></a></p>
+<p>code: <a href="https://github.com/xch-liu/geom-tex-dg"><a href="https://github.com/FuxiCV/MeInGame">FuxiCV&#x2F;MeInGame: MeInGame: Create a Game Character Face from a Single Portrait, AAAI 2021 (github.com)</a></a></p>
+<span id="more"></span>
+
+<h1><span id="任务">任务</span></h1><p>从单张真实2D肖像生成武侠风格的3D可形变模型。</p>
+<h1><span id="出发点">出发点</span></h1><p>近年来，人们提出了许多基于深度学习的三维人脸重建方法，但在游戏中应用较少。当前的游戏角色定制系统要么要求玩家手动调整相当多的面部属性以获得所需的面部，要么限制面部形状和纹理的自由度。</p>
+<h1><span id="贡献">贡献</span></h1><p>我们提出了一种低成本的三维人脸数据集创建方法。我们创建的数据集在种族和性别上是平衡的，面部形状和纹理都是从原始图像中创建的。我们将在论文被接受后将其公开。 提出了一种低成本的面部纹理获取方法</p>
+<p>我们提出了一种将重建的3DMM人脸形状转换为游戏网格的方法，可以直接在游戏环境中使用。该方法与网格连通性无关，在实际应用中计算效率较高。 </p>
+<p>为了消除光照和遮挡的影响，我们在对抗性训练范式下训练神经网络，从野外人脸图像中的单个图像预测一个完整的漫反射贴图。 </p>
+<h1><span id="方法">方法</span></h1><p><img src="/2022/06/29/review_9_MeInGame/image-20220629143637063.png" alt="image-20220629143637063"></p>
+<p>Shape Reconstructor pretrain好，获取3DMM系数和姿势系数，通过3DMM网络构成3DMM mesh（只有正面3D人脸），Shape Transfer将3DMM mesh转换成Game mesh（整个3D人头）；</p>
+<p>根据Game mesh将原图uv展开创建一个粗糙纹理贴图，通过encoder decoder进一步细化至细化纹理；</p>
+<p>还引入了一个光照predictor，预测光照系数；</p>
+<p>最后，将预测的形状、纹理和照明系数一起提供给可微分渲染器，并强制渲染输出与输入照片类似。为了进一步改进结果，引入了两个鉴别器。</p>
+<h2><span id="3d人脸数据集构建方法">3D人脸数据集构建方法</span></h2><p>1）给定一张人脸图像，通过预训练好的人脸分割网络检测皮肤区域</p>
+<p>2）计算输入面部皮肤的平均颜色，并将平均皮肤颜色传输到模板纹理贴图（由游戏开发人员提供，是标准3D模型模板对应的标准UV模板） </p>
+<p>3）根据变形的game mesh，将输入人脸图像展开到UV空间</p>
+<p>4）使用Poisson blending（图像融合操作）将展开的贴图与UV模板混合，移除头发和眼镜等非皮肤区域，并尽可能使用对称性修补遮挡区域</p>
+<h2><span id="人脸形状重建-face-shape-reconstruction">人脸形状重建 （Face Shape Reconstruction）</span></h2><p>第一步从输入图像预测3DMM形状和姿势系数。采用了<a href="https://openaccess.thecvf.com/content_CVPRW_2019/papers/AMFG/Deng_Accurate_3D_Face_Reconstruction_With_Weakly-Supervised_Learning_From_Single_Image_CVPRW_2019_paper.pdf">Accurate 3D Face Reconstruction With Weakly-Supervised Learning: From Single Image to Image Set (thecvf.com)</a>的方法，其他3DMM的方法同样适用。</p>
+<h2><span id="形状转换shape-transfer">形状转换（Shape Transfer）</span></h2><p>形状传递模块的目的是将重建的3DMM网格传递到游戏网格。我们设计了基于Radial Basis Function（RBF）插值的形状传递模块。</p>
+<h2><span id="损失函数">损失函数</span></h2><p>我们设计了损失函数来最小化渲染人脸图像和输入人脸照片之间的距离，以及精细纹理贴图和地面真实纹理贴图之间的距离。在渲染循环中，我们设计了四种类型的损失函数，即像素损失、感知损失、皮肤正则化损失和对抗性损失，以从全局外观和局部细节来衡量面部相似性。 </p>
+<p><strong>像素损失（Pixel Loss）</strong></p>
+<p>渲染后的图像R和输入图像I，做pixel loss：</p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629153338519.png" alt="image-20220629153338519"></p>
+<p>GT的UV贴图G和细化的纹理贴图F，做pixel loss：</p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629154446786.png" alt="image-20220629154446786"></p>
+<p><strong>感知损失（Perceptual Loss）</strong></p>
+<p>在感知层面减小重建图像的差异，做法遵循[Structure Guided Img Inpaint using Edge Prediction - 知乎 (zhihu.com)](<a href="https://zhuanlan.zhihu.com/p/147654092#:~:text=%E3%80%8AEdgeConnect%3A">https://zhuanlan.zhihu.com/p/147654092#:~:text=《EdgeConnect%3A</a> Structure Guided Image Inpainting using Edge Prediction》,结构信息 中的 边缘信息 来实现图像的修复（类似Free-form的素描信息） 适用于： rectangular masks、irregular masks。)</p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160619803.png" alt="image-20220629160619803"></p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160626723.png" alt="image-20220629160626723"></p>
+<p><strong>皮肤正则化损失 （Skin Regularization Loss）</strong></p>
+<p>为了在整个面部产生恒定的肤色并去除高光和阴影，我们进行了两次损失来调整面部皮肤，即“对称损失”和“标准偏差损失”。与之前将皮肤正则化直接应用于顶点颜色的工作不同，我们对高斯模糊纹理贴图施加惩罚。这是基于一个事实，即一些个性化的细节（例如痣）并不总是对称的，并且与肤色无关。我们将对称损耗定义如下： </p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160919834.png" alt="image-20220629160919834"></p>
+<p>我们将表皮标准偏差损失定义如下： </p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161001203.png" alt="image-20220629161001203"></p>
+<p><strong>对抗损失（Adversarial Loss）</strong></p>
+<p>为了进一步提高重建的逼真度，我们还在训练期间使用对抗性损失。我们引入了两个鉴别器，一个用于渲染人脸，另一个用于生成的UV纹理贴图。我们训练鉴别器来判断生成的输出是真是假，同时，我们训练网络的其他部分来愚弄鉴别器。对抗训练的目标功能定义如下： </p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161825452.png" alt="image-20220629161825452"></p>
+<p><strong>总损失定义</strong></p>
+<p>**<img src="/2022/06/29/review_9_MeInGame/image-20220629161847549.png" alt="image-20220629161847549">    **        </p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161920596.png" alt="image-20220629161920596"></p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>3DMM</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>RTTO WEEK1</title>
     <url>/2022/09/19/rtto_1/</url>
     <content><![CDATA[<!-- toc -->
@@ -1337,74 +1405,6 @@
       </categories>
       <tags>
         <tag>RTTO</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《MeInGame:Create a Game Character Face from a Single Portrait》</title>
-    <url>/2022/06/29/review_9_MeInGame/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E8%B4%A1%E7%8C%AE">贡献</a></li>
-<li><a href="#%E6%96%B9%E6%B3%95">方法</a><ul>
-<li><a href="#3d%E4%BA%BA%E8%84%B8%E6%95%B0%E6%8D%AE%E9%9B%86%E6%9E%84%E5%BB%BA%E6%96%B9%E6%B3%95">3D人脸数据集构建方法</a></li>
-<li><a href="#%E4%BA%BA%E8%84%B8%E5%BD%A2%E7%8A%B6%E9%87%8D%E5%BB%BA-face-shape-reconstruction">人脸形状重建 （Face Shape Reconstruction）</a></li>
-<li><a href="#%E5%BD%A2%E7%8A%B6%E8%BD%AC%E6%8D%A2shape-transfer">形状转换（Shape Transfer）</a></li>
-<li><a href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0">损失函数</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Liu_Geometric_and_Textural_Augmentation_for_Domain_Gap_Reduction_CVPR_2022_paper.pdf"><a href="https://arxiv.org/pdf/2102.02371.pdf">2102.02371.pdf (arxiv.org)</a></a></p>
-<p>code: <a href="https://github.com/xch-liu/geom-tex-dg"><a href="https://github.com/FuxiCV/MeInGame">FuxiCV&#x2F;MeInGame: MeInGame: Create a Game Character Face from a Single Portrait, AAAI 2021 (github.com)</a></a></p>
-<span id="more"></span>
-
-<h1><span id="任务">任务</span></h1><p>从单张真实2D肖像生成武侠风格的3D可形变模型。</p>
-<h1><span id="出发点">出发点</span></h1><p>近年来，人们提出了许多基于深度学习的三维人脸重建方法，但在游戏中应用较少。当前的游戏角色定制系统要么要求玩家手动调整相当多的面部属性以获得所需的面部，要么限制面部形状和纹理的自由度。</p>
-<h1><span id="贡献">贡献</span></h1><p>我们提出了一种低成本的三维人脸数据集创建方法。我们创建的数据集在种族和性别上是平衡的，面部形状和纹理都是从原始图像中创建的。我们将在论文被接受后将其公开。 提出了一种低成本的面部纹理获取方法</p>
-<p>我们提出了一种将重建的3DMM人脸形状转换为游戏网格的方法，可以直接在游戏环境中使用。该方法与网格连通性无关，在实际应用中计算效率较高。 </p>
-<p>为了消除光照和遮挡的影响，我们在对抗性训练范式下训练神经网络，从野外人脸图像中的单个图像预测一个完整的漫反射贴图。 </p>
-<h1><span id="方法">方法</span></h1><p><img src="/2022/06/29/review_9_MeInGame/image-20220629143637063.png" alt="image-20220629143637063"></p>
-<p>Shape Reconstructor pretrain好，获取3DMM系数和姿势系数，通过3DMM网络构成3DMM mesh（只有正面3D人脸），Shape Transfer将3DMM mesh转换成Game mesh（整个3D人头）；</p>
-<p>根据Game mesh将原图uv展开创建一个粗糙纹理贴图，通过encoder decoder进一步细化至细化纹理；</p>
-<p>还引入了一个光照predictor，预测光照系数；</p>
-<p>最后，将预测的形状、纹理和照明系数一起提供给可微分渲染器，并强制渲染输出与输入照片类似。为了进一步改进结果，引入了两个鉴别器。</p>
-<h2><span id="3d人脸数据集构建方法">3D人脸数据集构建方法</span></h2><p>1）给定一张人脸图像，通过预训练好的人脸分割网络检测皮肤区域</p>
-<p>2）计算输入面部皮肤的平均颜色，并将平均皮肤颜色传输到模板纹理贴图（由游戏开发人员提供，是标准3D模型模板对应的标准UV模板） </p>
-<p>3）根据变形的game mesh，将输入人脸图像展开到UV空间</p>
-<p>4）使用Poisson blending（图像融合操作）将展开的贴图与UV模板混合，移除头发和眼镜等非皮肤区域，并尽可能使用对称性修补遮挡区域</p>
-<h2><span id="人脸形状重建-face-shape-reconstruction">人脸形状重建 （Face Shape Reconstruction）</span></h2><p>第一步从输入图像预测3DMM形状和姿势系数。采用了<a href="https://openaccess.thecvf.com/content_CVPRW_2019/papers/AMFG/Deng_Accurate_3D_Face_Reconstruction_With_Weakly-Supervised_Learning_From_Single_Image_CVPRW_2019_paper.pdf">Accurate 3D Face Reconstruction With Weakly-Supervised Learning: From Single Image to Image Set (thecvf.com)</a>的方法，其他3DMM的方法同样适用。</p>
-<h2><span id="形状转换shape-transfer">形状转换（Shape Transfer）</span></h2><p>形状传递模块的目的是将重建的3DMM网格传递到游戏网格。我们设计了基于Radial Basis Function（RBF）插值的形状传递模块。</p>
-<h2><span id="损失函数">损失函数</span></h2><p>我们设计了损失函数来最小化渲染人脸图像和输入人脸照片之间的距离，以及精细纹理贴图和地面真实纹理贴图之间的距离。在渲染循环中，我们设计了四种类型的损失函数，即像素损失、感知损失、皮肤正则化损失和对抗性损失，以从全局外观和局部细节来衡量面部相似性。 </p>
-<p><strong>像素损失（Pixel Loss）</strong></p>
-<p>渲染后的图像R和输入图像I，做pixel loss：</p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629153338519.png" alt="image-20220629153338519"></p>
-<p>GT的UV贴图G和细化的纹理贴图F，做pixel loss：</p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629154446786.png" alt="image-20220629154446786"></p>
-<p><strong>感知损失（Perceptual Loss）</strong></p>
-<p>在感知层面减小重建图像的差异，做法遵循[Structure Guided Img Inpaint using Edge Prediction - 知乎 (zhihu.com)](<a href="https://zhuanlan.zhihu.com/p/147654092#:~:text=%E3%80%8AEdgeConnect%3A">https://zhuanlan.zhihu.com/p/147654092#:~:text=《EdgeConnect%3A</a> Structure Guided Image Inpainting using Edge Prediction》,结构信息 中的 边缘信息 来实现图像的修复（类似Free-form的素描信息） 适用于： rectangular masks、irregular masks。)</p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160619803.png" alt="image-20220629160619803"></p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160626723.png" alt="image-20220629160626723"></p>
-<p><strong>皮肤正则化损失 （Skin Regularization Loss）</strong></p>
-<p>为了在整个面部产生恒定的肤色并去除高光和阴影，我们进行了两次损失来调整面部皮肤，即“对称损失”和“标准偏差损失”。与之前将皮肤正则化直接应用于顶点颜色的工作不同，我们对高斯模糊纹理贴图施加惩罚。这是基于一个事实，即一些个性化的细节（例如痣）并不总是对称的，并且与肤色无关。我们将对称损耗定义如下： </p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160919834.png" alt="image-20220629160919834"></p>
-<p>我们将表皮标准偏差损失定义如下： </p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161001203.png" alt="image-20220629161001203"></p>
-<p><strong>对抗损失（Adversarial Loss）</strong></p>
-<p>为了进一步提高重建的逼真度，我们还在训练期间使用对抗性损失。我们引入了两个鉴别器，一个用于渲染人脸，另一个用于生成的UV纹理贴图。我们训练鉴别器来判断生成的输出是真是假，同时，我们训练网络的其他部分来愚弄鉴别器。对抗训练的目标功能定义如下： </p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161825452.png" alt="image-20220629161825452"></p>
-<p><strong>总损失定义</strong></p>
-<p>**<img src="/2022/06/29/review_9_MeInGame/image-20220629161847549.png" alt="image-20220629161847549">    **        </p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161920596.png" alt="image-20220629161920596"></p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>3DMM</tag>
       </tags>
   </entry>
   <entry>
@@ -1533,6 +1533,37 @@
       </tags>
   </entry>
   <entry>
+    <title>RTTO HOT 100</title>
+    <url>/2023/03/16/rtto_hot100/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#hot-100">HOT 100</a><ul>
+<li><a href="#1%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8Ce">1.两数之和（e）</a></li>
+<li><a href="#2%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0m">2.两数相加（m）</a></li>
+<li><a href="#3%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2m">3.无重复字符的最长子串（m）</a></li>
+<li><a href="#4%E5%AF%BB%E6%89%BE%E4%B8%A4%E4%B8%AA%E6%AD%A3%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0h">4.寻找两个正序数组的中位数（h）</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="hot-100">HOT 100</span></h1><h2><span id="1两数之和e">1.两数之和（e）</span></h2><p>使用map&lt;int,int&gt;构造哈希表；使用map的count方法寻找target-nums[i]是否存在，存在的话就存入res相关index，否则存入nums[i]的索引位置。</p>
+<h2><span id="2两数相加m">2.两数相加（m）</span></h2><p>遍历l1，l2计算sum和进位，尾插法更新tail，注意此时的tail是逆序的，需要一开始使用head指向初始节点作为结果返回。</p>
+<h2><span id="3无重复字符的最长子串m">3.无重复字符的最长子串（m）</span></h2><p>滑动窗口法，使用start，end，使用end进行遍历整个字符串，记录每次end的所指向的字符记为tmp，子循环从start遍历到end，若发现有与tmp相等的符号，则发生子串重复，更新start位置到当前index下一位，计算当前子串length，并退出子循环。动态更新res和length的最大值作为当前结果。</p>
+<h2><span id="4寻找两个正序数组的中位数h">4.寻找两个正序数组的中位数（h）</span></h2><p>二分法</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">double</span> <span class="title">findMedianSortedArrays</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums1, vector&lt;<span class="type">int</span>&gt;&amp; nums2)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums1.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> m = nums2.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> left = (n + m + <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> right = (n + m + <span class="number">2</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">return</span> (<span class="built_in">getKth</span>(nums1, <span class="number">0</span>, n - <span class="number">1</span>, nums2, <span class="number">0</span>, m - <span class="number">1</span>, left) + <span class="built_in">getKth</span>(nums1, <span class="number">0</span>, n - <span class="number">1</span>, nums2, <span class="number">0</span>, m - <span class="number">1</span>, right)) * <span class="number">0.5</span>; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getKth</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums1, <span class="type">int</span> start1, <span class="type">int</span> end1, vector&lt;<span class="type">int</span>&gt;&amp; nums2, <span class="type">int</span> start2, <span class="type">int</span> end2, <span class="type">int</span> k)</span></span>&#123;</span><br><span class="line">        <span class="type">int</span> len1 = end1 - start1 + <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> len2 = end2 - start2 + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(len1 &gt; len2) <span class="keyword">return</span>  <span class="built_in">getKth</span>(nums2, start2, end2, nums1, start1, end1, k);</span><br><span class="line">        <span class="keyword">if</span> (len1 == <span class="number">0</span>)  <span class="keyword">return</span> nums2[start2 + k - <span class="number">1</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(k == <span class="number">1</span>) <span class="keyword">return</span> <span class="built_in">min</span>(nums1[start1], nums2[start2]);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> i = start1 + <span class="built_in">min</span>(len1, k / <span class="number">2</span>) - <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> j = start2 + <span class="built_in">min</span>(len2, k / <span class="number">2</span>) - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(nums1[i] &gt; nums2[j])&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">getKth</span>(nums1, start1, end1, nums2, j + <span class="number">1</span>, end2, k - (j - start2 + <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">getKth</span>(nums1, i + <span class="number">1</span>, end1, nums2, start2, end2, k - (i - start1 + <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>RTTO</category>
+      </categories>
+      <tags>
+        <tag>RTTO</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>RTTO WEEK5</title>
     <url>/2023/02/22/rtto_5/</url>
     <content><![CDATA[<!-- toc -->
@@ -1613,37 +1644,6 @@
 
 <p>非递归法：</p>
 <p>层序遍历</p>
-]]></content>
-      <categories>
-        <category>RTTO</category>
-      </categories>
-      <tags>
-        <tag>RTTO</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RTTO HOT 100</title>
-    <url>/2023/03/16/rtto_hot100/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#hot-100">HOT 100</a><ul>
-<li><a href="#1%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8Ce">1.两数之和（e）</a></li>
-<li><a href="#2%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0m">2.两数相加（m）</a></li>
-<li><a href="#3%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2m">3.无重复字符的最长子串（m）</a></li>
-<li><a href="#4%E5%AF%BB%E6%89%BE%E4%B8%A4%E4%B8%AA%E6%AD%A3%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0h">4.寻找两个正序数组的中位数（h）</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<span id="more"></span>
-
-<h1><span id="hot-100">HOT 100</span></h1><h2><span id="1两数之和e">1.两数之和（e）</span></h2><p>使用map&lt;int,int&gt;构造哈希表；使用map的count方法寻找target-nums[i]是否存在，存在的话就存入res相关index，否则存入nums[i]的索引位置。</p>
-<h2><span id="2两数相加m">2.两数相加（m）</span></h2><p>遍历l1，l2计算sum和进位，尾插法更新tail，注意此时的tail是逆序的，需要一开始使用head指向初始节点作为结果返回。</p>
-<h2><span id="3无重复字符的最长子串m">3.无重复字符的最长子串（m）</span></h2><p>滑动窗口法，使用start，end，使用end进行遍历整个字符串，记录每次end的所指向的字符记为tmp，子循环从start遍历到end，若发现有与tmp相等的符号，则发生子串重复，更新start位置到当前index下一位，计算当前子串length，并退出子循环。动态更新res和length的最大值作为当前结果。</p>
-<h2><span id="4寻找两个正序数组的中位数h">4.寻找两个正序数组的中位数（h）</span></h2><p>二分法</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">double</span> <span class="title">findMedianSortedArrays</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums1, vector&lt;<span class="type">int</span>&gt;&amp; nums2)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums1.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> m = nums2.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> left = (n + m + <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> right = (n + m + <span class="number">2</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">return</span> (<span class="built_in">getKth</span>(nums1, <span class="number">0</span>, n - <span class="number">1</span>, nums2, <span class="number">0</span>, m - <span class="number">1</span>, left) + <span class="built_in">getKth</span>(nums1, <span class="number">0</span>, n - <span class="number">1</span>, nums2, <span class="number">0</span>, m - <span class="number">1</span>, right)) * <span class="number">0.5</span>; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getKth</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums1, <span class="type">int</span> start1, <span class="type">int</span> end1, vector&lt;<span class="type">int</span>&gt;&amp; nums2, <span class="type">int</span> start2, <span class="type">int</span> end2, <span class="type">int</span> k)</span></span>&#123;</span><br><span class="line">        <span class="type">int</span> len1 = end1 - start1 + <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> len2 = end2 - start2 + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(len1 &gt; len2) <span class="keyword">return</span>  <span class="built_in">getKth</span>(nums2, start2, end2, nums1, start1, end1, k);</span><br><span class="line">        <span class="keyword">if</span> (len1 == <span class="number">0</span>)  <span class="keyword">return</span> nums2[start2 + k - <span class="number">1</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(k == <span class="number">1</span>) <span class="keyword">return</span> <span class="built_in">min</span>(nums1[start1], nums2[start2]);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> i = start1 + <span class="built_in">min</span>(len1, k / <span class="number">2</span>) - <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> j = start2 + <span class="built_in">min</span>(len2, k / <span class="number">2</span>) - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(nums1[i] &gt; nums2[j])&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">getKth</span>(nums1, start1, end1, nums2, j + <span class="number">1</span>, end2, k - (j - start2 + <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">getKth</span>(nums1, i + <span class="number">1</span>, end1, nums2, start2, end2, k - (i - start1 + <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>RTTO</category>
