@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" integrity="sha256-jTIdiMuX/e3DGJUGwl3pKSxuc6YOuqtJYkM0bGQESA4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mrbananazly.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="1. 贡献 2. 动机 3. 简介 4. 预备知识 符号定义 3DMM补充 一些标准的evaluation pipeline motivation   5. REALY：A New 3D Face Benchmark 选择HIFI3D基底作为目标拓扑的原因 数据集构建步骤 挑战与解决方案 挑战一：原始扫描具有不同的比例和姿势，具有不准确的稀疏keypoints，这使得它们难以一致地对齐。 挑">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《High-Fidelity 3D Digital Human Head Creation from RGB-D Selfies》">
+<meta property="og:url" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/index.html">
+<meta property="og:site_name" content="Road 2 the Final">
+<meta property="og:description" content="1. 贡献 2. 动机 3. 简介 4. 预备知识 符号定义 3DMM补充 一些标准的evaluation pipeline motivation   5. REALY：A New 3D Face Benchmark 选择HIFI3D基底作为目标拓扑的原因 数据集构建步骤 挑战与解决方案 挑战一：原始扫描具有不同的比例和姿势，具有不准确的稀疏keypoints，这使得它们难以一致地对齐。 挑">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230601193651526.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230601201029200.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_12_REALY/image-20230601201913382.png">
+<meta property="og:image" content="http://mrbananazly.cn/review_12_REALY/image-20230601201923089.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230601202527762.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230601202606377.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230601202856040.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230601203122686.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230601204718654.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230601210609441.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230601212010004.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230601220745894.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230601220904606.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230601212947987.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230601222014228.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230601223856306.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230601223904991.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230601223102196.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230604150316983.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230604150534367.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230604151228612.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230604151250890.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230604151640859.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230604151657772.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230604151756157.png">
+<meta property="article:published_time" content="2023-06-01T11:07:00.592Z">
+<meta property="article:modified_time" content="2023-06-04T07:20:34.723Z">
+<meta property="article:author" content="mrbanana_zly">
+<meta property="article:tag" content="3DMM">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://mrbananazly.cn/2023/06/01/review_12_REALY/image-20230601193651526.png">
+
+
+<link rel="canonical" href="http://mrbananazly.cn/2023/06/01/review_12_REALY/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://mrbananazly.cn/2023/06/01/review_12_REALY/","path":"2023/06/01/review_12_REALY/","title":"《High-Fidelity 3D Digital Human Head Creation from RGB-D Selfies》"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《High-Fidelity 3D Digital Human Head Creation from RGB-D Selfies》 | Road 2 the Final</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Road 2 the Final</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">1. 贡献</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">2. 动机</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">3. 简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">4. 预备知识</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.1.</span> <span class="nav-text">符号定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.2.</span> <span class="nav-text">3DMM补充</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.3.</span> <span class="nav-text">一些标准的evaluation pipeline</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">4.4.</span> <span class="nav-text">motivation</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link"><span class="nav-number">4.4.0.1.</span> <span class="nav-text">传统standard evaluation pipeline的缺陷</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">5. REALY：A New 3D Face Benchmark</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.1.</span> <span class="nav-text">选择HIFI3D基底作为目标拓扑的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.2.</span> <span class="nav-text">数据集构建步骤</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.3.</span> <span class="nav-text">挑战与解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.3.1.</span> <span class="nav-text">挑战一：原始扫描具有不同的比例和姿势，具有不准确的稀疏keypoints，这使得它们难以一致地对齐。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link"><span class="nav-number">5.3.2.</span> <span class="nav-text">挑战二：得到重新拓扑的 SL 之后，如何准确地将region masks从 SL（继承自 Stemp）转移到SH</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.4.</span> <span class="nav-text">HIFI3D++</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">6.</span> <span class="nav-text">6 创新的Evaluation pipeline</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">7.</span> <span class="nav-text">7. 实验</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.1.</span> <span class="nav-text">消融实验：bICP VS gICP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.2.</span> <span class="nav-text">不同方法在REALY benchmark上的表现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">7.3.</span> <span class="nav-text">不同3DMM在REALY上的表现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">8.</span> <span class="nav-text">8. 总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="mrbanana_zly"
+      src="/images/favicon.png">
+  <p class="site-author-name" itemprop="name">mrbanana_zly</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://mrbananazly.cn/2023/06/01/review_12_REALY/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.png">
+      <meta itemprop="name" content="mrbanana_zly">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="《High-Fidelity 3D Digital Human Head Creation from RGB-D Selfies》 | Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《High-Fidelity 3D Digital Human Head Creation from RGB-D Selfies》
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-06-01 19:07:00" itemprop="dateCreated datePublished" datetime="2023-06-01T19:07:00+08:00">2023-06-01</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-06-04 15:20:34" itemprop="dateModified" datetime="2023-06-04T15:20:34+08:00">2023-06-04</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/paper-review/" itemprop="url" rel="index"><span itemprop="name">paper review</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <!-- toc -->
+
+<ul>
+<li><a href="#1-%E8%B4%A1%E7%8C%AE">1. 贡献</a></li>
+<li><a href="#2-%E5%8A%A8%E6%9C%BA">2. 动机</a></li>
+<li><a href="#3-%E7%AE%80%E4%BB%8B">3. 简介</a></li>
+<li><a href="#4-%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86">4. 预备知识</a><ul>
+<li><a href="#%E7%AC%A6%E5%8F%B7%E5%AE%9A%E4%B9%89"><strong>符号定义</strong></a></li>
+<li><a href="#3dmm%E8%A1%A5%E5%85%85">3DMM补充</a></li>
+<li><a href="#%E4%B8%80%E4%BA%9B%E6%A0%87%E5%87%86%E7%9A%84evaluation-pipeline">一些标准的evaluation pipeline</a></li>
+<li><a href="#motivation">motivation</a></li>
+</ul>
+</li>
+<li><a href="#5-realya-new-3d-face-benchmark">5. REALY：A New 3D Face Benchmark</a><ul>
+<li><a href="#%E9%80%89%E6%8B%A9hifi3d%E5%9F%BA%E5%BA%95%E4%BD%9C%E4%B8%BA%E7%9B%AE%E6%A0%87%E6%8B%93%E6%89%91%E7%9A%84%E5%8E%9F%E5%9B%A0">选择HIFI3D基底作为目标拓扑的原因</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E6%9E%84%E5%BB%BA%E6%AD%A5%E9%AA%A4">数据集构建步骤</a></li>
+<li><a href="#%E6%8C%91%E6%88%98%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">挑战与解决方案</a><ul>
+<li><a href="#%E6%8C%91%E6%88%98%E4%B8%80%E5%8E%9F%E5%A7%8B%E6%89%AB%E6%8F%8F%E5%85%B7%E6%9C%89%E4%B8%8D%E5%90%8C%E7%9A%84%E6%AF%94%E4%BE%8B%E5%92%8C%E5%A7%BF%E5%8A%BF%E5%85%B7%E6%9C%89%E4%B8%8D%E5%87%86%E7%A1%AE%E7%9A%84%E7%A8%80%E7%96%8Fkeypoints%E8%BF%99%E4%BD%BF%E5%BE%97%E5%AE%83%E4%BB%AC%E9%9A%BE%E4%BB%A5%E4%B8%80%E8%87%B4%E5%9C%B0%E5%AF%B9%E9%BD%90">挑战一：原始扫描具有不同的比例和姿势，具有不准确的稀疏keypoints，这使得它们难以一致地对齐。</a></li>
+<li><a href="#%E6%8C%91%E6%88%98%E4%BA%8C%E5%BE%97%E5%88%B0%E9%87%8D%E6%96%B0%E6%8B%93%E6%89%91%E7%9A%84-sl-%E4%B9%8B%E5%90%8E%E5%A6%82%E4%BD%95%E5%87%86%E7%A1%AE%E5%9C%B0%E5%B0%86region-masks%E4%BB%8E-sl%E7%BB%A7%E6%89%BF%E8%87%AA-stemp%E8%BD%AC%E7%A7%BB%E5%88%B0sh">挑战二：得到重新拓扑的 SL 之后，如何准确地将region masks从 SL（继承自 Stemp）转移到SH</a></li>
+</ul>
+</li>
+<li><a href="#hifi3d">HIFI3D++</a></li>
+</ul>
+</li>
+<li><a href="#6-%E5%88%9B%E6%96%B0%E7%9A%84evaluation-pipeline">6 创新的Evaluation pipeline</a></li>
+<li><a href="#7-%E5%AE%9E%E9%AA%8C">7. 实验</a><ul>
+<li><a href="#%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8Cbicp-vs-gicp">消融实验：bICP VS gICP</a></li>
+<li><a href="#%E4%B8%8D%E5%90%8C%E6%96%B9%E6%B3%95%E5%9C%A8realy-benchmark%E4%B8%8A%E7%9A%84%E8%A1%A8%E7%8E%B0">不同方法在REALY benchmark上的表现</a></li>
+<li><a href="#%E4%B8%8D%E5%90%8C3dmm%E5%9C%A8realy%E4%B8%8A%E7%9A%84%E8%A1%A8%E7%8E%B0">不同3DMM在REALY上的表现</a></li>
+</ul>
+</li>
+<li><a href="#8-%E6%80%BB%E7%BB%93">8. 总结</a></li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a target="_blank" rel="noopener" href="https://realy3dface.com/">REALY (realy3dface.com)</a></p>
+<p>code: <a target="_blank" rel="noopener" href="https://github.com/tencent-ailab/hifi3dface"><a target="_blank" rel="noopener" href="https://github.com/czh-98/REALY">czh-98&#x2F;REALY: REALY: Rethinking the Evaluation of 3D Face Reconstruction (ECCV 2022) (github.com)</a></a></p>
+<p>ref link:<a target="_blank" rel="noopener" href="https://blog.csdn.net/jiafeier_555/article/details/125428388">https://blog.csdn.net/jiafeier_555/article/details/125428388</a></p>
+<span id="more"></span>
+
+<h1><span id="1-贡献">1. 贡献</span></h1><p>提出一个3D face reconstruction的benchmark REALY（Region-aware benchmark based on the LYHM Benchmark）</p>
+<p>REALY，HIFI3D++（3DMM），本文的新evaluation pipeline以开源。</p>
+<h1><span id="2-动机">2. 动机</span></h1><p>人脸重建任务中，不同的数据集，会制约重建方法、评估方法、3DMM基底的发展。</p>
+<p>现有的开源 3D 人脸数据集存在一些不可忽视的缺陷。 例如，面部扫描具有不同的比例和随机姿势，并且提供的关键点不够准确或辨别力不够，这使得将输入形状与预测面部对齐以进行评估变得极其困难。 此外，由于原始面部扫描中缺乏真实标注，标准评估管道依赖于最近邻对应来衡量扫描与估计面部形状之间的相似性，这完全忽略了实体特征并丢弃了人体的几何形状面孔。</p>
+<h1><span id="3-简介">3. 简介</span></h1><p>为了填补这一空白，提出了一个名为 REALY 的新基准，用于评估 3D 人脸重建方法。  REALY 包含来自 <strong>LYHM 数据集</strong>的 100 个人的 3D 人脸扫描，其中人脸扫描被一致地<strong>重新缩放、全局对齐，并展开成拓扑结构一致的mesh</strong>。 更重要的是，由于本文已经<strong>预定义了重新拓扑网格模板的面部关键点keypoints和掩码masks</strong>，因此<strong>可以将keypoints和masks转移到原始面部扫描结构</strong>中。 在这种情况下，本文即获得了原始原始面部扫描的高质量面部关键点和蒙版，这使我们能够对估计的 3D 面部形状执行更准确的对齐和细粒度的区域评估。</p>
+<p>我们的基准包含来自不同种族、年龄和性别群体的个体。 利用为 REALY 构建的<strong>重新拓扑步骤（已开源）</strong>，我们通过对齐和重新拓扑多个 3D 人脸数据集，进一步提供了一个名为 HIFI3D++ 的 3DMM 基底。 我们进行了广泛的实验来评估最先进的 3D 人脸重建方法和 3DMM 基底。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601193651526.png" alt="image-20230601193651526"></p>
+<h1><span id="4-预备知识">4. 预备知识</span></h1><h2><span id="符号定义"><strong>符号定义</strong></span></h2><p><img src="/2023/06/01/review_12_REALY/image-20230601201029200.png" alt="image-20230601201029200"></p>
+<p>三个特殊的face shape，以及在不同face shape上的keypoints和regions</p>
+<p><img src="/review_12_REALY/image-20230601201913382.png" alt="image-20230601201913382"></p>
+<p><img src="/review_12_REALY/image-20230601201923089.png" alt="image-20230601201923089"></p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601202527762.png" alt="image-20230601202527762"></p>
+<p><strong>NMSE用于度量两个surfaces之间的距离</strong></p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601202606377.png" alt="image-20230601202606377"></p>
+<p><strong>ICP可用于通过迭代求解刚性变换和最近邻映射来对齐两个shape，以最小化NMSE</strong></p>
+<h2><span id="3dmm补充">3DMM补充</span></h2><p>一些开源的3DMM数据：</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601202856040.png" alt="image-20230601202856040"></p>
+<h2><span id="一些标准的evaluation-pipeline">一些标准的evaluation pipeline</span></h2><p>一些数据集还提供ground truth scan数据</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601203122686.png" alt="image-20230601203122686"></p>
+<h2><span id="motivation">motivation</span></h2><h4><span id="传统standard-evaluation-pipeline的缺陷">传统standard evaluation pipeline的缺陷</span></h4><p><img src="/2023/06/01/review_12_REALY/image-20230601204718654.png" alt="image-20230601204718654"></p>
+<p>如上图，使用standard evalution pipeline，高分辨的shape和gt shape的差异反而要比低分辨率的shape的高。所以<strong>考虑regions的对齐</strong>比较合理。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601210609441.png" alt="image-20230601210609441"></p>
+<p>如上图，x对应的最近邻点是y1，而根据语义x应该与语义y2计算NMSE。</p>
+<p><strong>结论</strong></p>
+<p><strong>需要考虑基于region和双向对齐</strong></p>
+<p>&#x3D;》提出真实语义区域的region masks的shape进行度量&#x3D;》现存数据集都未设定这样的规则&#x3D;》本文方法</p>
+<h1><span id="5-realya-new-3d-face-benchmark">5. REALY：A New 3D Face Benchmark</span></h1><p>100个个体</p>
+<p>每个个体包含高分辨率shape（来自LYHN的aligned 3D scan）和低分辨率shape（使用HIFI3D基底拓扑进行重新拓扑化）</p>
+<p>所有shape始终等比例缩放对齐，</p>
+<p>同时每个shape都有68个keypoints和4个region masks</p>
+<p>对于每个个体，使用精心设计的照明条件和gt相机参数渲染出5张高质量的多视图图像（包括1张正面图像）</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601212010004.png" alt="image-20230601212010004"></p>
+<h2><span id="选择hifi3d基底作为目标拓扑的原因">选择HIFI3D基底作为目标拓扑的原因</span></h2><p>LYHM 在眼睛和嘴巴的边界处有过密的采样；</p>
+<p>LSFM 没有边缘循环来定义眼睛和嘴巴的轮廓；</p>
+<p>FLAME的三角剖分不自然，无法模拟一些逼真的肌肉动作，比如抬眉毛。 作为比较，HIFI3D 具有更好的三角剖分和平衡采样，可以做出逼真和细腻的表达。 </p>
+<p>此外，HIFI3D还有眼球、嘴巴内部结构、肩部区域等，这些都将有利于下游应用。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601220745894.png" alt="image-20230601220745894"></p>
+<h2><span id="数据集构建步骤">数据集构建步骤</span></h2><p>第一，从 LYHM 收集 1235 个scans数据，并在 HIFI3D 拓扑中准备<strong>模板形状 Stemp</strong>，其中<strong>预定义了 68 个关键点 Ktemp 和 4 个区域掩码 Rtemp</strong>（包括鼻子、嘴巴、前额和脸颊区域）。</p>
+<p>第二，将输入扫描重新缩放并严格对齐到模板形状 Stemp，从而生成我们的真实高分辨率网格 SH（即<strong>对齐扫描</strong>）。 </p>
+<p>第三，定义一个评估区域（有相关论文），该区域是一个以鼻尖为中心的圆盘。</p>
+<p>第四，将 Stemp“包装”（即<strong>执行非刚性配准</strong>）到每个 SH 以获得重新拓扑化的 SL，使得 SL 具有与 Stemp 相同的拓扑但反映 SH 的形状。（<strong>高分配准低分</strong>） 请注意，我们有关键点 KL &#x3D; Ktemp 和区域 RL &#x3D; Rtemp，因为 <strong>SL 和 Stemp 共享相同的 HIFI3D 拓扑</strong></p>
+<p>第五，将每个人的 KL 和 RL 从 SL 转移到 SH。（<strong>低分的region和mask转移到高分</strong>） 我们还设置了一个渲染管道，用于为带纹理的高分辨率网格 SH 合成多视图图像。 这种受控环境使REALY能够专注于反映不同方法的重建能力。<br>第六，过滤掉wrapping error（这里不理解）大于 0.2mm 的样本，并请具有 3 年建模经验的专家艺术家从所有处理过的扫描中选择 100 个具有最高模型质量的个体，跨越不同的性别、种族和年龄，以获得我们的真正的基准（<strong>最终人工筛选高质量模型</strong>）。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601220904606.png" alt="image-20230601220904606"></p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601212947987.png" alt="image-20230601212947987"></p>
+<h2><span id="挑战与解决方案">挑战与解决方案</span></h2><h3><span id="挑战一原始扫描具有不同的比例和姿势具有不准确的稀疏keypoints这使得它们难以一致地对齐">挑战一：原始扫描具有不同的比例和姿势，具有不准确的稀疏keypoints，这使得它们难以一致地对齐。</span></h3><p>为了解决这个问题，我们迭代以下步骤直到收敛：</p>
+<p>第一，渲染一张高分shape的前脸、带纹理的图像（使用initial&#x2F;estimated transformation）来对齐SH到Stemp（注意正面姿势需要alignment transformation，因为对于给定的scan数据，正面姿势是未知的需要进行统一对齐）；</p>
+<p>第二，使用sota的landmark detector来检测这张渲染图像的2D 面部keypoints；</p>
+<p>第三，使用渲染相机视角将 2D 关键点投影到 3D； </p>
+<p>第四，使用 SH 上的投影 3D 关键点与 Stemp 上已知的 3D 关键点之间的对应关系，更新从 SH 到 Stemp 的对齐变换。</p>
+<h3><span id="挑战二得到重新拓扑的-sl-之后如何准确地将region-masks从-sl继承自-stemp转移到sh">挑战二：得到重新拓扑的 SL 之后，如何准确地将region masks从 SL（继承自 Stemp）转移到SH</span></h3><p> 一种天真的解决方案是使用从 SL 到 SH 的最近邻映射来传输区域掩码。 然而，由于 SH 的分辨率可以比 SL 的分辨率大 50 倍，这种天真的解决方案将引入断开连接和嘈杂的区域掩码。 为避免此类缺陷，我们从两个方向使用顶点到点映射来查找 SH 上的候选区域。<br>由于在从 SH 到 SL 的映射过程中可以建立更多的对应关系，因此可以获得更高质量、更平滑的区域掩码。 最后，我们过滤掉噪声区域（例如，鼻孔、眼球）并返回最大的连接区域。</p>
+<h2><span id="hifi3d">HIFI3D++</span></h2><p>通过以上过程，我们可以通过对更多的3D人脸模型进行重新拓扑来进一步构建新的3DMM基底。</p>
+<p>具体来说，基于来自 HIFI3D 的 200 个个体，我们另外处理和重新拓扑来自 FaceScape 数据集的 846 个个体的 3D 人脸模型到 HIFI3D 拓扑中。 连同上述来自 LYHM 的 1235 个个体的处理模型，我们收集并选择了 1957 个最具代表性的mesh数据。 </p>
+<p>然后，我们应用 PCA 获得我们的新基底，包含 526 个 PC（具有 99.9% 的累积解释方差），我们将其命名为 HIFI3D++。</p>
+<p>下图显示了 HIFI3D++ 与其他 3DMM 的比较。 请注意，以前的 3DMM 或多或少存在种族偏见。 例如，BFM  主要由欧洲人构建，FLAME 由美国和欧洲的扫描构建，而 HIFI3D 和 FS 由亚洲人的扫描构建。<br>LSFM 和 FLAME 分别包含 50 : 1 和 12 : 1 的白种人和亚洲人。 相比之下，HIFI3D++ 由跨越更平衡的种族群体的高质量模型构建，确保白种人和亚洲人（加上来自其他种族的一些受试者）之间的比例为 1：1。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601222014228.png" alt="image-20230601222014228"></p>
+<h1><span id="6-创新的evaluation-pipeline">6 创新的Evaluation pipeline</span></h1><p><strong>本文提出的pipeline就是采用rICP+bICP取代standard pipeline的直接gICP</strong></p>
+<p>在REALY的基础上，我们提出一个新的评价流程避免先前评价流程的问题，具体而言，我们的评价流程包含如下两个步骤：</p>
+<p><strong>（该两步分别对应上文的motivation）</strong></p>
+<p><strong>第一，局部区域的对齐 region-aware ICP（对齐region）</strong></p>
+<p>考虑到不同区域的重建质量会影响全局的对齐结果，由于我们的benchmark得到了不同脸部区域的mask，因此我们可以借助这个信息将predicted mesh对齐到ground-truth scan的特定区域，在error计算时只计算ground-truth scan上的特定区域与predicted mesh之间的误差，而不考虑脸部其他区域对于对齐结果以及误差计算的影响。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601223856306.png" alt="image-20230601223856306"></p>
+<p><strong>第二，对应关系的建立 non-rigid and bidirectional ICP（构建点对）</strong></p>
+<p>在局部对齐的基础上，我们需要建立ground-truth scan某一区域上的每一个点与predicted mesh之间的对应点并计算两者的误差。考虑到先前基于最近点的方式存在的问题，我们提出一个新的对应关系的建立方法，提高了关键点语义信息的一致性。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601223904991.png" alt="image-20230601223904991"></p>
+<p>具体而言，我们<strong>首先通过最近点建立初步的对应关系（region-aware ICP）</strong>；随后<strong>借助non-rigid ICP将ground-truth scan某一区域变形到predicted mesh</strong>上，由于变形后的区域与predicted mesh已经贴合，因为在变形过程中考虑了具备语义信息的关键点损失，所以这时的对应关系相比于原始的最近点的对应关系具有更好的语义关系的一致性（如，图3中脸部关键点的一致性），从而我们<strong>对初始的对应关系进行更新</strong>；最后，由于变形前后的拓扑形状的一致性，我们能够<strong>借助更新后的对应关系计算原始的ground-truth scan区域与局部对齐的mesh之间的最终误差</strong>。</p>
+<p><strong>下图为三种ICP后gt和predicted的关联度</strong></p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601223102196.png" alt="image-20230601223102196"></p>
+<h1><span id="7-实验">7. 实验</span></h1><h2><span id="消融实验bicp-vs-gicp">消融实验：bICP VS gICP</span></h2><p><img src="/2023/06/01/review_12_REALY/image-20230604150316983.png" alt="image-20230604150316983"></p>
+<p>从图4来看，全局的对齐策略由于局部区域的改变容易导致全局误差的变化，而我们的对齐策略则只聚焦于特定区域，其中对角线的error map表明误差较大的区域，而非对角线的error map的误差较小，对应没有发生变化的区域。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230604150534367.png" alt="image-20230604150534367"></p>
+<p>从表2来看，我们的对齐结果通过ground-truth的对应点计算得到的误差与真实的误差更为接近，而全局的对齐策略则导致误差与真实误差不匹配。</p>
+<p>从表3来看，我们的对应点计算策略带来的误差要显著小于全局对齐后最近点获得的对应点。实验结果表明，我们的评价流程不仅能够聚焦到脸部区域有差异的部分(图4和表2的对角线)，并且我们的对应关系建立更加准确(表3)。</p>
+<h2><span id="不同方法在realy-benchmark上的表现">不同方法在REALY benchmark上的表现</span></h2><p>具体可见REALY官网列表</p>
+<p>我们对比了先前的评价流程与我们提出的评价流程在REALY benchmark上的表现。对于先前的评价方法，我们从两个方向(即ground-truth scan的每个点与predicted mesh建立对应关系，以及predicted mesh每个点与ground-truth scan建立对应关系)作为对比，定量与定性的比较如表4和图5所示。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230604151228612.png" alt="image-20230604151228612"></p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230604151250890.png" alt="image-20230604151250890"></p>
+<p>我们通过user study投票选出各组最好(*)&#x2F;次好(†)的人脸，通过比较不同评价流程选出的最好的人脸(橙、蓝、紫框)可以发现，我们的评价流程（橙框）选出的最好的人脸与user study的投票结果匹配程度更高。并且，我们的评价流程给出了细粒度的评测结果，即：对不同的人脸区域都能进行定量的评价和比较。</p>
+<h2><span id="不同3dmm在realy上的表现">不同3DMM在REALY上的表现</span></h2><p>借助REALY benchmark，本文采用RGB(-D) Fitting的方式对不同3DMM的表达能力进行了评价，定量与定性的比较如表5和图8所示</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230604151640859.png" alt="image-20230604151640859"></p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230604151657772.png" alt="image-20230604151657772"></p>
+<p>定量和定性的结果表明，我们的3DMM在REALY上取得了更优的重建效果，并且，通过不同方法的比较表明，RGB-D Fitting的结果要显著优于目前最好的重建算法，3D人脸重建任务仍有很大的提升空间。</p>
+<p>为了进一步证明HIFI3D++的表达能力，我们只用顶点损失，根据最小二乘的方式拟合一组mesh，对HIFI3D&#x2F;HIFI3D(A)&#x2F;HIFI3D++进行比较，如图9所示。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230604151756157.png" alt="image-20230604151756157"></p>
+<h1><span id="8-总结">8. 总结</span></h1><p>本文是我们对3D人脸重建评价的重新思考和探索。针对先前的评价指标无法准确衡量重建mesh与ground-truth相似性的问题，我们构建了一个新的数据集——REALY，包含更加丰富以及高质量的脸部区域信息，并借助新的评价流程对先前的数十个重建算法、3DMM进行了评价。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/3DMM/" rel="tag"># 3DMM</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/03/22/cpp_STL_note/" rel="prev" title="施磊C++初级STL笔记">
+                  <i class="fa fa-chevron-left"></i> 施磊C++初级STL笔记
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mrbanana_zly</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

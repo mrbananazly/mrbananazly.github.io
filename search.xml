@@ -1,6 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>施磊C++初级STL笔记</title>
+    <url>/2023/03/22/cpp_STL_note/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#c-stl%E5%88%86%E7%B1%BB">C++ STL分类</a><ul>
+<li><a href="#%E4%B8%80-%E6%A0%87%E5%87%86%E5%AE%B9%E5%99%A8">一、标准容器</a><ul>
+<li><a href="#1%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8">1.顺序容器</a></li>
+<li><a href="#2%E5%AE%B9%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8">2.容器适配器</a></li>
+<li><a href="#3%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8">3.关联容器</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-%E8%BF%91%E5%AE%B9%E5%99%A8">二、近容器</a></li>
+<li><a href="#%E4%B8%89-%E8%BF%AD%E4%BB%A3%E5%99%A8">三、迭代器</a></li>
+<li><a href="#%E5%9B%9B-%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1">四、函数对象</a></li>
+<li><a href="#%E4%BA%94-%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95">五、泛型算法</a></li>
+</ul>
+</li>
+<li><a href="#vector%E5%AE%B9%E5%99%A8">vector容器</a></li>
+<li><a href="#deque%E5%AE%B9%E5%99%A8">deque容器</a></li>
+<li><a href="#list%E5%AE%B9%E5%99%A8">list容器</a></li>
+<li><a href="#%E5%AE%B9%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8">容器适配器</a></li>
+<li><a href="#%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8">关联容器</a></li>
+<li><a href="#%E8%BF%AD%E4%BB%A3%E5%99%A8">迭代器</a></li>
+<li><a href="#%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1">函数对象</a></li>
+<li><a href="#%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95">泛型算法</a></li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="c-stl分类">C++ STL分类</span></h1><h2><span id="一-标准容器">一、标准容器</span></h2><h3><span id="1顺序容器">1.顺序容器</span></h3><p>vector    deque    list</p>
+<h3><span id="2容器适配器">2.容器适配器</span></h3><p>stack    queue    priority_queue</p>
+<h3><span id="3关联容器">3.关联容器</span></h3><p>无序关联容器    链式哈希表    增删查O(1)</p>
+<p>unordered_set    unordered_multiset    unordered_map    unordered_multimap</p>
+<p>有序关联容器</p>
+<p>set    multiset    map    multimap</p>
+<h2><span id="二-近容器">二、近容器</span></h2><p>数组    string    bitset</p>
+<h2><span id="三-迭代器">三、迭代器</span></h2><p>iterator    const_iterator</p>
+<p>reverse_iterator    const_reverse_iterator</p>
+<h2><span id="四-函数对象">四、函数对象</span></h2><p>greater    less</p>
+<h2><span id="五-泛型算法">五、泛型算法</span></h2><p>sort    find    find_if    binary_search    for_each</p>
+<h1><span id="vector容器">vector容器</span></h1><p><img src="/cpp_STL_note/image-20230322224639551.png" alt="image-20230322224639551"></p>
+<h1><span id="deque容器">deque容器</span></h1><p><img src="/cpp_STL_note/image-20230322231048003.png" alt="image-20230322231048003"></p>
+<p><img src="/cpp_STL_note/image-20230322232359532.png" alt="image-20230322232359532"></p>
+<h1><span id="list容器">list容器</span></h1><p><img src="/cpp_STL_note/image-20230322232440404.png" alt="image-20230322232440404"></p>
+<p><img src="/cpp_STL_note/image-20230322232641231.png" alt="image-20230322232641231"></p>
+<p><strong>vector、deque、list区别</strong></p>
+<p><img src="/cpp_STL_note/image-20230323102712597.png" alt="image-20230323102712597"></p>
+<p><img src="/cpp_STL_note/image-20230323102855340.png" alt="image-20230323102855340"></p>
+<h1><span id="容器适配器">容器适配器</span></h1><p><img src="/cpp_STL_note/image-20230323111005628.png" alt="image-20230323111005628"></p>
+<p><img src="/cpp_STL_note/image-20230323110945919.png" alt="image-20230323110945919"></p>
+<h1><span id="关联容器">关联容器</span></h1><p><img src="/cpp_STL_note/image-20230323111555262.png" alt="image-20230323111555262"></p>
+<p><img src="/cpp_STL_note/image-20230323111417256.png" alt="image-20230323111417256"></p>
+<p><img src="/cpp_STL_note/image-20230323112926253.png" alt="image-20230323112926253"></p>
+<h1><span id="迭代器">迭代器</span></h1><p><img src="/cpp_STL_note/image-20230323150210820.png" alt="image-20230323150210820"></p>
+<p><img src="/cpp_STL_note/image-20230323145614546.png" alt="image-20230323145614546"></p>
+<p><img src="/cpp_STL_note/image-20230323145734503.png" alt="image-20230323145734503"></p>
+<p><img src="/cpp_STL_note/image-20230323145949126.png" alt="image-20230323145949126"></p>
+<h1><span id="函数对象">函数对象</span></h1><p><img src="/cpp_STL_note/image-20230323152022993.png" alt="image-20230323152022993"></p>
+<p>通过函数指针调用函数，是没有办法内联的，效率很低，因为没有函数调用开销。</p>
+<p><strong>所以需要函数对象来代替函数指针</strong></p>
+<p> <img src="/cpp_STL_note/image-20230323152258041.png" alt="image-20230323152258041"></p>
+<p><img src="/cpp_STL_note/image-20230323152325846.png" alt="image-20230323152325846"></p>
+<h1><span id="泛型算法">泛型算法</span></h1><p><img src="/cpp_STL_note/image-20230323194139744.png" alt="image-20230323194139744"></p>
+<p><img src="/cpp_STL_note/image-20230323195045590.png" alt="image-20230323195045590"></p>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《E题1.0》</title>
     <url>/2022/10/06/HWB/</url>
     <content><![CDATA[<!-- toc -->
@@ -40,6 +115,272 @@
       </categories>
       <tags>
         <tag>建模</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>施磊C++初级笔记</title>
+    <url>/2023/03/20/cpp_basic_note/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#1-%E6%B7%B1%E5%85%A5%E5%AD%A6%E4%B9%A0c%E8%AF%AD%E8%A8%80%E5%85%88%E8%A6%81%E7%BB%83%E5%A5%BD%E7%9A%84%E5%86%85%E5%8A%9F">1 深入学习C++语言先要练好的内功</a><ul>
+<li><a href="#11-%E6%8E%8C%E6%8F%A1%E8%BF%9B%E7%A8%8B%E8%99%9A%E6%8B%9F%E5%9C%B0%E5%9D%80%E7%A9%BA%E9%97%B4%E5%8C%BA%E5%9F%9F%E5%88%92%E5%88%86">1.1 掌握进程虚拟地址空间区域划分</a></li>
+<li><a href="#12-%E4%BB%8E%E6%8C%87%E4%BB%A4%E8%A7%92%E5%BA%A6%E6%8E%8C%E6%8F%A1%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E5%A0%86%E6%A0%88%E8%AF%A6%E7%BB%86%E8%BF%87%E7%A8%8B">1.2 从指令角度掌握函数调用堆栈详细过程</a></li>
+<li><a href="#13-%E4%BB%8E%E7%BC%96%E8%AF%91%E5%99%A8%E8%A7%92%E5%BA%A6%E7%90%86%E8%A7%A3c%E4%BB%A3%E7%A0%81%E7%9A%84%E7%BC%96%E8%AF%91%E5%92%8C%E9%93%BE%E6%8E%A5%E5%8E%9F%E7%90%86">1.3 从编译器角度理解C++代码的编译和链接原理</a></li>
+</ul>
+</li>
+<li><a href="#2-c%E5%9F%BA%E7%A1%80">2 C++基础</a><ul>
+<li><a href="#21-%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3newdelete">2.1 深入理解new，delete</a></li>
+<li><a href="#22-c%E7%9A%84const">2.2 C++的const</a><ul>
+<li><a href="#const%E6%80%8E%E4%B9%88%E7%90%86%E8%A7%A3">const怎么理解？</a></li>
+<li><a href="#c%E5%92%8Cc%E4%B8%AD%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88">C和C++中的区别是什么？</a></li>
+</ul>
+</li>
+<li><a href="#23-const%E5%92%8C%E4%B8%80%E4%BA%8C%E5%A4%9A%E7%BA%A7%E6%8C%87%E9%92%88%E7%9A%84%E7%BB%93%E5%90%88%E5%BA%94%E7%94%A8">2.3 const和一二（多）级指针的结合应用</a><ul>
+<li><a href="#const%E4%BF%AE%E9%A5%B0%E7%9A%84%E9%87%8F%E5%B8%B8%E5%87%BA%E7%8E%B0%E7%9A%84%E9%94%99%E8%AF%AF">const修饰的量常出现的错误</a></li>
+<li><a href="#const%E5%92%8C%E4%B8%80%E7%BA%A7%E6%8C%87%E9%92%88%E7%9A%84%E7%BB%93%E5%90%88">const和一级指针的结合</a></li>
+<li><a href="#const%E5%92%8C%E4%BA%8C%E7%BA%A7%E6%8C%87%E9%92%88%E7%9A%84%E7%BB%93%E5%90%88">const和二级指针的结合</a></li>
+</ul>
+</li>
+<li><a href="#24-c%E7%9A%84%E5%BC%95%E7%94%A8">2.4 C++的引用</a></li>
+<li><a href="#25-%E5%87%BD%E6%95%B0%E9%87%8D%E8%BD%BD">2.5 函数重载</a></li>
+<li><a href="#26-inline%E5%87%BD%E6%95%B0">2.6 inline函数</a></li>
+</ul>
+</li>
+<li><a href="#3-c%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1">3 C++面向对象</a><ul>
+<li><a href="#31-this%E6%8C%87%E9%92%88">3.1 this指针</a></li>
+<li><a href="#32-%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%B7%B1%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B5%85%E6%8B%B7%E8%B4%9D">3.2 对象的深拷贝和浅拷贝</a></li>
+<li><a href="#33-%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E5%88%97%E8%A1%A8">3.3 构造函数的初始化列表</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<p><img src="/cpp_basic_note/image-20230321143438563.png" alt="image-20230321143438563"></p>
+<h1><span id="1-深入学习c语言先要练好的内功">1 深入学习C++语言先要练好的内功</span></h1><h2><span id="11-掌握进程虚拟地址空间区域划分">1.1 掌握进程虚拟地址空间区域划分</span></h2><p><img src="/cpp_basic_note/image-20230320221443055.png" alt="image-20230320221443055"></p>
+<p><img src="/cpp_basic_note/image-20230320221901794.png" alt="image-20230320221901794"></p>
+<h2><span id="12-从指令角度掌握函数调用堆栈详细过程">1.2 从指令角度掌握函数调用堆栈详细过程</span></h2><p><img src="/cpp_basic_note/image-20230321111119551.png" alt="image-20230321111119551"></p>
+<p><img src="/cpp_basic_note/image-20230321112224556.png" alt="image-20230321112224556"></p>
+<p>具体得看视频，讲述了main函数调用sum方法每步的空间变化。</p>
+<h2><span id="13-从编译器角度理解c代码的编译和链接原理">1.3 从编译器角度理解C++代码的编译和链接原理</span></h2><p><img src="/cpp_basic_note/image-20230321142611763.png" alt="image-20230321142611763"></p>
+<p><img src="/cpp_basic_note/image-20230321142632348.png" alt="image-20230321142632348"></p>
+<h1><span id="2-c基础">2 C++基础</span></h1><h2><span id="21-深入理解newdelete">2.1 深入理解new，delete</span></h2><p>malloc和free称作C的库函数，new和delete称作运算符；</p>
+<p>new不仅可以做内存开辟，还可以做内存初始化操作；</p>
+<p>malloc开辟内存失败，是通过返回值和nullptr作比较；而new开辟内存失败，是通过抛出bad_alloc类型的异常来判断；</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// new有多少种？</span></span><br><span class="line"><span class="type">int</span> *p1 = <span class="keyword">new</span> <span class="built_in">int</span>(<span class="number">20</span>);</span><br><span class="line"><span class="type">int</span> *p2 = <span class="built_in">new</span> (nothrow) <span class="type">int</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> *p3 = <span class="keyword">new</span> <span class="type">const</span> <span class="built_in">int</span>(<span class="number">40</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定位new</span></span><br><span class="line"><span class="type">int</span> data = <span class="number">0</span>;</span><br><span class="line"><span class="comment">// 在一块已经定位好内存的内存块上，初始化值为50</span></span><br><span class="line"><span class="type">int</span> *p4 = <span class="built_in">new</span> (&amp;data) <span class="built_in">int</span>(<span class="number">50</span>);</span><br></pre></td></tr></table></figure>
+
+<h2><span id="22-c的const">2.2 C++的const</span></h2><h3><span id="const怎么理解">const怎么理解？</span></h3><p>const修饰的变量不能再作为左值！！！初始化完成后值不能被修改！！！</p>
+<h3><span id="c和c中的区别是什么">C和C++中的区别是什么？</span></h3><p>C中const修饰的量不叫常量，叫常变量 ；</p>
+<p>C++中const必须初始化，叫常量；</p>
+<p>C++中若</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> b = <span class="number">20</span>;</span><br><span class="line"><span class="type">const</span> <span class="type">int</span> a = b;</span><br></pre></td></tr></table></figure>
+
+<p>此时a已经被修改了，就是常变量而不是常量了，因为其初始值不是一个立即数。</p>
+<p>const编译方式不同，C中const当作一个变量来编译生成指令的；C++中，所有出现const常量名字的地方都会被常量的初始值替换；</p>
+<h2><span id="23-const和一二多级指针的结合应用">2.3 const和一二（多）级指针的结合应用</span></h2><h3><span id="const修饰的量常出现的错误">const修饰的量常出现的错误</span></h3><p>1.常量不能再作为左值；（直接修改）</p>
+<p>2.不能把常量的地址泄露给一个普通的指针或者普通的引用变量；（如下做了间接修改）</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> *p = &amp;a;	<span class="comment">// int* &lt;= const int* xxx!!!</span></span><br></pre></td></tr></table></figure>
+
+<h3><span id="const和一级指针的结合">const和一级指针的结合</span></h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> *p；	<span class="comment">// p指针可以指向任意int类型的内存，但无法通过指针间接修改指向的内存的值（离const最近的类型为int）</span></span><br><span class="line"><span class="type">int</span> <span class="type">const</span>* p;	<span class="comment">// 同上</span></span><br><span class="line"><span class="type">int</span> *<span class="type">const</span> p;	<span class="comment">// 这个指针p现在是常量，不能再指向其他内存，但可以通过指针解引用修改指向的内存的值（离const最近的类型为int*）</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> *<span class="type">const</span> p;	<span class="comment">// 指针p是常量，其指向内存的值也无法修改</span></span><br></pre></td></tr></table></figure>
+
+<p>C++的语言规范：const修饰的使离它最近的类型</p>
+<p>const和一级指针的结合有两种情况：</p>
+<p><strong>一种是使指针是常量，无法再指向其他内存；一种是使指针指向的内存的值是常量，无法在被修改。</strong></p>
+<p>总结，const和指针的类型转换公式：</p>
+<p><em><em>int</em>    &lt;&#x3D;    const int</em>    是错误的！**</p>
+<p><em><em>const int</em>    &lt;&#x3D;    int</em>    是可以的！**</p>
+<p><strong>int**    &lt;&#x3D;    const int**是错误的!</strong></p>
+<p><strong>const int**    &lt;&#x3D;    int**是错误的！</strong></p>
+<p><strong>const如果右边没有指针*的话，const是不参与类型的。</strong></p>
+<h3><span id="const和二级指针的结合">const和二级指针的结合</span></h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">int</span> **q;	<span class="comment">// **q不能被赋值</span></span><br><span class="line"><span class="type">int</span> *<span class="type">const</span>* q;	<span class="comment">// *q不能被赋值</span></span><br><span class="line"><span class="type">int</span> **<span class="type">const</span> q;	<span class="comment">// q不能被赋值</span></span><br></pre></td></tr></table></figure>
+
+<h2><span id="24-c的引用">2.4 C++的引用</span></h2><p><strong>引用和指针的区别？</strong></p>
+<p>引用是一种更安全的指针。</p>
+<p>1.引用是必须初始化的，指针可以不初始化；</p>
+<p>2.引用只有一级引用，不存在多级引用；指针可以有一级指针，也可以有多级指针；</p>
+<p>3.定义一个引用变量和定义一个指针变量其汇编指令是一模一样的；通过引用变量修改所引用内存的值，和通过指针解引用修改指针指向内存的值，其底层指令也是一模一样的；</p>
+<p><strong>右值引用</strong></p>
+<p>1.int &amp;&amp;c &#x3D; 20;    专门用来引用右值类型，指令上，可以自动产生临时量，然后直接引用临时量 c &#x3D; 40;</p>
+<p>2.右值引用变量本身是一个左值，只能用左值引用来引用它；</p>
+<p>3.不能用一个右值引用变量来引用一个左值；</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> array[<span class="number">5</span>] = &#123;&#125;;</span><br><span class="line"><span class="type">int</span> *p = array;</span><br><span class="line"><span class="comment">// 定义一个引用变量，来引用array数组</span></span><br><span class="line"><span class="built_in">int</span> (&amp;q)[<span class="number">5</span>] = array;</span><br><span class="line">cout &lt;&lt; <span class="built_in">sizeof</span>(array) &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; <span class="built_in">sizeof</span>(p) &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; <span class="built_in">sizeof</span>(q) &lt;&lt; endl;</span><br><span class="line"><span class="comment">// 20 4 20</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">10</span>;	<span class="comment">// 左值，它有内存，有名字，值可以修改</span></span><br><span class="line"><span class="type">int</span> &amp;b = a;</span><br><span class="line"></span><br><span class="line"><span class="comment">// int &amp;c = 2-; // 20是右值：没内存，没名字</span></span><br><span class="line"><span class="comment">// C++提供了右值引用	一个右值引用变量本身是一个左值</span></span><br><span class="line"><span class="type">int</span> &amp;&amp;c = <span class="number">20</span>;</span><br><span class="line">c = <span class="number">30</span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">int tmp = 20;</span></span><br><span class="line"><span class="comment">tmp -&gt; d</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="type">const</span> <span class="type">int</span> &amp;d = <span class="number">20</span>;</span><br></pre></td></tr></table></figure>
+
+<p> <strong>const、一级指针、引用的结合</strong></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 写一句代码，在内存0x0018ff44处写一个4字节的10</span></span><br><span class="line"><span class="comment">// 引用一个int常量</span></span><br><span class="line"><span class="type">int</span> *<span class="type">const</span> &amp;p = (<span class="type">int</span>*)<span class="number">0x0018ff44</span>;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="type">int</span> *p = &amp;a;</span><br><span class="line"><span class="comment">// q是a的引用变量</span></span><br><span class="line"><span class="type">int</span> *&amp;q = p;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="25-函数重载">2.5 函数重载</span></h2><p><strong>什么是函数重载</strong></p>
+<p>1.一组函数，其中函数名相同，参数列表的个数或者类型不同，那么这一组函数就称作函数重载；</p>
+<p>2.一组函数要称得上重载，一定先是处在同一个作用域当中的；</p>
+<p>3.const或者volatile，是怎么影响形参类型的；</p>
+<p>4.一组函数，函数名相同，参数列表也相同，仅仅是返回值不同不叫重载；</p>
+<p><strong>请解释一下多态？</strong></p>
+<p>静态（编译时期）的多态：函数重载</p>
+<p>动态（运行时期）的多态：</p>
+<p><strong>C++为什么支持函数重载，C语言不支持函数重载？</strong></p>
+<p>C++代码产生函数符号的时候，函数名+参数列表类型组成的！</p>
+<p>C代码产生函数符号，函数名来决定！</p>
+<h2><span id="26-inline函数">2.6 inline函数</span></h2><p><strong>inline内联函数和普通函数的区别</strong></p>
+<p>inline函数：在编译过程中，就没有函数的调用开销了，在函数的调用点直接把函数的代码进行展开处理了</p>
+<p>inline函数不再生成相应的函数符号</p>
+<p>inline只是建议编译器把这个函数处理成内联函数，但是不是所有的inline都会被编译器处理成内联函数——递归</p>
+<p>debug版本上，inline是不起作用的；inline只有在release版本下才能出现</p>
+<p>g++ -c main.cpp -02        objdump -t main.o</p>
+<h1><span id="3-c面向对象">3 C++面向对象</span></h1><h2><span id="31-this指针">3.1 this指针</span></h2><p>this指针 &#x3D;&gt; 类 &#x3D;&gt; 很多对象 共享一套成员方法</p>
+<p>成员方法，方法的参数都会添加一个this指针</p>
+<p>构造函数：定义对象时，自动调用的；可以重载的；构造完成，对象产生了</p>
+<p>析构函数：不带参数，不能重载，只有一个析构函数；析构完成，对象就不存在了</p>
+<p><strong>OOP语言的四大特征是？</strong></p>
+<p>抽象    封装&#x2F;隐藏    继承    多态</p>
+<h2><span id="32-对象的深拷贝和浅拷贝">3.2 对象的深拷贝和浅拷贝</span></h2><p>对象默认的拷贝构造是做内存的数据拷贝</p>
+<p>关键是对象<strong>如果占用外部资源</strong>，那么浅拷贝就出现问题了！（占用同一个资源析构两次就会出错！）</p>
+<p>此时（对象的浅拷贝出现问题了）就需要自定义<strong>拷贝构造函数</strong>和<strong>赋值函数</strong>（运算符重载）</p>
+<h2><span id="33-构造函数的初始化列表">3.3 构造函数的初始化列表</span></h2><p><strong>初始化列表做初始化和在函数体内初始化区别？</strong></p>
+<p>int amount &#x3D; 0；和 int amount; amount &#x3D; 0;的区别，若数据类型为自定义类型，未指定该自定义类型的构造函数（调用默认构造函数），则无法成功构造。</p>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《High-Fidelity 3D Digital Human Head Creation from RGB-D Selfies》</title>
+    <url>/2023/06/01/review_12_REALY/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#1-%E8%B4%A1%E7%8C%AE">1. 贡献</a></li>
+<li><a href="#2-%E5%8A%A8%E6%9C%BA">2. 动机</a></li>
+<li><a href="#3-%E7%AE%80%E4%BB%8B">3. 简介</a></li>
+<li><a href="#4-%E9%A2%84%E5%A4%87%E7%9F%A5%E8%AF%86">4. 预备知识</a><ul>
+<li><a href="#%E7%AC%A6%E5%8F%B7%E5%AE%9A%E4%B9%89"><strong>符号定义</strong></a></li>
+<li><a href="#3dmm%E8%A1%A5%E5%85%85">3DMM补充</a></li>
+<li><a href="#%E4%B8%80%E4%BA%9B%E6%A0%87%E5%87%86%E7%9A%84evaluation-pipeline">一些标准的evaluation pipeline</a></li>
+<li><a href="#motivation">motivation</a></li>
+</ul>
+</li>
+<li><a href="#5-realya-new-3d-face-benchmark">5. REALY：A New 3D Face Benchmark</a><ul>
+<li><a href="#%E9%80%89%E6%8B%A9hifi3d%E5%9F%BA%E5%BA%95%E4%BD%9C%E4%B8%BA%E7%9B%AE%E6%A0%87%E6%8B%93%E6%89%91%E7%9A%84%E5%8E%9F%E5%9B%A0">选择HIFI3D基底作为目标拓扑的原因</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E6%9E%84%E5%BB%BA%E6%AD%A5%E9%AA%A4">数据集构建步骤</a></li>
+<li><a href="#%E6%8C%91%E6%88%98%E4%B8%8E%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">挑战与解决方案</a><ul>
+<li><a href="#%E6%8C%91%E6%88%98%E4%B8%80%E5%8E%9F%E5%A7%8B%E6%89%AB%E6%8F%8F%E5%85%B7%E6%9C%89%E4%B8%8D%E5%90%8C%E7%9A%84%E6%AF%94%E4%BE%8B%E5%92%8C%E5%A7%BF%E5%8A%BF%E5%85%B7%E6%9C%89%E4%B8%8D%E5%87%86%E7%A1%AE%E7%9A%84%E7%A8%80%E7%96%8Fkeypoints%E8%BF%99%E4%BD%BF%E5%BE%97%E5%AE%83%E4%BB%AC%E9%9A%BE%E4%BB%A5%E4%B8%80%E8%87%B4%E5%9C%B0%E5%AF%B9%E9%BD%90">挑战一：原始扫描具有不同的比例和姿势，具有不准确的稀疏keypoints，这使得它们难以一致地对齐。</a></li>
+<li><a href="#%E6%8C%91%E6%88%98%E4%BA%8C%E5%BE%97%E5%88%B0%E9%87%8D%E6%96%B0%E6%8B%93%E6%89%91%E7%9A%84-sl-%E4%B9%8B%E5%90%8E%E5%A6%82%E4%BD%95%E5%87%86%E7%A1%AE%E5%9C%B0%E5%B0%86region-masks%E4%BB%8E-sl%E7%BB%A7%E6%89%BF%E8%87%AA-stemp%E8%BD%AC%E7%A7%BB%E5%88%B0sh">挑战二：得到重新拓扑的 SL 之后，如何准确地将region masks从 SL（继承自 Stemp）转移到SH</a></li>
+</ul>
+</li>
+<li><a href="#hifi3d">HIFI3D++</a></li>
+</ul>
+</li>
+<li><a href="#6-%E5%88%9B%E6%96%B0%E7%9A%84evaluation-pipeline">6 创新的Evaluation pipeline</a></li>
+<li><a href="#7-%E5%AE%9E%E9%AA%8C">7. 实验</a><ul>
+<li><a href="#%E6%B6%88%E8%9E%8D%E5%AE%9E%E9%AA%8Cbicp-vs-gicp">消融实验：bICP VS gICP</a></li>
+<li><a href="#%E4%B8%8D%E5%90%8C%E6%96%B9%E6%B3%95%E5%9C%A8realy-benchmark%E4%B8%8A%E7%9A%84%E8%A1%A8%E7%8E%B0">不同方法在REALY benchmark上的表现</a></li>
+<li><a href="#%E4%B8%8D%E5%90%8C3dmm%E5%9C%A8realy%E4%B8%8A%E7%9A%84%E8%A1%A8%E7%8E%B0">不同3DMM在REALY上的表现</a></li>
+</ul>
+</li>
+<li><a href="#8-%E6%80%BB%E7%BB%93">8. 总结</a></li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://realy3dface.com/">REALY (realy3dface.com)</a></p>
+<p>code: <a href="https://github.com/tencent-ailab/hifi3dface"><a href="https://github.com/czh-98/REALY">czh-98&#x2F;REALY: REALY: Rethinking the Evaluation of 3D Face Reconstruction (ECCV 2022) (github.com)</a></a></p>
+<p>ref link:<a href="https://blog.csdn.net/jiafeier_555/article/details/125428388">https://blog.csdn.net/jiafeier_555/article/details/125428388</a></p>
+<span id="more"></span>
+
+<h1><span id="1-贡献">1. 贡献</span></h1><p>提出一个3D face reconstruction的benchmark REALY（Region-aware benchmark based on the LYHM Benchmark）</p>
+<p>REALY，HIFI3D++（3DMM），本文的新evaluation pipeline以开源。</p>
+<h1><span id="2-动机">2. 动机</span></h1><p>人脸重建任务中，不同的数据集，会制约重建方法、评估方法、3DMM基底的发展。</p>
+<p>现有的开源 3D 人脸数据集存在一些不可忽视的缺陷。 例如，面部扫描具有不同的比例和随机姿势，并且提供的关键点不够准确或辨别力不够，这使得将输入形状与预测面部对齐以进行评估变得极其困难。 此外，由于原始面部扫描中缺乏真实标注，标准评估管道依赖于最近邻对应来衡量扫描与估计面部形状之间的相似性，这完全忽略了实体特征并丢弃了人体的几何形状面孔。</p>
+<h1><span id="3-简介">3. 简介</span></h1><p>为了填补这一空白，提出了一个名为 REALY 的新基准，用于评估 3D 人脸重建方法。  REALY 包含来自 <strong>LYHM 数据集</strong>的 100 个人的 3D 人脸扫描，其中人脸扫描被一致地<strong>重新缩放、全局对齐，并展开成拓扑结构一致的mesh</strong>。 更重要的是，由于本文已经<strong>预定义了重新拓扑网格模板的面部关键点keypoints和掩码masks</strong>，因此<strong>可以将keypoints和masks转移到原始面部扫描结构</strong>中。 在这种情况下，本文即获得了原始原始面部扫描的高质量面部关键点和蒙版，这使我们能够对估计的 3D 面部形状执行更准确的对齐和细粒度的区域评估。</p>
+<p>我们的基准包含来自不同种族、年龄和性别群体的个体。 利用为 REALY 构建的<strong>重新拓扑步骤（已开源）</strong>，我们通过对齐和重新拓扑多个 3D 人脸数据集，进一步提供了一个名为 HIFI3D++ 的 3DMM 基底。 我们进行了广泛的实验来评估最先进的 3D 人脸重建方法和 3DMM 基底。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601193651526.png" alt="image-20230601193651526"></p>
+<h1><span id="4-预备知识">4. 预备知识</span></h1><h2><span id="符号定义"><strong>符号定义</strong></span></h2><p><img src="/2023/06/01/review_12_REALY/image-20230601201029200.png" alt="image-20230601201029200"></p>
+<p>三个特殊的face shape，以及在不同face shape上的keypoints和regions</p>
+<p><img src="/review_12_REALY/image-20230601201913382.png" alt="image-20230601201913382"></p>
+<p><img src="/review_12_REALY/image-20230601201923089.png" alt="image-20230601201923089"></p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601202527762.png" alt="image-20230601202527762"></p>
+<p><strong>NMSE用于度量两个surfaces之间的距离</strong></p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601202606377.png" alt="image-20230601202606377"></p>
+<p><strong>ICP可用于通过迭代求解刚性变换和最近邻映射来对齐两个shape，以最小化NMSE</strong></p>
+<h2><span id="3dmm补充">3DMM补充</span></h2><p>一些开源的3DMM数据：</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601202856040.png" alt="image-20230601202856040"></p>
+<h2><span id="一些标准的evaluation-pipeline">一些标准的evaluation pipeline</span></h2><p>一些数据集还提供ground truth scan数据</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601203122686.png" alt="image-20230601203122686"></p>
+<h2><span id="motivation">motivation</span></h2><h4><span id="传统standard-evaluation-pipeline的缺陷">传统standard evaluation pipeline的缺陷</span></h4><p><img src="/2023/06/01/review_12_REALY/image-20230601204718654.png" alt="image-20230601204718654"></p>
+<p>如上图，使用standard evalution pipeline，高分辨的shape和gt shape的差异反而要比低分辨率的shape的高。所以<strong>考虑regions的对齐</strong>比较合理。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601210609441.png" alt="image-20230601210609441"></p>
+<p>如上图，x对应的最近邻点是y1，而根据语义x应该与语义y2计算NMSE。</p>
+<p><strong>结论</strong></p>
+<p><strong>需要考虑基于region和双向对齐</strong></p>
+<p>&#x3D;》提出真实语义区域的region masks的shape进行度量&#x3D;》现存数据集都未设定这样的规则&#x3D;》本文方法</p>
+<h1><span id="5-realya-new-3d-face-benchmark">5. REALY：A New 3D Face Benchmark</span></h1><p>100个个体</p>
+<p>每个个体包含高分辨率shape（来自LYHN的aligned 3D scan）和低分辨率shape（使用HIFI3D基底拓扑进行重新拓扑化）</p>
+<p>所有shape始终等比例缩放对齐，</p>
+<p>同时每个shape都有68个keypoints和4个region masks</p>
+<p>对于每个个体，使用精心设计的照明条件和gt相机参数渲染出5张高质量的多视图图像（包括1张正面图像）</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601212010004.png" alt="image-20230601212010004"></p>
+<h2><span id="选择hifi3d基底作为目标拓扑的原因">选择HIFI3D基底作为目标拓扑的原因</span></h2><p>LYHM 在眼睛和嘴巴的边界处有过密的采样；</p>
+<p>LSFM 没有边缘循环来定义眼睛和嘴巴的轮廓；</p>
+<p>FLAME的三角剖分不自然，无法模拟一些逼真的肌肉动作，比如抬眉毛。 作为比较，HIFI3D 具有更好的三角剖分和平衡采样，可以做出逼真和细腻的表达。 </p>
+<p>此外，HIFI3D还有眼球、嘴巴内部结构、肩部区域等，这些都将有利于下游应用。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601220745894.png" alt="image-20230601220745894"></p>
+<h2><span id="数据集构建步骤">数据集构建步骤</span></h2><p>第一，从 LYHM 收集 1235 个scans数据，并在 HIFI3D 拓扑中准备<strong>模板形状 Stemp</strong>，其中<strong>预定义了 68 个关键点 Ktemp 和 4 个区域掩码 Rtemp</strong>（包括鼻子、嘴巴、前额和脸颊区域）。</p>
+<p>第二，将输入扫描重新缩放并严格对齐到模板形状 Stemp，从而生成我们的真实高分辨率网格 SH（即<strong>对齐扫描</strong>）。 </p>
+<p>第三，定义一个评估区域（有相关论文），该区域是一个以鼻尖为中心的圆盘。</p>
+<p>第四，将 Stemp“包装”（即<strong>执行非刚性配准</strong>）到每个 SH 以获得重新拓扑化的 SL，使得 SL 具有与 Stemp 相同的拓扑但反映 SH 的形状。（<strong>高分配准低分</strong>） 请注意，我们有关键点 KL &#x3D; Ktemp 和区域 RL &#x3D; Rtemp，因为 <strong>SL 和 Stemp 共享相同的 HIFI3D 拓扑</strong></p>
+<p>第五，将每个人的 KL 和 RL 从 SL 转移到 SH。（<strong>低分的region和mask转移到高分</strong>） 我们还设置了一个渲染管道，用于为带纹理的高分辨率网格 SH 合成多视图图像。 这种受控环境使REALY能够专注于反映不同方法的重建能力。<br>第六，过滤掉wrapping error（这里不理解）大于 0.2mm 的样本，并请具有 3 年建模经验的专家艺术家从所有处理过的扫描中选择 100 个具有最高模型质量的个体，跨越不同的性别、种族和年龄，以获得我们的真正的基准（<strong>最终人工筛选高质量模型</strong>）。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601220904606.png" alt="image-20230601220904606"></p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601212947987.png" alt="image-20230601212947987"></p>
+<h2><span id="挑战与解决方案">挑战与解决方案</span></h2><h3><span id="挑战一原始扫描具有不同的比例和姿势具有不准确的稀疏keypoints这使得它们难以一致地对齐">挑战一：原始扫描具有不同的比例和姿势，具有不准确的稀疏keypoints，这使得它们难以一致地对齐。</span></h3><p>为了解决这个问题，我们迭代以下步骤直到收敛：</p>
+<p>第一，渲染一张高分shape的前脸、带纹理的图像（使用initial&#x2F;estimated transformation）来对齐SH到Stemp（注意正面姿势需要alignment transformation，因为对于给定的scan数据，正面姿势是未知的需要进行统一对齐）；</p>
+<p>第二，使用sota的landmark detector来检测这张渲染图像的2D 面部keypoints；</p>
+<p>第三，使用渲染相机视角将 2D 关键点投影到 3D； </p>
+<p>第四，使用 SH 上的投影 3D 关键点与 Stemp 上已知的 3D 关键点之间的对应关系，更新从 SH 到 Stemp 的对齐变换。</p>
+<h3><span id="挑战二得到重新拓扑的-sl-之后如何准确地将region-masks从-sl继承自-stemp转移到sh">挑战二：得到重新拓扑的 SL 之后，如何准确地将region masks从 SL（继承自 Stemp）转移到SH</span></h3><p> 一种天真的解决方案是使用从 SL 到 SH 的最近邻映射来传输区域掩码。 然而，由于 SH 的分辨率可以比 SL 的分辨率大 50 倍，这种天真的解决方案将引入断开连接和嘈杂的区域掩码。 为避免此类缺陷，我们从两个方向使用顶点到点映射来查找 SH 上的候选区域。<br>由于在从 SH 到 SL 的映射过程中可以建立更多的对应关系，因此可以获得更高质量、更平滑的区域掩码。 最后，我们过滤掉噪声区域（例如，鼻孔、眼球）并返回最大的连接区域。</p>
+<h2><span id="hifi3d">HIFI3D++</span></h2><p>通过以上过程，我们可以通过对更多的3D人脸模型进行重新拓扑来进一步构建新的3DMM基底。</p>
+<p>具体来说，基于来自 HIFI3D 的 200 个个体，我们另外处理和重新拓扑来自 FaceScape 数据集的 846 个个体的 3D 人脸模型到 HIFI3D 拓扑中。 连同上述来自 LYHM 的 1235 个个体的处理模型，我们收集并选择了 1957 个最具代表性的mesh数据。 </p>
+<p>然后，我们应用 PCA 获得我们的新基底，包含 526 个 PC（具有 99.9% 的累积解释方差），我们将其命名为 HIFI3D++。</p>
+<p>下图显示了 HIFI3D++ 与其他 3DMM 的比较。 请注意，以前的 3DMM 或多或少存在种族偏见。 例如，BFM  主要由欧洲人构建，FLAME 由美国和欧洲的扫描构建，而 HIFI3D 和 FS 由亚洲人的扫描构建。<br>LSFM 和 FLAME 分别包含 50 : 1 和 12 : 1 的白种人和亚洲人。 相比之下，HIFI3D++ 由跨越更平衡的种族群体的高质量模型构建，确保白种人和亚洲人（加上来自其他种族的一些受试者）之间的比例为 1：1。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601222014228.png" alt="image-20230601222014228"></p>
+<h1><span id="6-创新的evaluation-pipeline">6 创新的Evaluation pipeline</span></h1><p><strong>本文提出的pipeline就是采用rICP+bICP取代standard pipeline的直接gICP</strong></p>
+<p>在REALY的基础上，我们提出一个新的评价流程避免先前评价流程的问题，具体而言，我们的评价流程包含如下两个步骤：</p>
+<p><strong>（该两步分别对应上文的motivation）</strong></p>
+<p><strong>第一，局部区域的对齐 region-aware ICP（对齐region）</strong></p>
+<p>考虑到不同区域的重建质量会影响全局的对齐结果，由于我们的benchmark得到了不同脸部区域的mask，因此我们可以借助这个信息将predicted mesh对齐到ground-truth scan的特定区域，在error计算时只计算ground-truth scan上的特定区域与predicted mesh之间的误差，而不考虑脸部其他区域对于对齐结果以及误差计算的影响。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601223856306.png" alt="image-20230601223856306"></p>
+<p><strong>第二，对应关系的建立 non-rigid and bidirectional ICP（构建点对）</strong></p>
+<p>在局部对齐的基础上，我们需要建立ground-truth scan某一区域上的每一个点与predicted mesh之间的对应点并计算两者的误差。考虑到先前基于最近点的方式存在的问题，我们提出一个新的对应关系的建立方法，提高了关键点语义信息的一致性。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601223904991.png" alt="image-20230601223904991"></p>
+<p>具体而言，我们<strong>首先通过最近点建立初步的对应关系（region-aware ICP）</strong>；随后<strong>借助non-rigid ICP将ground-truth scan某一区域变形到predicted mesh</strong>上，由于变形后的区域与predicted mesh已经贴合，因为在变形过程中考虑了具备语义信息的关键点损失，所以这时的对应关系相比于原始的最近点的对应关系具有更好的语义关系的一致性（如，图3中脸部关键点的一致性），从而我们<strong>对初始的对应关系进行更新</strong>；最后，由于变形前后的拓扑形状的一致性，我们能够<strong>借助更新后的对应关系计算原始的ground-truth scan区域与局部对齐的mesh之间的最终误差</strong>。</p>
+<p><strong>下图为三种ICP后gt和predicted的关联度</strong></p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230601223102196.png" alt="image-20230601223102196"></p>
+<h1><span id="7-实验">7. 实验</span></h1><h2><span id="消融实验bicp-vs-gicp">消融实验：bICP VS gICP</span></h2><p><img src="/2023/06/01/review_12_REALY/image-20230604150316983.png" alt="image-20230604150316983"></p>
+<p>从图4来看，全局的对齐策略由于局部区域的改变容易导致全局误差的变化，而我们的对齐策略则只聚焦于特定区域，其中对角线的error map表明误差较大的区域，而非对角线的error map的误差较小，对应没有发生变化的区域。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230604150534367.png" alt="image-20230604150534367"></p>
+<p>从表2来看，我们的对齐结果通过ground-truth的对应点计算得到的误差与真实的误差更为接近，而全局的对齐策略则导致误差与真实误差不匹配。</p>
+<p>从表3来看，我们的对应点计算策略带来的误差要显著小于全局对齐后最近点获得的对应点。实验结果表明，我们的评价流程不仅能够聚焦到脸部区域有差异的部分(图4和表2的对角线)，并且我们的对应关系建立更加准确(表3)。</p>
+<h2><span id="不同方法在realy-benchmark上的表现">不同方法在REALY benchmark上的表现</span></h2><p>具体可见REALY官网列表</p>
+<p>我们对比了先前的评价流程与我们提出的评价流程在REALY benchmark上的表现。对于先前的评价方法，我们从两个方向(即ground-truth scan的每个点与predicted mesh建立对应关系，以及predicted mesh每个点与ground-truth scan建立对应关系)作为对比，定量与定性的比较如表4和图5所示。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230604151228612.png" alt="image-20230604151228612"></p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230604151250890.png" alt="image-20230604151250890"></p>
+<p>我们通过user study投票选出各组最好(*)&#x2F;次好(†)的人脸，通过比较不同评价流程选出的最好的人脸(橙、蓝、紫框)可以发现，我们的评价流程（橙框）选出的最好的人脸与user study的投票结果匹配程度更高。并且，我们的评价流程给出了细粒度的评测结果，即：对不同的人脸区域都能进行定量的评价和比较。</p>
+<h2><span id="不同3dmm在realy上的表现">不同3DMM在REALY上的表现</span></h2><p>借助REALY benchmark，本文采用RGB(-D) Fitting的方式对不同3DMM的表达能力进行了评价，定量与定性的比较如表5和图8所示</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230604151640859.png" alt="image-20230604151640859"></p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230604151657772.png" alt="image-20230604151657772"></p>
+<p>定量和定性的结果表明，我们的3DMM在REALY上取得了更优的重建效果，并且，通过不同方法的比较表明，RGB-D Fitting的结果要显著优于目前最好的重建算法，3D人脸重建任务仍有很大的提升空间。</p>
+<p>为了进一步证明HIFI3D++的表达能力，我们只用顶点损失，根据最小二乘的方式拟合一组mesh，对HIFI3D&#x2F;HIFI3D(A)&#x2F;HIFI3D++进行比较，如图9所示。</p>
+<p><img src="/2023/06/01/review_12_REALY/image-20230604151756157.png" alt="image-20230604151756157"></p>
+<h1><span id="8-总结">8. 总结</span></h1><p>本文是我们对3D人脸重建评价的重新思考和探索。针对先前的评价指标无法准确衡量重建mesh与ground-truth相似性的问题，我们构建了一个新的数据集——REALY，包含更加丰富以及高质量的脸部区域信息，并借助新的评价流程对先前的数十个重建算法、3DMM进行了评价。</p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>3DMM</tag>
       </tags>
   </entry>
   <entry>
@@ -90,75 +431,6 @@
       </categories>
       <tags>
         <tag>Game Character Create</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer》</title>
-    <url>/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
-<li><a href="#visual-context-transformer-encoder">Visual Context Transformer Encoder</a></li>
-<li><a href="#pose-guided-feature-aggregation">Pose-guided Feature Aggregation</a></li>
-<li><a href="#part-view-based-transformer-decoder">Part View Based Transformer Decoder</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://arxiv.org/pdf/2112.02466v2.pdf</a></p>
-<p>code: <a href="https://github.com/WangTaoAs/PFD_Net">WangTaoAs&#x2F;PFD_Net: This is Official implementation for “Pose-guided Feature Disentangling for Occluded Person Re-Identification Based on Transformer” in AAAI2022 (github.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="出发点">出发点</span></h1><p>存在遮挡的行人重识别（<em>Occluded Person Re-identification</em>），由于遮挡的存在，各种噪声被引入，导致特征不匹配；遮挡可能具有与人体部位相似的特征，导致特征学习失败。</p>
-<p>前人的方法有：使用姿势信息指导特征空间将全局特征划分为局部特征（缺点是需要严格的特征空间对齐）；使用基于图的方法建模拓扑信息（缺点是容易陷入上述的第二种问题）。</p>
-<h1><span id="创新点">创新点</span></h1><p>本文探索了在没有空间对齐的情况下，将附加姿势信息与Transformer相结合的可能性。其使用姿势信息对语义成分（如人体的关节部位）进行分解，并对非遮挡的部位进行选择性匹配；设计了一种<em>Pose-guided Push Loss</em>。</p>
-<h1><span id="做法">做法</span></h1><p>整体框架图：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103047158.png" alt="image-20220329103047158"></p>
-<h2><span id="visual-context-transformer-encoder">Visual Context Transformer Encoder</span></h2><p>首先需要对输入图像划分为固定大小的N块patch，步距大小定义为S，每块patch的尺度定义为P，patch个数N为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103958451.png" alt="image-20220329103958451"></p>
-<p>当S等于P时，划分出来的patch就不重叠；当S&lt;P时，patch重叠，可以减少空间领域信息的丢失。</p>
-<p>将这些patch通过线形层生成一个序列输入transformer encoder，concat一组可训练的<em>Position Encoding</em>，以及<em>Camera Information Embedding</em>（表示该图像所属的摄像头视角信息，标签给定的，相同视角图像有一样的值），最终的输入序列定义为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329104849953.png" alt="image-20220329104849953"></p>
-<p>最后通过Transformer Encoder输出分为两部分的特征，一部分为global feature，一部分为part feature。为进一步区分人体各个部位的特征，part feature又分为K组，每一组都与global feature做cancat送入shared transformer layer学习这些K组融合特征。</p>
-<p><strong>Encoder Supervision Loss</strong></p>
-<p>选用交叉熵损失作为identity loss以及triplet loss来作为这部分的loss：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329110809342.png" alt="image-20220329110809342"></p>
-<h2><span id="pose-guided-feature-aggregation">Pose-guided Feature Aggregation</span></h2><p>被遮挡的人体图像的身体信息较少，而非身体部位的信息可能不明确。本文使用<em>pose estimator</em> 从图像中提取landmark信息。</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112105052.png" alt="image-20220329112105052"></p>
-<p><strong>Pose Estimation</strong></p>
-<p>给定一张图像，估计器从中提取M个landmark，然后利用这些landmark生成一组heatmap <strong>H</strong>，每张heatmap都被下采样到（H&#x2F;4）*（W&#x2F;4），其中最大的response point对应一个joint point，设置了一个阈值γ来滤除高置信度和低置信度的landmark。滤除出的剩余landmark的heatmap并不是将其设为0，而是赋值0&#x2F;1，热图标签可以形式化为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112535277.png" alt="image-20220329112535277"></p>
-<p>ci定义为第i个landmark的置信度分数。</p>
-<p><strong>Pose-guided Feature Aggregation</strong></p>
-<p>将之前的分组数设为K&#x3D;M，使其等于landmark的数量。将生成的一组heatmap <strong>H</strong>后接一层FC，使其尺寸与group part local feature（fgp）相同，得到<strong>H‘</strong>。将<strong>H‘</strong>与<strong>fgp</strong> mutiply element-wisely（向量对应元素相乘，将heatmap的注意力附加在fgp上）获得<strong>P</strong>，其目的是为了从fgp中找到对身体某个部位贡献最大的信息部分。</p>
-<p>为此，本文开发了一种匹配和分布机制，将part local feature和pose-guided feature视为一组相似性度量问题，最终获取一个pose-guided feature集合<strong>S</strong>。</p>
-<p>对于每个<strong>Pi</strong>,在fgp中找到最相似的特征，即<strong>找寻融合了heatmap注意力的序列和原始局部特征的最近距离的局部特征</strong>，以选出优质的局部特征，用余弦距离，形式化定义为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115119956.png" alt="image-20220329115119956"></p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115132888.png" alt="image-20220329115132888"></p>
-<h2><span id="part-view-based-transformer-decoder">Part View Based Transformer Decoder</span></h2><p>将heatmap和fen做点乘送入Decoder学习一系列learnable semantic views以学习有区别的身体部分。其实整个框架的大体思路为一张图片走两路，一路分patch进transformer encoder，一路特征点检测生成heatmap走transformer decoder，再将这两部分的输出进行match，可以得到view feature，取高置信度的view feature采样成与fgb，fgp相同尺寸算triplet loss，再将所有的view feature采样做<em>Pose Guided Push Loss</em>。</p>
-<p><strong>Pose-View Matching Module</strong></p>
-<p>此部分计算patch view和通过Pose-guided Feature Aggregation得到的Set之间的相似度，来获得最终的view feature，用余弦距离，形式化定义为：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329151559098.png" alt="image-20220329151559098"></p>
-<p>之前的heatmap通过阈值打好了0&#x2F;1标签，最终的view feature即可通过heatmap标签分为两类。在上述距离置信度较高的view feature中取heatmap label为1的；在置信度较低的view feature中取heatmap label为0的。这样的操作会产生可变长度，需要固定长度补0操作。</p>
-<p><strong>Decoder Supervision Loss</strong></p>
-<p>提出的Pose-guided Push Loss：</p>
-<p>余弦距离：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152506162.png" alt="image-20220329152506162"></p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152517889.png" alt="image-20220329152517889"></p>
-<p>整体的loss定义：</p>
-<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329153030797.png" alt="image-20220329153030797"></p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>ReID</tag>
-        <tag>Transformer</tag>
-        <tag>Landmark</tag>
       </tags>
   </entry>
   <entry>
@@ -349,6 +621,166 @@
       </categories>
       <tags>
         <tag>Patch-based Transformer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer》</title>
+    <url>/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#visual-context-transformer-encoder">Visual Context Transformer Encoder</a></li>
+<li><a href="#pose-guided-feature-aggregation">Pose-guided Feature Aggregation</a></li>
+<li><a href="#part-view-based-transformer-decoder">Part View Based Transformer Decoder</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://arxiv.org/pdf/2112.02466v2.pdf</a></p>
+<p>code: <a href="https://github.com/WangTaoAs/PFD_Net">WangTaoAs&#x2F;PFD_Net: This is Official implementation for “Pose-guided Feature Disentangling for Occluded Person Re-Identification Based on Transformer” in AAAI2022 (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="出发点">出发点</span></h1><p>存在遮挡的行人重识别（<em>Occluded Person Re-identification</em>），由于遮挡的存在，各种噪声被引入，导致特征不匹配；遮挡可能具有与人体部位相似的特征，导致特征学习失败。</p>
+<p>前人的方法有：使用姿势信息指导特征空间将全局特征划分为局部特征（缺点是需要严格的特征空间对齐）；使用基于图的方法建模拓扑信息（缺点是容易陷入上述的第二种问题）。</p>
+<h1><span id="创新点">创新点</span></h1><p>本文探索了在没有空间对齐的情况下，将附加姿势信息与Transformer相结合的可能性。其使用姿势信息对语义成分（如人体的关节部位）进行分解，并对非遮挡的部位进行选择性匹配；设计了一种<em>Pose-guided Push Loss</em>。</p>
+<h1><span id="做法">做法</span></h1><p>整体框架图：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103047158.png" alt="image-20220329103047158"></p>
+<h2><span id="visual-context-transformer-encoder">Visual Context Transformer Encoder</span></h2><p>首先需要对输入图像划分为固定大小的N块patch，步距大小定义为S，每块patch的尺度定义为P，patch个数N为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329103958451.png" alt="image-20220329103958451"></p>
+<p>当S等于P时，划分出来的patch就不重叠；当S&lt;P时，patch重叠，可以减少空间领域信息的丢失。</p>
+<p>将这些patch通过线形层生成一个序列输入transformer encoder，concat一组可训练的<em>Position Encoding</em>，以及<em>Camera Information Embedding</em>（表示该图像所属的摄像头视角信息，标签给定的，相同视角图像有一样的值），最终的输入序列定义为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329104849953.png" alt="image-20220329104849953"></p>
+<p>最后通过Transformer Encoder输出分为两部分的特征，一部分为global feature，一部分为part feature。为进一步区分人体各个部位的特征，part feature又分为K组，每一组都与global feature做cancat送入shared transformer layer学习这些K组融合特征。</p>
+<p><strong>Encoder Supervision Loss</strong></p>
+<p>选用交叉熵损失作为identity loss以及triplet loss来作为这部分的loss：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329110809342.png" alt="image-20220329110809342"></p>
+<h2><span id="pose-guided-feature-aggregation">Pose-guided Feature Aggregation</span></h2><p>被遮挡的人体图像的身体信息较少，而非身体部位的信息可能不明确。本文使用<em>pose estimator</em> 从图像中提取landmark信息。</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112105052.png" alt="image-20220329112105052"></p>
+<p><strong>Pose Estimation</strong></p>
+<p>给定一张图像，估计器从中提取M个landmark，然后利用这些landmark生成一组heatmap <strong>H</strong>，每张heatmap都被下采样到（H&#x2F;4）*（W&#x2F;4），其中最大的response point对应一个joint point，设置了一个阈值γ来滤除高置信度和低置信度的landmark。滤除出的剩余landmark的heatmap并不是将其设为0，而是赋值0&#x2F;1，热图标签可以形式化为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329112535277.png" alt="image-20220329112535277"></p>
+<p>ci定义为第i个landmark的置信度分数。</p>
+<p><strong>Pose-guided Feature Aggregation</strong></p>
+<p>将之前的分组数设为K&#x3D;M，使其等于landmark的数量。将生成的一组heatmap <strong>H</strong>后接一层FC，使其尺寸与group part local feature（fgp）相同，得到<strong>H‘</strong>。将<strong>H‘</strong>与<strong>fgp</strong> mutiply element-wisely（向量对应元素相乘，将heatmap的注意力附加在fgp上）获得<strong>P</strong>，其目的是为了从fgp中找到对身体某个部位贡献最大的信息部分。</p>
+<p>为此，本文开发了一种匹配和分布机制，将part local feature和pose-guided feature视为一组相似性度量问题，最终获取一个pose-guided feature集合<strong>S</strong>。</p>
+<p>对于每个<strong>Pi</strong>,在fgp中找到最相似的特征，即<strong>找寻融合了heatmap注意力的序列和原始局部特征的最近距离的局部特征</strong>，以选出优质的局部特征，用余弦距离，形式化定义为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115119956.png" alt="image-20220329115119956"></p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329115132888.png" alt="image-20220329115132888"></p>
+<h2><span id="part-view-based-transformer-decoder">Part View Based Transformer Decoder</span></h2><p>将heatmap和fen做点乘送入Decoder学习一系列learnable semantic views以学习有区别的身体部分。其实整个框架的大体思路为一张图片走两路，一路分patch进transformer encoder，一路特征点检测生成heatmap走transformer decoder，再将这两部分的输出进行match，可以得到view feature，取高置信度的view feature采样成与fgb，fgp相同尺寸算triplet loss，再将所有的view feature采样做<em>Pose Guided Push Loss</em>。</p>
+<p><strong>Pose-View Matching Module</strong></p>
+<p>此部分计算patch view和通过Pose-guided Feature Aggregation得到的Set之间的相似度，来获得最终的view feature，用余弦距离，形式化定义为：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329151559098.png" alt="image-20220329151559098"></p>
+<p>之前的heatmap通过阈值打好了0&#x2F;1标签，最终的view feature即可通过heatmap标签分为两类。在上述距离置信度较高的view feature中取heatmap label为1的；在置信度较低的view feature中取heatmap label为0的。这样的操作会产生可变长度，需要固定长度补0操作。</p>
+<p><strong>Decoder Supervision Loss</strong></p>
+<p>提出的Pose-guided Push Loss：</p>
+<p>余弦距离：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152506162.png" alt="image-20220329152506162"></p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329152517889.png" alt="image-20220329152517889"></p>
+<p>整体的loss定义：</p>
+<p><img src="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/image-20220329153030797.png" alt="image-20220329153030797"></p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>ReID</tag>
+        <tag>Transformer</tag>
+        <tag>Landmark</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《IACycleGAN》</title>
+    <url>/2022/06/08/review_6_IACycleGAN/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B">生成模型</a><ul>
+<li><a href="#%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C%E6%95%B4%E4%BD%93loss%E5%9B%BE%E7%A4%BA">生成网络整体loss图示</a></li>
+</ul>
+</li>
+<li><a href="#%E8%AF%86%E5%88%AB%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C%E7%9A%84%E4%BA%92%E7%9B%B8%E4%BC%98%E5%8C%96">识别网络与生成网络的互相优化</a></li>
+</ul>
+</li>
+<li><a href="#%E5%AE%9E%E9%AA%8C">实验</a><ul>
+<li><a href="#%E6%95%B0%E6%8D%AE%E9%9B%86">数据集</a><ul>
+<li><a href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82">生成模型实施细节</a></li>
+<li><a href="#%E8%AF%86%E5%88%AB%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82">识别模型实施细节</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf"><a href="https://arxiv.org/pdf/2103.16019.pdf">Identity-Aware CycleGAN for Face Photo-Sketch Synthesis and Recognition (arxiv.org)</a></a></p>
+<p>code: none</p>
+<span id="more"></span>
+
+<h1><span id="任务">任务</span></h1><p>真人素描生成与识别</p>
+<h1><span id="出发点">出发点</span></h1><p>生成促进识别 识别促进生成；</p>
+<p>大部分生成方法使得合成图像与原始图像在纹理上保持一致，会导致信息丢失；</p>
+<p>大多数生成框架都只能学习两个域之间的关系，其鉴别器只关注照片和草图之间的差异，而不考虑任何特定的识别优化（身份信息）；</p>
+<h1><span id="创新点">创新点</span></h1><p>在CycleGAN上加入了感知损失（perceptual loss）,能更好的关注面部的语义信息（眼睛、鼻子）;</p>
+<p>使生成模型和识别模型相互优化，生成模型迭代生成更好的图像，Triplet Loss训识别模型；</p>
+<h1><span id="做法">做法</span></h1><h2><span id="生成模型">生成模型</span></h2><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608102426736.png" alt="image-20220608102426736"></p>
+<p>分别给出两个domain的照片（这里输入的是paired数据，这里的paired应该身份paired），其训练目的是获得Gx，Gy两个生成器。</p>
+<p>两个识别网络，其目的是使用pretrain好的vggface提取feature做Identity perception loss；</p>
+<p>生成器用了《Perceptual losses for real-time style transfer and super-resolution》中的结构；</p>
+<p>判别器用了PatchGAN的结构；</p>
+<h3><span id="生成网络整体loss图示">生成网络整体loss图示</span></h3><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608105545461.png" alt="image-20220608105545461"></p>
+<h4><span id="对抗损失adversarial-loss">对抗损失（adversarial loss）</span></h4><p>输入图像与生成图像进入判别器进行计算，最小化下式</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608110633855.png" alt="image-20220608110633855"></p>
+<h4><span id="循环一致性损失cycle-consistency-loss">循环一致性损失（cycle consistency loss）</span></h4><p>Gx生成的图像再进入Gy恢复原本domain与最初的输入x计算L1，<strong>此loss为pix级</strong>，最小化下式</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608110959225.png" alt="image-20220608110959225"></p>
+<h4><span id="身份保持损失identity-perception-loss">身份保持损失（identity perception loss）</span></h4><p>仅使用对抗损失会导致伪影和训练不稳定，需要加更强大的监督；</p>
+<p>通过一个pretrain的识别网络（文中选择vggface）分别提取两对（原图与合成图）的feature计算L2，<strong>此loss区别于pix级监督，是feature级</strong>，文中对于此处的解释是：绘制的草图会有夸张成分以扭曲面部纹理信息，夸大面部特征，完全基于pix重建图像效果不会好；CycleGAN的训练需要进行数据增强操作（resize，flip等）难以实施pix级的监督。</p>
+<p>最小化下式</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608111456554.png" alt="image-20220608111456554"></p>
+<h4><span id="身份映射损失identity-mapping-loss">身份映射损失（identity mapping loss）</span></h4><p>常规的pix级的约束，最小化下式</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112212476.png" alt="image-20220608112212476"></p>
+<h4><span id="整体loss">整体loss</span></h4><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112236780.png" alt="image-20220608112236780"></p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112252105.png" alt="image-20220608112252105"></p>
+<p>最小化生成器的loss最大化判别器的loss</p>
+<p>其中超参数lamda分别设为10，30000000，5</p>
+<h2><span id="识别网络与生成网络的互相优化">识别网络与生成网络的互相优化</span></h2><p>许多主做生成的工作都是fix相应的识别网络作为一个特征提取器来附加身份保持损失；</p>
+<p>本文的做法估计是：</p>
+<p>step1：先fix识别网络参数训练生成网络，获得一定量的生成的图片；</p>
+<p>step2：使用生成的图片fine-tune识别网络（单走一个人脸识别模型的流程），用了triplet loss，更新识别网络参数，其中两个模态分别有两个识别网络，要分开训练；</p>
+<p>step3：重复上述操作以获得更好的生成模型和识别模型。</p>
+<p>（有问题的点：若第一次生成的质量得不到保证，那低质量的生成图像真的能提升识别模型的acc吗？<strong>互相优化的模型很依赖第一次生成的图像质量</strong>）</p>
+<p>我认为的做法：先简单训练一个识别网络达到一个还行的acc，更新其backbone参数作为生成网络的特征提取器，然后再进行生成网络的训练。</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608135047478.png" alt="image-20220608135047478"></p>
+<h1><span id="实验">实验</span></h1><p>CycleGAN生成—》一阶段vgg fine-tune—》IACycleGAN生成（加入fine-tune的vgg提取的特征做身份保持损失）—》二阶段vgg fine-tune</p>
+<h2><span id="数据集">数据集</span></h2><p>CUFS和CUFSF</p>
+<h3><span id="生成模型实施细节">生成模型实施细节</span></h3><p>对于生成网络的训练，都是从头开始训练，使用instance normalization来实现更好的稳定性和更低的噪声；</p>
+<p>使用Adam优化器，horizontal filp prob&#x3D;0.5用于数据增强；</p>
+<p>前100个epoch设置0.0002的学习率，并在后100个epoch线性下降至0；</p>
+<p>在titian xp上训练了10小时；</p>
+<p>为减小网络震荡，采用存储多个生成图像的图像缓冲区来更新鉴别器，而不是使用最后生成的图像。</p>
+<p>生成使用了SSIM FSIM两个指标</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608152343197.png" alt="image-20220608152343197"></p>
+<h3><span id="识别模型实施细节">识别模型实施细节</span></h3><p>文中用的vggface，caffe上跑的（估计是官方代码）</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608153331083.png" alt="image-20220608153331083"></p>
+<p>在做检索任务时，先做风格模态的迁移，再计算相似度。</p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608155946505.png" alt="image-20220608155946505"></p>
+<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608160958943.png" alt="image-20220608160958943"></p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>sketch</tag>
+        <tag>synthesis</tag>
+        <tag>GAN</tag>
+        <tag>face recognition</tag>
       </tags>
   </entry>
   <entry>
@@ -574,97 +1006,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《IACycleGAN》</title>
-    <url>/2022/06/08/review_6_IACycleGAN/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
-<li><a href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B">生成模型</a><ul>
-<li><a href="#%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C%E6%95%B4%E4%BD%93loss%E5%9B%BE%E7%A4%BA">生成网络整体loss图示</a></li>
-</ul>
-</li>
-<li><a href="#%E8%AF%86%E5%88%AB%E7%BD%91%E7%BB%9C%E4%B8%8E%E7%94%9F%E6%88%90%E7%BD%91%E7%BB%9C%E7%9A%84%E4%BA%92%E7%9B%B8%E4%BC%98%E5%8C%96">识别网络与生成网络的互相优化</a></li>
-</ul>
-</li>
-<li><a href="#%E5%AE%9E%E9%AA%8C">实验</a><ul>
-<li><a href="#%E6%95%B0%E6%8D%AE%E9%9B%86">数据集</a><ul>
-<li><a href="#%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82">生成模型实施细节</a></li>
-<li><a href="#%E8%AF%86%E5%88%AB%E6%A8%A1%E5%9E%8B%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82">识别模型实施细节</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf"><a href="https://arxiv.org/pdf/2103.16019.pdf">Identity-Aware CycleGAN for Face Photo-Sketch Synthesis and Recognition (arxiv.org)</a></a></p>
-<p>code: none</p>
-<span id="more"></span>
-
-<h1><span id="任务">任务</span></h1><p>真人素描生成与识别</p>
-<h1><span id="出发点">出发点</span></h1><p>生成促进识别 识别促进生成；</p>
-<p>大部分生成方法使得合成图像与原始图像在纹理上保持一致，会导致信息丢失；</p>
-<p>大多数生成框架都只能学习两个域之间的关系，其鉴别器只关注照片和草图之间的差异，而不考虑任何特定的识别优化（身份信息）；</p>
-<h1><span id="创新点">创新点</span></h1><p>在CycleGAN上加入了感知损失（perceptual loss）,能更好的关注面部的语义信息（眼睛、鼻子）;</p>
-<p>使生成模型和识别模型相互优化，生成模型迭代生成更好的图像，Triplet Loss训识别模型；</p>
-<h1><span id="做法">做法</span></h1><h2><span id="生成模型">生成模型</span></h2><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608102426736.png" alt="image-20220608102426736"></p>
-<p>分别给出两个domain的照片（这里输入的是paired数据，这里的paired应该身份paired），其训练目的是获得Gx，Gy两个生成器。</p>
-<p>两个识别网络，其目的是使用pretrain好的vggface提取feature做Identity perception loss；</p>
-<p>生成器用了《Perceptual losses for real-time style transfer and super-resolution》中的结构；</p>
-<p>判别器用了PatchGAN的结构；</p>
-<h3><span id="生成网络整体loss图示">生成网络整体loss图示</span></h3><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608105545461.png" alt="image-20220608105545461"></p>
-<h4><span id="对抗损失adversarial-loss">对抗损失（adversarial loss）</span></h4><p>输入图像与生成图像进入判别器进行计算，最小化下式</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608110633855.png" alt="image-20220608110633855"></p>
-<h4><span id="循环一致性损失cycle-consistency-loss">循环一致性损失（cycle consistency loss）</span></h4><p>Gx生成的图像再进入Gy恢复原本domain与最初的输入x计算L1，<strong>此loss为pix级</strong>，最小化下式</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608110959225.png" alt="image-20220608110959225"></p>
-<h4><span id="身份保持损失identity-perception-loss">身份保持损失（identity perception loss）</span></h4><p>仅使用对抗损失会导致伪影和训练不稳定，需要加更强大的监督；</p>
-<p>通过一个pretrain的识别网络（文中选择vggface）分别提取两对（原图与合成图）的feature计算L2，<strong>此loss区别于pix级监督，是feature级</strong>，文中对于此处的解释是：绘制的草图会有夸张成分以扭曲面部纹理信息，夸大面部特征，完全基于pix重建图像效果不会好；CycleGAN的训练需要进行数据增强操作（resize，flip等）难以实施pix级的监督。</p>
-<p>最小化下式</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608111456554.png" alt="image-20220608111456554"></p>
-<h4><span id="身份映射损失identity-mapping-loss">身份映射损失（identity mapping loss）</span></h4><p>常规的pix级的约束，最小化下式</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112212476.png" alt="image-20220608112212476"></p>
-<h4><span id="整体loss">整体loss</span></h4><p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112236780.png" alt="image-20220608112236780"></p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608112252105.png" alt="image-20220608112252105"></p>
-<p>最小化生成器的loss最大化判别器的loss</p>
-<p>其中超参数lamda分别设为10，30000000，5</p>
-<h2><span id="识别网络与生成网络的互相优化">识别网络与生成网络的互相优化</span></h2><p>许多主做生成的工作都是fix相应的识别网络作为一个特征提取器来附加身份保持损失；</p>
-<p>本文的做法估计是：</p>
-<p>step1：先fix识别网络参数训练生成网络，获得一定量的生成的图片；</p>
-<p>step2：使用生成的图片fine-tune识别网络（单走一个人脸识别模型的流程），用了triplet loss，更新识别网络参数，其中两个模态分别有两个识别网络，要分开训练；</p>
-<p>step3：重复上述操作以获得更好的生成模型和识别模型。</p>
-<p>（有问题的点：若第一次生成的质量得不到保证，那低质量的生成图像真的能提升识别模型的acc吗？<strong>互相优化的模型很依赖第一次生成的图像质量</strong>）</p>
-<p>我认为的做法：先简单训练一个识别网络达到一个还行的acc，更新其backbone参数作为生成网络的特征提取器，然后再进行生成网络的训练。</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608135047478.png" alt="image-20220608135047478"></p>
-<h1><span id="实验">实验</span></h1><p>CycleGAN生成—》一阶段vgg fine-tune—》IACycleGAN生成（加入fine-tune的vgg提取的特征做身份保持损失）—》二阶段vgg fine-tune</p>
-<h2><span id="数据集">数据集</span></h2><p>CUFS和CUFSF</p>
-<h3><span id="生成模型实施细节">生成模型实施细节</span></h3><p>对于生成网络的训练，都是从头开始训练，使用instance normalization来实现更好的稳定性和更低的噪声；</p>
-<p>使用Adam优化器，horizontal filp prob&#x3D;0.5用于数据增强；</p>
-<p>前100个epoch设置0.0002的学习率，并在后100个epoch线性下降至0；</p>
-<p>在titian xp上训练了10小时；</p>
-<p>为减小网络震荡，采用存储多个生成图像的图像缓冲区来更新鉴别器，而不是使用最后生成的图像。</p>
-<p>生成使用了SSIM FSIM两个指标</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608152343197.png" alt="image-20220608152343197"></p>
-<h3><span id="识别模型实施细节">识别模型实施细节</span></h3><p>文中用的vggface，caffe上跑的（估计是官方代码）</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608153331083.png" alt="image-20220608153331083"></p>
-<p>在做检索任务时，先做风格模态的迁移，再计算相似度。</p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608155946505.png" alt="image-20220608155946505"></p>
-<p><img src="/2022/06/08/review_6_IACycleGAN/image-20220608160958943.png" alt="image-20220608160958943"></p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>sketch</tag>
-        <tag>synthesis</tag>
-        <tag>GAN</tag>
-        <tag>face recognition</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Learning to Warp for Style Transfer》</title>
     <url>/2022/06/09/review_7_Learing%20to%20Warp%20for%20Style%20Transfer/</url>
     <content><![CDATA[<!-- toc -->
@@ -885,74 +1226,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《MeInGame:Create a Game Character Face from a Single Portrait》</title>
-    <url>/2022/06/29/review_9_MeInGame/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E8%B4%A1%E7%8C%AE">贡献</a></li>
-<li><a href="#%E6%96%B9%E6%B3%95">方法</a><ul>
-<li><a href="#3d%E4%BA%BA%E8%84%B8%E6%95%B0%E6%8D%AE%E9%9B%86%E6%9E%84%E5%BB%BA%E6%96%B9%E6%B3%95">3D人脸数据集构建方法</a></li>
-<li><a href="#%E4%BA%BA%E8%84%B8%E5%BD%A2%E7%8A%B6%E9%87%8D%E5%BB%BA-face-shape-reconstruction">人脸形状重建 （Face Shape Reconstruction）</a></li>
-<li><a href="#%E5%BD%A2%E7%8A%B6%E8%BD%AC%E6%8D%A2shape-transfer">形状转换（Shape Transfer）</a></li>
-<li><a href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0">损失函数</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Liu_Geometric_and_Textural_Augmentation_for_Domain_Gap_Reduction_CVPR_2022_paper.pdf"><a href="https://arxiv.org/pdf/2102.02371.pdf">2102.02371.pdf (arxiv.org)</a></a></p>
-<p>code: <a href="https://github.com/xch-liu/geom-tex-dg"><a href="https://github.com/FuxiCV/MeInGame">FuxiCV&#x2F;MeInGame: MeInGame: Create a Game Character Face from a Single Portrait, AAAI 2021 (github.com)</a></a></p>
-<span id="more"></span>
-
-<h1><span id="任务">任务</span></h1><p>从单张真实2D肖像生成武侠风格的3D可形变模型。</p>
-<h1><span id="出发点">出发点</span></h1><p>近年来，人们提出了许多基于深度学习的三维人脸重建方法，但在游戏中应用较少。当前的游戏角色定制系统要么要求玩家手动调整相当多的面部属性以获得所需的面部，要么限制面部形状和纹理的自由度。</p>
-<h1><span id="贡献">贡献</span></h1><p>我们提出了一种低成本的三维人脸数据集创建方法。我们创建的数据集在种族和性别上是平衡的，面部形状和纹理都是从原始图像中创建的。我们将在论文被接受后将其公开。 提出了一种低成本的面部纹理获取方法</p>
-<p>我们提出了一种将重建的3DMM人脸形状转换为游戏网格的方法，可以直接在游戏环境中使用。该方法与网格连通性无关，在实际应用中计算效率较高。 </p>
-<p>为了消除光照和遮挡的影响，我们在对抗性训练范式下训练神经网络，从野外人脸图像中的单个图像预测一个完整的漫反射贴图。 </p>
-<h1><span id="方法">方法</span></h1><p><img src="/2022/06/29/review_9_MeInGame/image-20220629143637063.png" alt="image-20220629143637063"></p>
-<p>Shape Reconstructor pretrain好，获取3DMM系数和姿势系数，通过3DMM网络构成3DMM mesh（只有正面3D人脸），Shape Transfer将3DMM mesh转换成Game mesh（整个3D人头）；</p>
-<p>根据Game mesh将原图uv展开创建一个粗糙纹理贴图，通过encoder decoder进一步细化至细化纹理；</p>
-<p>还引入了一个光照predictor，预测光照系数；</p>
-<p>最后，将预测的形状、纹理和照明系数一起提供给可微分渲染器，并强制渲染输出与输入照片类似。为了进一步改进结果，引入了两个鉴别器。</p>
-<h2><span id="3d人脸数据集构建方法">3D人脸数据集构建方法</span></h2><p>1）给定一张人脸图像，通过预训练好的人脸分割网络检测皮肤区域</p>
-<p>2）计算输入面部皮肤的平均颜色，并将平均皮肤颜色传输到模板纹理贴图（由游戏开发人员提供，是标准3D模型模板对应的标准UV模板） </p>
-<p>3）根据变形的game mesh，将输入人脸图像展开到UV空间</p>
-<p>4）使用Poisson blending（图像融合操作）将展开的贴图与UV模板混合，移除头发和眼镜等非皮肤区域，并尽可能使用对称性修补遮挡区域</p>
-<h2><span id="人脸形状重建-face-shape-reconstruction">人脸形状重建 （Face Shape Reconstruction）</span></h2><p>第一步从输入图像预测3DMM形状和姿势系数。采用了<a href="https://openaccess.thecvf.com/content_CVPRW_2019/papers/AMFG/Deng_Accurate_3D_Face_Reconstruction_With_Weakly-Supervised_Learning_From_Single_Image_CVPRW_2019_paper.pdf">Accurate 3D Face Reconstruction With Weakly-Supervised Learning: From Single Image to Image Set (thecvf.com)</a>的方法，其他3DMM的方法同样适用。</p>
-<h2><span id="形状转换shape-transfer">形状转换（Shape Transfer）</span></h2><p>形状传递模块的目的是将重建的3DMM网格传递到游戏网格。我们设计了基于Radial Basis Function（RBF）插值的形状传递模块。</p>
-<h2><span id="损失函数">损失函数</span></h2><p>我们设计了损失函数来最小化渲染人脸图像和输入人脸照片之间的距离，以及精细纹理贴图和地面真实纹理贴图之间的距离。在渲染循环中，我们设计了四种类型的损失函数，即像素损失、感知损失、皮肤正则化损失和对抗性损失，以从全局外观和局部细节来衡量面部相似性。 </p>
-<p><strong>像素损失（Pixel Loss）</strong></p>
-<p>渲染后的图像R和输入图像I，做pixel loss：</p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629153338519.png" alt="image-20220629153338519"></p>
-<p>GT的UV贴图G和细化的纹理贴图F，做pixel loss：</p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629154446786.png" alt="image-20220629154446786"></p>
-<p><strong>感知损失（Perceptual Loss）</strong></p>
-<p>在感知层面减小重建图像的差异，做法遵循[Structure Guided Img Inpaint using Edge Prediction - 知乎 (zhihu.com)](<a href="https://zhuanlan.zhihu.com/p/147654092#:~:text=%E3%80%8AEdgeConnect%3A">https://zhuanlan.zhihu.com/p/147654092#:~:text=《EdgeConnect%3A</a> Structure Guided Image Inpainting using Edge Prediction》,结构信息 中的 边缘信息 来实现图像的修复（类似Free-form的素描信息） 适用于： rectangular masks、irregular masks。)</p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160619803.png" alt="image-20220629160619803"></p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160626723.png" alt="image-20220629160626723"></p>
-<p><strong>皮肤正则化损失 （Skin Regularization Loss）</strong></p>
-<p>为了在整个面部产生恒定的肤色并去除高光和阴影，我们进行了两次损失来调整面部皮肤，即“对称损失”和“标准偏差损失”。与之前将皮肤正则化直接应用于顶点颜色的工作不同，我们对高斯模糊纹理贴图施加惩罚。这是基于一个事实，即一些个性化的细节（例如痣）并不总是对称的，并且与肤色无关。我们将对称损耗定义如下： </p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160919834.png" alt="image-20220629160919834"></p>
-<p>我们将表皮标准偏差损失定义如下： </p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161001203.png" alt="image-20220629161001203"></p>
-<p><strong>对抗损失（Adversarial Loss）</strong></p>
-<p>为了进一步提高重建的逼真度，我们还在训练期间使用对抗性损失。我们引入了两个鉴别器，一个用于渲染人脸，另一个用于生成的UV纹理贴图。我们训练鉴别器来判断生成的输出是真是假，同时，我们训练网络的其他部分来愚弄鉴别器。对抗训练的目标功能定义如下： </p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161825452.png" alt="image-20220629161825452"></p>
-<p><strong>总损失定义</strong></p>
-<p>**<img src="/2022/06/29/review_9_MeInGame/image-20220629161847549.png" alt="image-20220629161847549">    **        </p>
-<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161920596.png" alt="image-20220629161920596"></p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>3DMM</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>RTTO WEEK1</title>
     <url>/2022/09/19/rtto_1/</url>
     <content><![CDATA[<!-- toc -->
@@ -1064,6 +1337,74 @@
       </categories>
       <tags>
         <tag>RTTO</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《MeInGame:Create a Game Character Face from a Single Portrait》</title>
+    <url>/2022/06/29/review_9_MeInGame/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E8%B4%A1%E7%8C%AE">贡献</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95">方法</a><ul>
+<li><a href="#3d%E4%BA%BA%E8%84%B8%E6%95%B0%E6%8D%AE%E9%9B%86%E6%9E%84%E5%BB%BA%E6%96%B9%E6%B3%95">3D人脸数据集构建方法</a></li>
+<li><a href="#%E4%BA%BA%E8%84%B8%E5%BD%A2%E7%8A%B6%E9%87%8D%E5%BB%BA-face-shape-reconstruction">人脸形状重建 （Face Shape Reconstruction）</a></li>
+<li><a href="#%E5%BD%A2%E7%8A%B6%E8%BD%AC%E6%8D%A2shape-transfer">形状转换（Shape Transfer）</a></li>
+<li><a href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0">损失函数</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2022/papers/Liu_Geometric_and_Textural_Augmentation_for_Domain_Gap_Reduction_CVPR_2022_paper.pdf"><a href="https://arxiv.org/pdf/2102.02371.pdf">2102.02371.pdf (arxiv.org)</a></a></p>
+<p>code: <a href="https://github.com/xch-liu/geom-tex-dg"><a href="https://github.com/FuxiCV/MeInGame">FuxiCV&#x2F;MeInGame: MeInGame: Create a Game Character Face from a Single Portrait, AAAI 2021 (github.com)</a></a></p>
+<span id="more"></span>
+
+<h1><span id="任务">任务</span></h1><p>从单张真实2D肖像生成武侠风格的3D可形变模型。</p>
+<h1><span id="出发点">出发点</span></h1><p>近年来，人们提出了许多基于深度学习的三维人脸重建方法，但在游戏中应用较少。当前的游戏角色定制系统要么要求玩家手动调整相当多的面部属性以获得所需的面部，要么限制面部形状和纹理的自由度。</p>
+<h1><span id="贡献">贡献</span></h1><p>我们提出了一种低成本的三维人脸数据集创建方法。我们创建的数据集在种族和性别上是平衡的，面部形状和纹理都是从原始图像中创建的。我们将在论文被接受后将其公开。 提出了一种低成本的面部纹理获取方法</p>
+<p>我们提出了一种将重建的3DMM人脸形状转换为游戏网格的方法，可以直接在游戏环境中使用。该方法与网格连通性无关，在实际应用中计算效率较高。 </p>
+<p>为了消除光照和遮挡的影响，我们在对抗性训练范式下训练神经网络，从野外人脸图像中的单个图像预测一个完整的漫反射贴图。 </p>
+<h1><span id="方法">方法</span></h1><p><img src="/2022/06/29/review_9_MeInGame/image-20220629143637063.png" alt="image-20220629143637063"></p>
+<p>Shape Reconstructor pretrain好，获取3DMM系数和姿势系数，通过3DMM网络构成3DMM mesh（只有正面3D人脸），Shape Transfer将3DMM mesh转换成Game mesh（整个3D人头）；</p>
+<p>根据Game mesh将原图uv展开创建一个粗糙纹理贴图，通过encoder decoder进一步细化至细化纹理；</p>
+<p>还引入了一个光照predictor，预测光照系数；</p>
+<p>最后，将预测的形状、纹理和照明系数一起提供给可微分渲染器，并强制渲染输出与输入照片类似。为了进一步改进结果，引入了两个鉴别器。</p>
+<h2><span id="3d人脸数据集构建方法">3D人脸数据集构建方法</span></h2><p>1）给定一张人脸图像，通过预训练好的人脸分割网络检测皮肤区域</p>
+<p>2）计算输入面部皮肤的平均颜色，并将平均皮肤颜色传输到模板纹理贴图（由游戏开发人员提供，是标准3D模型模板对应的标准UV模板） </p>
+<p>3）根据变形的game mesh，将输入人脸图像展开到UV空间</p>
+<p>4）使用Poisson blending（图像融合操作）将展开的贴图与UV模板混合，移除头发和眼镜等非皮肤区域，并尽可能使用对称性修补遮挡区域</p>
+<h2><span id="人脸形状重建-face-shape-reconstruction">人脸形状重建 （Face Shape Reconstruction）</span></h2><p>第一步从输入图像预测3DMM形状和姿势系数。采用了<a href="https://openaccess.thecvf.com/content_CVPRW_2019/papers/AMFG/Deng_Accurate_3D_Face_Reconstruction_With_Weakly-Supervised_Learning_From_Single_Image_CVPRW_2019_paper.pdf">Accurate 3D Face Reconstruction With Weakly-Supervised Learning: From Single Image to Image Set (thecvf.com)</a>的方法，其他3DMM的方法同样适用。</p>
+<h2><span id="形状转换shape-transfer">形状转换（Shape Transfer）</span></h2><p>形状传递模块的目的是将重建的3DMM网格传递到游戏网格。我们设计了基于Radial Basis Function（RBF）插值的形状传递模块。</p>
+<h2><span id="损失函数">损失函数</span></h2><p>我们设计了损失函数来最小化渲染人脸图像和输入人脸照片之间的距离，以及精细纹理贴图和地面真实纹理贴图之间的距离。在渲染循环中，我们设计了四种类型的损失函数，即像素损失、感知损失、皮肤正则化损失和对抗性损失，以从全局外观和局部细节来衡量面部相似性。 </p>
+<p><strong>像素损失（Pixel Loss）</strong></p>
+<p>渲染后的图像R和输入图像I，做pixel loss：</p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629153338519.png" alt="image-20220629153338519"></p>
+<p>GT的UV贴图G和细化的纹理贴图F，做pixel loss：</p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629154446786.png" alt="image-20220629154446786"></p>
+<p><strong>感知损失（Perceptual Loss）</strong></p>
+<p>在感知层面减小重建图像的差异，做法遵循[Structure Guided Img Inpaint using Edge Prediction - 知乎 (zhihu.com)](<a href="https://zhuanlan.zhihu.com/p/147654092#:~:text=%E3%80%8AEdgeConnect%3A">https://zhuanlan.zhihu.com/p/147654092#:~:text=《EdgeConnect%3A</a> Structure Guided Image Inpainting using Edge Prediction》,结构信息 中的 边缘信息 来实现图像的修复（类似Free-form的素描信息） 适用于： rectangular masks、irregular masks。)</p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160619803.png" alt="image-20220629160619803"></p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160626723.png" alt="image-20220629160626723"></p>
+<p><strong>皮肤正则化损失 （Skin Regularization Loss）</strong></p>
+<p>为了在整个面部产生恒定的肤色并去除高光和阴影，我们进行了两次损失来调整面部皮肤，即“对称损失”和“标准偏差损失”。与之前将皮肤正则化直接应用于顶点颜色的工作不同，我们对高斯模糊纹理贴图施加惩罚。这是基于一个事实，即一些个性化的细节（例如痣）并不总是对称的，并且与肤色无关。我们将对称损耗定义如下： </p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629160919834.png" alt="image-20220629160919834"></p>
+<p>我们将表皮标准偏差损失定义如下： </p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161001203.png" alt="image-20220629161001203"></p>
+<p><strong>对抗损失（Adversarial Loss）</strong></p>
+<p>为了进一步提高重建的逼真度，我们还在训练期间使用对抗性损失。我们引入了两个鉴别器，一个用于渲染人脸，另一个用于生成的UV纹理贴图。我们训练鉴别器来判断生成的输出是真是假，同时，我们训练网络的其他部分来愚弄鉴别器。对抗训练的目标功能定义如下： </p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161825452.png" alt="image-20220629161825452"></p>
+<p><strong>总损失定义</strong></p>
+<p>**<img src="/2022/06/29/review_9_MeInGame/image-20220629161847549.png" alt="image-20220629161847549">    **        </p>
+<p><img src="/2022/06/29/review_9_MeInGame/image-20220629161920596.png" alt="image-20220629161920596"></p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>3DMM</tag>
       </tags>
   </entry>
   <entry>
@@ -1199,6 +1540,15 @@
 <ul>
 <li><a href="#week-5"><strong>WEEK 5</strong></a><ul>
 <li><a href="#144%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86e">144.二叉树的前序遍历（e）</a></li>
+<li><a href="#94%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86e">94.二叉树的中序遍历（e）</a></li>
+<li><a href="#145%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86e">145.二叉树的后序遍历（e）</a></li>
+<li><a href="#%E9%9D%9E%E9%80%92%E5%BD%92%E9%81%8D%E5%8E%86%E7%9A%84%E7%BB%9F%E4%B8%80%E5%86%99%E6%B3%95">非递归遍历的统一写法</a></li>
+<li><a href="#102%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86m">102.二叉树的层序遍历（m）</a></li>
+<li><a href="#226%E5%8F%8D%E8%BD%AC%E4%BA%8C%E5%8F%89%E6%A0%91e">226.反转二叉树（e）</a></li>
+<li><a href="#101%E5%AF%B9%E7%A7%B0%E4%BA%8C%E5%8F%89%E6%A0%91e">101.对称二叉树（e）</a></li>
+<li><a href="#559n%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E6%B7%B1%E5%BA%A6e">559.N叉树的最大深度（e）</a></li>
+<li><a href="#111%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%B0%8F%E6%B7%B1%E5%BA%A6e">111.二叉树的最小深度（e）</a></li>
+<li><a href="#222%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E8%8A%82%E7%82%B9%E4%B8%AA%E6%95%B0m">222.完全二叉树的节点个数（m）</a></li>
 </ul>
 </li>
 </ul>
@@ -1206,14 +1556,168 @@
 
 <span id="more"></span>
 
-<h1><span id="week-5"><strong>WEEK 5</strong></span></h1><h2><span id="144二叉树的前序遍历e">144.二叉树的前序遍历（e）</span></h2><p>递归法：中前后</p>
+<h1><span id="week-5"><strong>WEEK 5</strong></span></h1><h2><span id="144二叉树的前序遍历e">144.二叉树的前序遍历（e）</span></h2><p>递归法：中左右</p>
 <p>非递归法：</p>
+<p>1、使用栈结构</p>
+<p>先pop根节点，push右节点，push左节点</p>
+<h2><span id="94二叉树的中序遍历e">94.二叉树的中序遍历（e）</span></h2><p>递归法：左中右</p>
+<p>非递归法：</p>
+<p>1、使用栈结构和指针</p>
+<p>指针动态记录需要最先出栈的左节点位置，先找到最下层的左节点，并将途径的节点入栈，找到该左节点后存入res，并pop，此时栈中的top元素为该左节点的根节点，pop根节点后去寻找是否右节点直至栈空。</p>
+<h2><span id="145二叉树的后序遍历e">145.二叉树的后序遍历（e）</span></h2><p>递归法：左右中</p>
+<p>非递归法：</p>
+<p>1、类似前序遍历</p>
+<p>先pop根节点，push<strong>左</strong>节点，push<strong>右</strong>节点，最后<strong>reverse结果</strong></p>
+<h2><span id="非递归遍历的统一写法">非递归遍历的统一写法</span></h2><p>中序为例</p>
+<p><img src="/rtto_5/image-20230222211656892.png" alt="image-20230222211656892"></p>
+<p>如何理解？</p>
+<p>目的是使在res数组中进行push_back最终值的时候，必须碰到栈中的NULL，才加入到结果集；</p>
+<p>无论什么遍历顺序都是以根节点访问状态为关键，<strong>那些访问到但还没处理的根节点就加入空节点作为标记</strong>，代表着下次栈中top遇到标记时可以加入到结果集。</p>
+<p>前序 后序只需改变push 中节点和NULL节点的位置就行。</p>
+<h2><span id="102二叉树的层序遍历m">102.二叉树的层序遍历（m）</span></h2><p>递归法：</p>
+<p><img src="/rtto_5/image-20230222215418586.png" alt="image-20230222215418586"></p>
+<p><img src="/rtto_5/image-20230222215501764.png" alt="image-20230222215501764"></p>
+<p>第二行是res容器的扩容，注意输出的数据形式！</p>
+<p>非递归法：</p>
+<p>用队列实现</p>
+<p>中左右（若有）入队 ，出队入结果集。</p>
+<h2><span id="226反转二叉树e">226.反转二叉树（e）</span></h2><p>递归法：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">swap(root-&gt;left, root-&gt;right);</span><br></pre></td></tr></table></figure>
+
+<p>非递归法：使用栈结构</p>
+<p>在非递归遍历的基础上修改；存结果数组改为交换左右子树。</p>
+<h2><span id="101对称二叉树e">101.对称二叉树（e）</span></h2><p>递归法：</p>
+<p>1.确定递归函数的参数和返回值。</p>
+<p>需要比较两个子树是否对称，故参数为左子树和右子树的节点；参数为bool。</p>
+<p>2.确定终止条件。</p>
+<p>首先排除空指针的情况：</p>
+<p>左右空 true</p>
+<p>左右一空 false</p>
+<p>左右值不等 false</p>
+<p>3.确定单层递归的逻辑。</p>
+<p><img src="/rtto_5/image-20230228110738488.png" alt="image-20230228110738488"></p>
+<p>如图对称二叉树为最后一层3-3 4-4相等</p>
+<p><img src="/rtto_5/image-20230228110838781.png" alt="image-20230228110838781"></p>
+<p>非递归方法：</p>
+<p>使用队列（此时的规则非前中后遍历了）</p>
+<p>需要按题目规则两两入队比较是否相等；false的判断条件和递归法的一样，左右有空或者左右值不相等；保证每次成对push的节点是需要进行比较的节点。（用栈也行）</p>
+<h2><span id="559n叉树的最大深度e">559.N叉树的最大深度（e）</span></h2><p>和上题一样，只不过Node数据结构变了，加个遍历儿子节点就行。</p>
+<h2><span id="111二叉树的最小深度e">111.二叉树的最小深度（e）</span></h2><p>递归法：</p>
+<p>1.递归参数和返回值：参数为node 返回值为int</p>
+<p>2.终止条件：node为空终止</p>
+<p>3.单层逻辑：左存在 右不存在 说明需要更新左边的深度 +1；右存在 左不存在 说明需要更新右边的深度 +1</p>
+<p>非递归法：</p>
+<p>使用层序遍历，若左右都无节点就说明到了最低点，若有左右其中一个节点则不是最低点；</p>
+<h2><span id="222完全二叉树的节点个数m">222.完全二叉树的节点个数（m）</span></h2><p>递归法：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">getNodesNum</span><span class="params">(TreeNode* node)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(node == <span class="literal">NULL</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> leftNum = <span class="built_in">getNodesNum</span>(node-&gt;left);</span><br><span class="line">	<span class="type">int</span> rightNum = <span class="built_in">getNodesNum</span>(node-&gt;right);</span><br><span class="line">	<span class="type">int</span> treeNum = leftNum + rightNum + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">return</span> treeNum;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">countNodes</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">getNodesNum</span>(root);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>非递归法：</p>
+<p>层序遍历</p>
 ]]></content>
       <categories>
         <category>RTTO</category>
       </categories>
       <tags>
         <tag>RTTO</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RTTO HOT 100</title>
+    <url>/2023/03/16/rtto_hot100/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#hot-100">HOT 100</a><ul>
+<li><a href="#1%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8Ce">1.两数之和（e）</a></li>
+<li><a href="#2%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0m">2.两数相加（m）</a></li>
+<li><a href="#3%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2m">3.无重复字符的最长子串（m）</a></li>
+<li><a href="#4%E5%AF%BB%E6%89%BE%E4%B8%A4%E4%B8%AA%E6%AD%A3%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0h">4.寻找两个正序数组的中位数（h）</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="hot-100">HOT 100</span></h1><h2><span id="1两数之和e">1.两数之和（e）</span></h2><p>使用map&lt;int,int&gt;构造哈希表；使用map的count方法寻找target-nums[i]是否存在，存在的话就存入res相关index，否则存入nums[i]的索引位置。</p>
+<h2><span id="2两数相加m">2.两数相加（m）</span></h2><p>遍历l1，l2计算sum和进位，尾插法更新tail，注意此时的tail是逆序的，需要一开始使用head指向初始节点作为结果返回。</p>
+<h2><span id="3无重复字符的最长子串m">3.无重复字符的最长子串（m）</span></h2><p>滑动窗口法，使用start，end，使用end进行遍历整个字符串，记录每次end的所指向的字符记为tmp，子循环从start遍历到end，若发现有与tmp相等的符号，则发生子串重复，更新start位置到当前index下一位，计算当前子串length，并退出子循环。动态更新res和length的最大值作为当前结果。</p>
+<h2><span id="4寻找两个正序数组的中位数h">4.寻找两个正序数组的中位数（h）</span></h2><p>二分法</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">double</span> <span class="title">findMedianSortedArrays</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums1, vector&lt;<span class="type">int</span>&gt;&amp; nums2)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums1.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> m = nums2.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> left = (n + m + <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> right = (n + m + <span class="number">2</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">return</span> (<span class="built_in">getKth</span>(nums1, <span class="number">0</span>, n - <span class="number">1</span>, nums2, <span class="number">0</span>, m - <span class="number">1</span>, left) + <span class="built_in">getKth</span>(nums1, <span class="number">0</span>, n - <span class="number">1</span>, nums2, <span class="number">0</span>, m - <span class="number">1</span>, right)) * <span class="number">0.5</span>; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getKth</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums1, <span class="type">int</span> start1, <span class="type">int</span> end1, vector&lt;<span class="type">int</span>&gt;&amp; nums2, <span class="type">int</span> start2, <span class="type">int</span> end2, <span class="type">int</span> k)</span></span>&#123;</span><br><span class="line">        <span class="type">int</span> len1 = end1 - start1 + <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> len2 = end2 - start2 + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(len1 &gt; len2) <span class="keyword">return</span>  <span class="built_in">getKth</span>(nums2, start2, end2, nums1, start1, end1, k);</span><br><span class="line">        <span class="keyword">if</span> (len1 == <span class="number">0</span>)  <span class="keyword">return</span> nums2[start2 + k - <span class="number">1</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(k == <span class="number">1</span>) <span class="keyword">return</span> <span class="built_in">min</span>(nums1[start1], nums2[start2]);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> i = start1 + <span class="built_in">min</span>(len1, k / <span class="number">2</span>) - <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> j = start2 + <span class="built_in">min</span>(len2, k / <span class="number">2</span>) - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(nums1[i] &gt; nums2[j])&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">getKth</span>(nums1, start1, end1, nums2, j + <span class="number">1</span>, end2, k - (j - start2 + <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">getKth</span>(nums1, i + <span class="number">1</span>, end1, nums2, start2, end2, k - (i - start1 + <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>RTTO</category>
+      </categories>
+      <tags>
+        <tag>RTTO</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo建站相关</title>
+    <url>/2022/03/25/tools_1_start/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E6%90%AD%E5%BB%BAhexo%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%80%9A%E8%BF%87git%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8">搭建Hexo服务器，通过Git自动部署在阿里云服务器</a><ul>
+<li><a href="#%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%83%A8%E7%BD%B2">搭建及部署</a></li>
+<li><a href="#%E5%8D%9A%E6%96%87%E5%8F%91%E5%B8%83">博文发布</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%BB%E9%A2%98%E5%8F%8A%E5%85%B6%E7%BE%8E%E5%8C%96">主题及其美化</a><ul>
+<li><a href="#butterfly">Butterfly</a></li>
+<li><a href="#next">Next</a><ul>
+<li><a href="#%E7%BE%8E%E5%8C%96">美化</a></li>
+<li><a href="#%E6%96%87%E7%AB%A0%E5%90%AF%E7%94%A8tags%E5%92%8Ccategories">文章启用tags和categories</a></li>
+<li><a href="#%E8%AE%BE%E7%BD%AE%E9%98%85%E8%AF%BB%E5%85%A8%E6%96%87">设置阅读全文</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98updating">相关问题（Updating…）</a><ul>
+<li><a href="#%E6%97%A0%E6%B3%95%E6%AD%A3%E7%A1%AE%E6%B8%B2%E6%9F%93markdown%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98">无法正确渲染markdown文件问题</a></li>
+<li><a href="#%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98">插入图片问题</a></li>
+<li><a href="#%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98">目录生成问题</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E6%9C%AC%E5%9C%B0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD">添加本地搜索功能</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="搭建hexo服务器通过git自动部署在阿里云服务器">搭建Hexo服务器，通过Git自动部署在阿里云服务器</span></h1><h2><span id="搭建及部署">搭建及部署</span></h2><p>参考博文链接：<a href="https://mp.weixin.qq.com/s/JTTUYJTvtdT6X2fvLUBFZg">Win10下Hexo博客搭建教程，及阿里云服务器部署实战 (qq.com)</a></p>
+<h2><span id="博文发布">博文发布</span></h2><p>在本地机器上部署Hexo相关MyHexoBlogs文件夹下，进入MyHexoBlogs&#x2F;myblogs&#x2F;source&#x2F;_posts目录；</p>
+<p>在当前页进入git bash，输入hexo clean 清除缓存，hexo g 解析静态文件，hexo d 刷新部署新的资源。</p>
+<p>hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</p>
+<h1><span id="主题及其美化">主题及其美化</span></h1><h2><span id="butterfly">Butterfly</span></h2><p>Butterfly主题部署参考博文链接：<a href="https://www.jianshu.com/p/50a565adaf15?ivk_sa=1024320u">hexo框架|butterfly主题配置 - 简书 (jianshu.com)</a></p>
+<p>Butterfly主题官方文档：<a href="https://www.butterfly1.cn/">Hexo-Butterfly主题(🦋 A Hexo Theme: Butterfly-Official website) (butterfly1.cn)</a></p>
+<p>Hexo默认美化项：<a href="https://zhuanlan.zhihu.com/p/369951111">Hexo个性化设置 - 知乎 (zhihu.com)</a></p>
+<h2><span id="next">Next</span></h2><h3><span id="美化">美化</span></h3><p><a href="https://blog.csdn.net/qq_34003239/article/details/100883213">(54条消息) Next主题美化_蜗牛非牛的博客-CSDN博客_next主题美化</a></p>
+<h3><span id="文章启用tags和categories">文章启用tags和categories</span></h3><p><a href="https://blog.csdn.net/Lancis/article/details/118788205">(54条消息) hexo next主题简单美化_Lancis的博客-CSDN博客_next主题美化</a></p>
+<h3><span id="设置阅读全文">设置阅读全文</span></h3><p><a href="https://blog.csdn.net/CHENGXUYUAN09/article/details/103408380">(54条消息) next7.6版本关于设置阅读全文_LIYUANWAISPRING的博客-CSDN博客</a></p>
+<h1><span id="相关问题updating">相关问题（Updating…）</span></h1><h2><span id="无法正确渲染markdown文件问题">无法正确渲染markdown文件问题</span></h2><p>hexo对于md文件的解析规则不是标准规则，有时候在复制论文标题时会有换行符无法正确解析；</p>
+<p>重新手动输入检查标题格式解决问题</p>
+<h2><span id="插入图片问题">插入图片问题</span></h2><p>选择采用hexo官网的解决方式：<a href="https://hexo.io/zh-cn/docs/asset-folders">资源文件夹 | Hexo</a></p>
+<h2><span id="目录生成问题">目录生成问题</span></h2><p>安装插件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-toc --save</span><br></pre></td></tr></table></figure>
+
+<p>hexo的配置文件中设置格式，添加配置代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">toc:</span><br><span class="line">  maxdepth: 3</span><br></pre></td></tr></table></figure>
+
+<p>在md中使用时</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- toc --&gt;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="添加本地搜索功能">添加本地搜索功能</span></h2><p>与Next官方配置文件中的链接步骤不同的是，还需要修改</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">preload: true</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
   <entry>
@@ -1493,74 +1997,6 @@
       </categories>
       <tags>
         <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo建站相关</title>
-    <url>/2022/03/25/tools_1_start/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E6%90%AD%E5%BB%BAhexo%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%80%9A%E8%BF%87git%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8">搭建Hexo服务器，通过Git自动部署在阿里云服务器</a><ul>
-<li><a href="#%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%83%A8%E7%BD%B2">搭建及部署</a></li>
-<li><a href="#%E5%8D%9A%E6%96%87%E5%8F%91%E5%B8%83">博文发布</a></li>
-</ul>
-</li>
-<li><a href="#%E4%B8%BB%E9%A2%98%E5%8F%8A%E5%85%B6%E7%BE%8E%E5%8C%96">主题及其美化</a><ul>
-<li><a href="#butterfly">Butterfly</a></li>
-<li><a href="#next">Next</a><ul>
-<li><a href="#%E7%BE%8E%E5%8C%96">美化</a></li>
-<li><a href="#%E6%96%87%E7%AB%A0%E5%90%AF%E7%94%A8tags%E5%92%8Ccategories">文章启用tags和categories</a></li>
-<li><a href="#%E8%AE%BE%E7%BD%AE%E9%98%85%E8%AF%BB%E5%85%A8%E6%96%87">设置阅读全文</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98updating">相关问题（Updating…）</a><ul>
-<li><a href="#%E6%97%A0%E6%B3%95%E6%AD%A3%E7%A1%AE%E6%B8%B2%E6%9F%93markdown%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98">无法正确渲染markdown文件问题</a></li>
-<li><a href="#%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98">插入图片问题</a></li>
-<li><a href="#%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98">目录生成问题</a></li>
-<li><a href="#%E6%B7%BB%E5%8A%A0%E6%9C%AC%E5%9C%B0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD">添加本地搜索功能</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<span id="more"></span>
-
-<h1><span id="搭建hexo服务器通过git自动部署在阿里云服务器">搭建Hexo服务器，通过Git自动部署在阿里云服务器</span></h1><h2><span id="搭建及部署">搭建及部署</span></h2><p>参考博文链接：<a href="https://mp.weixin.qq.com/s/JTTUYJTvtdT6X2fvLUBFZg">Win10下Hexo博客搭建教程，及阿里云服务器部署实战 (qq.com)</a></p>
-<h2><span id="博文发布">博文发布</span></h2><p>在本地机器上部署Hexo相关MyHexoBlogs文件夹下，进入MyHexoBlogs&#x2F;myblogs&#x2F;source&#x2F;_posts目录；</p>
-<p>在当前页进入git bash，输入hexo clean 清除缓存，hexo g 解析静态文件，hexo d 刷新部署新的资源。</p>
-<p>hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</p>
-<h1><span id="主题及其美化">主题及其美化</span></h1><h2><span id="butterfly">Butterfly</span></h2><p>Butterfly主题部署参考博文链接：<a href="https://www.jianshu.com/p/50a565adaf15?ivk_sa=1024320u">hexo框架|butterfly主题配置 - 简书 (jianshu.com)</a></p>
-<p>Butterfly主题官方文档：<a href="https://www.butterfly1.cn/">Hexo-Butterfly主题(🦋 A Hexo Theme: Butterfly-Official website) (butterfly1.cn)</a></p>
-<p>Hexo默认美化项：<a href="https://zhuanlan.zhihu.com/p/369951111">Hexo个性化设置 - 知乎 (zhihu.com)</a></p>
-<h2><span id="next">Next</span></h2><h3><span id="美化">美化</span></h3><p><a href="https://blog.csdn.net/qq_34003239/article/details/100883213">(54条消息) Next主题美化_蜗牛非牛的博客-CSDN博客_next主题美化</a></p>
-<h3><span id="文章启用tags和categories">文章启用tags和categories</span></h3><p><a href="https://blog.csdn.net/Lancis/article/details/118788205">(54条消息) hexo next主题简单美化_Lancis的博客-CSDN博客_next主题美化</a></p>
-<h3><span id="设置阅读全文">设置阅读全文</span></h3><p><a href="https://blog.csdn.net/CHENGXUYUAN09/article/details/103408380">(54条消息) next7.6版本关于设置阅读全文_LIYUANWAISPRING的博客-CSDN博客</a></p>
-<h1><span id="相关问题updating">相关问题（Updating…）</span></h1><h2><span id="无法正确渲染markdown文件问题">无法正确渲染markdown文件问题</span></h2><p>hexo对于md文件的解析规则不是标准规则，有时候在复制论文标题时会有换行符无法正确解析；</p>
-<p>重新手动输入检查标题格式解决问题</p>
-<h2><span id="插入图片问题">插入图片问题</span></h2><p>选择采用hexo官网的解决方式：<a href="https://hexo.io/zh-cn/docs/asset-folders">资源文件夹 | Hexo</a></p>
-<h2><span id="目录生成问题">目录生成问题</span></h2><p>安装插件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-toc --save</span><br></pre></td></tr></table></figure>
-
-<p>hexo的配置文件中设置格式，添加配置代码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">toc:</span><br><span class="line">  maxdepth: 3</span><br></pre></td></tr></table></figure>
-
-<p>在md中使用时</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- toc --&gt;</span><br></pre></td></tr></table></figure>
-
-<h2><span id="添加本地搜索功能">添加本地搜索功能</span></h2><p>与Next官方配置文件中的链接步骤不同的是，还需要修改</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">preload: true</span><br></pre></td></tr></table></figure>
-
-
-
-]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
 </search>

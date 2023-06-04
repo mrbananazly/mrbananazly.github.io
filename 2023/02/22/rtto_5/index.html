@@ -20,18 +20,24 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"mrbananazly.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
 
-    <meta name="description" content="WEEK 5 144.二叉树的前序遍历（e）">
+    <meta name="description" content="WEEK 5 144.二叉树的前序遍历（e） 94.二叉树的中序遍历（e） 145.二叉树的后序遍历（e） 非递归遍历的统一写法 102.二叉树的层序遍历（m） 226.反转二叉树（e） 101.对称二叉树（e） 559.N叉树的最大深度（e） 111.二叉树的最小深度（e） 222.完全二叉树的节点个数（m）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RTTO WEEK5">
 <meta property="og:url" content="http://mrbananazly.cn/2023/02/22/rtto_5/index.html">
 <meta property="og:site_name" content="Road 2 the Final">
-<meta property="og:description" content="WEEK 5 144.二叉树的前序遍历（e）">
+<meta property="og:description" content="WEEK 5 144.二叉树的前序遍历（e） 94.二叉树的中序遍历（e） 145.二叉树的后序遍历（e） 非递归遍历的统一写法 102.二叉树的层序遍历（m） 226.反转二叉树（e） 101.对称二叉树（e） 559.N叉树的最大深度（e） 111.二叉树的最小深度（e） 222.完全二叉树的节点个数（m）">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://mrbananazly.cn/rtto_5/image-20230222211656892.png">
+<meta property="og:image" content="http://mrbananazly.cn/rtto_5/image-20230222215418586.png">
+<meta property="og:image" content="http://mrbananazly.cn/rtto_5/image-20230222215501764.png">
+<meta property="og:image" content="http://mrbananazly.cn/rtto_5/image-20230228110738488.png">
+<meta property="og:image" content="http://mrbananazly.cn/rtto_5/image-20230228110838781.png">
 <meta property="article:published_time" content="2023-02-22T06:55:58.938Z">
-<meta property="article:modified_time" content="2023-02-22T06:58:03.754Z">
+<meta property="article:modified_time" content="2023-03-03T11:09:44.758Z">
 <meta property="article:author" content="mrbanana_zly">
 <meta property="article:tag" content="RTTO">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://mrbananazly.cn/rtto_5/image-20230222211656892.png">
 
 
 <link rel="canonical" href="http://mrbananazly.cn/2023/02/22/rtto_5/">
@@ -140,7 +146,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">WEEK 5</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">144.二叉树的前序遍历（e）</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">WEEK 5</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.1.</span> <span class="nav-text">144.二叉树的前序遍历（e）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.2.</span> <span class="nav-text">94.二叉树的中序遍历（e）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.3.</span> <span class="nav-text">145.二叉树的后序遍历（e）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.4.</span> <span class="nav-text">非递归遍历的统一写法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.5.</span> <span class="nav-text">102.二叉树的层序遍历（m）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.6.</span> <span class="nav-text">226.反转二叉树（e）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.7.</span> <span class="nav-text">101.对称二叉树（e）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.8.</span> <span class="nav-text">559.N叉树的最大深度（e）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.9.</span> <span class="nav-text">111.二叉树的最小深度（e）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">1.10.</span> <span class="nav-text">222.完全二叉树的节点个数（m）</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -155,16 +161,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -231,9 +237,15 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2023-02-22 14:55:58 / Modified: 14:58:03" itemprop="dateCreated datePublished" datetime="2023-02-22T14:55:58+08:00">2023-02-22</time>
+      <time title="Created: 2023-02-22 14:55:58" itemprop="dateCreated datePublished" datetime="2023-02-22T14:55:58+08:00">2023-02-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-03-03 19:09:44" itemprop="dateModified" datetime="2023-03-03T19:09:44+08:00">2023-03-03</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -260,6 +272,15 @@
 <ul>
 <li><a href="#week-5"><strong>WEEK 5</strong></a><ul>
 <li><a href="#144%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%89%8D%E5%BA%8F%E9%81%8D%E5%8E%86e">144.二叉树的前序遍历（e）</a></li>
+<li><a href="#94%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86e">94.二叉树的中序遍历（e）</a></li>
+<li><a href="#145%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86e">145.二叉树的后序遍历（e）</a></li>
+<li><a href="#%E9%9D%9E%E9%80%92%E5%BD%92%E9%81%8D%E5%8E%86%E7%9A%84%E7%BB%9F%E4%B8%80%E5%86%99%E6%B3%95">非递归遍历的统一写法</a></li>
+<li><a href="#102%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%B1%82%E5%BA%8F%E9%81%8D%E5%8E%86m">102.二叉树的层序遍历（m）</a></li>
+<li><a href="#226%E5%8F%8D%E8%BD%AC%E4%BA%8C%E5%8F%89%E6%A0%91e">226.反转二叉树（e）</a></li>
+<li><a href="#101%E5%AF%B9%E7%A7%B0%E4%BA%8C%E5%8F%89%E6%A0%91e">101.对称二叉树（e）</a></li>
+<li><a href="#559n%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%A4%A7%E6%B7%B1%E5%BA%A6e">559.N叉树的最大深度（e）</a></li>
+<li><a href="#111%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9C%80%E5%B0%8F%E6%B7%B1%E5%BA%A6e">111.二叉树的最小深度（e）</a></li>
+<li><a href="#222%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E8%8A%82%E7%82%B9%E4%B8%AA%E6%95%B0m">222.完全二叉树的节点个数（m）</a></li>
 </ul>
 </li>
 </ul>
@@ -267,8 +288,63 @@
 
 <span id="more"></span>
 
-<h1><span id="week-5"><strong>WEEK 5</strong></span></h1><h2><span id="144二叉树的前序遍历e">144.二叉树的前序遍历（e）</span></h2><p>递归法：中前后</p>
+<h1><span id="week-5"><strong>WEEK 5</strong></span></h1><h2><span id="144二叉树的前序遍历e">144.二叉树的前序遍历（e）</span></h2><p>递归法：中左右</p>
 <p>非递归法：</p>
+<p>1、使用栈结构</p>
+<p>先pop根节点，push右节点，push左节点</p>
+<h2><span id="94二叉树的中序遍历e">94.二叉树的中序遍历（e）</span></h2><p>递归法：左中右</p>
+<p>非递归法：</p>
+<p>1、使用栈结构和指针</p>
+<p>指针动态记录需要最先出栈的左节点位置，先找到最下层的左节点，并将途径的节点入栈，找到该左节点后存入res，并pop，此时栈中的top元素为该左节点的根节点，pop根节点后去寻找是否右节点直至栈空。</p>
+<h2><span id="145二叉树的后序遍历e">145.二叉树的后序遍历（e）</span></h2><p>递归法：左右中</p>
+<p>非递归法：</p>
+<p>1、类似前序遍历</p>
+<p>先pop根节点，push<strong>左</strong>节点，push<strong>右</strong>节点，最后<strong>reverse结果</strong></p>
+<h2><span id="非递归遍历的统一写法">非递归遍历的统一写法</span></h2><p>中序为例</p>
+<p><img src="/rtto_5/image-20230222211656892.png" alt="image-20230222211656892"></p>
+<p>如何理解？</p>
+<p>目的是使在res数组中进行push_back最终值的时候，必须碰到栈中的NULL，才加入到结果集；</p>
+<p>无论什么遍历顺序都是以根节点访问状态为关键，<strong>那些访问到但还没处理的根节点就加入空节点作为标记</strong>，代表着下次栈中top遇到标记时可以加入到结果集。</p>
+<p>前序 后序只需改变push 中节点和NULL节点的位置就行。</p>
+<h2><span id="102二叉树的层序遍历m">102.二叉树的层序遍历（m）</span></h2><p>递归法：</p>
+<p><img src="/rtto_5/image-20230222215418586.png" alt="image-20230222215418586"></p>
+<p><img src="/rtto_5/image-20230222215501764.png" alt="image-20230222215501764"></p>
+<p>第二行是res容器的扩容，注意输出的数据形式！</p>
+<p>非递归法：</p>
+<p>用队列实现</p>
+<p>中左右（若有）入队 ，出队入结果集。</p>
+<h2><span id="226反转二叉树e">226.反转二叉树（e）</span></h2><p>递归法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">swap(root-&gt;left, root-&gt;right);</span><br></pre></td></tr></table></figure>
+
+<p>非递归法：使用栈结构</p>
+<p>在非递归遍历的基础上修改；存结果数组改为交换左右子树。</p>
+<h2><span id="101对称二叉树e">101.对称二叉树（e）</span></h2><p>递归法：</p>
+<p>1.确定递归函数的参数和返回值。</p>
+<p>需要比较两个子树是否对称，故参数为左子树和右子树的节点；参数为bool。</p>
+<p>2.确定终止条件。</p>
+<p>首先排除空指针的情况：</p>
+<p>左右空 true</p>
+<p>左右一空 false</p>
+<p>左右值不等 false</p>
+<p>3.确定单层递归的逻辑。</p>
+<p><img src="/rtto_5/image-20230228110738488.png" alt="image-20230228110738488"></p>
+<p>如图对称二叉树为最后一层3-3 4-4相等</p>
+<p><img src="/rtto_5/image-20230228110838781.png" alt="image-20230228110838781"></p>
+<p>非递归方法：</p>
+<p>使用队列（此时的规则非前中后遍历了）</p>
+<p>需要按题目规则两两入队比较是否相等；false的判断条件和递归法的一样，左右有空或者左右值不相等；保证每次成对push的节点是需要进行比较的节点。（用栈也行）</p>
+<h2><span id="559n叉树的最大深度e">559.N叉树的最大深度（e）</span></h2><p>和上题一样，只不过Node数据结构变了，加个遍历儿子节点就行。</p>
+<h2><span id="111二叉树的最小深度e">111.二叉树的最小深度（e）</span></h2><p>递归法：</p>
+<p>1.递归参数和返回值：参数为node 返回值为int</p>
+<p>2.终止条件：node为空终止</p>
+<p>3.单层逻辑：左存在 右不存在 说明需要更新左边的深度 +1；右存在 左不存在 说明需要更新右边的深度 +1</p>
+<p>非递归法：</p>
+<p>使用层序遍历，若左右都无节点就说明到了最低点，若有左右其中一个节点则不是最低点；</p>
+<h2><span id="222完全二叉树的节点个数m">222.完全二叉树的节点个数（m）</span></h2><p>递归法：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">getNodesNum</span><span class="params">(TreeNode* node)</span></span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(node == <span class="literal">NULL</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">	<span class="type">int</span> leftNum = <span class="built_in">getNodesNum</span>(node-&gt;left);</span><br><span class="line">	<span class="type">int</span> rightNum = <span class="built_in">getNodesNum</span>(node-&gt;right);</span><br><span class="line">	<span class="type">int</span> treeNum = leftNum + rightNum + <span class="number">1</span>;</span><br><span class="line">	<span class="keyword">return</span> treeNum;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="type">int</span> <span class="title">countNodes</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="built_in">getNodesNum</span>(root);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>非递归法：</p>
+<p>层序遍历</p>
 
     </div>
 
@@ -290,6 +366,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/2023/03/16/rtto_hot100/" rel="next" title="RTTO HOT 100">
+                  RTTO HOT 100 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>

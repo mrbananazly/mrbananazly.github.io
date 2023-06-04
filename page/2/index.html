@@ -149,16 +149,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-count">23</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">22</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -187,6 +187,465 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://mrbananazly.cn/2022/09/29/tech_1_docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.png">
+      <meta itemprop="name" content="mrbanana_zly">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/09/29/tech_1_docker/" class="post-title-link" itemprop="url">Docker学习笔记</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-09-29 14:14:06 / Modified: 20:33:26" itemprop="dateCreated datePublished" datetime="2022-09-29T14:14:06+08:00">2022-09-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Docker/" itemprop="url" rel="index"><span itemprop="name">Docker</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <!-- toc -->
+
+<ul>
+<li><a href="#docker-hello-world">Docker Hello World</a><ul>
+<li><a href="#%E8%BF%90%E8%A1%8C%E4%BA%A4%E4%BA%92%E5%BC%8F%E7%9A%84%E5%AE%B9%E5%99%A8">运行交互式的容器</a></li>
+<li><a href="#%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8%E5%90%8E%E5%8F%B0%E6%A8%A1%E5%BC%8F">启动容器（后台模式）</a></li>
+</ul>
+</li>
+<li><a href="#docker%E5%AE%B9%E5%99%A8%E4%BD%BF%E7%94%A8">Docker容器使用</a><ul>
+<li><a href="#docker%E5%AE%A2%E6%88%B7%E7%AB%AF">Docker客户端</a></li>
+<li><a href="#%E5%AE%B9%E5%99%A8%E4%BD%BF%E7%94%A8">容器使用</a><ul>
+<li><a href="#%E6%8D%A2%E9%BB%98%E8%AE%A4%E6%BA%90">换默认源</a></li>
+<li><a href="#%E8%8E%B7%E5%8F%96%E9%95%9C%E5%83%8F">获取镜像</a></li>
+<li><a href="#%E5%90%AF%E5%8A%A8%E5%AE%B9%E5%99%A8">启动容器</a></li>
+<li><a href="#%E5%90%AF%E5%8A%A8%E5%B7%B2%E5%81%9C%E6%AD%A2%E8%BF%90%E8%A1%8C%E7%9A%84%E5%AE%B9%E5%99%A8">启动已停止运行的容器</a></li>
+<li><a href="#%E5%90%8E%E5%8F%B0%E8%BF%90%E8%A1%8C">后台运行</a></li>
+<li><a href="#%E8%BF%9B%E5%85%A5%E5%AE%B9%E5%99%A8">进入容器</a></li>
+<li><a href="#%E5%AF%BC%E5%87%BA%E5%92%8C%E5%AF%BC%E5%85%A5%E5%AE%B9%E5%99%A8">导出和导入容器</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E5%AE%B9%E5%99%A8">删除容器</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#docker%E9%95%9C%E5%83%8F%E4%BD%BF%E7%94%A8">Docker镜像使用</a><ul>
+<li><a href="#%E5%88%97%E5%87%BA%E9%95%9C%E5%83%8F%E5%88%97%E8%A1%A8">列出镜像列表</a></li>
+<li><a href="#%E8%8E%B7%E5%8F%96%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E9%95%9C%E5%83%8F">获取一个新的镜像</a></li>
+<li><a href="#%E6%9F%A5%E6%89%BE%E9%95%9C%E5%83%8F">查找镜像</a></li>
+<li><a href="#%E6%8B%96%E5%8F%96%E9%95%9C%E5%83%8F">拖取镜像</a></li>
+<li><a href="#%E5%88%A0%E9%99%A4%E9%95%9C%E5%83%8F">删除镜像</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E9%95%9C%E5%83%8F">创建镜像</a><ul>
+<li><a href="#%E6%9B%B4%E6%96%B0%E9%95%9C%E5%83%8F">更新镜像</a></li>
+<li><a href="#%E6%9E%84%E5%BB%BA%E9%95%9C%E5%83%8F">构建镜像</a></li>
+<li><a href="#%E8%AE%BE%E7%BD%AE%E9%95%9C%E5%83%8F%E6%A0%87%E7%AD%BE">设置镜像标签</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#docker%E4%BB%93%E5%BA%93%E7%AE%A1%E7%90%86%E4%BB%A5docker-hub%E4%B8%BA%E4%BE%8B">Docker仓库管理（以Docker Hub为例）</a><ul>
+<li><a href="#docker-hub">Docker Hub</a><ul>
+<li><a href="#%E6%B3%A8%E5%86%8C">注册</a></li>
+<li><a href="#%E7%99%BB%E5%BD%95%E5%92%8C%E9%80%80%E5%87%BA">登录和退出</a></li>
+<li><a href="#%E9%80%80%E5%87%BA"><strong>退出</strong></a></li>
+<li><a href="#%E6%8B%89%E5%8F%96%E9%95%9C%E5%83%8F">拉取镜像</a></li>
+<li><a href="#%E6%8E%A8%E9%80%81%E9%95%9C%E5%83%8F">推送镜像</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#dockerfile">Dockerfile</a></li>
+</ul>
+<!-- tocstop -->
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/09/29/tech_1_docker/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://mrbananazly.cn/2022/09/19/rtto_1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.png">
+      <meta itemprop="name" content="mrbanana_zly">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/09/19/rtto_1/" class="post-title-link" itemprop="url">RTTO WEEK1</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-09-19 17:12:32 / Modified: 17:13:58" itemprop="dateCreated datePublished" datetime="2022-09-19T17:12:32+08:00">2022-09-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/RTTO/" itemprop="url" rel="index"><span itemprop="name">RTTO</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <!-- toc -->
+
+<ul>
+<li><a href="#week-1"><strong>WEEK 1</strong></a><ul>
+<li><a href="#209%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84m">209.长度最小的子数组（m）</a></li>
+<li><a href="#904%E6%B0%B4%E6%9E%9C%E6%88%90%E7%AF%AEm">904.水果成篮（m）</a></li>
+<li><a href="#76%E6%9C%80%E5%B0%8F%E8%A6%86%E7%9B%96%E5%AD%90%E4%B8%B2h">76.最小覆盖子串（h）</a></li>
+<li><a href="#59%E8%9E%BA%E6%97%8B%E7%9F%A9%E9%98%B5m">59.螺旋矩阵（m）</a></li>
+<li><a href="#203%E7%A7%BB%E9%99%A4%E9%93%BE%E8%A1%A8%E5%85%83%E7%B4%A0e">203.移除链表元素（e）</a></li>
+<li><a href="#707%E8%AE%BE%E8%AE%A1%E9%93%BE%E8%A1%A8m">707.设计链表（m）</a></li>
+<li><a href="#206%E5%8F%8D%E8%BD%AC%E9%93%BE%E8%A1%A8e">206.反转链表（e）</a></li>
+<li><a href="#24%E4%B8%A4%E4%B8%A4%E4%BA%A4%E6%8D%A2%E9%93%BE%E8%A1%A8%E4%B8%AD%E7%9A%84%E8%8A%82%E7%82%B9m">24.两两交换链表中的节点（m）</a></li>
+<li><a href="#19%E5%88%A0%E9%99%A4%E9%93%BE%E8%A1%A8%E7%9A%84%E5%80%92%E6%95%B0%E7%AC%ACn%E5%90%84%E7%BB%93%E7%82%B9m">19.删除链表的倒数第N各结点（m）</a></li>
+<li><a href="#%E9%9D%A2%E8%AF%95%E9%A2%98-0207-%E9%93%BE%E8%A1%A8%E7%9B%B8%E4%BA%A4e">面试题 02.07. 链表相交（e）</a></li>
+<li><a href="#142%E7%8E%AF%E5%BD%A2%E9%93%BE%E8%A1%A8iim">142.环形链表Ⅱ（m）</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/09/19/rtto_1/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://mrbananazly.cn/2022/07/24/review_10_F2P/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.png">
+      <meta itemprop="name" content="mrbanana_zly">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/07/24/review_10_F2P/" class="post-title-link" itemprop="url">《Face-to-Parameter Translation for Game Character Auto-Creation》</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-07-24 16:34:38" itemprop="dateCreated datePublished" datetime="2022-07-24T16:34:38+08:00">2022-07-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-07-25 15:10:19" itemprop="dateModified" datetime="2022-07-25T15:10:19+08:00">2022-07-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/paper-review/" itemprop="url" rel="index"><span itemprop="name">paper review</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <!-- toc -->
+
+<ul>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95%E7%AE%80%E8%BF%B0">方法简述</a><ul>
+<li><a href="#%E8%B4%A1%E7%8C%AE">贡献</a></li>
+</ul>
+</li>
+<li><a href="#%E6%96%B9%E6%B3%95%E8%AF%A6%E8%A7%A3">方法详解</a><ul>
+<li><a href="#1imitator">1.Imitator</a></li>
+<li><a href="#2facial-similarity-measurement">2.Facial Similarity Measurement</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content_ICCV_2019/papers/Shi_Face-to-Parameter_Translation_for_Game_Character_Auto-Creation_ICCV_2019_paper.pdf">Face-to-Parameter Translation for Game Character Auto-Creation (thecvf.com)</a></p>
+<p>code: no code</p>
+<p>reference link: <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/105037127">【1】伏羲AI lab：脸部照片到脸部参数的游戏角色自动生成 论文笔记 - 知乎 (zhihu.com)</a></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/07/24/review_10_F2P/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://mrbananazly.cn/2022/06/29/review_9_MeInGame/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.png">
+      <meta itemprop="name" content="mrbanana_zly">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/06/29/review_9_MeInGame/" class="post-title-link" itemprop="url">《MeInGame:Create a Game Character Face from a Single Portrait》</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-06-29 12:26:21" itemprop="dateCreated datePublished" datetime="2022-06-29T12:26:21+08:00">2022-06-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2022-06-30 10:18:43" itemprop="dateModified" datetime="2022-06-30T10:18:43+08:00">2022-06-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/paper-review/" itemprop="url" rel="index"><span itemprop="name">paper review</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E8%B4%A1%E7%8C%AE">贡献</a></li>
+<li><a href="#%E6%96%B9%E6%B3%95">方法</a><ul>
+<li><a href="#3d%E4%BA%BA%E8%84%B8%E6%95%B0%E6%8D%AE%E9%9B%86%E6%9E%84%E5%BB%BA%E6%96%B9%E6%B3%95">3D人脸数据集构建方法</a></li>
+<li><a href="#%E4%BA%BA%E8%84%B8%E5%BD%A2%E7%8A%B6%E9%87%8D%E5%BB%BA-face-shape-reconstruction">人脸形状重建 （Face Shape Reconstruction）</a></li>
+<li><a href="#%E5%BD%A2%E7%8A%B6%E8%BD%AC%E6%8D%A2shape-transfer">形状转换（Shape Transfer）</a></li>
+<li><a href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0">损失函数</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2022/papers/Liu_Geometric_and_Textural_Augmentation_for_Domain_Gap_Reduction_CVPR_2022_paper.pdf"><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2102.02371.pdf">2102.02371.pdf (arxiv.org)</a></a></p>
+<p>code: <a target="_blank" rel="noopener" href="https://github.com/xch-liu/geom-tex-dg"><a target="_blank" rel="noopener" href="https://github.com/FuxiCV/MeInGame">FuxiCV&#x2F;MeInGame: MeInGame: Create a Game Character Face from a Single Portrait, AAAI 2021 (github.com)</a></a></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2022/06/29/review_9_MeInGame/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -869,329 +1328,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://mrbananazly.cn/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/favicon.png">
-      <meta itemprop="name" content="mrbanana_zly">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Road 2 the Final">
-      <meta itemprop="description" content="">
-    </span>
-    
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Road 2 the Final">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/" class="post-title-link" itemprop="url">《Pose-guided Feature Disentangling for Occluded Person Re-identification Based on Transformer》</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2022-03-30 11:08:26 / Modified: 11:09:48" itemprop="dateCreated datePublished" datetime="2022-03-30T11:08:26+08:00">2022-03-30</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/paper-review/" itemprop="url" rel="index"><span itemprop="name">paper review</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <!-- toc -->
-
-<ul>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
-<li><a href="#visual-context-transformer-encoder">Visual Context Transformer Encoder</a></li>
-<li><a href="#pose-guided-feature-aggregation">Pose-guided Feature Aggregation</a></li>
-<li><a href="#part-view-based-transformer-decoder">Part View Based Transformer Decoder</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://arxiv.org/pdf/2112.02466v2.pdf</a></p>
-<p>code: <a target="_blank" rel="noopener" href="https://github.com/WangTaoAs/PFD_Net">WangTaoAs&#x2F;PFD_Net: This is Official implementation for “Pose-guided Feature Disentangling for Occluded Person Re-Identification Based on Transformer” in AAAI2022 (github.com)</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/30/review_2_Pose-guided%20Feature%20Disentangling%20for%20Occluded%20Person%20Re-identification%20Based%20on%20Transformer/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://mrbananazly.cn/2022/03/25/tools_1_start/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/favicon.png">
-      <meta itemprop="name" content="mrbanana_zly">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Road 2 the Final">
-      <meta itemprop="description" content="">
-    </span>
-    
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Road 2 the Final">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/25/tools_1_start/" class="post-title-link" itemprop="url">Hexo建站相关</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-03-25 10:33:25" itemprop="dateCreated datePublished" datetime="2022-03-25T10:33:25+08:00">2022-03-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-06-08 17:35:53" itemprop="dateModified" datetime="2022-06-08T17:35:53+08:00">2022-06-08</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <!-- toc -->
-
-<ul>
-<li><a href="#%E6%90%AD%E5%BB%BAhexo%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%80%9A%E8%BF%87git%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8">搭建Hexo服务器，通过Git自动部署在阿里云服务器</a><ul>
-<li><a href="#%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%83%A8%E7%BD%B2">搭建及部署</a></li>
-<li><a href="#%E5%8D%9A%E6%96%87%E5%8F%91%E5%B8%83">博文发布</a></li>
-</ul>
-</li>
-<li><a href="#%E4%B8%BB%E9%A2%98%E5%8F%8A%E5%85%B6%E7%BE%8E%E5%8C%96">主题及其美化</a><ul>
-<li><a href="#butterfly">Butterfly</a></li>
-<li><a href="#next">Next</a><ul>
-<li><a href="#%E7%BE%8E%E5%8C%96">美化</a></li>
-<li><a href="#%E6%96%87%E7%AB%A0%E5%90%AF%E7%94%A8tags%E5%92%8Ccategories">文章启用tags和categories</a></li>
-<li><a href="#%E8%AE%BE%E7%BD%AE%E9%98%85%E8%AF%BB%E5%85%A8%E6%96%87">设置阅读全文</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98updating">相关问题（Updating…）</a><ul>
-<li><a href="#%E6%97%A0%E6%B3%95%E6%AD%A3%E7%A1%AE%E6%B8%B2%E6%9F%93markdown%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98">无法正确渲染markdown文件问题</a></li>
-<li><a href="#%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98">插入图片问题</a></li>
-<li><a href="#%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98">目录生成问题</a></li>
-<li><a href="#%E6%B7%BB%E5%8A%A0%E6%9C%AC%E5%9C%B0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD">添加本地搜索功能</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/25/tools_1_start/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="http://mrbananazly.cn/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/favicon.png">
-      <meta itemprop="name" content="mrbanana_zly">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Road 2 the Final">
-      <meta itemprop="description" content="">
-    </span>
-    
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | Road 2 the Final">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/" class="post-title-link" itemprop="url">《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2022-03-25 10:33:25" itemprop="dateCreated datePublished" datetime="2022-03-25T10:33:25+08:00">2022-03-25</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2022-08-18 19:58:47" itemprop="dateModified" datetime="2022-08-18T19:58:47+08:00">2022-08-18</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/paper-review/" itemprop="url" rel="index"><span itemprop="name">paper review</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <!-- toc -->
-
-<ul>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a></li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: [<a target="_blank" rel="noopener" href="https://arxiv.org/abs/2203.06541">2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org)</a></p>
-<p>code: <a target="_blank" rel="noopener" href="https://github.com/Jiahao-UTS/SLPT-master">Jiahao-UTS&#x2F;SLPT-master (github.com)</a></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 </div>
