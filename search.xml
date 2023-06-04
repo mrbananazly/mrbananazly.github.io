@@ -1,48 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>《E题1.0》</title>
-    <url>/2022/10/06/HWB/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E9%97%AE%E9%A2%981">问题1</a></li>
-<li><a href="#%E9%97%AE%E9%A2%982">问题2</a></li>
-<li><a href="#%E9%97%AE%E9%A2%983">问题3</a></li>
-<li><a href="#%E9%97%AE%E9%A2%984">问题4</a></li>
-<li><a href="#%E9%97%AE%E9%A2%985">问题5</a></li>
-<li><a href="#%E9%97%AE%E9%A2%986">问题6</a></li>
-</ul>
-<!-- tocstop -->
-
-<span id="more"></span>
-
-<h1><span id="问题1">问题1</span></h1><h4><span id="从机理分析的角度建立不同放牧策略放牧方式和放牧强度对锡林郭勒草原土壤物理性质主要是土壤湿度和植被生物量影响的数学模型">从机理分析的角度，建立不同放牧策略（放牧方式和放牧强度）对锡林郭勒草原土壤物理性质（主要是土壤湿度）和植被生物量影响的数学模型</span></h4><p>筛选出放牧策略（载畜量）、降水、地表蒸发量数据，套用下方公式</p>
-<p>画出植被生物量和单位时间的曲线，可求出对应的单位时间的斜率，推出该时间S和w的关系；</p>
-<p>土壤含水量同理，但要将α换成w的式子；</p>
-<p>画出土壤含水量和单位时间的曲线，可求出对应的单位时间的斜率，推出该时间S和w的关系；</p>
-<p>E(a)直接使用蒸发量代替</p>
-<p><img src="/2022/10/06/HWB/image-20221006201807430.png" alt="image-20221006201807430"></p>
-<h1><span id="问题2">问题2</span></h1><p>先时间序列自回归预测浅层因子，然后用这些浅层因子做自变量做多元回归；</p>
-<p>其中可以使用前十年的单一月份数据，来预测后一年单一月份数据（建12个模型）</p>
-<h1><span id="问题3">问题3</span></h1><h4><span id="从机理分析的角度建立不同放牧策略放牧方式和放牧强度对锡林郭勒草原土壤化学性质影响的数学模型-并请结合附件14中数据预测锡林郭勒草原监测样地12个放牧小区在不同放牧强度下2022年土壤同期有机碳-无机碳-全n-土壤cx2fn比等值并完成下表">从机理分析的角度，建立不同放牧策略（放牧方式和放牧强度）对锡林郭勒草原土壤化学性质影响的数学模型。并请结合附件14中数据预测锡林郭勒草原监测样地(12个放牧小区)在不同放牧强度下2022年土壤同期有机碳、无机碳、全N、土壤C&#x2F;N比等值,并完成下表。</span></h4><p>时间序列自回归</p>
-<h1><span id="问题4">问题4</span></h1><h4><span id="利用沙漠化程度指数预测模型和附件提供数据包括自己收集的数据确定不同放牧强度下监测点的沙漠化程度指数值">利用沙漠化程度指数预测模型和附件提供数据（包括自己收集的数据）确定不同放牧强度下监测点的沙漠化程度指数值。</span></h4><p>影响因子：风速、降水、气温（气象因素附件8）；植被盖度（附件10或6或5）、地表水资源（附件9）、地下水位（附件9）；人口数量、牲畜数量、社会经济水平（附件2）等等。</p>
-<p>PCA加权累加</p>
-<p><img src="/2022/10/06/HWB/image-20221006191041118.png" alt="image-20221006191041118"></p>
-<h4><span id="并请尝试给出定量的土壤板结化定义">并请尝试给出定量的土壤板结化定义</span></h4><p><img src="/2022/10/06/HWB/image-20221006192120031.png" alt="image-20221006192120031"></p>
-<h4><span id="在建立合理的土壤板结化模型基础上结合问题3给出放牧策略模型使得沙漠化程度指数与板结化程度最小">在建立合理的土壤板结化模型基础上结合问题3，给出放牧策略模型，使得沙漠化程度指数与板结化程度最小。</span></h4><p>带入第一题公式和板结化公式，求解S</p>
-<h1><span id="问题5">问题5</span></h1><h4><span id="锡林郭勒草原近10的年降水量包含降雪通常在300-mm-~1200-mm之间请在给定的降水量300mm600mm-900-mm-和1200mm情形下在保持草原可持续发展情况下对实验草场内附件14-15放牧羊的数量进行求解找到最大阈值-注这里计算结果可以不是正整数">锡林郭勒草原近10的年降水量（包含降雪）通常在300 mm ~1200 mm之间，请在给定的降水量（300mm，600mm、900 mm 和1200mm）情形下，在保持草原可持续发展情况下对实验草场内（附件14、15）放牧羊的数量进行求解，找到最大阈值。（注：这里计算结果可以不是正整数）</span></h4><p>筛选出满足降水条件的年份对应的数据。</p>
-<p><img src="/2022/10/06/HWB/image-20221006193918802.png" alt="image-20221006193918802"></p>
-<h1><span id="问题6">问题6</span></h1><h4><span id="在保持附件13的示范牧户放牧策略不变和问题4中得到的放牧方案两种情况下用图示或者动态演示方式分别预测示范区2023年9月土地状态比如土壤肥力变化-土壤湿度-植被覆盖等">在保持附件13的示范牧户放牧策略不变和问题4中得到的放牧方案两种情况下，用图示或者动态演示方式分别预测示范区2023年9月土地状态（比如土壤肥力变化、土壤湿度、植被覆盖等）</span></h4><p>善男先做</p>
-]]></content>
-      <categories>
-        <category>建模</category>
-      </categories>
-      <tags>
-        <tag>建模</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>施磊C++初级STL笔记</title>
     <url>/2023/03/22/cpp_STL_note/</url>
     <content><![CDATA[<!-- toc -->
@@ -115,6 +73,48 @@
       </categories>
       <tags>
         <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《E题1.0》</title>
+    <url>/2022/10/06/HWB/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E9%97%AE%E9%A2%981">问题1</a></li>
+<li><a href="#%E9%97%AE%E9%A2%982">问题2</a></li>
+<li><a href="#%E9%97%AE%E9%A2%983">问题3</a></li>
+<li><a href="#%E9%97%AE%E9%A2%984">问题4</a></li>
+<li><a href="#%E9%97%AE%E9%A2%985">问题5</a></li>
+<li><a href="#%E9%97%AE%E9%A2%986">问题6</a></li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="问题1">问题1</span></h1><h4><span id="从机理分析的角度建立不同放牧策略放牧方式和放牧强度对锡林郭勒草原土壤物理性质主要是土壤湿度和植被生物量影响的数学模型">从机理分析的角度，建立不同放牧策略（放牧方式和放牧强度）对锡林郭勒草原土壤物理性质（主要是土壤湿度）和植被生物量影响的数学模型</span></h4><p>筛选出放牧策略（载畜量）、降水、地表蒸发量数据，套用下方公式</p>
+<p>画出植被生物量和单位时间的曲线，可求出对应的单位时间的斜率，推出该时间S和w的关系；</p>
+<p>土壤含水量同理，但要将α换成w的式子；</p>
+<p>画出土壤含水量和单位时间的曲线，可求出对应的单位时间的斜率，推出该时间S和w的关系；</p>
+<p>E(a)直接使用蒸发量代替</p>
+<p><img src="/2022/10/06/HWB/image-20221006201807430.png" alt="image-20221006201807430"></p>
+<h1><span id="问题2">问题2</span></h1><p>先时间序列自回归预测浅层因子，然后用这些浅层因子做自变量做多元回归；</p>
+<p>其中可以使用前十年的单一月份数据，来预测后一年单一月份数据（建12个模型）</p>
+<h1><span id="问题3">问题3</span></h1><h4><span id="从机理分析的角度建立不同放牧策略放牧方式和放牧强度对锡林郭勒草原土壤化学性质影响的数学模型-并请结合附件14中数据预测锡林郭勒草原监测样地12个放牧小区在不同放牧强度下2022年土壤同期有机碳-无机碳-全n-土壤cx2fn比等值并完成下表">从机理分析的角度，建立不同放牧策略（放牧方式和放牧强度）对锡林郭勒草原土壤化学性质影响的数学模型。并请结合附件14中数据预测锡林郭勒草原监测样地(12个放牧小区)在不同放牧强度下2022年土壤同期有机碳、无机碳、全N、土壤C&#x2F;N比等值,并完成下表。</span></h4><p>时间序列自回归</p>
+<h1><span id="问题4">问题4</span></h1><h4><span id="利用沙漠化程度指数预测模型和附件提供数据包括自己收集的数据确定不同放牧强度下监测点的沙漠化程度指数值">利用沙漠化程度指数预测模型和附件提供数据（包括自己收集的数据）确定不同放牧强度下监测点的沙漠化程度指数值。</span></h4><p>影响因子：风速、降水、气温（气象因素附件8）；植被盖度（附件10或6或5）、地表水资源（附件9）、地下水位（附件9）；人口数量、牲畜数量、社会经济水平（附件2）等等。</p>
+<p>PCA加权累加</p>
+<p><img src="/2022/10/06/HWB/image-20221006191041118.png" alt="image-20221006191041118"></p>
+<h4><span id="并请尝试给出定量的土壤板结化定义">并请尝试给出定量的土壤板结化定义</span></h4><p><img src="/2022/10/06/HWB/image-20221006192120031.png" alt="image-20221006192120031"></p>
+<h4><span id="在建立合理的土壤板结化模型基础上结合问题3给出放牧策略模型使得沙漠化程度指数与板结化程度最小">在建立合理的土壤板结化模型基础上结合问题3，给出放牧策略模型，使得沙漠化程度指数与板结化程度最小。</span></h4><p>带入第一题公式和板结化公式，求解S</p>
+<h1><span id="问题5">问题5</span></h1><h4><span id="锡林郭勒草原近10的年降水量包含降雪通常在300-mm-~1200-mm之间请在给定的降水量300mm600mm-900-mm-和1200mm情形下在保持草原可持续发展情况下对实验草场内附件14-15放牧羊的数量进行求解找到最大阈值-注这里计算结果可以不是正整数">锡林郭勒草原近10的年降水量（包含降雪）通常在300 mm ~1200 mm之间，请在给定的降水量（300mm，600mm、900 mm 和1200mm）情形下，在保持草原可持续发展情况下对实验草场内（附件14、15）放牧羊的数量进行求解，找到最大阈值。（注：这里计算结果可以不是正整数）</span></h4><p>筛选出满足降水条件的年份对应的数据。</p>
+<p><img src="/2022/10/06/HWB/image-20221006193918802.png" alt="image-20221006193918802"></p>
+<h1><span id="问题6">问题6</span></h1><h4><span id="在保持附件13的示范牧户放牧策略不变和问题4中得到的放牧方案两种情况下用图示或者动态演示方式分别预测示范区2023年9月土地状态比如土壤肥力变化-土壤湿度-植被覆盖等">在保持附件13的示范牧户放牧策略不变和问题4中得到的放牧方案两种情况下，用图示或者动态演示方式分别预测示范区2023年9月土地状态（比如土壤肥力变化、土壤湿度、植被覆盖等）</span></h4><p>善男先做</p>
+]]></content>
+      <categories>
+        <category>建模</category>
+      </categories>
+      <tags>
+        <tag>建模</tag>
       </tags>
   </entry>
   <entry>
@@ -786,66 +786,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《Clothes-Changing Person Re-identification with RGB Modality Only》</title>
-    <url>/2022/05/02/review_5_Simple-CCReID/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
-<li><a href="#clothes-based-adversarial-loss">Clothes-based Adversarial Loss</a><ul>
-<li><a href="#training-clothes-classifier">Training clothes classifier</a></li>
-<li><a href="#learning-clothes-irrelevant-features">Learning clothes-irrelevant features</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://arxiv.org/pdf/2204.06890v1.pdf</a></p>
-<p>code: <a href="https://github.com/guxinqian/simple-ccreid">guxinqian&#x2F;Simple-CCReID: Pytorch implementation of ‘Clothes-Changing Person Re-identification with RGB Modality Only. In CVPR, 2022.’ (github.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="任务">任务</span></h1><p>换装人员重识别</p>
-<h1><span id="出发点">出发点</span></h1><p><strong>提取与衣服无关的特征</strong>，如脸型、发型、体形和步态。目前大多数工作主要集中在从多模态信息（如剪影和草图）中建模身体形状，但没有充分利用原始 RGB 图像中与衣服无关的信息。</p>
-<h1><span id="创新点">创新点</span></h1><p>文章提出一种基于衣服的<strong>对抗</strong>性损失（CAL），通过惩罚 re-id 模型对衣服的预测能力（其实就是个分类器），从原始 RGB 图像中<strong>挖掘与衣服无关的特征</strong>。</p>
-<h1><span id="做法">做法</span></h1><p>首先通过最小化Lc来优化衣服分类器。然后固定衣服分类器的参数，最小化Lid和Lca，迫使backbone学习与衣服无关的特征。（每张图片对应一个一个身份标签和服装标签，将衣服类定义为细粒度标识类——所有同一身份的样本都根据他们的衣服被划分为属于该身份的不同类别，不同的人即使穿着相同的衣服也不会共享相同的衣服标签）</p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504092335366.png" alt="image-20220504092335366"></p>
-<h2><span id="clothes-based-adversarial-loss">Clothes-based Adversarial Loss</span></h2><h3><span id="training-clothes-classifier">Training clothes classifier</span></h3><p>Lc采用交叉熵损失</p>
-<h3><span id="learning-clothes-irrelevant-features">Learning clothes-irrelevant features</span></h3><p>固定衣服分类器的参数，并强制主干学习与衣服无关的特征。为此，应该<strong>惩罚re-id模型对于衣服的预测能力</strong>。</p>
-<p>然而，由于衣服类被定义为细粒度类，因此惩罚re-id模型对于所有衣服类别的预测能力，也会降低其预测身份的能力，这对re-id是有害的。</p>
-<p>那么最终的目的是使经过训练的<strong>服装分类器无法区分相同身份和不同服装的样本</strong>。</p>
-<p>所以，Lca是一个<em>multi-positive-class classification loss</em>，属于同一个身份的不同服装类互为正类。（把不同衣服的只要是属于同一个id身份的衣服类都视为衣服正类）</p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504101750986.png" alt="image-20220504101750986"></p>
-<p>Si+（Si-)是一个有相同身份的衣服标签fi的集合，K是S中的衣服类别数量，q(c)是第c个衣服类别的交叉熵损失的权重，同一件衣服同一个身份的正例，和不同衣服同一个身份的正例有相同的权重1&#x2F;K。</p>
-<p>同时，为了在不严重降低衣服一致性识别精度的情况下提高模型的换衣识别能力，等式（4）可替换为：</p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105337953.png" alt="image-20220504105337953"></p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105427890.png" alt="image-20220504105427890"></p>
-<p>另外，穿着相同衣服的正例比穿着不同衣服的正例有更大的权重。</p>
-<p>在优化CAL的同时，对身份分类器进行了优化。因此，第二步的优化过程是：</p>
-<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105540307.png" alt="image-20220504105540307"></p>
-<p>当仅使用Lid进行训练时，该模型在优化的早期阶段倾向于学习简单样本（具有相同的衣服），然后逐渐学习区分困难样本（具有相同的身份和不同的衣服）。类似课程学习方式，但尽管如此（6）中并未抛弃Lid。其原因是，在优化的早期阶段，只有最小化Lca并迫使模型区分硬样本，才可能导致局部最优。相反，在我们的实验中，在第一次降低学习率后，增加了Lca用于训练。</p>
-<p>&#96;&#96;</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class ClothesBasedAdversarialLoss(nn.Module):</span><br><span class="line">    &quot;&quot;&quot; Clothes-based Adversarial Loss.</span><br><span class="line"></span><br><span class="line">    Reference:</span><br><span class="line">        Gu et al. Clothes-Changing Person Re-identification with RGB Modality Only. In CVPR, 2022.</span><br><span class="line"></span><br><span class="line">    Args:</span><br><span class="line">        scale (float): scaling factor.</span><br><span class="line">        epsilon (float): a trade-off hyper-parameter.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __init__(self, scale=16, epsilon=0.1):</span><br><span class="line">        super().__init__()</span><br><span class="line">        self.scale = scale</span><br><span class="line">        self.epsilon = epsilon</span><br><span class="line"></span><br><span class="line">    def forward(self, inputs, targets, positive_mask):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        Args:</span><br><span class="line">            inputs: prediction matrix (before softmax) with shape (batch_size, num_classes)</span><br><span class="line">            targets: ground truth labels with shape (batch_size)</span><br><span class="line">            positive_mask: positive mask matrix with shape (batch_size, num_classes). The clothes classes with </span><br><span class="line">                the same identity as the anchor sample are defined as positive clothes classes and their mask </span><br><span class="line">                values are 1. The clothes classes with different identities from the anchor sample are defined </span><br><span class="line">                as negative clothes classes and their mask values in positive_mask are 0.</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        inputs = self.scale * inputs</span><br><span class="line">        negtive_mask = 1 - positive_mask</span><br><span class="line">        identity_mask = torch.zeros(inputs.size()).scatter_(1, targets.unsqueeze(1).data.cpu(), 1).cuda()</span><br><span class="line"></span><br><span class="line">        exp_logits = torch.exp(inputs)</span><br><span class="line">        log_sum_exp_pos_and_all_neg = torch.log((exp_logits * negtive_mask).sum(1, keepdim=True) + exp_logits)</span><br><span class="line">        log_prob = inputs - log_sum_exp_pos_and_all_neg</span><br><span class="line"></span><br><span class="line">        mask = (1 - self.epsilon) * identity_mask + self.epsilon / positive_mask.sum(1, keepdim=True) * positive_mask</span><br><span class="line">        loss = (- mask * log_prob).sum(1).mean()</span><br><span class="line"></span><br><span class="line">        return loss</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>ReID</tag>
-        <tag>decouple</tag>
-        <tag>adversarial</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《CariMe:Unpaired Caricature Generation with Multiple Exaggerations》</title>
     <url>/2022/04/13/review_4_CariMe/</url>
     <content><![CDATA[<!-- toc -->
@@ -912,6 +852,66 @@
       <tags>
         <tag>generation</tag>
         <tag>caricature</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Clothes-Changing Person Re-identification with RGB Modality Only》</title>
+    <url>/2022/05/02/review_5_Simple-CCReID/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E4%BB%BB%E5%8A%A1">任务</a></li>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a><ul>
+<li><a href="#clothes-based-adversarial-loss">Clothes-based Adversarial Loss</a><ul>
+<li><a href="#training-clothes-classifier">Training clothes classifier</a></li>
+<li><a href="#learning-clothes-irrelevant-features">Learning clothes-irrelevant features</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://openaccess.thecvf.com/content/CVPR2021/papers/Jing_Cross-Modal_Center_Loss_for_3D_Cross-Modal_Retrieval_CVPR_2021_paper.pdf">https://arxiv.org/pdf/2204.06890v1.pdf</a></p>
+<p>code: <a href="https://github.com/guxinqian/simple-ccreid">guxinqian&#x2F;Simple-CCReID: Pytorch implementation of ‘Clothes-Changing Person Re-identification with RGB Modality Only. In CVPR, 2022.’ (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="任务">任务</span></h1><p>换装人员重识别</p>
+<h1><span id="出发点">出发点</span></h1><p><strong>提取与衣服无关的特征</strong>，如脸型、发型、体形和步态。目前大多数工作主要集中在从多模态信息（如剪影和草图）中建模身体形状，但没有充分利用原始 RGB 图像中与衣服无关的信息。</p>
+<h1><span id="创新点">创新点</span></h1><p>文章提出一种基于衣服的<strong>对抗</strong>性损失（CAL），通过惩罚 re-id 模型对衣服的预测能力（其实就是个分类器），从原始 RGB 图像中<strong>挖掘与衣服无关的特征</strong>。</p>
+<h1><span id="做法">做法</span></h1><p>首先通过最小化Lc来优化衣服分类器。然后固定衣服分类器的参数，最小化Lid和Lca，迫使backbone学习与衣服无关的特征。（每张图片对应一个一个身份标签和服装标签，将衣服类定义为细粒度标识类——所有同一身份的样本都根据他们的衣服被划分为属于该身份的不同类别，不同的人即使穿着相同的衣服也不会共享相同的衣服标签）</p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504092335366.png" alt="image-20220504092335366"></p>
+<h2><span id="clothes-based-adversarial-loss">Clothes-based Adversarial Loss</span></h2><h3><span id="training-clothes-classifier">Training clothes classifier</span></h3><p>Lc采用交叉熵损失</p>
+<h3><span id="learning-clothes-irrelevant-features">Learning clothes-irrelevant features</span></h3><p>固定衣服分类器的参数，并强制主干学习与衣服无关的特征。为此，应该<strong>惩罚re-id模型对于衣服的预测能力</strong>。</p>
+<p>然而，由于衣服类被定义为细粒度类，因此惩罚re-id模型对于所有衣服类别的预测能力，也会降低其预测身份的能力，这对re-id是有害的。</p>
+<p>那么最终的目的是使经过训练的<strong>服装分类器无法区分相同身份和不同服装的样本</strong>。</p>
+<p>所以，Lca是一个<em>multi-positive-class classification loss</em>，属于同一个身份的不同服装类互为正类。（把不同衣服的只要是属于同一个id身份的衣服类都视为衣服正类）</p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504101750986.png" alt="image-20220504101750986"></p>
+<p>Si+（Si-)是一个有相同身份的衣服标签fi的集合，K是S中的衣服类别数量，q(c)是第c个衣服类别的交叉熵损失的权重，同一件衣服同一个身份的正例，和不同衣服同一个身份的正例有相同的权重1&#x2F;K。</p>
+<p>同时，为了在不严重降低衣服一致性识别精度的情况下提高模型的换衣识别能力，等式（4）可替换为：</p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105337953.png" alt="image-20220504105337953"></p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105427890.png" alt="image-20220504105427890"></p>
+<p>另外，穿着相同衣服的正例比穿着不同衣服的正例有更大的权重。</p>
+<p>在优化CAL的同时，对身份分类器进行了优化。因此，第二步的优化过程是：</p>
+<p><img src="/2022/05/02/review_5_Simple-CCReID/image-20220504105540307.png" alt="image-20220504105540307"></p>
+<p>当仅使用Lid进行训练时，该模型在优化的早期阶段倾向于学习简单样本（具有相同的衣服），然后逐渐学习区分困难样本（具有相同的身份和不同的衣服）。类似课程学习方式，但尽管如此（6）中并未抛弃Lid。其原因是，在优化的早期阶段，只有最小化Lca并迫使模型区分硬样本，才可能导致局部最优。相反，在我们的实验中，在第一次降低学习率后，增加了Lca用于训练。</p>
+<p>&#96;&#96;</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">class ClothesBasedAdversarialLoss(nn.Module):</span><br><span class="line">    &quot;&quot;&quot; Clothes-based Adversarial Loss.</span><br><span class="line"></span><br><span class="line">    Reference:</span><br><span class="line">        Gu et al. Clothes-Changing Person Re-identification with RGB Modality Only. In CVPR, 2022.</span><br><span class="line"></span><br><span class="line">    Args:</span><br><span class="line">        scale (float): scaling factor.</span><br><span class="line">        epsilon (float): a trade-off hyper-parameter.</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    def __init__(self, scale=16, epsilon=0.1):</span><br><span class="line">        super().__init__()</span><br><span class="line">        self.scale = scale</span><br><span class="line">        self.epsilon = epsilon</span><br><span class="line"></span><br><span class="line">    def forward(self, inputs, targets, positive_mask):</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        Args:</span><br><span class="line">            inputs: prediction matrix (before softmax) with shape (batch_size, num_classes)</span><br><span class="line">            targets: ground truth labels with shape (batch_size)</span><br><span class="line">            positive_mask: positive mask matrix with shape (batch_size, num_classes). The clothes classes with </span><br><span class="line">                the same identity as the anchor sample are defined as positive clothes classes and their mask </span><br><span class="line">                values are 1. The clothes classes with different identities from the anchor sample are defined </span><br><span class="line">                as negative clothes classes and their mask values in positive_mask are 0.</span><br><span class="line">        &quot;&quot;&quot;</span><br><span class="line">        inputs = self.scale * inputs</span><br><span class="line">        negtive_mask = 1 - positive_mask</span><br><span class="line">        identity_mask = torch.zeros(inputs.size()).scatter_(1, targets.unsqueeze(1).data.cpu(), 1).cuda()</span><br><span class="line"></span><br><span class="line">        exp_logits = torch.exp(inputs)</span><br><span class="line">        log_sum_exp_pos_and_all_neg = torch.log((exp_logits * negtive_mask).sum(1, keepdim=True) + exp_logits)</span><br><span class="line">        log_prob = inputs - log_sum_exp_pos_and_all_neg</span><br><span class="line"></span><br><span class="line">        mask = (1 - self.epsilon) * identity_mask + self.epsilon / positive_mask.sum(1, keepdim=True) * positive_mask</span><br><span class="line">        loss = (- mask * log_prob).sum(1).mean()</span><br><span class="line"></span><br><span class="line">        return loss</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>ReID</tag>
+        <tag>decouple</tag>
+        <tag>adversarial</tag>
       </tags>
   </entry>
   <entry>
@@ -1356,58 +1356,6 @@
       </tags>
   </entry>
   <entry>
-    <title>RTTO WEEK3</title>
-    <url>/2022/09/30/rtto_3/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#week-3"><strong>WEEK 3</strong></a><ul>
-<li><a href="#344%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">344.反转字符串（e）</a></li>
-<li><a href="#541%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2iie">541.反转字符串Ⅱ（e）</a></li>
-<li><a href="#%E5%89%91%E6%8C%87offer-05%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BCe">剑指Offer 05.替换空格（e）</a></li>
-<li><a href="#151%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%8D%95%E8%AF%8Dm">151.反转字符串中的单词（m）</a></li>
-<li><a href="#%E5%89%91%E6%8C%87offer-58-ii%E5%B7%A6%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">剑指Offer 58 - Ⅱ.左旋转字符串（e）</a></li>
-<li><a href="#28%E6%89%BE%E5%87%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8C%B9%E9%85%8D%E9%A1%B9%E7%9A%84%E4%B8%8B%E6%A0%87m">28.找出字符串中第一个匹配项的下标（m）</a></li>
-<li><a href="#459%E9%87%8D%E5%A4%8D%E7%9A%84%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2e">459.重复的子字符串（e）</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<span id="more"></span>
-
-<h1><span id="week-3"><strong>WEEK 3</strong></span></h1><h2><span id="344反转字符串e">344.反转字符串（e）</span></h2><p> 前一半后一半做个swap，没啥好说的。</p>
-<h2><span id="541反转字符串iie">541.反转字符串Ⅱ（e）</span></h2><p>每次遍历2k的距离，如果有k个字符（size能容纳当前遍历的k个字符），则reverse前k个，否则，反转全部字符。</p>
-<h2><span id="剑指offer-05替换空格e">剑指Offer 05.替换空格（e）</span></h2><p>简单遍历改字符需要进行字符串空间上的扩容；</p>
-<p>1.首先遍历一遍原字符串计算出所含空格的个数；</p>
-<p>2.resize原字符串，+2*count；</p>
-<p>3.使用双指针法，j指向原字符串最后一位，i指向扩充后字符串最后一位，同时向前遍历新字符串；若碰到非空位置，则更新非空字符在新字符串中的位置；若碰到空位置，此时的i即对应新字符串中0的位置，前一位为2，前前位为%；</p>
-<h2><span id="151反转字符串中的单词m">151.反转字符串中的单词（m）</span></h2><p>两个关键操作：字符串逆置reverse；去除多余空格，保证两个单词之间仅存在一个空格；</p>
-<p>1.将原字符串去除多余空格；</p>
-<p>2.将去重后的原字符串整个逆置；</p>
-<p>3.遍历逆置后的字符串，碰到空格则将空格前的字符逆置；</p>
-<h2><span id="剑指offer-58-ii左旋转字符串e">剑指Offer 58 - Ⅱ.左旋转字符串（e）</span></h2><p>默认不开辟额外空间；</p>
-<p>reverse前n个；</p>
-<p>reverse剩下的；</p>
-<p>reverse全部的；</p>
-<h2><span id="28找出字符串中第一个匹配项的下标m">28.找出字符串中第一个匹配项的下标（m）</span></h2><p>KMP算法</p>
-<p><a href="https://programmercarl.com/0028.%E5%AE%9E%E7%8E%B0strStr.html">代码随想录 (programmercarl.com)</a></p>
-<h2><span id="459重复的子字符串e">459.重复的子字符串（e）</span></h2><p>解法一：移动匹配</p>
-<p>任何一个重复子字符串构成的字符串，其前半部分和后半部分都是相等的；</p>
-<p>那么s+s中就一定存在一个新s；</p>
-<p>掐头去尾（erase去首尾字母），这样才能找到拼接而成的新s，而不是原本头尾的老s；</p>
-<p>若存在新s，则返回true，否则false；</p>
-<p>解法二：KMP法</p>
-<p>核心：最长相等前后缀不包含的子串就是最小重复子串</p>
-]]></content>
-      <categories>
-        <category>RTTO</category>
-      </categories>
-      <tags>
-        <tag>RTTO</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>RTTO WEEK2</title>
     <url>/2022/09/30/rtto_2/</url>
     <content><![CDATA[<!-- toc -->
@@ -1487,6 +1435,58 @@
       </tags>
   </entry>
   <entry>
+    <title>RTTO WEEK3</title>
+    <url>/2022/09/30/rtto_3/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#week-3"><strong>WEEK 3</strong></a><ul>
+<li><a href="#344%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">344.反转字符串（e）</a></li>
+<li><a href="#541%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2iie">541.反转字符串Ⅱ（e）</a></li>
+<li><a href="#%E5%89%91%E6%8C%87offer-05%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BCe">剑指Offer 05.替换空格（e）</a></li>
+<li><a href="#151%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%8D%95%E8%AF%8Dm">151.反转字符串中的单词（m）</a></li>
+<li><a href="#%E5%89%91%E6%8C%87offer-58-ii%E5%B7%A6%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">剑指Offer 58 - Ⅱ.左旋转字符串（e）</a></li>
+<li><a href="#28%E6%89%BE%E5%87%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8C%B9%E9%85%8D%E9%A1%B9%E7%9A%84%E4%B8%8B%E6%A0%87m">28.找出字符串中第一个匹配项的下标（m）</a></li>
+<li><a href="#459%E9%87%8D%E5%A4%8D%E7%9A%84%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2e">459.重复的子字符串（e）</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="week-3"><strong>WEEK 3</strong></span></h1><h2><span id="344反转字符串e">344.反转字符串（e）</span></h2><p> 前一半后一半做个swap，没啥好说的。</p>
+<h2><span id="541反转字符串iie">541.反转字符串Ⅱ（e）</span></h2><p>每次遍历2k的距离，如果有k个字符（size能容纳当前遍历的k个字符），则reverse前k个，否则，反转全部字符。</p>
+<h2><span id="剑指offer-05替换空格e">剑指Offer 05.替换空格（e）</span></h2><p>简单遍历改字符需要进行字符串空间上的扩容；</p>
+<p>1.首先遍历一遍原字符串计算出所含空格的个数；</p>
+<p>2.resize原字符串，+2*count；</p>
+<p>3.使用双指针法，j指向原字符串最后一位，i指向扩充后字符串最后一位，同时向前遍历新字符串；若碰到非空位置，则更新非空字符在新字符串中的位置；若碰到空位置，此时的i即对应新字符串中0的位置，前一位为2，前前位为%；</p>
+<h2><span id="151反转字符串中的单词m">151.反转字符串中的单词（m）</span></h2><p>两个关键操作：字符串逆置reverse；去除多余空格，保证两个单词之间仅存在一个空格；</p>
+<p>1.将原字符串去除多余空格；</p>
+<p>2.将去重后的原字符串整个逆置；</p>
+<p>3.遍历逆置后的字符串，碰到空格则将空格前的字符逆置；</p>
+<h2><span id="剑指offer-58-ii左旋转字符串e">剑指Offer 58 - Ⅱ.左旋转字符串（e）</span></h2><p>默认不开辟额外空间；</p>
+<p>reverse前n个；</p>
+<p>reverse剩下的；</p>
+<p>reverse全部的；</p>
+<h2><span id="28找出字符串中第一个匹配项的下标m">28.找出字符串中第一个匹配项的下标（m）</span></h2><p>KMP算法</p>
+<p><a href="https://programmercarl.com/0028.%E5%AE%9E%E7%8E%B0strStr.html">代码随想录 (programmercarl.com)</a></p>
+<h2><span id="459重复的子字符串e">459.重复的子字符串（e）</span></h2><p>解法一：移动匹配</p>
+<p>任何一个重复子字符串构成的字符串，其前半部分和后半部分都是相等的；</p>
+<p>那么s+s中就一定存在一个新s；</p>
+<p>掐头去尾（erase去首尾字母），这样才能找到拼接而成的新s，而不是原本头尾的老s；</p>
+<p>若存在新s，则返回true，否则false；</p>
+<p>解法二：KMP法</p>
+<p>核心：最长相等前后缀不包含的子串就是最小重复子串</p>
+]]></content>
+      <categories>
+        <category>RTTO</category>
+      </categories>
+      <tags>
+        <tag>RTTO</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>RTTO WEEK4</title>
     <url>/2022/10/19/rtto_4/</url>
     <content><![CDATA[<!-- toc -->
@@ -1524,37 +1524,6 @@
 
 <h2><span id="71简化路径m">71.简化路径（m）</span></h2><p>使用栈</p>
 <p><img src="/2022/10/19/rtto_4/image-20230222104900412.png" alt="image-20230222104900412"></p>
-]]></content>
-      <categories>
-        <category>RTTO</category>
-      </categories>
-      <tags>
-        <tag>RTTO</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RTTO HOT 100</title>
-    <url>/2023/03/16/rtto_hot100/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#hot-100">HOT 100</a><ul>
-<li><a href="#1%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8Ce">1.两数之和（e）</a></li>
-<li><a href="#2%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0m">2.两数相加（m）</a></li>
-<li><a href="#3%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2m">3.无重复字符的最长子串（m）</a></li>
-<li><a href="#4%E5%AF%BB%E6%89%BE%E4%B8%A4%E4%B8%AA%E6%AD%A3%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0h">4.寻找两个正序数组的中位数（h）</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<span id="more"></span>
-
-<h1><span id="hot-100">HOT 100</span></h1><h2><span id="1两数之和e">1.两数之和（e）</span></h2><p>使用map&lt;int,int&gt;构造哈希表；使用map的count方法寻找target-nums[i]是否存在，存在的话就存入res相关index，否则存入nums[i]的索引位置。</p>
-<h2><span id="2两数相加m">2.两数相加（m）</span></h2><p>遍历l1，l2计算sum和进位，尾插法更新tail，注意此时的tail是逆序的，需要一开始使用head指向初始节点作为结果返回。</p>
-<h2><span id="3无重复字符的最长子串m">3.无重复字符的最长子串（m）</span></h2><p>滑动窗口法，使用start，end，使用end进行遍历整个字符串，记录每次end的所指向的字符记为tmp，子循环从start遍历到end，若发现有与tmp相等的符号，则发生子串重复，更新start位置到当前index下一位，计算当前子串length，并退出子循环。动态更新res和length的最大值作为当前结果。</p>
-<h2><span id="4寻找两个正序数组的中位数h">4.寻找两个正序数组的中位数（h）</span></h2><p>二分法</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">double</span> <span class="title">findMedianSortedArrays</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums1, vector&lt;<span class="type">int</span>&gt;&amp; nums2)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums1.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> m = nums2.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> left = (n + m + <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> right = (n + m + <span class="number">2</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">return</span> (<span class="built_in">getKth</span>(nums1, <span class="number">0</span>, n - <span class="number">1</span>, nums2, <span class="number">0</span>, m - <span class="number">1</span>, left) + <span class="built_in">getKth</span>(nums1, <span class="number">0</span>, n - <span class="number">1</span>, nums2, <span class="number">0</span>, m - <span class="number">1</span>, right)) * <span class="number">0.5</span>; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getKth</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums1, <span class="type">int</span> start1, <span class="type">int</span> end1, vector&lt;<span class="type">int</span>&gt;&amp; nums2, <span class="type">int</span> start2, <span class="type">int</span> end2, <span class="type">int</span> k)</span></span>&#123;</span><br><span class="line">        <span class="type">int</span> len1 = end1 - start1 + <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> len2 = end2 - start2 + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(len1 &gt; len2) <span class="keyword">return</span>  <span class="built_in">getKth</span>(nums2, start2, end2, nums1, start1, end1, k);</span><br><span class="line">        <span class="keyword">if</span> (len1 == <span class="number">0</span>)  <span class="keyword">return</span> nums2[start2 + k - <span class="number">1</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(k == <span class="number">1</span>) <span class="keyword">return</span> <span class="built_in">min</span>(nums1[start1], nums2[start2]);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> i = start1 + <span class="built_in">min</span>(len1, k / <span class="number">2</span>) - <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> j = start2 + <span class="built_in">min</span>(len2, k / <span class="number">2</span>) - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(nums1[i] &gt; nums2[j])&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">getKth</span>(nums1, start1, end1, nums2, j + <span class="number">1</span>, end2, k - (j - start2 + <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">getKth</span>(nums1, i + <span class="number">1</span>, end1, nums2, start2, end2, k - (i - start1 + <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>RTTO</category>
@@ -1653,31 +1622,16 @@
       </tags>
   </entry>
   <entry>
-    <title>Hexo建站相关</title>
-    <url>/2022/03/25/tools_1_start/</url>
+    <title>RTTO HOT 100</title>
+    <url>/2023/03/16/rtto_hot100/</url>
     <content><![CDATA[<!-- toc -->
 
 <ul>
-<li><a href="#%E6%90%AD%E5%BB%BAhexo%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%80%9A%E8%BF%87git%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8">搭建Hexo服务器，通过Git自动部署在阿里云服务器</a><ul>
-<li><a href="#%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%83%A8%E7%BD%B2">搭建及部署</a></li>
-<li><a href="#%E5%8D%9A%E6%96%87%E5%8F%91%E5%B8%83">博文发布</a></li>
-</ul>
-</li>
-<li><a href="#%E4%B8%BB%E9%A2%98%E5%8F%8A%E5%85%B6%E7%BE%8E%E5%8C%96">主题及其美化</a><ul>
-<li><a href="#butterfly">Butterfly</a></li>
-<li><a href="#next">Next</a><ul>
-<li><a href="#%E7%BE%8E%E5%8C%96">美化</a></li>
-<li><a href="#%E6%96%87%E7%AB%A0%E5%90%AF%E7%94%A8tags%E5%92%8Ccategories">文章启用tags和categories</a></li>
-<li><a href="#%E8%AE%BE%E7%BD%AE%E9%98%85%E8%AF%BB%E5%85%A8%E6%96%87">设置阅读全文</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98updating">相关问题（Updating…）</a><ul>
-<li><a href="#%E6%97%A0%E6%B3%95%E6%AD%A3%E7%A1%AE%E6%B8%B2%E6%9F%93markdown%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98">无法正确渲染markdown文件问题</a></li>
-<li><a href="#%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98">插入图片问题</a></li>
-<li><a href="#%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98">目录生成问题</a></li>
-<li><a href="#%E6%B7%BB%E5%8A%A0%E6%9C%AC%E5%9C%B0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD">添加本地搜索功能</a></li>
+<li><a href="#hot-100">HOT 100</a><ul>
+<li><a href="#1%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8Ce">1.两数之和（e）</a></li>
+<li><a href="#2%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0m">2.两数相加（m）</a></li>
+<li><a href="#3%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2m">3.无重复字符的最长子串（m）</a></li>
+<li><a href="#4%E5%AF%BB%E6%89%BE%E4%B8%A4%E4%B8%AA%E6%AD%A3%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0h">4.寻找两个正序数组的中位数（h）</a></li>
 </ul>
 </li>
 </ul>
@@ -1685,39 +1639,17 @@
 
 <span id="more"></span>
 
-<h1><span id="搭建hexo服务器通过git自动部署在阿里云服务器">搭建Hexo服务器，通过Git自动部署在阿里云服务器</span></h1><h2><span id="搭建及部署">搭建及部署</span></h2><p>参考博文链接：<a href="https://mp.weixin.qq.com/s/JTTUYJTvtdT6X2fvLUBFZg">Win10下Hexo博客搭建教程，及阿里云服务器部署实战 (qq.com)</a></p>
-<h2><span id="博文发布">博文发布</span></h2><p>在本地机器上部署Hexo相关MyHexoBlogs文件夹下，进入MyHexoBlogs&#x2F;myblogs&#x2F;source&#x2F;_posts目录；</p>
-<p>在当前页进入git bash，输入hexo clean 清除缓存，hexo g 解析静态文件，hexo d 刷新部署新的资源。</p>
-<p>hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</p>
-<h1><span id="主题及其美化">主题及其美化</span></h1><h2><span id="butterfly">Butterfly</span></h2><p>Butterfly主题部署参考博文链接：<a href="https://www.jianshu.com/p/50a565adaf15?ivk_sa=1024320u">hexo框架|butterfly主题配置 - 简书 (jianshu.com)</a></p>
-<p>Butterfly主题官方文档：<a href="https://www.butterfly1.cn/">Hexo-Butterfly主题(🦋 A Hexo Theme: Butterfly-Official website) (butterfly1.cn)</a></p>
-<p>Hexo默认美化项：<a href="https://zhuanlan.zhihu.com/p/369951111">Hexo个性化设置 - 知乎 (zhihu.com)</a></p>
-<h2><span id="next">Next</span></h2><h3><span id="美化">美化</span></h3><p><a href="https://blog.csdn.net/qq_34003239/article/details/100883213">(54条消息) Next主题美化_蜗牛非牛的博客-CSDN博客_next主题美化</a></p>
-<h3><span id="文章启用tags和categories">文章启用tags和categories</span></h3><p><a href="https://blog.csdn.net/Lancis/article/details/118788205">(54条消息) hexo next主题简单美化_Lancis的博客-CSDN博客_next主题美化</a></p>
-<h3><span id="设置阅读全文">设置阅读全文</span></h3><p><a href="https://blog.csdn.net/CHENGXUYUAN09/article/details/103408380">(54条消息) next7.6版本关于设置阅读全文_LIYUANWAISPRING的博客-CSDN博客</a></p>
-<h1><span id="相关问题updating">相关问题（Updating…）</span></h1><h2><span id="无法正确渲染markdown文件问题">无法正确渲染markdown文件问题</span></h2><p>hexo对于md文件的解析规则不是标准规则，有时候在复制论文标题时会有换行符无法正确解析；</p>
-<p>重新手动输入检查标题格式解决问题</p>
-<h2><span id="插入图片问题">插入图片问题</span></h2><p>选择采用hexo官网的解决方式：<a href="https://hexo.io/zh-cn/docs/asset-folders">资源文件夹 | Hexo</a></p>
-<h2><span id="目录生成问题">目录生成问题</span></h2><p>安装插件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-toc --save</span><br></pre></td></tr></table></figure>
-
-<p>hexo的配置文件中设置格式，添加配置代码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">toc:</span><br><span class="line">  maxdepth: 3</span><br></pre></td></tr></table></figure>
-
-<p>在md中使用时</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- toc --&gt;</span><br></pre></td></tr></table></figure>
-
-<h2><span id="添加本地搜索功能">添加本地搜索功能</span></h2><p>与Next官方配置文件中的链接步骤不同的是，还需要修改</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">preload: true</span><br></pre></td></tr></table></figure>
-
-
-
+<h1><span id="hot-100">HOT 100</span></h1><h2><span id="1两数之和e">1.两数之和（e）</span></h2><p>使用map&lt;int,int&gt;构造哈希表；使用map的count方法寻找target-nums[i]是否存在，存在的话就存入res相关index，否则存入nums[i]的索引位置。</p>
+<h2><span id="2两数相加m">2.两数相加（m）</span></h2><p>遍历l1，l2计算sum和进位，尾插法更新tail，注意此时的tail是逆序的，需要一开始使用head指向初始节点作为结果返回。</p>
+<h2><span id="3无重复字符的最长子串m">3.无重复字符的最长子串（m）</span></h2><p>滑动窗口法，使用start，end，使用end进行遍历整个字符串，记录每次end的所指向的字符记为tmp，子循环从start遍历到end，若发现有与tmp相等的符号，则发生子串重复，更新start位置到当前index下一位，计算当前子串length，并退出子循环。动态更新res和length的最大值作为当前结果。</p>
+<h2><span id="4寻找两个正序数组的中位数h">4.寻找两个正序数组的中位数（h）</span></h2><p>二分法</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">double</span> <span class="title">findMedianSortedArrays</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums1, vector&lt;<span class="type">int</span>&gt;&amp; nums2)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums1.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> m = nums2.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> left = (n + m + <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> right = (n + m + <span class="number">2</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">return</span> (<span class="built_in">getKth</span>(nums1, <span class="number">0</span>, n - <span class="number">1</span>, nums2, <span class="number">0</span>, m - <span class="number">1</span>, left) + <span class="built_in">getKth</span>(nums1, <span class="number">0</span>, n - <span class="number">1</span>, nums2, <span class="number">0</span>, m - <span class="number">1</span>, right)) * <span class="number">0.5</span>; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getKth</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums1, <span class="type">int</span> start1, <span class="type">int</span> end1, vector&lt;<span class="type">int</span>&gt;&amp; nums2, <span class="type">int</span> start2, <span class="type">int</span> end2, <span class="type">int</span> k)</span></span>&#123;</span><br><span class="line">        <span class="type">int</span> len1 = end1 - start1 + <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> len2 = end2 - start2 + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(len1 &gt; len2) <span class="keyword">return</span>  <span class="built_in">getKth</span>(nums2, start2, end2, nums1, start1, end1, k);</span><br><span class="line">        <span class="keyword">if</span> (len1 == <span class="number">0</span>)  <span class="keyword">return</span> nums2[start2 + k - <span class="number">1</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(k == <span class="number">1</span>) <span class="keyword">return</span> <span class="built_in">min</span>(nums1[start1], nums2[start2]);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> i = start1 + <span class="built_in">min</span>(len1, k / <span class="number">2</span>) - <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> j = start2 + <span class="built_in">min</span>(len2, k / <span class="number">2</span>) - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(nums1[i] &gt; nums2[j])&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">getKth</span>(nums1, start1, end1, nums2, j + <span class="number">1</span>, end2, k - (j - start2 + <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">getKth</span>(nums1, i + <span class="number">1</span>, end1, nums2, start2, end2, k - (i - start1 + <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>Hexo</category>
+        <category>RTTO</category>
       </categories>
       <tags>
-        <tag>Hexo</tag>
+        <tag>RTTO</tag>
       </tags>
   </entry>
   <entry>
@@ -1997,6 +1929,74 @@
       </categories>
       <tags>
         <tag>Docker</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo建站相关</title>
+    <url>/2022/03/25/tools_1_start/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E6%90%AD%E5%BB%BAhexo%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%80%9A%E8%BF%87git%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8">搭建Hexo服务器，通过Git自动部署在阿里云服务器</a><ul>
+<li><a href="#%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%83%A8%E7%BD%B2">搭建及部署</a></li>
+<li><a href="#%E5%8D%9A%E6%96%87%E5%8F%91%E5%B8%83">博文发布</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%BB%E9%A2%98%E5%8F%8A%E5%85%B6%E7%BE%8E%E5%8C%96">主题及其美化</a><ul>
+<li><a href="#butterfly">Butterfly</a></li>
+<li><a href="#next">Next</a><ul>
+<li><a href="#%E7%BE%8E%E5%8C%96">美化</a></li>
+<li><a href="#%E6%96%87%E7%AB%A0%E5%90%AF%E7%94%A8tags%E5%92%8Ccategories">文章启用tags和categories</a></li>
+<li><a href="#%E8%AE%BE%E7%BD%AE%E9%98%85%E8%AF%BB%E5%85%A8%E6%96%87">设置阅读全文</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98updating">相关问题（Updating…）</a><ul>
+<li><a href="#%E6%97%A0%E6%B3%95%E6%AD%A3%E7%A1%AE%E6%B8%B2%E6%9F%93markdown%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98">无法正确渲染markdown文件问题</a></li>
+<li><a href="#%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98">插入图片问题</a></li>
+<li><a href="#%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98">目录生成问题</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E6%9C%AC%E5%9C%B0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD">添加本地搜索功能</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="搭建hexo服务器通过git自动部署在阿里云服务器">搭建Hexo服务器，通过Git自动部署在阿里云服务器</span></h1><h2><span id="搭建及部署">搭建及部署</span></h2><p>参考博文链接：<a href="https://mp.weixin.qq.com/s/JTTUYJTvtdT6X2fvLUBFZg">Win10下Hexo博客搭建教程，及阿里云服务器部署实战 (qq.com)</a></p>
+<h2><span id="博文发布">博文发布</span></h2><p>在本地机器上部署Hexo相关MyHexoBlogs文件夹下，进入MyHexoBlogs&#x2F;myblogs&#x2F;source&#x2F;_posts目录；</p>
+<p>在当前页进入git bash，输入hexo clean 清除缓存，hexo g 解析静态文件，hexo d 刷新部署新的资源。</p>
+<p>hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</p>
+<h1><span id="主题及其美化">主题及其美化</span></h1><h2><span id="butterfly">Butterfly</span></h2><p>Butterfly主题部署参考博文链接：<a href="https://www.jianshu.com/p/50a565adaf15?ivk_sa=1024320u">hexo框架|butterfly主题配置 - 简书 (jianshu.com)</a></p>
+<p>Butterfly主题官方文档：<a href="https://www.butterfly1.cn/">Hexo-Butterfly主题(🦋 A Hexo Theme: Butterfly-Official website) (butterfly1.cn)</a></p>
+<p>Hexo默认美化项：<a href="https://zhuanlan.zhihu.com/p/369951111">Hexo个性化设置 - 知乎 (zhihu.com)</a></p>
+<h2><span id="next">Next</span></h2><h3><span id="美化">美化</span></h3><p><a href="https://blog.csdn.net/qq_34003239/article/details/100883213">(54条消息) Next主题美化_蜗牛非牛的博客-CSDN博客_next主题美化</a></p>
+<h3><span id="文章启用tags和categories">文章启用tags和categories</span></h3><p><a href="https://blog.csdn.net/Lancis/article/details/118788205">(54条消息) hexo next主题简单美化_Lancis的博客-CSDN博客_next主题美化</a></p>
+<h3><span id="设置阅读全文">设置阅读全文</span></h3><p><a href="https://blog.csdn.net/CHENGXUYUAN09/article/details/103408380">(54条消息) next7.6版本关于设置阅读全文_LIYUANWAISPRING的博客-CSDN博客</a></p>
+<h1><span id="相关问题updating">相关问题（Updating…）</span></h1><h2><span id="无法正确渲染markdown文件问题">无法正确渲染markdown文件问题</span></h2><p>hexo对于md文件的解析规则不是标准规则，有时候在复制论文标题时会有换行符无法正确解析；</p>
+<p>重新手动输入检查标题格式解决问题</p>
+<h2><span id="插入图片问题">插入图片问题</span></h2><p>选择采用hexo官网的解决方式：<a href="https://hexo.io/zh-cn/docs/asset-folders">资源文件夹 | Hexo</a></p>
+<h2><span id="目录生成问题">目录生成问题</span></h2><p>安装插件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-toc --save</span><br></pre></td></tr></table></figure>
+
+<p>hexo的配置文件中设置格式，添加配置代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">toc:</span><br><span class="line">  maxdepth: 3</span><br></pre></td></tr></table></figure>
+
+<p>在md中使用时</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- toc --&gt;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="添加本地搜索功能">添加本地搜索功能</span></h2><p>与Next官方配置文件中的链接步骤不同的是，还需要修改</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">preload: true</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
       </tags>
   </entry>
 </search>
