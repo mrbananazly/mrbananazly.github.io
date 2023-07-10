@@ -581,6 +581,130 @@
       </tags>
   </entry>
   <entry>
+    <title>《Towards Realistic Generative 3D Face Models》</title>
+    <url>/2023/06/07/review_13_AlbedoGAN/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#1-%E8%B4%A1%E7%8C%AE">1. 贡献</a></li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: [<a href="https://arxiv.org/abs/2304.12483">2304.12483] Towards Realistic Generative 3D Face Models (arxiv.org)</a></p>
+<p>code: <a href="https://github.com/aashishrai3799/Towards-Realistic-Generative-3D-Face-Models/">aashishrai3799&#x2F;Towards-Realistic-Generative-3D-Face-Models: 3D face model that can generate high-quality mesh and texture (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="1-贡献">1. 贡献</span></h1>]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>3D Face Reconstruction</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Facial Geometric Detail Recovery via Implicit Representation》</title>
+    <url>/2023/07/05/review_15_PBIDR/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#1-%E7%9B%AE%E6%A0%87">1、目标</a></li>
+<li><a href="#2-%E8%B4%A1%E7%8C%AE">2、贡献</a></li>
+<li><a href="#3-%E7%AE%80%E4%BB%8B">3、简介</a></li>
+<li><a href="#4-%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C">4、相关工作</a></li>
+<li><a href="#5-%E5%85%B7%E4%BD%93%E6%96%B9%E6%B3%95">5、具体方法</a><ul>
+<li><a href="#51-%E9%81%AE%E6%8C%A1%E9%B2%81%E6%A3%92%E7%BA%B9%E7%90%86%E8%A1%A5%E5%85%A8">5.1 遮挡鲁棒纹理补全</a></li>
+<li><a href="#52-%E7%BA%B9%E7%90%86%E5%BC%95%E5%AF%BC%E7%9A%84%E9%9D%A2%E9%83%A8%E5%87%A0%E4%BD%95%E7%BB%86%E8%8A%82%E6%81%A2%E5%A4%8D">5.2 纹理引导的面部几何细节恢复</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://arxiv.org/pdf/2203.09692v1.pdf">2203.09692v1.pdf (arxiv.org)</a></p>
+<p>code: <a href="https://github.com/deepinsight/insightface/tree/master/reconstruction/PBIDR">insightface&#x2F;reconstruction&#x2F;PBIDR at master · deepinsight&#x2F;insightface · GitHub</a></p>
+<span id="more"></span>
+
+<h1><span id="1-目标">1、目标</span></h1><p>单图三维人脸重建</p>
+<p>有限的低维3DMM统计模型会导致重建效果平滑，缺乏细节</p>
+<p>直接预测三维模型结构的方法成本高昂，需要大量匹配的三维扫描数据</p>
+<p>参数化的纹理空间表达力有限（一般都是较低维的）</p>
+<p>输入的野外图像容易受遮挡和阴影等环境因素的影响</p>
+<h1><span id="2-贡献">2、贡献</span></h1><p>设计了一种单张图像获取高保真纹理和几何形状的方法；</p>
+<p>设计了遮挡鲁棒的面部纹理补全方法，仅使用预训练的StyleGAN-v2生成器；</p>
+<p>设计了一种详细的形状优化方法，一种基于物理的深度网络，解耦出镜面法线以更好地恢复几何细节；</p>
+<h1><span id="3-简介">3、简介</span></h1><p>提出一种<strong>人脸几何细节恢复方法</strong>，包括了<strong>纹理增强</strong>和<strong>几何增强</strong></p>
+<p><strong>纹理增强部分</strong></p>
+<p>首先人脸解析生成蒙版，后输入StyleGAN Encoder来修复被遮挡的图像，然后使用无遮挡的图像修复蒙版图像</p>
+<p><strong>几何增强部分</strong></p>
+<p>先使用完整面部纹理图像和3DMM得出的粗糙几何形状渲染出多视角的图像；输入这些渲染图像，后经过深度网络分离，漫反射法线（diffuse normal）和镜面法线（specular normal）</p>
+<p><img src="/2023/07/05/review_15_PBIDR/image-20230705211531697.png" alt="image-20230705211531697"></p>
+<h1><span id="4-相关工作">4、相关工作</span></h1><p><strong>纹理修复相关工作</strong></p>
+<p>利用面部对称性训练image to image网络，需要匹配训练数据</p>
+<p>将纹理修复视为补全问题，使用StyleGAN-v2修复遮挡部分，但存在外部遮挡时会失效</p>
+<p><strong>几何增强相关工作</strong></p>
+<p>基于优化——拟合3DMM获得粗略形状，后使用shape from shading生成细节——遮挡敏感</p>
+<p>基于回归——拟合3DMM获得粗略形状，回归高分扫描数据；回归displacement map；回归bump map；利用多视图图像数据回归；利用light-stage数据来学习漫反射和镜面反射率；直接学习可动画化的displacement map；</p>
+<p>无3DMM模型——直接重建密集网格或推断表面法线 image to mesh</p>
+<p><strong>隐式表面重建</strong></p>
+<p>SDF理论介绍：</p>
+<p><a href="https://zhuanlan.zhihu.com/p/536530019">SDF(signed distance field)基础理论和计算 - 知乎 (zhihu.com)</a></p>
+<p>SDF的本质就是存储每个点到图形的最近距离，即将模型划出一个表面，在模型表面外侧的点数值大于0，在模型表面内侧的点数值小于0。</p>
+<h1><span id="5-具体方法">5、具体方法</span></h1><h2><span id="51-遮挡鲁棒纹理补全">5.1 遮挡鲁棒纹理补全</span></h2><p><strong>去除外部遮挡</strong></p>
+<p>给定输入图像与通过现成人脸分割网络得到的人脸图像蒙版，和使用StyleGAN-v2对latent space采样进行复原</p>
+<p><img src="/2023/07/05/review_15_PBIDR/image-20230706213722366.png" alt="image-20230706213722366"></p>
+<p>遵循与OSTeC相同的方式来初始化潜在参数，这加速了收敛并帮助优化器避免局部极小值。 然后，使用学习率为 0.25 的 Adam优化器对潜在参数（方程 1）进行优化。 请注意，我们的过程（例如拼接、掩模预测）是全自动的，不需要针对不同图像进行参数调整。</p>
+<p><strong>纹理补全</strong></p>
+<p>这部分基本是基于OSTeC的工作上做的；与OSTeC所用的3DMM估计粗略形状；获取可视部分，再以不同的姿势重新渲染修复混合</p>
+<p><strong>多视角面部的再渲染</strong></p>
+<p>选择各种预设相机姿势下使用纹理图渲染网格结构，收集多视角的渲染图以便之后使用</p>
+<h2><span id="52-纹理引导的面部几何细节恢复">5.2 纹理引导的面部几何细节恢复</span></h2><p>给定一连串渲染图和他们对应的几何结构，定义一个SDF和一个可微分渲染器PBIDR，使用PBIDR优化SDF，获得精确的镜面法线和隐式的面部表面，最后传回3DMM拓扑。</p>
+<p><strong>SDF的形状表示</strong></p>
+<p><img src="/2023/07/05/review_15_PBIDR/image-20230706221922642.png" alt="image-20230706221922642"></p>
+<p>预测一个点到面的映射</p>
+<p><strong>基于物理的隐式可微分渲染器PBIDR</strong></p>
+<p>传统上，面部重建方法使用简单的 Lambertian 着色模型来渲染具有单个反照率纹理的面部网格。 相反，逼真的面部渲染需要额外的材质属性和昂贵的着色模型。  Blinn-Phong 着色模型分别对漫反射和镜面着色进行建模，并且可以以较低的计算成本近似人体皮肤渲染。 此外，分离漫反射法线和镜面法线还可以近似皮肤的漫反射次表面散射，它受镜面法线中存在的高频细节的影响较小。 相反，镜面法线代表一些细观表面细节的外观，例如细皱纹和皮肤毛孔，这些细节通常很难提取，但它们在渲染中的效果很显着。</p>
+<p>将镜面法线近似为SDF的梯度，光滑的漫反射法线近似为再原始粗糙网格上进行重心采样获得的法线，这样只有SDF法线负责渲染图像的高频细节，从而指导SDF更准确地捕获它们。因此，可将该顶点的外观分解为：</p>
+<p><img src="/2023/07/05/review_15_PBIDR/image-20230706223609630.png" alt="image-20230706223609630"></p>
+<p><strong>形状细节优化</strong></p>
+<p>定义了一个优化框架，并使用光度损失、掩蔽损失、eikonal 损失、配准损失和法线损失来训练 SDF MLP 结构。</p>
+<p><img src="/2023/07/05/review_15_PBIDR/image-20230706223750017.png" alt="image-20230706223750017"></p>
+<p><img src="/2023/07/05/review_15_PBIDR/image-20230706223802170.png" alt="image-20230706223802170"></p>
+<p><strong>将细化的SDF转换到模板网格</strong></p>
+<p>优化 Fθ 后，我们可以估计任意点的梯度和 SDF 值，并将它们“拉”到隐式曲面。 因此，我们计算粗 3D 网格中顶点的 SDF 值，然后近似其法线。 然后，我们保留原始网格面，并通过其法线和 SDF 值给每个顶点一个位移，得到细粒度网格 Gf 如下：</p>
+<p><img src="/2023/07/05/review_15_PBIDR/image-20230706224023313.png" alt="image-20230706224023313"></p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>3D Face Reconstruction</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Multiview Neural Surface Reconstruction by Disentangling Geometry and Appearance》</title>
+    <url>/2023/07/07/review_16_IDR/</url>
+    <content><![CDATA[<!-- toc -->
+
+
+
+<!-- tocstop -->
+
+<p>ref link: <a href="https://blog.csdn.net/pylittlebrat/article/details/127883937">(99条消息) IDR 学习笔记_multiview neural surface reconstruction by disenta_ACxz的博客-CSDN博客</a></p>
+<span id="more"></span>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>3D Face Reconstruction</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</title>
     <url>/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/</url>
     <content><![CDATA[<!-- toc -->

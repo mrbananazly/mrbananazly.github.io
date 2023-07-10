@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.1.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" integrity="sha256-jTIdiMuX/e3DGJUGwl3pKSxuc6YOuqtJYkM0bGQESA4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"mrbananazly.cn","root":"/","images":"/images","scheme":"Gemini","darkmode":false,"version":"8.10.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":true}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="1、目标 2、贡献 3、简介 4、相关工作 5、具体方法 5.1 遮挡鲁棒纹理补全 5.2 纹理引导的面部几何细节恢复      paper: 2203.09692v1.pdf (arxiv.org) code: insightface&#x2F;reconstruction&#x2F;PBIDR at master · deepinsight&#x2F;insightface · GitH">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《Facial Geometric Detail Recovery via Implicit Representation》">
+<meta property="og:url" content="http://mrbananazly.cn/2023/07/05/review_15_PBIDR/index.html">
+<meta property="og:site_name" content="Road 2 the Final">
+<meta property="og:description" content="1、目标 2、贡献 3、简介 4、相关工作 5、具体方法 5.1 遮挡鲁棒纹理补全 5.2 纹理引导的面部几何细节恢复      paper: 2203.09692v1.pdf (arxiv.org) code: insightface&#x2F;reconstruction&#x2F;PBIDR at master · deepinsight&#x2F;insightface · GitH">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://mrbananazly.cn/2023/07/05/review_15_PBIDR/image-20230705211531697.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/07/05/review_15_PBIDR/image-20230706213722366.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/07/05/review_15_PBIDR/image-20230706221922642.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/07/05/review_15_PBIDR/image-20230706223609630.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/07/05/review_15_PBIDR/image-20230706223750017.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/07/05/review_15_PBIDR/image-20230706223802170.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/07/05/review_15_PBIDR/image-20230706224023313.png">
+<meta property="article:published_time" content="2023-07-05T08:56:39.266Z">
+<meta property="article:modified_time" content="2023-07-10T11:10:53.567Z">
+<meta property="article:author" content="mrbanana_zly">
+<meta property="article:tag" content="3D Face Reconstruction">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://mrbananazly.cn/2023/07/05/review_15_PBIDR/image-20230705211531697.png">
+
+
+<link rel="canonical" href="http://mrbananazly.cn/2023/07/05/review_15_PBIDR/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"en","comments":true,"permalink":"http://mrbananazly.cn/2023/07/05/review_15_PBIDR/","path":"2023/07/05/review_15_PBIDR/","title":"《Facial Geometric Detail Recovery via Implicit Representation》"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>《Facial Geometric Detail Recovery via Implicit Representation》 | Road 2 the Final</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Road 2 the Final</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">1.</span> <span class="nav-text">1、目标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">2.</span> <span class="nav-text">2、贡献</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">3.</span> <span class="nav-text">3、简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">4.</span> <span class="nav-text">4、相关工作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link"><span class="nav-number">5.</span> <span class="nav-text">5、具体方法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 遮挡鲁棒纹理补全</span></a></li><li class="nav-item nav-level-2"><a class="nav-link"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 纹理引导的面部几何细节恢复</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="mrbanana_zly"
+      src="/images/favicon.png">
+  <p class="site-author-name" itemprop="name">mrbanana_zly</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">26</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">categories</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-name">tags</span>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://mrbananazly.cn/2023/07/05/review_15_PBIDR/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/favicon.png">
+      <meta itemprop="name" content="mrbanana_zly">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+    
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="《Facial Geometric Detail Recovery via Implicit Representation》 | Road 2 the Final">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          《Facial Geometric Detail Recovery via Implicit Representation》
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2023-07-05 16:56:39" itemprop="dateCreated datePublished" datetime="2023-07-05T16:56:39+08:00">2023-07-05</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-07-10 19:10:53" itemprop="dateModified" datetime="2023-07-10T19:10:53+08:00">2023-07-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/paper-review/" itemprop="url" rel="index"><span itemprop="name">paper review</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <!-- toc -->
+
+<ul>
+<li><a href="#1-%E7%9B%AE%E6%A0%87">1、目标</a></li>
+<li><a href="#2-%E8%B4%A1%E7%8C%AE">2、贡献</a></li>
+<li><a href="#3-%E7%AE%80%E4%BB%8B">3、简介</a></li>
+<li><a href="#4-%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C">4、相关工作</a></li>
+<li><a href="#5-%E5%85%B7%E4%BD%93%E6%96%B9%E6%B3%95">5、具体方法</a><ul>
+<li><a href="#51-%E9%81%AE%E6%8C%A1%E9%B2%81%E6%A3%92%E7%BA%B9%E7%90%86%E8%A1%A5%E5%85%A8">5.1 遮挡鲁棒纹理补全</a></li>
+<li><a href="#52-%E7%BA%B9%E7%90%86%E5%BC%95%E5%AF%BC%E7%9A%84%E9%9D%A2%E9%83%A8%E5%87%A0%E4%BD%95%E7%BB%86%E8%8A%82%E6%81%A2%E5%A4%8D">5.2 纹理引导的面部几何细节恢复</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a target="_blank" rel="noopener" href="https://arxiv.org/pdf/2203.09692v1.pdf">2203.09692v1.pdf (arxiv.org)</a></p>
+<p>code: <a target="_blank" rel="noopener" href="https://github.com/deepinsight/insightface/tree/master/reconstruction/PBIDR">insightface&#x2F;reconstruction&#x2F;PBIDR at master · deepinsight&#x2F;insightface · GitHub</a></p>
+<span id="more"></span>
+
+<h1><span id="1-目标">1、目标</span></h1><p>单图三维人脸重建</p>
+<p>有限的低维3DMM统计模型会导致重建效果平滑，缺乏细节</p>
+<p>直接预测三维模型结构的方法成本高昂，需要大量匹配的三维扫描数据</p>
+<p>参数化的纹理空间表达力有限（一般都是较低维的）</p>
+<p>输入的野外图像容易受遮挡和阴影等环境因素的影响</p>
+<h1><span id="2-贡献">2、贡献</span></h1><p>设计了一种单张图像获取高保真纹理和几何形状的方法；</p>
+<p>设计了遮挡鲁棒的面部纹理补全方法，仅使用预训练的StyleGAN-v2生成器；</p>
+<p>设计了一种详细的形状优化方法，一种基于物理的深度网络，解耦出镜面法线以更好地恢复几何细节；</p>
+<h1><span id="3-简介">3、简介</span></h1><p>提出一种<strong>人脸几何细节恢复方法</strong>，包括了<strong>纹理增强</strong>和<strong>几何增强</strong></p>
+<p><strong>纹理增强部分</strong></p>
+<p>首先人脸解析生成蒙版，后输入StyleGAN Encoder来修复被遮挡的图像，然后使用无遮挡的图像修复蒙版图像</p>
+<p><strong>几何增强部分</strong></p>
+<p>先使用完整面部纹理图像和3DMM得出的粗糙几何形状渲染出多视角的图像；输入这些渲染图像，后经过深度网络分离，漫反射法线（diffuse normal）和镜面法线（specular normal）</p>
+<p><img src="/2023/07/05/review_15_PBIDR/image-20230705211531697.png" alt="image-20230705211531697"></p>
+<h1><span id="4-相关工作">4、相关工作</span></h1><p><strong>纹理修复相关工作</strong></p>
+<p>利用面部对称性训练image to image网络，需要匹配训练数据</p>
+<p>将纹理修复视为补全问题，使用StyleGAN-v2修复遮挡部分，但存在外部遮挡时会失效</p>
+<p><strong>几何增强相关工作</strong></p>
+<p>基于优化——拟合3DMM获得粗略形状，后使用shape from shading生成细节——遮挡敏感</p>
+<p>基于回归——拟合3DMM获得粗略形状，回归高分扫描数据；回归displacement map；回归bump map；利用多视图图像数据回归；利用light-stage数据来学习漫反射和镜面反射率；直接学习可动画化的displacement map；</p>
+<p>无3DMM模型——直接重建密集网格或推断表面法线 image to mesh</p>
+<p><strong>隐式表面重建</strong></p>
+<p>SDF理论介绍：</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/536530019">SDF(signed distance field)基础理论和计算 - 知乎 (zhihu.com)</a></p>
+<p>SDF的本质就是存储每个点到图形的最近距离，即将模型划出一个表面，在模型表面外侧的点数值大于0，在模型表面内侧的点数值小于0。</p>
+<h1><span id="5-具体方法">5、具体方法</span></h1><h2><span id="51-遮挡鲁棒纹理补全">5.1 遮挡鲁棒纹理补全</span></h2><p><strong>去除外部遮挡</strong></p>
+<p>给定输入图像与通过现成人脸分割网络得到的人脸图像蒙版，和使用StyleGAN-v2对latent space采样进行复原</p>
+<p><img src="/2023/07/05/review_15_PBIDR/image-20230706213722366.png" alt="image-20230706213722366"></p>
+<p>遵循与OSTeC相同的方式来初始化潜在参数，这加速了收敛并帮助优化器避免局部极小值。 然后，使用学习率为 0.25 的 Adam优化器对潜在参数（方程 1）进行优化。 请注意，我们的过程（例如拼接、掩模预测）是全自动的，不需要针对不同图像进行参数调整。</p>
+<p><strong>纹理补全</strong></p>
+<p>这部分基本是基于OSTeC的工作上做的；与OSTeC所用的3DMM估计粗略形状；获取可视部分，再以不同的姿势重新渲染修复混合</p>
+<p><strong>多视角面部的再渲染</strong></p>
+<p>选择各种预设相机姿势下使用纹理图渲染网格结构，收集多视角的渲染图以便之后使用</p>
+<h2><span id="52-纹理引导的面部几何细节恢复">5.2 纹理引导的面部几何细节恢复</span></h2><p>给定一连串渲染图和他们对应的几何结构，定义一个SDF和一个可微分渲染器PBIDR，使用PBIDR优化SDF，获得精确的镜面法线和隐式的面部表面，最后传回3DMM拓扑。</p>
+<p><strong>SDF的形状表示</strong></p>
+<p><img src="/2023/07/05/review_15_PBIDR/image-20230706221922642.png" alt="image-20230706221922642"></p>
+<p>预测一个点到面的映射</p>
+<p><strong>基于物理的隐式可微分渲染器PBIDR</strong></p>
+<p>传统上，面部重建方法使用简单的 Lambertian 着色模型来渲染具有单个反照率纹理的面部网格。 相反，逼真的面部渲染需要额外的材质属性和昂贵的着色模型。  Blinn-Phong 着色模型分别对漫反射和镜面着色进行建模，并且可以以较低的计算成本近似人体皮肤渲染。 此外，分离漫反射法线和镜面法线还可以近似皮肤的漫反射次表面散射，它受镜面法线中存在的高频细节的影响较小。 相反，镜面法线代表一些细观表面细节的外观，例如细皱纹和皮肤毛孔，这些细节通常很难提取，但它们在渲染中的效果很显着。</p>
+<p>将镜面法线近似为SDF的梯度，光滑的漫反射法线近似为再原始粗糙网格上进行重心采样获得的法线，这样只有SDF法线负责渲染图像的高频细节，从而指导SDF更准确地捕获它们。因此，可将该顶点的外观分解为：</p>
+<p><img src="/2023/07/05/review_15_PBIDR/image-20230706223609630.png" alt="image-20230706223609630"></p>
+<p><strong>形状细节优化</strong></p>
+<p>定义了一个优化框架，并使用光度损失、掩蔽损失、eikonal 损失、配准损失和法线损失来训练 SDF MLP 结构。</p>
+<p><img src="/2023/07/05/review_15_PBIDR/image-20230706223750017.png" alt="image-20230706223750017"></p>
+<p><img src="/2023/07/05/review_15_PBIDR/image-20230706223802170.png" alt="image-20230706223802170"></p>
+<p><strong>将细化的SDF转换到模板网格</strong></p>
+<p>优化 Fθ 后，我们可以估计任意点的梯度和 SDF 值，并将它们“拉”到隐式曲面。 因此，我们计算粗 3D 网格中顶点的 SDF 值，然后近似其法线。 然后，我们保留原始网格面，并通过其法线和 SDF 值给每个顶点一个位移，得到细粒度网格 Gf 如下：</p>
+<p><img src="/2023/07/05/review_15_PBIDR/image-20230706224023313.png" alt="image-20230706224023313"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/3D-Face-Reconstruction/" rel="tag"># 3D Face Reconstruction</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/06/07/review_13_AlbedoGAN/" rel="prev" title="《Towards Realistic Generative 3D Face Models》">
+                  <i class="fa fa-chevron-left"></i> 《Towards Realistic Generative 3D Face Models》
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/07/07/review_16_IDR/" rel="next" title="《Multiview Neural Surface Reconstruction by Disentangling Geometry and Appearance》">
+                  《Multiview Neural Surface Reconstruction by Disentangling Geometry and Appearance》 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">mrbanana_zly</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/hexo-generator-searchdb@1.4.0/dist/search.js" integrity="sha256-vXZMYLEqsROAXkEw93GGIvaB2ab+QW6w3+1ahD9nXXA=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
