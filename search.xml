@@ -603,6 +603,45 @@
       </tags>
   </entry>
   <entry>
+    <title>《FFHQ-UV:Normalized Facial UV-Texture Dataset for 3D Face Reconstruction》</title>
+    <url>/2023/06/07/review_14_FFHQ-UV/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#1-%E8%B4%A1%E7%8C%AE">1. 贡献</a></li>
+<li><a href="#2-ffhq-uv%E6%95%B0%E6%8D%AE%E9%9B%86%E5%88%9B%E5%BB%BA%E7%AE%A1%E9%81%93">2. FFHQ-UV数据集创建管道</a><ul>
+<li><a href="#21-%E5%9F%BA%E4%BA%8Estylegan%E7%9A%84%E9%9D%A2%E9%83%A8%E5%9B%BE%E5%83%8F%E7%BC%96%E8%BE%91">2.1 基于StyleGAN的面部图像编辑</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: [<a href="https://arxiv.org/abs/2211.13874">2211.13874] FFHQ-UV: Normalized Facial UV-Texture Dataset for 3D Face Reconstruction (arxiv.org)</a></p>
+<p>code: <a href="https://github.com/aashishrai3799/Towards-Realistic-Generative-3D-Face-Models/"><a href="https://github.com/csbhr/FFHQ-UV">csbhr&#x2F;FFHQ-UV: The official repository of our CVPR2023 paper “FFHQ-UV: Normalized Facial UV-Texture Dataset for 3D Face Reconstruction”. (github.com)</a></a></p>
+<span id="more"></span>
+
+<h1><span id="1-贡献">1. 贡献</span></h1><p>设计了一个从真实人脸图像生成高质量 UV 纹理图的全自动管道，涉及人脸编辑、UV 纹理的提取、矫正和补全；</p>
+<p>基于 FFHQ，创建并开源了一个具有均匀光照、中立表情和干净面部区域的大规模 UV 纹理数据集 FFHQ-UV；</p>
+<p>基于 FFHQ-UV，提出了一个 3D 人脸重建算法，在高保真度和高质量上超越现有方法。</p>
+<h1><span id="2-ffhq-uv数据集创建管道">2. FFHQ-UV数据集创建管道</span></h1><p><img src="/2023/06/07/review_14_FFHQ-UV/image-20230608092241715.png" alt="image-20230608092241715"></p>
+<p>分为三步：</p>
+<p>1、基于StyleGAN的面部图像编辑</p>
+<p>2、面部UV纹理提取</p>
+<p>3、UV纹理校正和补全</p>
+<h2><span id="21-基于stylegan的面部图像编辑">2.1 基于StyleGAN的面部图像编辑</span></h2><p>首先从单视图野外图像中提取出多视图、归一化后的人脸图像，由此产生的图像具有均匀的光照、中性的表情、无遮挡（眼镜头发等等）。</p>
+<p><strong>具体来说，首先使用GAN inversion方法e4e获取W+潜在空间中的w参数，后使用人脸编辑方法 StyleFlow 和 InterFaceGAN 自动编辑 StyleGAN2 的 W+ 潜在空间中的图像属性</strong>。</p>
+<p>GAN inversion可以将一张图像映射到一个GAN生成器的隐空间中，从而利用StyleGAN强大的能力对图片进行编辑。</p>
+<p>源码阅读：</p>
+<p>run_ffhq_uv_dataset.sh</p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>3D Face Reconstruction</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《Facial Geometric Detail Recovery via Implicit Representation》</title>
     <url>/2023/07/05/review_15_PBIDR/</url>
     <content><![CDATA[<!-- toc -->
@@ -681,30 +720,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《Multiview Neural Surface Reconstruction by Disentangling Geometry and Appearance》</title>
-    <url>/2023/07/07/review_16_IDR/</url>
-    <content><![CDATA[<!-- toc -->
-
-
-
-<!-- tocstop -->
-
-<p>ref link: <a href="https://blog.csdn.net/pylittlebrat/article/details/127883937">(99条消息) IDR 学习笔记_multiview neural surface reconstruction by disenta_ACxz的博客-CSDN博客</a></p>
-<span id="more"></span>
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>3D Face Reconstruction</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</title>
     <url>/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/</url>
     <content><![CDATA[<!-- toc -->
@@ -745,6 +760,106 @@
       </categories>
       <tags>
         <tag>Patch-based Transformer</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Sider:Singleimage neural optimization for facial geometric detail recovery》</title>
+    <url>/2023/07/07/review_17_SIDER/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#1-%E7%9B%AE%E6%A0%87">1、目标</a></li>
+<li><a href="#2-%E8%B4%A1%E7%8C%AE">2、贡献</a></li>
+<li><a href="#3-%E6%96%B9%E6%B3%95">3、方法</a><ul>
+<li><a href="#31-%E6%9E%B6%E6%9E%84">3.1 架构</a></li>
+<li><a href="#32-%E5%AD%A6%E4%B9%A0%E7%B2%97%E7%B3%99%E5%87%A0%E4%BD%95%E7%BB%93%E6%9E%84">3.2 学习粗糙几何结构</a></li>
+<li><a href="#33-%E6%81%A2%E5%A4%8D%E9%9D%A2%E9%83%A8%E5%87%A0%E4%BD%95%E7%BB%86%E8%8A%82">3.3 恢复面部几何细节</a></li>
+</ul>
+</li>
+<li><a href="#4-%E5%AE%9E%E9%AA%8C">4、实验</a><ul>
+<li><a href="#41-%E5%AE%9E%E6%96%BD%E7%BB%86%E8%8A%82">4.1 实施细节</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: <a href="https://arxiv.org/pdf/2108.05465.pdf">2108.05465.pdf (arxiv.org)</a></p>
+<p>code: none</p>
+<span id="more"></span>
+
+<h1><span id="1-目标">1、目标</span></h1><p>单图人脸几何细节重建</p>
+<p>结合3DMM和SDF的隐式几何表达用神经网络做优化</p>
+<h1><span id="2-贡献">2、贡献</span></h1><p>提出了SIDER，一种无监督从单图重建人脸几何细节的方法；</p>
+<p>提出了一种新颖的从粗到精的优化方案，该方案利用经典的3DMM模型表示作为先验来防止 SDF 的退化解决方案，并使用无监督的光度损失进行优化；</p>
+<h1><span id="3-方法">3、方法</span></h1><p>给定单个图像，SIDER 旨在从中提取面部几何细节，例如皱纹和皮肤褶皱。<br>SIDER 使用两阶段神经优化方法来提取这些细节。 在第一阶段，我们先利用 FLAME 可变形模型 ，以学习面部的粗略几何形状，其表示为 SDF。<br>接下来，我们根据所提供图像 I 的光度损失来优化此 SDF，以学习面部几何细节。 下面我们详细阐述SIDER的运作和训练过程。</p>
+<h2><span id="31-架构">3.1 架构</span></h2><p><img src="/2023/07/07/review_17_SIDER/image-20230708162612823.png" alt="image-20230708162612823"></p>
+<p><img src="/2023/07/07/review_17_SIDER/image-20230710141317269.png" alt="image-20230710141317269"></p>
+<p>几何网络预测两种数据：</p>
+<p><img src="/2023/07/07/review_17_SIDER/image-20230710143021110.png" alt="image-20230710143021110"></p>
+<p>前者为对应一个点x上经过位置编码所预测的SDF值；后者为在x处预测的特征向量用于输入渲染网络。</p>
+<p>渲染网络输入输出如下：</p>
+<p><img src="/2023/07/07/review_17_SIDER/image-20230710145857267.png" alt="image-20230710145857267"></p>
+<p>输入经过编码后的x，x处的法线，经过编码后的视角，在几何网络种预测的x处的特征向量。</p>
+<h2><span id="32-学习粗糙几何结构">3.2 学习粗糙几何结构</span></h2><p>基于FLAME（与全身的SMPL类似）</p>
+<p><a href="https://aitechtogether.com/article/17540.html">3D人脸模型Flame —-《Learning a model of facial shape and expression from 4D scans》论文讲解及代码注释 | AI技术聚合 (aitechtogether.com)</a></p>
+<p><a href="https://zhuanlan.zhihu.com/p/591136896">基于FLAME的三维人脸重建技术总结 - 知乎 (zhihu.com)</a></p>
+<p>基于LBS（linear blend skinning）并结合blendshape（并非arkits规则）作为表示</p>
+<p>给定一张图像I，FLAME使用standard landmark来拟合：</p>
+<p><img src="/2023/07/07/review_17_SIDER/image-20230710163331427.png" alt="image-20230710163331427"></p>
+<p>前一个L是FLAME模型的第i个landmark的位置，后一个使用3DDFA预测得到的landmark作为GT值，优化的参数为FLAME模型的shape，exp，pose参数以及相机参数。训练一个MLP来进行拟合。</p>
+<p><img src="/2023/07/07/review_17_SIDER/image-20230710163941399.png" alt="image-20230710163941399"></p>
+<p>其中P是FLAME模型<strong>附近空间中</strong>随机选取的一组点；x是此空间中一个点；φ 是位置编码；SDFGT (·) 是针对粗糙网格的SDF的GT值；由于 FLAME 网格是一个开放且单一的表面层，因此无法直接在其上定义 SDF（不存在距离为负的区域，因为没有“内部”）。 因此，为了定义SDF，将网格视为一个有“厚度”的体积物体。 这使我们能够将真实 SDF 定义如下：</p>
+<p><img src="/2023/07/07/review_17_SIDER/image-20230710164824672.png" alt="image-20230710164824672"></p>
+<p>其中 Point2Mesh 是点到网格的距离函数，是一个表示网格厚度的小数字。</p>
+<p>此外，几何网络使用 eikonal 损失进行正则化：</p>
+<p><img src="/2023/07/07/review_17_SIDER/image-20230710165139092.png" alt="image-20230710165139092"></p>
+<h2><span id="33-恢复面部几何细节">3.3 恢复面部几何细节</span></h2><p>使用输入的原始图像I来fine-tune几何网络以恢复几何细节。</p>
+<p>为渲染SDF，使用sphere-tracing结合渲染网络。光线从相机中心o射入场景，并使用球体追踪和隐式微分来估计这些光线与面部网格的交点，更通俗地说，使用渲染网络预测相交点的RGB值。</p>
+<p>具体使用Multiview Neural Surface Reconstruction by Disentangling Geometry and Appearance这篇文章中的方法。</p>
+<p>更通俗地说，考虑一条射线，r &#x3D; o + vt，其观察方向为 v，表面交点为 xˆ。xˆ 处的 RGB 颜色计算如下：</p>
+<p><img src="/2023/07/07/review_17_SIDER/image-20230710155252181.png" alt="image-20230710155252181"></p>
+<p>就是上面的公式</p>
+<p><img src="/2023/07/07/review_17_SIDER/image-20230710155704886.png" alt="image-20230710155704886"></p>
+<p>总体的几何细节生成loss</p>
+<p><img src="/2023/07/07/review_17_SIDER/image-20230710155711482.png" alt="image-20230710155711482"></p>
+<h1><span id="4-实验">4、实验</span></h1><h2><span id="41-实施细节">4.1 实施细节</span></h2><p><strong>数据集</strong></p>
+<p>FFHQ    ALFW2000    NoW</p>
+<p>resize到256</p>
+<p><strong>几何网络</strong></p>
+<p>8层全连接 一个残差连接（从input到第四层）与Multiview Neural Surface Reconstruction by Disentangling Geometry and Appearance文中结构相似</p>
+<p><strong>渲染网络</strong></p>
+<p>四层全连接，其输入被非线性映射以学习高频。两个MLP的每一层都包括512个隐藏单元。</p>
+<p>首先对几何网络进行1000个epoch的训练，以学习粗略几何形状。然后，通过优化对其进行微调，并联合训练渲染网络约200-300个epoch。使用Adam优化器，学习率为10-4。</p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>3D Face Reconstruction</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Multiview Neural Surface Reconstruction by Disentangling Geometry and Appearance》</title>
+    <url>/2023/07/07/review_16_IDR/</url>
+    <content><![CDATA[<!-- toc -->
+
+
+
+<!-- tocstop -->
+
+<p>ref link: <a href="https://blog.csdn.net/pylittlebrat/article/details/127883937">(99条消息) IDR 学习笔记_multiview neural surface reconstruction by disenta_ACxz的博客-CSDN博客</a></p>
+<span id="more"></span>
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>3D Face Reconstruction</tag>
       </tags>
   </entry>
   <entry>
@@ -1480,58 +1595,6 @@
       </tags>
   </entry>
   <entry>
-    <title>RTTO WEEK3</title>
-    <url>/2022/09/30/rtto_3/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#week-3"><strong>WEEK 3</strong></a><ul>
-<li><a href="#344%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">344.反转字符串（e）</a></li>
-<li><a href="#541%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2iie">541.反转字符串Ⅱ（e）</a></li>
-<li><a href="#%E5%89%91%E6%8C%87offer-05%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BCe">剑指Offer 05.替换空格（e）</a></li>
-<li><a href="#151%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%8D%95%E8%AF%8Dm">151.反转字符串中的单词（m）</a></li>
-<li><a href="#%E5%89%91%E6%8C%87offer-58-ii%E5%B7%A6%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">剑指Offer 58 - Ⅱ.左旋转字符串（e）</a></li>
-<li><a href="#28%E6%89%BE%E5%87%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8C%B9%E9%85%8D%E9%A1%B9%E7%9A%84%E4%B8%8B%E6%A0%87m">28.找出字符串中第一个匹配项的下标（m）</a></li>
-<li><a href="#459%E9%87%8D%E5%A4%8D%E7%9A%84%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2e">459.重复的子字符串（e）</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<span id="more"></span>
-
-<h1><span id="week-3"><strong>WEEK 3</strong></span></h1><h2><span id="344反转字符串e">344.反转字符串（e）</span></h2><p> 前一半后一半做个swap，没啥好说的。</p>
-<h2><span id="541反转字符串iie">541.反转字符串Ⅱ（e）</span></h2><p>每次遍历2k的距离，如果有k个字符（size能容纳当前遍历的k个字符），则reverse前k个，否则，反转全部字符。</p>
-<h2><span id="剑指offer-05替换空格e">剑指Offer 05.替换空格（e）</span></h2><p>简单遍历改字符需要进行字符串空间上的扩容；</p>
-<p>1.首先遍历一遍原字符串计算出所含空格的个数；</p>
-<p>2.resize原字符串，+2*count；</p>
-<p>3.使用双指针法，j指向原字符串最后一位，i指向扩充后字符串最后一位，同时向前遍历新字符串；若碰到非空位置，则更新非空字符在新字符串中的位置；若碰到空位置，此时的i即对应新字符串中0的位置，前一位为2，前前位为%；</p>
-<h2><span id="151反转字符串中的单词m">151.反转字符串中的单词（m）</span></h2><p>两个关键操作：字符串逆置reverse；去除多余空格，保证两个单词之间仅存在一个空格；</p>
-<p>1.将原字符串去除多余空格；</p>
-<p>2.将去重后的原字符串整个逆置；</p>
-<p>3.遍历逆置后的字符串，碰到空格则将空格前的字符逆置；</p>
-<h2><span id="剑指offer-58-ii左旋转字符串e">剑指Offer 58 - Ⅱ.左旋转字符串（e）</span></h2><p>默认不开辟额外空间；</p>
-<p>reverse前n个；</p>
-<p>reverse剩下的；</p>
-<p>reverse全部的；</p>
-<h2><span id="28找出字符串中第一个匹配项的下标m">28.找出字符串中第一个匹配项的下标（m）</span></h2><p>KMP算法</p>
-<p><a href="https://programmercarl.com/0028.%E5%AE%9E%E7%8E%B0strStr.html">代码随想录 (programmercarl.com)</a></p>
-<h2><span id="459重复的子字符串e">459.重复的子字符串（e）</span></h2><p>解法一：移动匹配</p>
-<p>任何一个重复子字符串构成的字符串，其前半部分和后半部分都是相等的；</p>
-<p>那么s+s中就一定存在一个新s；</p>
-<p>掐头去尾（erase去首尾字母），这样才能找到拼接而成的新s，而不是原本头尾的老s；</p>
-<p>若存在新s，则返回true，否则false；</p>
-<p>解法二：KMP法</p>
-<p>核心：最长相等前后缀不包含的子串就是最小重复子串</p>
-]]></content>
-      <categories>
-        <category>RTTO</category>
-      </categories>
-      <tags>
-        <tag>RTTO</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>RTTO WEEK2</title>
     <url>/2022/09/30/rtto_2/</url>
     <content><![CDATA[<!-- toc -->
@@ -1611,6 +1674,58 @@
       </tags>
   </entry>
   <entry>
+    <title>RTTO WEEK3</title>
+    <url>/2022/09/30/rtto_3/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#week-3"><strong>WEEK 3</strong></a><ul>
+<li><a href="#344%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">344.反转字符串（e）</a></li>
+<li><a href="#541%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2iie">541.反转字符串Ⅱ（e）</a></li>
+<li><a href="#%E5%89%91%E6%8C%87offer-05%E6%9B%BF%E6%8D%A2%E7%A9%BA%E6%A0%BCe">剑指Offer 05.替换空格（e）</a></li>
+<li><a href="#151%E5%8F%8D%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%9A%84%E5%8D%95%E8%AF%8Dm">151.反转字符串中的单词（m）</a></li>
+<li><a href="#%E5%89%91%E6%8C%87offer-58-ii%E5%B7%A6%E6%97%8B%E8%BD%AC%E5%AD%97%E7%AC%A6%E4%B8%B2e">剑指Offer 58 - Ⅱ.左旋转字符串（e）</a></li>
+<li><a href="#28%E6%89%BE%E5%87%BA%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E7%AC%AC%E4%B8%80%E4%B8%AA%E5%8C%B9%E9%85%8D%E9%A1%B9%E7%9A%84%E4%B8%8B%E6%A0%87m">28.找出字符串中第一个匹配项的下标（m）</a></li>
+<li><a href="#459%E9%87%8D%E5%A4%8D%E7%9A%84%E5%AD%90%E5%AD%97%E7%AC%A6%E4%B8%B2e">459.重复的子字符串（e）</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="week-3"><strong>WEEK 3</strong></span></h1><h2><span id="344反转字符串e">344.反转字符串（e）</span></h2><p> 前一半后一半做个swap，没啥好说的。</p>
+<h2><span id="541反转字符串iie">541.反转字符串Ⅱ（e）</span></h2><p>每次遍历2k的距离，如果有k个字符（size能容纳当前遍历的k个字符），则reverse前k个，否则，反转全部字符。</p>
+<h2><span id="剑指offer-05替换空格e">剑指Offer 05.替换空格（e）</span></h2><p>简单遍历改字符需要进行字符串空间上的扩容；</p>
+<p>1.首先遍历一遍原字符串计算出所含空格的个数；</p>
+<p>2.resize原字符串，+2*count；</p>
+<p>3.使用双指针法，j指向原字符串最后一位，i指向扩充后字符串最后一位，同时向前遍历新字符串；若碰到非空位置，则更新非空字符在新字符串中的位置；若碰到空位置，此时的i即对应新字符串中0的位置，前一位为2，前前位为%；</p>
+<h2><span id="151反转字符串中的单词m">151.反转字符串中的单词（m）</span></h2><p>两个关键操作：字符串逆置reverse；去除多余空格，保证两个单词之间仅存在一个空格；</p>
+<p>1.将原字符串去除多余空格；</p>
+<p>2.将去重后的原字符串整个逆置；</p>
+<p>3.遍历逆置后的字符串，碰到空格则将空格前的字符逆置；</p>
+<h2><span id="剑指offer-58-ii左旋转字符串e">剑指Offer 58 - Ⅱ.左旋转字符串（e）</span></h2><p>默认不开辟额外空间；</p>
+<p>reverse前n个；</p>
+<p>reverse剩下的；</p>
+<p>reverse全部的；</p>
+<h2><span id="28找出字符串中第一个匹配项的下标m">28.找出字符串中第一个匹配项的下标（m）</span></h2><p>KMP算法</p>
+<p><a href="https://programmercarl.com/0028.%E5%AE%9E%E7%8E%B0strStr.html">代码随想录 (programmercarl.com)</a></p>
+<h2><span id="459重复的子字符串e">459.重复的子字符串（e）</span></h2><p>解法一：移动匹配</p>
+<p>任何一个重复子字符串构成的字符串，其前半部分和后半部分都是相等的；</p>
+<p>那么s+s中就一定存在一个新s；</p>
+<p>掐头去尾（erase去首尾字母），这样才能找到拼接而成的新s，而不是原本头尾的老s；</p>
+<p>若存在新s，则返回true，否则false；</p>
+<p>解法二：KMP法</p>
+<p>核心：最长相等前后缀不包含的子串就是最小重复子串</p>
+]]></content>
+      <categories>
+        <category>RTTO</category>
+      </categories>
+      <tags>
+        <tag>RTTO</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>RTTO WEEK4</title>
     <url>/2022/10/19/rtto_4/</url>
     <content><![CDATA[<!-- toc -->
@@ -1648,6 +1763,37 @@
 
 <h2><span id="71简化路径m">71.简化路径（m）</span></h2><p>使用栈</p>
 <p><img src="/2022/10/19/rtto_4/image-20230222104900412.png" alt="image-20230222104900412"></p>
+]]></content>
+      <categories>
+        <category>RTTO</category>
+      </categories>
+      <tags>
+        <tag>RTTO</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RTTO HOT 100</title>
+    <url>/2023/03/16/rtto_hot100/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#hot-100">HOT 100</a><ul>
+<li><a href="#1%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8Ce">1.两数之和（e）</a></li>
+<li><a href="#2%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0m">2.两数相加（m）</a></li>
+<li><a href="#3%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2m">3.无重复字符的最长子串（m）</a></li>
+<li><a href="#4%E5%AF%BB%E6%89%BE%E4%B8%A4%E4%B8%AA%E6%AD%A3%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0h">4.寻找两个正序数组的中位数（h）</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="hot-100">HOT 100</span></h1><h2><span id="1两数之和e">1.两数之和（e）</span></h2><p>使用map&lt;int,int&gt;构造哈希表；使用map的count方法寻找target-nums[i]是否存在，存在的话就存入res相关index，否则存入nums[i]的索引位置。</p>
+<h2><span id="2两数相加m">2.两数相加（m）</span></h2><p>遍历l1，l2计算sum和进位，尾插法更新tail，注意此时的tail是逆序的，需要一开始使用head指向初始节点作为结果返回。</p>
+<h2><span id="3无重复字符的最长子串m">3.无重复字符的最长子串（m）</span></h2><p>滑动窗口法，使用start，end，使用end进行遍历整个字符串，记录每次end的所指向的字符记为tmp，子循环从start遍历到end，若发现有与tmp相等的符号，则发生子串重复，更新start位置到当前index下一位，计算当前子串length，并退出子循环。动态更新res和length的最大值作为当前结果。</p>
+<h2><span id="4寻找两个正序数组的中位数h">4.寻找两个正序数组的中位数（h）</span></h2><p>二分法</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">double</span> <span class="title">findMedianSortedArrays</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums1, vector&lt;<span class="type">int</span>&gt;&amp; nums2)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums1.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> m = nums2.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> left = (n + m + <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> right = (n + m + <span class="number">2</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">return</span> (<span class="built_in">getKth</span>(nums1, <span class="number">0</span>, n - <span class="number">1</span>, nums2, <span class="number">0</span>, m - <span class="number">1</span>, left) + <span class="built_in">getKth</span>(nums1, <span class="number">0</span>, n - <span class="number">1</span>, nums2, <span class="number">0</span>, m - <span class="number">1</span>, right)) * <span class="number">0.5</span>; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getKth</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums1, <span class="type">int</span> start1, <span class="type">int</span> end1, vector&lt;<span class="type">int</span>&gt;&amp; nums2, <span class="type">int</span> start2, <span class="type">int</span> end2, <span class="type">int</span> k)</span></span>&#123;</span><br><span class="line">        <span class="type">int</span> len1 = end1 - start1 + <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> len2 = end2 - start2 + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(len1 &gt; len2) <span class="keyword">return</span>  <span class="built_in">getKth</span>(nums2, start2, end2, nums1, start1, end1, k);</span><br><span class="line">        <span class="keyword">if</span> (len1 == <span class="number">0</span>)  <span class="keyword">return</span> nums2[start2 + k - <span class="number">1</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(k == <span class="number">1</span>) <span class="keyword">return</span> <span class="built_in">min</span>(nums1[start1], nums2[start2]);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> i = start1 + <span class="built_in">min</span>(len1, k / <span class="number">2</span>) - <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> j = start2 + <span class="built_in">min</span>(len2, k / <span class="number">2</span>) - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(nums1[i] &gt; nums2[j])&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">getKth</span>(nums1, start1, end1, nums2, j + <span class="number">1</span>, end2, k - (j - start2 + <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">getKth</span>(nums1, i + <span class="number">1</span>, end1, nums2, start2, end2, k - (i - start1 + <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>RTTO</category>
@@ -1737,37 +1883,6 @@
 
 <p>非递归法：</p>
 <p>层序遍历</p>
-]]></content>
-      <categories>
-        <category>RTTO</category>
-      </categories>
-      <tags>
-        <tag>RTTO</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>RTTO HOT 100</title>
-    <url>/2023/03/16/rtto_hot100/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#hot-100">HOT 100</a><ul>
-<li><a href="#1%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8Ce">1.两数之和（e）</a></li>
-<li><a href="#2%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0m">2.两数相加（m）</a></li>
-<li><a href="#3%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2m">3.无重复字符的最长子串（m）</a></li>
-<li><a href="#4%E5%AF%BB%E6%89%BE%E4%B8%A4%E4%B8%AA%E6%AD%A3%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0h">4.寻找两个正序数组的中位数（h）</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<span id="more"></span>
-
-<h1><span id="hot-100">HOT 100</span></h1><h2><span id="1两数之和e">1.两数之和（e）</span></h2><p>使用map&lt;int,int&gt;构造哈希表；使用map的count方法寻找target-nums[i]是否存在，存在的话就存入res相关index，否则存入nums[i]的索引位置。</p>
-<h2><span id="2两数相加m">2.两数相加（m）</span></h2><p>遍历l1，l2计算sum和进位，尾插法更新tail，注意此时的tail是逆序的，需要一开始使用head指向初始节点作为结果返回。</p>
-<h2><span id="3无重复字符的最长子串m">3.无重复字符的最长子串（m）</span></h2><p>滑动窗口法，使用start，end，使用end进行遍历整个字符串，记录每次end的所指向的字符记为tmp，子循环从start遍历到end，若发现有与tmp相等的符号，则发生子串重复，更新start位置到当前index下一位，计算当前子串length，并退出子循环。动态更新res和length的最大值作为当前结果。</p>
-<h2><span id="4寻找两个正序数组的中位数h">4.寻找两个正序数组的中位数（h）</span></h2><p>二分法</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">double</span> <span class="title">findMedianSortedArrays</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums1, vector&lt;<span class="type">int</span>&gt;&amp; nums2)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums1.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> m = nums2.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> left = (n + m + <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> right = (n + m + <span class="number">2</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">return</span> (<span class="built_in">getKth</span>(nums1, <span class="number">0</span>, n - <span class="number">1</span>, nums2, <span class="number">0</span>, m - <span class="number">1</span>, left) + <span class="built_in">getKth</span>(nums1, <span class="number">0</span>, n - <span class="number">1</span>, nums2, <span class="number">0</span>, m - <span class="number">1</span>, right)) * <span class="number">0.5</span>; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getKth</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums1, <span class="type">int</span> start1, <span class="type">int</span> end1, vector&lt;<span class="type">int</span>&gt;&amp; nums2, <span class="type">int</span> start2, <span class="type">int</span> end2, <span class="type">int</span> k)</span></span>&#123;</span><br><span class="line">        <span class="type">int</span> len1 = end1 - start1 + <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> len2 = end2 - start2 + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(len1 &gt; len2) <span class="keyword">return</span>  <span class="built_in">getKth</span>(nums2, start2, end2, nums1, start1, end1, k);</span><br><span class="line">        <span class="keyword">if</span> (len1 == <span class="number">0</span>)  <span class="keyword">return</span> nums2[start2 + k - <span class="number">1</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(k == <span class="number">1</span>) <span class="keyword">return</span> <span class="built_in">min</span>(nums1[start1], nums2[start2]);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> i = start1 + <span class="built_in">min</span>(len1, k / <span class="number">2</span>) - <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> j = start2 + <span class="built_in">min</span>(len2, k / <span class="number">2</span>) - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(nums1[i] &gt; nums2[j])&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">getKth</span>(nums1, start1, end1, nums2, j + <span class="number">1</span>, end2, k - (j - start2 + <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">getKth</span>(nums1, i + <span class="number">1</span>, end1, nums2, start2, end2, k - (i - start1 + <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>RTTO</category>
