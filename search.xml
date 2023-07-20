@@ -43,6 +43,81 @@
       </tags>
   </entry>
   <entry>
+    <title>施磊C++初级STL笔记</title>
+    <url>/2023/03/22/cpp_STL_note/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#c-stl%E5%88%86%E7%B1%BB">C++ STL分类</a><ul>
+<li><a href="#%E4%B8%80-%E6%A0%87%E5%87%86%E5%AE%B9%E5%99%A8">一、标准容器</a><ul>
+<li><a href="#1%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8">1.顺序容器</a></li>
+<li><a href="#2%E5%AE%B9%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8">2.容器适配器</a></li>
+<li><a href="#3%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8">3.关联容器</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-%E8%BF%91%E5%AE%B9%E5%99%A8">二、近容器</a></li>
+<li><a href="#%E4%B8%89-%E8%BF%AD%E4%BB%A3%E5%99%A8">三、迭代器</a></li>
+<li><a href="#%E5%9B%9B-%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1">四、函数对象</a></li>
+<li><a href="#%E4%BA%94-%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95">五、泛型算法</a></li>
+</ul>
+</li>
+<li><a href="#vector%E5%AE%B9%E5%99%A8">vector容器</a></li>
+<li><a href="#deque%E5%AE%B9%E5%99%A8">deque容器</a></li>
+<li><a href="#list%E5%AE%B9%E5%99%A8">list容器</a></li>
+<li><a href="#%E5%AE%B9%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8">容器适配器</a></li>
+<li><a href="#%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8">关联容器</a></li>
+<li><a href="#%E8%BF%AD%E4%BB%A3%E5%99%A8">迭代器</a></li>
+<li><a href="#%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1">函数对象</a></li>
+<li><a href="#%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95">泛型算法</a></li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="c-stl分类">C++ STL分类</span></h1><h2><span id="一-标准容器">一、标准容器</span></h2><h3><span id="1顺序容器">1.顺序容器</span></h3><p>vector    deque    list</p>
+<h3><span id="2容器适配器">2.容器适配器</span></h3><p>stack    queue    priority_queue</p>
+<h3><span id="3关联容器">3.关联容器</span></h3><p>无序关联容器    链式哈希表    增删查O(1)</p>
+<p>unordered_set    unordered_multiset    unordered_map    unordered_multimap</p>
+<p>有序关联容器</p>
+<p>set    multiset    map    multimap</p>
+<h2><span id="二-近容器">二、近容器</span></h2><p>数组    string    bitset</p>
+<h2><span id="三-迭代器">三、迭代器</span></h2><p>iterator    const_iterator</p>
+<p>reverse_iterator    const_reverse_iterator</p>
+<h2><span id="四-函数对象">四、函数对象</span></h2><p>greater    less</p>
+<h2><span id="五-泛型算法">五、泛型算法</span></h2><p>sort    find    find_if    binary_search    for_each</p>
+<h1><span id="vector容器">vector容器</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230322224639551.png" alt="image-20230322224639551"></p>
+<h1><span id="deque容器">deque容器</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230322231048003.png" alt="image-20230322231048003"></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230322232359532.png" alt="image-20230322232359532"></p>
+<h1><span id="list容器">list容器</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230322232440404.png" alt="image-20230322232440404"></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230322232641231.png" alt="image-20230322232641231"></p>
+<p><strong>vector、deque、list区别</strong></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230323102712597.png" alt="image-20230323102712597"></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230323102855340.png" alt="image-20230323102855340"></p>
+<h1><span id="容器适配器">容器适配器</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230323111005628.png" alt="image-20230323111005628"></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230323110945919.png" alt="image-20230323110945919"></p>
+<h1><span id="关联容器">关联容器</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230323111555262.png" alt="image-20230323111555262"></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230323111417256.png" alt="image-20230323111417256"></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230323112926253.png" alt="image-20230323112926253"></p>
+<h1><span id="迭代器">迭代器</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230323150210820.png" alt="image-20230323150210820"></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230323145614546.png" alt="image-20230323145614546"></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230323145734503.png" alt="image-20230323145734503"></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230323145949126.png" alt="image-20230323145949126"></p>
+<h1><span id="函数对象">函数对象</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230323152022993.png" alt="image-20230323152022993"></p>
+<p>通过函数指针调用函数，是没有办法内联的，效率很低，因为没有函数调用开销。</p>
+<p><strong>所以需要函数对象来代替函数指针</strong></p>
+<p> <img src="/2023/03/22/cpp_STL_note/image-20230323152258041.png" alt="image-20230323152258041"></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230323152325846.png" alt="image-20230323152325846"></p>
+<h1><span id="泛型算法">泛型算法</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230323194139744.png" alt="image-20230323194139744"></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230323195045590.png" alt="image-20230323195045590"></p>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《游戏资源中常见的贴图类型介绍》</title>
     <url>/2023/07/12/link_1/</url>
     <content><![CDATA[<!-- toc -->
@@ -185,81 +260,6 @@
 <p>此时（对象的浅拷贝出现问题了）就需要自定义<strong>拷贝构造函数</strong>和<strong>赋值函数</strong>（运算符重载）</p>
 <h2><span id="33-构造函数的初始化列表">3.3 构造函数的初始化列表</span></h2><p><strong>初始化列表做初始化和在函数体内初始化区别？</strong></p>
 <p>int amount &#x3D; 0；和 int amount; amount &#x3D; 0;的区别，若数据类型为自定义类型，未指定该自定义类型的构造函数（调用默认构造函数），则无法成功构造。</p>
-]]></content>
-      <categories>
-        <category>C++</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>施磊C++初级STL笔记</title>
-    <url>/2023/03/22/cpp_STL_note/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#c-stl%E5%88%86%E7%B1%BB">C++ STL分类</a><ul>
-<li><a href="#%E4%B8%80-%E6%A0%87%E5%87%86%E5%AE%B9%E5%99%A8">一、标准容器</a><ul>
-<li><a href="#1%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8">1.顺序容器</a></li>
-<li><a href="#2%E5%AE%B9%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8">2.容器适配器</a></li>
-<li><a href="#3%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8">3.关联容器</a></li>
-</ul>
-</li>
-<li><a href="#%E4%BA%8C-%E8%BF%91%E5%AE%B9%E5%99%A8">二、近容器</a></li>
-<li><a href="#%E4%B8%89-%E8%BF%AD%E4%BB%A3%E5%99%A8">三、迭代器</a></li>
-<li><a href="#%E5%9B%9B-%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1">四、函数对象</a></li>
-<li><a href="#%E4%BA%94-%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95">五、泛型算法</a></li>
-</ul>
-</li>
-<li><a href="#vector%E5%AE%B9%E5%99%A8">vector容器</a></li>
-<li><a href="#deque%E5%AE%B9%E5%99%A8">deque容器</a></li>
-<li><a href="#list%E5%AE%B9%E5%99%A8">list容器</a></li>
-<li><a href="#%E5%AE%B9%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8">容器适配器</a></li>
-<li><a href="#%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8">关联容器</a></li>
-<li><a href="#%E8%BF%AD%E4%BB%A3%E5%99%A8">迭代器</a></li>
-<li><a href="#%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1">函数对象</a></li>
-<li><a href="#%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95">泛型算法</a></li>
-</ul>
-<!-- tocstop -->
-
-<span id="more"></span>
-
-<h1><span id="c-stl分类">C++ STL分类</span></h1><h2><span id="一-标准容器">一、标准容器</span></h2><h3><span id="1顺序容器">1.顺序容器</span></h3><p>vector    deque    list</p>
-<h3><span id="2容器适配器">2.容器适配器</span></h3><p>stack    queue    priority_queue</p>
-<h3><span id="3关联容器">3.关联容器</span></h3><p>无序关联容器    链式哈希表    增删查O(1)</p>
-<p>unordered_set    unordered_multiset    unordered_map    unordered_multimap</p>
-<p>有序关联容器</p>
-<p>set    multiset    map    multimap</p>
-<h2><span id="二-近容器">二、近容器</span></h2><p>数组    string    bitset</p>
-<h2><span id="三-迭代器">三、迭代器</span></h2><p>iterator    const_iterator</p>
-<p>reverse_iterator    const_reverse_iterator</p>
-<h2><span id="四-函数对象">四、函数对象</span></h2><p>greater    less</p>
-<h2><span id="五-泛型算法">五、泛型算法</span></h2><p>sort    find    find_if    binary_search    for_each</p>
-<h1><span id="vector容器">vector容器</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230322224639551.png" alt="image-20230322224639551"></p>
-<h1><span id="deque容器">deque容器</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230322231048003.png" alt="image-20230322231048003"></p>
-<p><img src="/2023/03/22/cpp_STL_note/image-20230322232359532.png" alt="image-20230322232359532"></p>
-<h1><span id="list容器">list容器</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230322232440404.png" alt="image-20230322232440404"></p>
-<p><img src="/2023/03/22/cpp_STL_note/image-20230322232641231.png" alt="image-20230322232641231"></p>
-<p><strong>vector、deque、list区别</strong></p>
-<p><img src="/2023/03/22/cpp_STL_note/image-20230323102712597.png" alt="image-20230323102712597"></p>
-<p><img src="/2023/03/22/cpp_STL_note/image-20230323102855340.png" alt="image-20230323102855340"></p>
-<h1><span id="容器适配器">容器适配器</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230323111005628.png" alt="image-20230323111005628"></p>
-<p><img src="/2023/03/22/cpp_STL_note/image-20230323110945919.png" alt="image-20230323110945919"></p>
-<h1><span id="关联容器">关联容器</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230323111555262.png" alt="image-20230323111555262"></p>
-<p><img src="/2023/03/22/cpp_STL_note/image-20230323111417256.png" alt="image-20230323111417256"></p>
-<p><img src="/2023/03/22/cpp_STL_note/image-20230323112926253.png" alt="image-20230323112926253"></p>
-<h1><span id="迭代器">迭代器</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230323150210820.png" alt="image-20230323150210820"></p>
-<p><img src="/2023/03/22/cpp_STL_note/image-20230323145614546.png" alt="image-20230323145614546"></p>
-<p><img src="/2023/03/22/cpp_STL_note/image-20230323145734503.png" alt="image-20230323145734503"></p>
-<p><img src="/2023/03/22/cpp_STL_note/image-20230323145949126.png" alt="image-20230323145949126"></p>
-<h1><span id="函数对象">函数对象</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230323152022993.png" alt="image-20230323152022993"></p>
-<p>通过函数指针调用函数，是没有办法内联的，效率很低，因为没有函数调用开销。</p>
-<p><strong>所以需要函数对象来代替函数指针</strong></p>
-<p> <img src="/2023/03/22/cpp_STL_note/image-20230323152258041.png" alt="image-20230323152258041"></p>
-<p><img src="/2023/03/22/cpp_STL_note/image-20230323152325846.png" alt="image-20230323152325846"></p>
-<h1><span id="泛型算法">泛型算法</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230323194139744.png" alt="image-20230323194139744"></p>
-<p><img src="/2023/03/22/cpp_STL_note/image-20230323195045590.png" alt="image-20230323195045590"></p>
 ]]></content>
       <categories>
         <category>C++</category>
@@ -601,6 +601,28 @@
       </tags>
   </entry>
   <entry>
+    <title>《Towards Realistic Generative 3D Face Models》</title>
+    <url>/2023/06/07/review_13_AlbedoGAN/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#1-%E8%B4%A1%E7%8C%AE">1. 贡献</a></li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: [<a href="https://arxiv.org/abs/2304.12483">2304.12483] Towards Realistic Generative 3D Face Models (arxiv.org)</a></p>
+<p>code: <a href="https://github.com/aashishrai3799/Towards-Realistic-Generative-3D-Face-Models/">aashishrai3799&#x2F;Towards-Realistic-Generative-3D-Face-Models: 3D face model that can generate high-quality mesh and texture (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="1-贡献">1. 贡献</span></h1>]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>3D Face Reconstruction</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>《FFHQ-UV:Normalized Facial UV-Texture Dataset for 3D Face Reconstruction》</title>
     <url>/2023/06/07/review_14_FFHQ-UV/</url>
     <content><![CDATA[<!-- toc -->
@@ -632,28 +654,6 @@
 <p>源码阅读：</p>
 <p>run_ffhq_uv_dataset.sh</p>
 ]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>3D Face Reconstruction</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>《Towards Realistic Generative 3D Face Models》</title>
-    <url>/2023/06/07/review_13_AlbedoGAN/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#1-%E8%B4%A1%E7%8C%AE">1. 贡献</a></li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: [<a href="https://arxiv.org/abs/2304.12483">2304.12483] Towards Realistic Generative 3D Face Models (arxiv.org)</a></p>
-<p>code: <a href="https://github.com/aashishrai3799/Towards-Realistic-Generative-3D-Face-Models/">aashishrai3799&#x2F;Towards-Realistic-Generative-3D-Face-Models: 3D face model that can generate high-quality mesh and texture (github.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="1-贡献">1. 贡献</span></h1>]]></content>
       <categories>
         <category>paper review</category>
       </categories>
@@ -764,56 +764,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《A Hierarchical Representation Network for Accurate and Detailed Face Reconstruction from In-The-Wild Images》</title>
-    <url>/2023/07/12/review_18_HRN/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#1-%E7%9B%AE%E6%A0%87">1、目标</a></li>
-<li><a href="#2-%E4%BB%8B%E7%BB%8D">2、介绍</a></li>
-<li><a href="#3-%E6%96%B9%E6%B3%95">3、方法</a><ul>
-<li><a href="#31-%E6%96%B9%E6%B3%95%E6%A6%82%E8%BF%B0">3.1 方法概述</a></li>
-<li><a href="#32-%E5%88%86%E5%B1%82%E5%BB%BA%E6%A8%A1">3.2 分层建模</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: [<a href="https://arxiv.org/abs/2302.14434">2302.14434] A Hierarchical Representation Network for Accurate and Detailed Face Reconstruction from In-The-Wild Images (arxiv.org)</a></p>
-<p>code: [youngLBW&#x2F;HRN: <a href="https://github.com/youngLBW/HRN">CVPR2023] A Hierarchical Representation Network for Accurate and Detailed Face Reconstruction from In-The-Wild Images. (github.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="1-目标">1、目标</span></h1><p><img src="/review_18_HRN/image-20230712065221103.png" alt="image-20230712065221103"></p>
-<p>在三个层面上解耦出不同的资产，以达到良好的重建效果</p>
-<p>三个层面：3DMM粗网格结构；deformation map；displacement map</p>
-<p>可拓展到muti view工况</p>
-<p>介绍了阿里自己做的一个数据集（还未公开）</p>
-<h1><span id="2-介绍">2、介绍</span></h1><p>现有的方法要么使用低维的3DMM实现低频细节，要么再考虑displacement map实现高频细节，往往忽略了中频细节。</p>
-<p>本方法将人脸几何结构解耦为低中高三频细节，后针对这三者分别建模为face-wise blendshape coefficients、vertex-wise deformation map、pixel-wise displacement map。</p>
-<p><strong>贡献</strong></p>
-<p>1、分三层建模</p>
-<p>2、GT创建流程，以及设计de-reouching模块</p>
-<p>3、可拓展至muti-view重建</p>
-<p>4、引入FaceHD-100数据集</p>
-<h1><span id="3-方法">3、方法</span></h1><p><img src="/review_18_HRN/image-20230712070647960.png" alt="image-20230712070647960"></p>
-<h2><span id="31-方法概述">3.1 方法概述</span></h2><p>我们首先使用3DMM来预测coarse mesh和albedo map（蓝色区域）。然后，我们开发了一种分层建模策略，以从粗到细的方式处理复杂的面部细节（绿色和紫色区域）。为了便于对层次细节进行准确和忠实的建模，结合3D先验进行对抗和半监督学习。<br>此外，我们提出了一个de-rectouching module，以实现几何结构和外观的更好解耦，缓解各种皮肤纹理和照明之间的模糊性。此外，我们将我们的框架扩展到多视图方式，并引入了高质量的3D人脸数据集，以促进稀疏视图人脸重建的研究。为了简化，我们在每一节中指定了相关的损失函数和训练策略。</p>
-<h2><span id="32-分层建模">3.2 分层建模</span></h2><p>图1解释了模型在不同层次上所体现的细节变化。</p>
-<p>低频部分，其提供与输入面大致对准的粗略形状；</p>
-<p>中频细节，其描述相对于低频部分的轮廓和局部形状的细节；</p>
-<p>高频细节，如褶皱、微凸起等。</p>
-<p><strong>具体设计如下</strong></p>
-<p>低频部分，选择BFM作为基础模型，并输出低维系数来实现粗略重建；</p>
-<p>中频细节，三通道的deformation map，关联position map，在uv空间上可定位到三维结构上的某一顶点，在三通道上表示相对偏移；64x64x3；</p>
-<p>高频细节，采用DECA中的displacement map，表示沿法线方向的几何变形，256x256x1；displacement map以像素方式转换为渲染过程中使用的详细法线，以显示所有微小的细节，打破了基础模型顶点密度的限制。因此，我们能够用这些表示来描述任意复杂的面。</p>
-]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>3D Face Reconstruction</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《Sider:Singleimage neural optimization for facial geometric detail recovery》</title>
     <url>/2023/07/07/review_17_SIDER/</url>
     <content><![CDATA[<!-- toc -->
@@ -881,6 +831,56 @@
 <p><strong>渲染网络</strong></p>
 <p>四层全连接，其输入被非线性映射以学习高频。两个MLP的每一层都包括512个隐藏单元。</p>
 <p>首先对几何网络进行1000个epoch的训练，以学习粗略几何形状。然后，通过优化对其进行微调，并联合训练渲染网络约200-300个epoch。使用Adam优化器，学习率为10-4。</p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>3D Face Reconstruction</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《A Hierarchical Representation Network for Accurate and Detailed Face Reconstruction from In-The-Wild Images》</title>
+    <url>/2023/07/12/review_18_HRN/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#1-%E7%9B%AE%E6%A0%87">1、目标</a></li>
+<li><a href="#2-%E4%BB%8B%E7%BB%8D">2、介绍</a></li>
+<li><a href="#3-%E6%96%B9%E6%B3%95">3、方法</a><ul>
+<li><a href="#31-%E6%96%B9%E6%B3%95%E6%A6%82%E8%BF%B0">3.1 方法概述</a></li>
+<li><a href="#32-%E5%88%86%E5%B1%82%E5%BB%BA%E6%A8%A1">3.2 分层建模</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: [<a href="https://arxiv.org/abs/2302.14434">2302.14434] A Hierarchical Representation Network for Accurate and Detailed Face Reconstruction from In-The-Wild Images (arxiv.org)</a></p>
+<p>code: [youngLBW&#x2F;HRN: <a href="https://github.com/youngLBW/HRN">CVPR2023] A Hierarchical Representation Network for Accurate and Detailed Face Reconstruction from In-The-Wild Images. (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="1-目标">1、目标</span></h1><p><img src="/review_18_HRN/image-20230712065221103.png" alt="image-20230712065221103"></p>
+<p>在三个层面上解耦出不同的资产，以达到良好的重建效果</p>
+<p>三个层面：3DMM粗网格结构；deformation map；displacement map</p>
+<p>可拓展到muti view工况</p>
+<p>介绍了阿里自己做的一个数据集（还未公开）</p>
+<h1><span id="2-介绍">2、介绍</span></h1><p>现有的方法要么使用低维的3DMM实现低频细节，要么再考虑displacement map实现高频细节，往往忽略了中频细节。</p>
+<p>本方法将人脸几何结构解耦为低中高三频细节，后针对这三者分别建模为face-wise blendshape coefficients、vertex-wise deformation map、pixel-wise displacement map。</p>
+<p><strong>贡献</strong></p>
+<p>1、分三层建模</p>
+<p>2、GT创建流程，以及设计de-reouching模块</p>
+<p>3、可拓展至muti-view重建</p>
+<p>4、引入FaceHD-100数据集</p>
+<h1><span id="3-方法">3、方法</span></h1><p><img src="/review_18_HRN/image-20230712070647960.png" alt="image-20230712070647960"></p>
+<h2><span id="31-方法概述">3.1 方法概述</span></h2><p>我们首先使用3DMM来预测coarse mesh和albedo map（蓝色区域）。然后，我们开发了一种分层建模策略，以从粗到细的方式处理复杂的面部细节（绿色和紫色区域）。为了便于对层次细节进行准确和忠实的建模，结合3D先验进行对抗和半监督学习。<br>此外，我们提出了一个de-rectouching module，以实现几何结构和外观的更好解耦，缓解各种皮肤纹理和照明之间的模糊性。此外，我们将我们的框架扩展到多视图方式，并引入了高质量的3D人脸数据集，以促进稀疏视图人脸重建的研究。为了简化，我们在每一节中指定了相关的损失函数和训练策略。</p>
+<h2><span id="32-分层建模">3.2 分层建模</span></h2><p>图1解释了模型在不同层次上所体现的细节变化。</p>
+<p>低频部分，其提供与输入面大致对准的粗略形状；</p>
+<p>中频细节，其描述相对于低频部分的轮廓和局部形状的细节；</p>
+<p>高频细节，如褶皱、微凸起等。</p>
+<p><strong>具体设计如下</strong></p>
+<p>低频部分，选择BFM作为基础模型，并输出低维系数来实现粗略重建；</p>
+<p>中频细节，三通道的deformation map，关联position map，在uv空间上可定位到三维结构上的某一顶点，在三通道上表示相对偏移；64x64x3；</p>
+<p>高频细节，采用DECA中的displacement map，表示沿法线方向的几何变形，256x256x1；displacement map以像素方式转换为渲染过程中使用的详细法线，以显示所有微小的细节，打破了基础模型顶点密度的限制。因此，我们能够用这些表示来描述任意复杂的面。</p>
 ]]></content>
       <categories>
         <category>paper review</category>
@@ -1962,6 +1962,74 @@
       </tags>
   </entry>
   <entry>
+    <title>Hexo建站相关</title>
+    <url>/2022/03/25/tools_1_start/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#%E6%90%AD%E5%BB%BAhexo%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%80%9A%E8%BF%87git%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8">搭建Hexo服务器，通过Git自动部署在阿里云服务器</a><ul>
+<li><a href="#%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%83%A8%E7%BD%B2">搭建及部署</a></li>
+<li><a href="#%E5%8D%9A%E6%96%87%E5%8F%91%E5%B8%83">博文发布</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%BB%E9%A2%98%E5%8F%8A%E5%85%B6%E7%BE%8E%E5%8C%96">主题及其美化</a><ul>
+<li><a href="#butterfly">Butterfly</a></li>
+<li><a href="#next">Next</a><ul>
+<li><a href="#%E7%BE%8E%E5%8C%96">美化</a></li>
+<li><a href="#%E6%96%87%E7%AB%A0%E5%90%AF%E7%94%A8tags%E5%92%8Ccategories">文章启用tags和categories</a></li>
+<li><a href="#%E8%AE%BE%E7%BD%AE%E9%98%85%E8%AF%BB%E5%85%A8%E6%96%87">设置阅读全文</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98updating">相关问题（Updating…）</a><ul>
+<li><a href="#%E6%97%A0%E6%B3%95%E6%AD%A3%E7%A1%AE%E6%B8%B2%E6%9F%93markdown%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98">无法正确渲染markdown文件问题</a></li>
+<li><a href="#%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98">插入图片问题</a></li>
+<li><a href="#%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98">目录生成问题</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0%E6%9C%AC%E5%9C%B0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD">添加本地搜索功能</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="搭建hexo服务器通过git自动部署在阿里云服务器">搭建Hexo服务器，通过Git自动部署在阿里云服务器</span></h1><h2><span id="搭建及部署">搭建及部署</span></h2><p>参考博文链接：<a href="https://mp.weixin.qq.com/s/JTTUYJTvtdT6X2fvLUBFZg">Win10下Hexo博客搭建教程，及阿里云服务器部署实战 (qq.com)</a></p>
+<h2><span id="博文发布">博文发布</span></h2><p>在本地机器上部署Hexo相关MyHexoBlogs文件夹下，进入MyHexoBlogs&#x2F;myblogs&#x2F;source&#x2F;_posts目录；</p>
+<p>在当前页进入git bash，输入hexo clean 清除缓存，hexo g 解析静态文件，hexo d 刷新部署新的资源。</p>
+<p>hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</p>
+<h1><span id="主题及其美化">主题及其美化</span></h1><h2><span id="butterfly">Butterfly</span></h2><p>Butterfly主题部署参考博文链接：<a href="https://www.jianshu.com/p/50a565adaf15?ivk_sa=1024320u">hexo框架|butterfly主题配置 - 简书 (jianshu.com)</a></p>
+<p>Butterfly主题官方文档：<a href="https://www.butterfly1.cn/">Hexo-Butterfly主题(🦋 A Hexo Theme: Butterfly-Official website) (butterfly1.cn)</a></p>
+<p>Hexo默认美化项：<a href="https://zhuanlan.zhihu.com/p/369951111">Hexo个性化设置 - 知乎 (zhihu.com)</a></p>
+<h2><span id="next">Next</span></h2><h3><span id="美化">美化</span></h3><p><a href="https://blog.csdn.net/qq_34003239/article/details/100883213">(54条消息) Next主题美化_蜗牛非牛的博客-CSDN博客_next主题美化</a></p>
+<h3><span id="文章启用tags和categories">文章启用tags和categories</span></h3><p><a href="https://blog.csdn.net/Lancis/article/details/118788205">(54条消息) hexo next主题简单美化_Lancis的博客-CSDN博客_next主题美化</a></p>
+<h3><span id="设置阅读全文">设置阅读全文</span></h3><p><a href="https://blog.csdn.net/CHENGXUYUAN09/article/details/103408380">(54条消息) next7.6版本关于设置阅读全文_LIYUANWAISPRING的博客-CSDN博客</a></p>
+<h1><span id="相关问题updating">相关问题（Updating…）</span></h1><h2><span id="无法正确渲染markdown文件问题">无法正确渲染markdown文件问题</span></h2><p>hexo对于md文件的解析规则不是标准规则，有时候在复制论文标题时会有换行符无法正确解析；</p>
+<p>重新手动输入检查标题格式解决问题</p>
+<h2><span id="插入图片问题">插入图片问题</span></h2><p>选择采用hexo官网的解决方式：<a href="https://hexo.io/zh-cn/docs/asset-folders">资源文件夹 | Hexo</a></p>
+<h2><span id="目录生成问题">目录生成问题</span></h2><p>安装插件</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-toc --save</span><br></pre></td></tr></table></figure>
+
+<p>hexo的配置文件中设置格式，添加配置代码</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">toc:</span><br><span class="line">  maxdepth: 3</span><br></pre></td></tr></table></figure>
+
+<p>在md中使用时</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- toc --&gt;</span><br></pre></td></tr></table></figure>
+
+<h2><span id="添加本地搜索功能">添加本地搜索功能</span></h2><p>与Next官方配置文件中的链接步骤不同的是，还需要修改</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">preload: true</span><br></pre></td></tr></table></figure>
+
+
+
+]]></content>
+      <categories>
+        <category>Hexo</category>
+      </categories>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Docker学习笔记</title>
     <url>/2022/09/29/tech_1_docker/</url>
     <content><![CDATA[<!-- toc -->
@@ -2238,74 +2306,6 @@
       </categories>
       <tags>
         <tag>Docker</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hexo建站相关</title>
-    <url>/2022/03/25/tools_1_start/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#%E6%90%AD%E5%BB%BAhexo%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%80%9A%E8%BF%87git%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%E5%9C%A8%E9%98%BF%E9%87%8C%E4%BA%91%E6%9C%8D%E5%8A%A1%E5%99%A8">搭建Hexo服务器，通过Git自动部署在阿里云服务器</a><ul>
-<li><a href="#%E6%90%AD%E5%BB%BA%E5%8F%8A%E9%83%A8%E7%BD%B2">搭建及部署</a></li>
-<li><a href="#%E5%8D%9A%E6%96%87%E5%8F%91%E5%B8%83">博文发布</a></li>
-</ul>
-</li>
-<li><a href="#%E4%B8%BB%E9%A2%98%E5%8F%8A%E5%85%B6%E7%BE%8E%E5%8C%96">主题及其美化</a><ul>
-<li><a href="#butterfly">Butterfly</a></li>
-<li><a href="#next">Next</a><ul>
-<li><a href="#%E7%BE%8E%E5%8C%96">美化</a></li>
-<li><a href="#%E6%96%87%E7%AB%A0%E5%90%AF%E7%94%A8tags%E5%92%8Ccategories">文章启用tags和categories</a></li>
-<li><a href="#%E8%AE%BE%E7%BD%AE%E9%98%85%E8%AF%BB%E5%85%A8%E6%96%87">设置阅读全文</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98updating">相关问题（Updating…）</a><ul>
-<li><a href="#%E6%97%A0%E6%B3%95%E6%AD%A3%E7%A1%AE%E6%B8%B2%E6%9F%93markdown%E6%96%87%E4%BB%B6%E9%97%AE%E9%A2%98">无法正确渲染markdown文件问题</a></li>
-<li><a href="#%E6%8F%92%E5%85%A5%E5%9B%BE%E7%89%87%E9%97%AE%E9%A2%98">插入图片问题</a></li>
-<li><a href="#%E7%9B%AE%E5%BD%95%E7%94%9F%E6%88%90%E9%97%AE%E9%A2%98">目录生成问题</a></li>
-<li><a href="#%E6%B7%BB%E5%8A%A0%E6%9C%AC%E5%9C%B0%E6%90%9C%E7%B4%A2%E5%8A%9F%E8%83%BD">添加本地搜索功能</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<span id="more"></span>
-
-<h1><span id="搭建hexo服务器通过git自动部署在阿里云服务器">搭建Hexo服务器，通过Git自动部署在阿里云服务器</span></h1><h2><span id="搭建及部署">搭建及部署</span></h2><p>参考博文链接：<a href="https://mp.weixin.qq.com/s/JTTUYJTvtdT6X2fvLUBFZg">Win10下Hexo博客搭建教程，及阿里云服务器部署实战 (qq.com)</a></p>
-<h2><span id="博文发布">博文发布</span></h2><p>在本地机器上部署Hexo相关MyHexoBlogs文件夹下，进入MyHexoBlogs&#x2F;myblogs&#x2F;source&#x2F;_posts目录；</p>
-<p>在当前页进入git bash，输入hexo clean 清除缓存，hexo g 解析静态文件，hexo d 刷新部署新的资源。</p>
-<p>hexo cl &amp;&amp; hexo g &amp;&amp; hexo d</p>
-<h1><span id="主题及其美化">主题及其美化</span></h1><h2><span id="butterfly">Butterfly</span></h2><p>Butterfly主题部署参考博文链接：<a href="https://www.jianshu.com/p/50a565adaf15?ivk_sa=1024320u">hexo框架|butterfly主题配置 - 简书 (jianshu.com)</a></p>
-<p>Butterfly主题官方文档：<a href="https://www.butterfly1.cn/">Hexo-Butterfly主题(🦋 A Hexo Theme: Butterfly-Official website) (butterfly1.cn)</a></p>
-<p>Hexo默认美化项：<a href="https://zhuanlan.zhihu.com/p/369951111">Hexo个性化设置 - 知乎 (zhihu.com)</a></p>
-<h2><span id="next">Next</span></h2><h3><span id="美化">美化</span></h3><p><a href="https://blog.csdn.net/qq_34003239/article/details/100883213">(54条消息) Next主题美化_蜗牛非牛的博客-CSDN博客_next主题美化</a></p>
-<h3><span id="文章启用tags和categories">文章启用tags和categories</span></h3><p><a href="https://blog.csdn.net/Lancis/article/details/118788205">(54条消息) hexo next主题简单美化_Lancis的博客-CSDN博客_next主题美化</a></p>
-<h3><span id="设置阅读全文">设置阅读全文</span></h3><p><a href="https://blog.csdn.net/CHENGXUYUAN09/article/details/103408380">(54条消息) next7.6版本关于设置阅读全文_LIYUANWAISPRING的博客-CSDN博客</a></p>
-<h1><span id="相关问题updating">相关问题（Updating…）</span></h1><h2><span id="无法正确渲染markdown文件问题">无法正确渲染markdown文件问题</span></h2><p>hexo对于md文件的解析规则不是标准规则，有时候在复制论文标题时会有换行符无法正确解析；</p>
-<p>重新手动输入检查标题格式解决问题</p>
-<h2><span id="插入图片问题">插入图片问题</span></h2><p>选择采用hexo官网的解决方式：<a href="https://hexo.io/zh-cn/docs/asset-folders">资源文件夹 | Hexo</a></p>
-<h2><span id="目录生成问题">目录生成问题</span></h2><p>安装插件</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">cnpm install hexo-toc --save</span><br></pre></td></tr></table></figure>
-
-<p>hexo的配置文件中设置格式，添加配置代码</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">toc:</span><br><span class="line">  maxdepth: 3</span><br></pre></td></tr></table></figure>
-
-<p>在md中使用时</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">&lt;!-- toc --&gt;</span><br></pre></td></tr></table></figure>
-
-<h2><span id="添加本地搜索功能">添加本地搜索功能</span></h2><p>与Next官方配置文件中的链接步骤不同的是，还需要修改</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">preload: true</span><br></pre></td></tr></table></figure>
-
-
-
-]]></content>
-      <categories>
-        <category>Hexo</category>
-      </categories>
-      <tags>
-        <tag>Hexo</tag>
       </tags>
   </entry>
 </search>
