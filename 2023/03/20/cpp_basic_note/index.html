@@ -27,19 +27,19 @@
 <meta property="og:site_name" content="Road 2 the Final">
 <meta property="og:description" content="1 深入学习C++语言先要练好的内功 1.1 掌握进程虚拟地址空间区域划分 1.2 从指令角度掌握函数调用堆栈详细过程 1.3 从编译器角度理解C++代码的编译和链接原理   2 C++基础 2.1 深入理解new，delete 2.2 C++的const const怎么理解？ C和C++中的区别是什么？   2.3 const和一二（多）级指针的结合应用 const修饰的量常出现的错误 c">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://mrbananazly.cn/cpp_basic_note/image-20230321143438563.png">
-<meta property="og:image" content="http://mrbananazly.cn/cpp_basic_note/image-20230320221443055.png">
-<meta property="og:image" content="http://mrbananazly.cn/cpp_basic_note/image-20230320221901794.png">
-<meta property="og:image" content="http://mrbananazly.cn/cpp_basic_note/image-20230321111119551.png">
-<meta property="og:image" content="http://mrbananazly.cn/cpp_basic_note/image-20230321112224556.png">
-<meta property="og:image" content="http://mrbananazly.cn/cpp_basic_note/image-20230321142611763.png">
-<meta property="og:image" content="http://mrbananazly.cn/cpp_basic_note/image-20230321142632348.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/03/20/cpp_basic_note/image-20230321143438563.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/03/20/cpp_basic_note/image-20230320221443055.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/03/20/cpp_basic_note/image-20230320221901794.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/03/20/cpp_basic_note/image-20230321111119551.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/03/20/cpp_basic_note/image-20230321112224556.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/03/20/cpp_basic_note/image-20230321142611763.png">
+<meta property="og:image" content="http://mrbananazly.cn/2023/03/20/cpp_basic_note/image-20230321142632348.png">
 <meta property="article:published_time" content="2023-03-20T14:02:04.997Z">
-<meta property="article:modified_time" content="2023-03-22T14:16:36.596Z">
+<meta property="article:modified_time" content="2023-07-20T12:31:05.791Z">
 <meta property="article:author" content="mrbanana_zly">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://mrbananazly.cn/cpp_basic_note/image-20230321143438563.png">
+<meta name="twitter:image" content="http://mrbananazly.cn/2023/03/20/cpp_basic_note/image-20230321143438563.png">
 
 
 <link rel="canonical" href="http://mrbananazly.cn/2023/03/20/cpp_basic_note/">
@@ -163,16 +163,16 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">28</span>
+          <span class="site-state-item-count">30</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">categories</span>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">24</span>
+        <span class="site-state-item-count">25</span>
         <span class="site-state-item-name">tags</span>
       </div>
   </nav>
@@ -247,7 +247,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-03-22 22:16:36" itemprop="dateModified" datetime="2023-03-22T22:16:36+08:00">2023-03-22</time>
+      <time title="Modified: 2023-07-20 20:31:05" itemprop="dateModified" datetime="2023-07-20T20:31:05+08:00">2023-07-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -307,14 +307,14 @@
 
 <span id="more"></span>
 
-<p><img src="/cpp_basic_note/image-20230321143438563.png" alt="image-20230321143438563"></p>
-<h1><span id="1-深入学习c语言先要练好的内功">1 深入学习C++语言先要练好的内功</span></h1><h2><span id="11-掌握进程虚拟地址空间区域划分">1.1 掌握进程虚拟地址空间区域划分</span></h2><p><img src="/cpp_basic_note/image-20230320221443055.png" alt="image-20230320221443055"></p>
-<p><img src="/cpp_basic_note/image-20230320221901794.png" alt="image-20230320221901794"></p>
-<h2><span id="12-从指令角度掌握函数调用堆栈详细过程">1.2 从指令角度掌握函数调用堆栈详细过程</span></h2><p><img src="/cpp_basic_note/image-20230321111119551.png" alt="image-20230321111119551"></p>
-<p><img src="/cpp_basic_note/image-20230321112224556.png" alt="image-20230321112224556"></p>
+<p><img src="/2023/03/20/cpp_basic_note/image-20230321143438563.png" alt="image-20230321143438563"></p>
+<h1><span id="1-深入学习c语言先要练好的内功">1 深入学习C++语言先要练好的内功</span></h1><h2><span id="11-掌握进程虚拟地址空间区域划分">1.1 掌握进程虚拟地址空间区域划分</span></h2><p><img src="/2023/03/20/cpp_basic_note/image-20230320221443055.png" alt="image-20230320221443055"></p>
+<p><img src="/2023/03/20/cpp_basic_note/image-20230320221901794.png" alt="image-20230320221901794"></p>
+<h2><span id="12-从指令角度掌握函数调用堆栈详细过程">1.2 从指令角度掌握函数调用堆栈详细过程</span></h2><p><img src="/2023/03/20/cpp_basic_note/image-20230321111119551.png" alt="image-20230321111119551"></p>
+<p><img src="/2023/03/20/cpp_basic_note/image-20230321112224556.png" alt="image-20230321112224556"></p>
 <p>具体得看视频，讲述了main函数调用sum方法每步的空间变化。</p>
-<h2><span id="13-从编译器角度理解c代码的编译和链接原理">1.3 从编译器角度理解C++代码的编译和链接原理</span></h2><p><img src="/cpp_basic_note/image-20230321142611763.png" alt="image-20230321142611763"></p>
-<p><img src="/cpp_basic_note/image-20230321142632348.png" alt="image-20230321142632348"></p>
+<h2><span id="13-从编译器角度理解c代码的编译和链接原理">1.3 从编译器角度理解C++代码的编译和链接原理</span></h2><p><img src="/2023/03/20/cpp_basic_note/image-20230321142611763.png" alt="image-20230321142611763"></p>
+<p><img src="/2023/03/20/cpp_basic_note/image-20230321142632348.png" alt="image-20230321142632348"></p>
 <h1><span id="2-c基础">2 C++基础</span></h1><h2><span id="21-深入理解newdelete">2.1 深入理解new，delete</span></h2><p>malloc和free称作C的库函数，new和delete称作运算符；</p>
 <p>new不仅可以做内存开辟，还可以做内存初始化操作；</p>
 <p>malloc开辟内存失败，是通过返回值和nullptr作比较；而new开辟内存失败，是通过抛出bad_alloc类型的异常来判断；</p>

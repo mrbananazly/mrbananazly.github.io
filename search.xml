@@ -43,78 +43,23 @@
       </tags>
   </entry>
   <entry>
-    <title>施磊C++初级STL笔记</title>
-    <url>/2023/03/22/cpp_STL_note/</url>
+    <title>《游戏资源中常见的贴图类型介绍》</title>
+    <url>/2023/07/12/link_1/</url>
     <content><![CDATA[<!-- toc -->
 
-<ul>
-<li><a href="#c-stl%E5%88%86%E7%B1%BB">C++ STL分类</a><ul>
-<li><a href="#%E4%B8%80-%E6%A0%87%E5%87%86%E5%AE%B9%E5%99%A8">一、标准容器</a><ul>
-<li><a href="#1%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8">1.顺序容器</a></li>
-<li><a href="#2%E5%AE%B9%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8">2.容器适配器</a></li>
-<li><a href="#3%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8">3.关联容器</a></li>
-</ul>
-</li>
-<li><a href="#%E4%BA%8C-%E8%BF%91%E5%AE%B9%E5%99%A8">二、近容器</a></li>
-<li><a href="#%E4%B8%89-%E8%BF%AD%E4%BB%A3%E5%99%A8">三、迭代器</a></li>
-<li><a href="#%E5%9B%9B-%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1">四、函数对象</a></li>
-<li><a href="#%E4%BA%94-%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95">五、泛型算法</a></li>
-</ul>
-</li>
-<li><a href="#vector%E5%AE%B9%E5%99%A8">vector容器</a></li>
-<li><a href="#deque%E5%AE%B9%E5%99%A8">deque容器</a></li>
-<li><a href="#list%E5%AE%B9%E5%99%A8">list容器</a></li>
-<li><a href="#%E5%AE%B9%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8">容器适配器</a></li>
-<li><a href="#%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8">关联容器</a></li>
-<li><a href="#%E8%BF%AD%E4%BB%A3%E5%99%A8">迭代器</a></li>
-<li><a href="#%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1">函数对象</a></li>
-<li><a href="#%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95">泛型算法</a></li>
-</ul>
+
+
 <!-- tocstop -->
 
 <span id="more"></span>
 
-<h1><span id="c-stl分类">C++ STL分类</span></h1><h2><span id="一-标准容器">一、标准容器</span></h2><h3><span id="1顺序容器">1.顺序容器</span></h3><p>vector    deque    list</p>
-<h3><span id="2容器适配器">2.容器适配器</span></h3><p>stack    queue    priority_queue</p>
-<h3><span id="3关联容器">3.关联容器</span></h3><p>无序关联容器    链式哈希表    增删查O(1)</p>
-<p>unordered_set    unordered_multiset    unordered_map    unordered_multimap</p>
-<p>有序关联容器</p>
-<p>set    multiset    map    multimap</p>
-<h2><span id="二-近容器">二、近容器</span></h2><p>数组    string    bitset</p>
-<h2><span id="三-迭代器">三、迭代器</span></h2><p>iterator    const_iterator</p>
-<p>reverse_iterator    const_reverse_iterator</p>
-<h2><span id="四-函数对象">四、函数对象</span></h2><p>greater    less</p>
-<h2><span id="五-泛型算法">五、泛型算法</span></h2><p>sort    find    find_if    binary_search    for_each</p>
-<h1><span id="vector容器">vector容器</span></h1><p><img src="/cpp_STL_note/image-20230322224639551.png" alt="image-20230322224639551"></p>
-<h1><span id="deque容器">deque容器</span></h1><p><img src="/cpp_STL_note/image-20230322231048003.png" alt="image-20230322231048003"></p>
-<p><img src="/cpp_STL_note/image-20230322232359532.png" alt="image-20230322232359532"></p>
-<h1><span id="list容器">list容器</span></h1><p><img src="/cpp_STL_note/image-20230322232440404.png" alt="image-20230322232440404"></p>
-<p><img src="/cpp_STL_note/image-20230322232641231.png" alt="image-20230322232641231"></p>
-<p><strong>vector、deque、list区别</strong></p>
-<p><img src="/cpp_STL_note/image-20230323102712597.png" alt="image-20230323102712597"></p>
-<p><img src="/cpp_STL_note/image-20230323102855340.png" alt="image-20230323102855340"></p>
-<h1><span id="容器适配器">容器适配器</span></h1><p><img src="/cpp_STL_note/image-20230323111005628.png" alt="image-20230323111005628"></p>
-<p><img src="/cpp_STL_note/image-20230323110945919.png" alt="image-20230323110945919"></p>
-<h1><span id="关联容器">关联容器</span></h1><p><img src="/cpp_STL_note/image-20230323111555262.png" alt="image-20230323111555262"></p>
-<p><img src="/cpp_STL_note/image-20230323111417256.png" alt="image-20230323111417256"></p>
-<p><img src="/cpp_STL_note/image-20230323112926253.png" alt="image-20230323112926253"></p>
-<h1><span id="迭代器">迭代器</span></h1><p><img src="/cpp_STL_note/image-20230323150210820.png" alt="image-20230323150210820"></p>
-<p><img src="/cpp_STL_note/image-20230323145614546.png" alt="image-20230323145614546"></p>
-<p><img src="/cpp_STL_note/image-20230323145734503.png" alt="image-20230323145734503"></p>
-<p><img src="/cpp_STL_note/image-20230323145949126.png" alt="image-20230323145949126"></p>
-<h1><span id="函数对象">函数对象</span></h1><p><img src="/cpp_STL_note/image-20230323152022993.png" alt="image-20230323152022993"></p>
-<p>通过函数指针调用函数，是没有办法内联的，效率很低，因为没有函数调用开销。</p>
-<p><strong>所以需要函数对象来代替函数指针</strong></p>
-<p> <img src="/cpp_STL_note/image-20230323152258041.png" alt="image-20230323152258041"></p>
-<p><img src="/cpp_STL_note/image-20230323152325846.png" alt="image-20230323152325846"></p>
-<h1><span id="泛型算法">泛型算法</span></h1><p><img src="/cpp_STL_note/image-20230323194139744.png" alt="image-20230323194139744"></p>
-<p><img src="/cpp_STL_note/image-20230323195045590.png" alt="image-20230323195045590"></p>
+<p><a href="https://zhuanlan.zhihu.com/p/260973533">游戏资源中常见的贴图类型 - 知乎 (zhihu.com)</a></p>
 ]]></content>
       <categories>
-        <category>C++</category>
+        <category>link</category>
       </categories>
       <tags>
-        <tag>C++</tag>
+        <tag>有用的博文</tag>
       </tags>
   </entry>
   <entry>
@@ -158,14 +103,14 @@
 
 <span id="more"></span>
 
-<p><img src="/cpp_basic_note/image-20230321143438563.png" alt="image-20230321143438563"></p>
-<h1><span id="1-深入学习c语言先要练好的内功">1 深入学习C++语言先要练好的内功</span></h1><h2><span id="11-掌握进程虚拟地址空间区域划分">1.1 掌握进程虚拟地址空间区域划分</span></h2><p><img src="/cpp_basic_note/image-20230320221443055.png" alt="image-20230320221443055"></p>
-<p><img src="/cpp_basic_note/image-20230320221901794.png" alt="image-20230320221901794"></p>
-<h2><span id="12-从指令角度掌握函数调用堆栈详细过程">1.2 从指令角度掌握函数调用堆栈详细过程</span></h2><p><img src="/cpp_basic_note/image-20230321111119551.png" alt="image-20230321111119551"></p>
-<p><img src="/cpp_basic_note/image-20230321112224556.png" alt="image-20230321112224556"></p>
+<p><img src="/2023/03/20/cpp_basic_note/image-20230321143438563.png" alt="image-20230321143438563"></p>
+<h1><span id="1-深入学习c语言先要练好的内功">1 深入学习C++语言先要练好的内功</span></h1><h2><span id="11-掌握进程虚拟地址空间区域划分">1.1 掌握进程虚拟地址空间区域划分</span></h2><p><img src="/2023/03/20/cpp_basic_note/image-20230320221443055.png" alt="image-20230320221443055"></p>
+<p><img src="/2023/03/20/cpp_basic_note/image-20230320221901794.png" alt="image-20230320221901794"></p>
+<h2><span id="12-从指令角度掌握函数调用堆栈详细过程">1.2 从指令角度掌握函数调用堆栈详细过程</span></h2><p><img src="/2023/03/20/cpp_basic_note/image-20230321111119551.png" alt="image-20230321111119551"></p>
+<p><img src="/2023/03/20/cpp_basic_note/image-20230321112224556.png" alt="image-20230321112224556"></p>
 <p>具体得看视频，讲述了main函数调用sum方法每步的空间变化。</p>
-<h2><span id="13-从编译器角度理解c代码的编译和链接原理">1.3 从编译器角度理解C++代码的编译和链接原理</span></h2><p><img src="/cpp_basic_note/image-20230321142611763.png" alt="image-20230321142611763"></p>
-<p><img src="/cpp_basic_note/image-20230321142632348.png" alt="image-20230321142632348"></p>
+<h2><span id="13-从编译器角度理解c代码的编译和链接原理">1.3 从编译器角度理解C++代码的编译和链接原理</span></h2><p><img src="/2023/03/20/cpp_basic_note/image-20230321142611763.png" alt="image-20230321142611763"></p>
+<p><img src="/2023/03/20/cpp_basic_note/image-20230321142632348.png" alt="image-20230321142632348"></p>
 <h1><span id="2-c基础">2 C++基础</span></h1><h2><span id="21-深入理解newdelete">2.1 深入理解new，delete</span></h2><p>malloc和free称作C的库函数，new和delete称作运算符；</p>
 <p>new不仅可以做内存开辟，还可以做内存初始化操作；</p>
 <p>malloc开辟内存失败，是通过返回值和nullptr作比较；而new开辟内存失败，是通过抛出bad_alloc类型的异常来判断；</p>
@@ -240,6 +185,81 @@
 <p>此时（对象的浅拷贝出现问题了）就需要自定义<strong>拷贝构造函数</strong>和<strong>赋值函数</strong>（运算符重载）</p>
 <h2><span id="33-构造函数的初始化列表">3.3 构造函数的初始化列表</span></h2><p><strong>初始化列表做初始化和在函数体内初始化区别？</strong></p>
 <p>int amount &#x3D; 0；和 int amount; amount &#x3D; 0;的区别，若数据类型为自定义类型，未指定该自定义类型的构造函数（调用默认构造函数），则无法成功构造。</p>
+]]></content>
+      <categories>
+        <category>C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>施磊C++初级STL笔记</title>
+    <url>/2023/03/22/cpp_STL_note/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#c-stl%E5%88%86%E7%B1%BB">C++ STL分类</a><ul>
+<li><a href="#%E4%B8%80-%E6%A0%87%E5%87%86%E5%AE%B9%E5%99%A8">一、标准容器</a><ul>
+<li><a href="#1%E9%A1%BA%E5%BA%8F%E5%AE%B9%E5%99%A8">1.顺序容器</a></li>
+<li><a href="#2%E5%AE%B9%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8">2.容器适配器</a></li>
+<li><a href="#3%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8">3.关联容器</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BA%8C-%E8%BF%91%E5%AE%B9%E5%99%A8">二、近容器</a></li>
+<li><a href="#%E4%B8%89-%E8%BF%AD%E4%BB%A3%E5%99%A8">三、迭代器</a></li>
+<li><a href="#%E5%9B%9B-%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1">四、函数对象</a></li>
+<li><a href="#%E4%BA%94-%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95">五、泛型算法</a></li>
+</ul>
+</li>
+<li><a href="#vector%E5%AE%B9%E5%99%A8">vector容器</a></li>
+<li><a href="#deque%E5%AE%B9%E5%99%A8">deque容器</a></li>
+<li><a href="#list%E5%AE%B9%E5%99%A8">list容器</a></li>
+<li><a href="#%E5%AE%B9%E5%99%A8%E9%80%82%E9%85%8D%E5%99%A8">容器适配器</a></li>
+<li><a href="#%E5%85%B3%E8%81%94%E5%AE%B9%E5%99%A8">关联容器</a></li>
+<li><a href="#%E8%BF%AD%E4%BB%A3%E5%99%A8">迭代器</a></li>
+<li><a href="#%E5%87%BD%E6%95%B0%E5%AF%B9%E8%B1%A1">函数对象</a></li>
+<li><a href="#%E6%B3%9B%E5%9E%8B%E7%AE%97%E6%B3%95">泛型算法</a></li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="c-stl分类">C++ STL分类</span></h1><h2><span id="一-标准容器">一、标准容器</span></h2><h3><span id="1顺序容器">1.顺序容器</span></h3><p>vector    deque    list</p>
+<h3><span id="2容器适配器">2.容器适配器</span></h3><p>stack    queue    priority_queue</p>
+<h3><span id="3关联容器">3.关联容器</span></h3><p>无序关联容器    链式哈希表    增删查O(1)</p>
+<p>unordered_set    unordered_multiset    unordered_map    unordered_multimap</p>
+<p>有序关联容器</p>
+<p>set    multiset    map    multimap</p>
+<h2><span id="二-近容器">二、近容器</span></h2><p>数组    string    bitset</p>
+<h2><span id="三-迭代器">三、迭代器</span></h2><p>iterator    const_iterator</p>
+<p>reverse_iterator    const_reverse_iterator</p>
+<h2><span id="四-函数对象">四、函数对象</span></h2><p>greater    less</p>
+<h2><span id="五-泛型算法">五、泛型算法</span></h2><p>sort    find    find_if    binary_search    for_each</p>
+<h1><span id="vector容器">vector容器</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230322224639551.png" alt="image-20230322224639551"></p>
+<h1><span id="deque容器">deque容器</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230322231048003.png" alt="image-20230322231048003"></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230322232359532.png" alt="image-20230322232359532"></p>
+<h1><span id="list容器">list容器</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230322232440404.png" alt="image-20230322232440404"></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230322232641231.png" alt="image-20230322232641231"></p>
+<p><strong>vector、deque、list区别</strong></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230323102712597.png" alt="image-20230323102712597"></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230323102855340.png" alt="image-20230323102855340"></p>
+<h1><span id="容器适配器">容器适配器</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230323111005628.png" alt="image-20230323111005628"></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230323110945919.png" alt="image-20230323110945919"></p>
+<h1><span id="关联容器">关联容器</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230323111555262.png" alt="image-20230323111555262"></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230323111417256.png" alt="image-20230323111417256"></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230323112926253.png" alt="image-20230323112926253"></p>
+<h1><span id="迭代器">迭代器</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230323150210820.png" alt="image-20230323150210820"></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230323145614546.png" alt="image-20230323145614546"></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230323145734503.png" alt="image-20230323145734503"></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230323145949126.png" alt="image-20230323145949126"></p>
+<h1><span id="函数对象">函数对象</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230323152022993.png" alt="image-20230323152022993"></p>
+<p>通过函数指针调用函数，是没有办法内联的，效率很低，因为没有函数调用开销。</p>
+<p><strong>所以需要函数对象来代替函数指针</strong></p>
+<p> <img src="/2023/03/22/cpp_STL_note/image-20230323152258041.png" alt="image-20230323152258041"></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230323152325846.png" alt="image-20230323152325846"></p>
+<h1><span id="泛型算法">泛型算法</span></h1><p><img src="/2023/03/22/cpp_STL_note/image-20230323194139744.png" alt="image-20230323194139744"></p>
+<p><img src="/2023/03/22/cpp_STL_note/image-20230323195045590.png" alt="image-20230323195045590"></p>
 ]]></content>
       <categories>
         <category>C++</category>
@@ -581,28 +601,6 @@
       </tags>
   </entry>
   <entry>
-    <title>《Towards Realistic Generative 3D Face Models》</title>
-    <url>/2023/06/07/review_13_AlbedoGAN/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#1-%E8%B4%A1%E7%8C%AE">1. 贡献</a></li>
-</ul>
-<!-- tocstop -->
-
-<p>paper: [<a href="https://arxiv.org/abs/2304.12483">2304.12483] Towards Realistic Generative 3D Face Models (arxiv.org)</a></p>
-<p>code: <a href="https://github.com/aashishrai3799/Towards-Realistic-Generative-3D-Face-Models/">aashishrai3799&#x2F;Towards-Realistic-Generative-3D-Face-Models: 3D face model that can generate high-quality mesh and texture (github.com)</a></p>
-<span id="more"></span>
-
-<h1><span id="1-贡献">1. 贡献</span></h1>]]></content>
-      <categories>
-        <category>paper review</category>
-      </categories>
-      <tags>
-        <tag>3D Face Reconstruction</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>《FFHQ-UV:Normalized Facial UV-Texture Dataset for 3D Face Reconstruction》</title>
     <url>/2023/06/07/review_14_FFHQ-UV/</url>
     <content><![CDATA[<!-- toc -->
@@ -634,6 +632,28 @@
 <p>源码阅读：</p>
 <p>run_ffhq_uv_dataset.sh</p>
 ]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>3D Face Reconstruction</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《Towards Realistic Generative 3D Face Models》</title>
+    <url>/2023/06/07/review_13_AlbedoGAN/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#1-%E8%B4%A1%E7%8C%AE">1. 贡献</a></li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: [<a href="https://arxiv.org/abs/2304.12483">2304.12483] Towards Realistic Generative 3D Face Models (arxiv.org)</a></p>
+<p>code: <a href="https://github.com/aashishrai3799/Towards-Realistic-Generative-3D-Face-Models/">aashishrai3799&#x2F;Towards-Realistic-Generative-3D-Face-Models: 3D face model that can generate high-quality mesh and texture (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="1-贡献">1. 贡献</span></h1>]]></content>
       <categories>
         <category>paper review</category>
       </categories>
@@ -720,46 +740,77 @@
       </tags>
   </entry>
   <entry>
-    <title>《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</title>
-    <url>/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/</url>
+    <title>《Multiview Neural Surface Reconstruction by Disentangling Geometry and Appearance》</title>
+    <url>/2023/07/07/review_16_IDR/</url>
     <content><![CDATA[<!-- toc -->
 
-<ul>
-<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
-<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
-<li><a href="#%E5%81%9A%E6%B3%95">做法</a></li>
-</ul>
+
+
 <!-- tocstop -->
 
-<p>paper: [<a href="https://arxiv.org/abs/2203.06541">2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org)</a></p>
-<p>code: <a href="https://github.com/Jiahao-UTS/SLPT-master">Jiahao-UTS&#x2F;SLPT-master (github.com)</a></p>
+<p>ref link: <a href="https://blog.csdn.net/pylittlebrat/article/details/127883937">(99条消息) IDR 学习笔记_multiview neural surface reconstruction by disenta_ACxz的博客-CSDN博客</a></p>
 <span id="more"></span>
 
-<h1><span id="出发点">出发点</span></h1><p>landmark之间的内在联系对于人脸对齐的性能有很大影响，本文重点考虑其内在联系。</p>
-<p>之前的方法有heatmap regression，Coordinate regression，有着不同方面的劣势。</p>
-<h1><span id="创新点">创新点</span></h1><p>提出了SLPT（<em>sparse local patch transformer</em>）来学习<em>query-query</em>和<em>representation-query</em>关系（自适应内在关系）；为了进一步提高SLPT的性能，提出了一种从粗到精的框架，使局部补丁进化为<strong>金字塔形补丁</strong>。</p>
-<h1><span id="做法">做法</span></h1><p>本文的SLPT并非同DETR从完整的feature map中预测坐标，而是首先从局部patch中生成每个landmark的表示特征。</p>
-<p>然后，使用一系列可学习的queries（称为<em>landmark queries</em>）来聚合表示。</p>
-<p>基于Transformer的交叉注意机制，SPLT在每一层学习一个<strong>自适应邻接矩阵</strong>。最后，通过MLP独立预测每个landmark在其对应patch中的subpixel坐标。由于使用了稀疏的局部补丁，与其他ViT相比，输入token的数量显著减少。 </p>
-<p>为了进一步提高性能，引入了从粗到精的框架，以与SLPT结合。下图为所提出的从粗到精的框架利用稀疏的局部面片实现鲁棒的人脸对齐。根据前一阶段的landmarks裁剪稀疏的局部补丁，并将其输入到同一SLPT中以预测面部landmarks。此外，patch大小随着阶段的增加而缩小，以使局部特征演变成金字塔形式。</p>
-<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/1.png" alt="1"></p>
-<p>整体框架图：</p>
-<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/2.png" alt="2"></p>
-<p>分为三部分：</p>
-<p><strong>the patch embedding &amp; structure encoding</strong></p>
-<p>不同于ViT，SLPT先根据landmark裁剪patch，再通过线性插值将patch大小调整为K*K，又使用了结构编码（可学习的参数）来补充表示。每种编码都与相邻地标（如左眼和右眼）的编码有很高的相似性。</p>
-<p>Muti-head Cross-attention（在Vision Transformer基础上的改进）：通过landmark在CNN提取出的feature map上划取局部patch，将这些feature map上的patch排成一个patch embedding，将其视为landmark的表示；紧接着对其进行结构编码（Structure Encodeing）,以获取人脸中的相对位置和patch embedding做concat。输入 landmarks queries ，通过这些MLP，独立预测每个landmark的位置。</p>
-<p><strong>inherent relation layers</strong></p>
-<p>受Transformer启发，每一层由三个块组成，即多头自注意（MSA）块、多头交叉注意（MCA）块和多层感知器（MLP）块，并且在每个块之前应用一个layer norm（LN）。 </p>
-<p><strong>prediction heads</strong></p>
-<p>预测头由一个用于规范化输入的分层模板和一个用于预测结果的MLP层组成。</p>
-<p>最右边的图像显示了不同样本的自适应固有关系。其将每个点连接到第一个内在关系层中交叉注意权重最高的点显示。</p>
+
+
+
+
 ]]></content>
       <categories>
         <category>paper review</category>
       </categories>
       <tags>
-        <tag>Patch-based Transformer</tag>
+        <tag>3D Face Reconstruction</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>《A Hierarchical Representation Network for Accurate and Detailed Face Reconstruction from In-The-Wild Images》</title>
+    <url>/2023/07/12/review_18_HRN/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#1-%E7%9B%AE%E6%A0%87">1、目标</a></li>
+<li><a href="#2-%E4%BB%8B%E7%BB%8D">2、介绍</a></li>
+<li><a href="#3-%E6%96%B9%E6%B3%95">3、方法</a><ul>
+<li><a href="#31-%E6%96%B9%E6%B3%95%E6%A6%82%E8%BF%B0">3.1 方法概述</a></li>
+<li><a href="#32-%E5%88%86%E5%B1%82%E5%BB%BA%E6%A8%A1">3.2 分层建模</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<p>paper: [<a href="https://arxiv.org/abs/2302.14434">2302.14434] A Hierarchical Representation Network for Accurate and Detailed Face Reconstruction from In-The-Wild Images (arxiv.org)</a></p>
+<p>code: [youngLBW&#x2F;HRN: <a href="https://github.com/youngLBW/HRN">CVPR2023] A Hierarchical Representation Network for Accurate and Detailed Face Reconstruction from In-The-Wild Images. (github.com)</a></p>
+<span id="more"></span>
+
+<h1><span id="1-目标">1、目标</span></h1><p><img src="/review_18_HRN/image-20230712065221103.png" alt="image-20230712065221103"></p>
+<p>在三个层面上解耦出不同的资产，以达到良好的重建效果</p>
+<p>三个层面：3DMM粗网格结构；deformation map；displacement map</p>
+<p>可拓展到muti view工况</p>
+<p>介绍了阿里自己做的一个数据集（还未公开）</p>
+<h1><span id="2-介绍">2、介绍</span></h1><p>现有的方法要么使用低维的3DMM实现低频细节，要么再考虑displacement map实现高频细节，往往忽略了中频细节。</p>
+<p>本方法将人脸几何结构解耦为低中高三频细节，后针对这三者分别建模为face-wise blendshape coefficients、vertex-wise deformation map、pixel-wise displacement map。</p>
+<p><strong>贡献</strong></p>
+<p>1、分三层建模</p>
+<p>2、GT创建流程，以及设计de-reouching模块</p>
+<p>3、可拓展至muti-view重建</p>
+<p>4、引入FaceHD-100数据集</p>
+<h1><span id="3-方法">3、方法</span></h1><p><img src="/review_18_HRN/image-20230712070647960.png" alt="image-20230712070647960"></p>
+<h2><span id="31-方法概述">3.1 方法概述</span></h2><p>我们首先使用3DMM来预测coarse mesh和albedo map（蓝色区域）。然后，我们开发了一种分层建模策略，以从粗到细的方式处理复杂的面部细节（绿色和紫色区域）。为了便于对层次细节进行准确和忠实的建模，结合3D先验进行对抗和半监督学习。<br>此外，我们提出了一个de-rectouching module，以实现几何结构和外观的更好解耦，缓解各种皮肤纹理和照明之间的模糊性。此外，我们将我们的框架扩展到多视图方式，并引入了高质量的3D人脸数据集，以促进稀疏视图人脸重建的研究。为了简化，我们在每一节中指定了相关的损失函数和训练策略。</p>
+<h2><span id="32-分层建模">3.2 分层建模</span></h2><p>图1解释了模型在不同层次上所体现的细节变化。</p>
+<p>低频部分，其提供与输入面大致对准的粗略形状；</p>
+<p>中频细节，其描述相对于低频部分的轮廓和局部形状的细节；</p>
+<p>高频细节，如褶皱、微凸起等。</p>
+<p><strong>具体设计如下</strong></p>
+<p>低频部分，选择BFM作为基础模型，并输出低维系数来实现粗略重建；</p>
+<p>中频细节，三通道的deformation map，关联position map，在uv空间上可定位到三维结构上的某一顶点，在三通道上表示相对偏移；64x64x3；</p>
+<p>高频细节，采用DECA中的displacement map，表示沿法线方向的几何变形，256x256x1；displacement map以像素方式转换为渲染过程中使用的详细法线，以显示所有微小的细节，打破了基础模型顶点密度的限制。因此，我们能够用这些表示来描述任意复杂的面。</p>
+]]></content>
+      <categories>
+        <category>paper review</category>
+      </categories>
+      <tags>
+        <tag>3D Face Reconstruction</tag>
       </tags>
   </entry>
   <entry>
@@ -839,27 +890,46 @@
       </tags>
   </entry>
   <entry>
-    <title>《Multiview Neural Surface Reconstruction by Disentangling Geometry and Appearance》</title>
-    <url>/2023/07/07/review_16_IDR/</url>
+    <title>《Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning》</title>
+    <url>/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/</url>
     <content><![CDATA[<!-- toc -->
 
-
-
+<ul>
+<li><a href="#%E5%87%BA%E5%8F%91%E7%82%B9">出发点</a></li>
+<li><a href="#%E5%88%9B%E6%96%B0%E7%82%B9">创新点</a></li>
+<li><a href="#%E5%81%9A%E6%B3%95">做法</a></li>
+</ul>
 <!-- tocstop -->
 
-<p>ref link: <a href="https://blog.csdn.net/pylittlebrat/article/details/127883937">(99条消息) IDR 学习笔记_multiview neural surface reconstruction by disenta_ACxz的博客-CSDN博客</a></p>
+<p>paper: [<a href="https://arxiv.org/abs/2203.06541">2203.06541] Sparse Local Patch Transformer for Robust Face Alignment and Landmarks Inherent Relation Learning (arxiv.org)</a></p>
+<p>code: <a href="https://github.com/Jiahao-UTS/SLPT-master">Jiahao-UTS&#x2F;SLPT-master (github.com)</a></p>
 <span id="more"></span>
 
-
-
-
-
+<h1><span id="出发点">出发点</span></h1><p>landmark之间的内在联系对于人脸对齐的性能有很大影响，本文重点考虑其内在联系。</p>
+<p>之前的方法有heatmap regression，Coordinate regression，有着不同方面的劣势。</p>
+<h1><span id="创新点">创新点</span></h1><p>提出了SLPT（<em>sparse local patch transformer</em>）来学习<em>query-query</em>和<em>representation-query</em>关系（自适应内在关系）；为了进一步提高SLPT的性能，提出了一种从粗到精的框架，使局部补丁进化为<strong>金字塔形补丁</strong>。</p>
+<h1><span id="做法">做法</span></h1><p>本文的SLPT并非同DETR从完整的feature map中预测坐标，而是首先从局部patch中生成每个landmark的表示特征。</p>
+<p>然后，使用一系列可学习的queries（称为<em>landmark queries</em>）来聚合表示。</p>
+<p>基于Transformer的交叉注意机制，SPLT在每一层学习一个<strong>自适应邻接矩阵</strong>。最后，通过MLP独立预测每个landmark在其对应patch中的subpixel坐标。由于使用了稀疏的局部补丁，与其他ViT相比，输入token的数量显著减少。 </p>
+<p>为了进一步提高性能，引入了从粗到精的框架，以与SLPT结合。下图为所提出的从粗到精的框架利用稀疏的局部面片实现鲁棒的人脸对齐。根据前一阶段的landmarks裁剪稀疏的局部补丁，并将其输入到同一SLPT中以预测面部landmarks。此外，patch大小随着阶段的增加而缩小，以使局部特征演变成金字塔形式。</p>
+<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/1.png" alt="1"></p>
+<p>整体框架图：</p>
+<p><img src="/2022/03/25/review_1_Sparse%20Local%20Patch%20Transformer%20for%20Robust%20Face%20Alignment%20and%20Landmarks/2.png" alt="2"></p>
+<p>分为三部分：</p>
+<p><strong>the patch embedding &amp; structure encoding</strong></p>
+<p>不同于ViT，SLPT先根据landmark裁剪patch，再通过线性插值将patch大小调整为K*K，又使用了结构编码（可学习的参数）来补充表示。每种编码都与相邻地标（如左眼和右眼）的编码有很高的相似性。</p>
+<p>Muti-head Cross-attention（在Vision Transformer基础上的改进）：通过landmark在CNN提取出的feature map上划取局部patch，将这些feature map上的patch排成一个patch embedding，将其视为landmark的表示；紧接着对其进行结构编码（Structure Encodeing）,以获取人脸中的相对位置和patch embedding做concat。输入 landmarks queries ，通过这些MLP，独立预测每个landmark的位置。</p>
+<p><strong>inherent relation layers</strong></p>
+<p>受Transformer启发，每一层由三个块组成，即多头自注意（MSA）块、多头交叉注意（MCA）块和多层感知器（MLP）块，并且在每个块之前应用一个layer norm（LN）。 </p>
+<p><strong>prediction heads</strong></p>
+<p>预测头由一个用于规范化输入的分层模板和一个用于预测结果的MLP层组成。</p>
+<p>最右边的图像显示了不同样本的自适应固有关系。其将每个点连接到第一个内在关系层中交叉注意权重最高的点显示。</p>
 ]]></content>
       <categories>
         <category>paper review</category>
       </categories>
       <tags>
-        <tag>3D Face Reconstruction</tag>
+        <tag>Patch-based Transformer</tag>
       </tags>
   </entry>
   <entry>
@@ -1772,37 +1842,6 @@
       </tags>
   </entry>
   <entry>
-    <title>RTTO HOT 100</title>
-    <url>/2023/03/16/rtto_hot100/</url>
-    <content><![CDATA[<!-- toc -->
-
-<ul>
-<li><a href="#hot-100">HOT 100</a><ul>
-<li><a href="#1%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8Ce">1.两数之和（e）</a></li>
-<li><a href="#2%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0m">2.两数相加（m）</a></li>
-<li><a href="#3%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2m">3.无重复字符的最长子串（m）</a></li>
-<li><a href="#4%E5%AF%BB%E6%89%BE%E4%B8%A4%E4%B8%AA%E6%AD%A3%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0h">4.寻找两个正序数组的中位数（h）</a></li>
-</ul>
-</li>
-</ul>
-<!-- tocstop -->
-
-<span id="more"></span>
-
-<h1><span id="hot-100">HOT 100</span></h1><h2><span id="1两数之和e">1.两数之和（e）</span></h2><p>使用map&lt;int,int&gt;构造哈希表；使用map的count方法寻找target-nums[i]是否存在，存在的话就存入res相关index，否则存入nums[i]的索引位置。</p>
-<h2><span id="2两数相加m">2.两数相加（m）</span></h2><p>遍历l1，l2计算sum和进位，尾插法更新tail，注意此时的tail是逆序的，需要一开始使用head指向初始节点作为结果返回。</p>
-<h2><span id="3无重复字符的最长子串m">3.无重复字符的最长子串（m）</span></h2><p>滑动窗口法，使用start，end，使用end进行遍历整个字符串，记录每次end的所指向的字符记为tmp，子循环从start遍历到end，若发现有与tmp相等的符号，则发生子串重复，更新start位置到当前index下一位，计算当前子串length，并退出子循环。动态更新res和length的最大值作为当前结果。</p>
-<h2><span id="4寻找两个正序数组的中位数h">4.寻找两个正序数组的中位数（h）</span></h2><p>二分法</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">double</span> <span class="title">findMedianSortedArrays</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums1, vector&lt;<span class="type">int</span>&gt;&amp; nums2)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums1.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> m = nums2.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> left = (n + m + <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> right = (n + m + <span class="number">2</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">return</span> (<span class="built_in">getKth</span>(nums1, <span class="number">0</span>, n - <span class="number">1</span>, nums2, <span class="number">0</span>, m - <span class="number">1</span>, left) + <span class="built_in">getKth</span>(nums1, <span class="number">0</span>, n - <span class="number">1</span>, nums2, <span class="number">0</span>, m - <span class="number">1</span>, right)) * <span class="number">0.5</span>; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getKth</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums1, <span class="type">int</span> start1, <span class="type">int</span> end1, vector&lt;<span class="type">int</span>&gt;&amp; nums2, <span class="type">int</span> start2, <span class="type">int</span> end2, <span class="type">int</span> k)</span></span>&#123;</span><br><span class="line">        <span class="type">int</span> len1 = end1 - start1 + <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> len2 = end2 - start2 + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(len1 &gt; len2) <span class="keyword">return</span>  <span class="built_in">getKth</span>(nums2, start2, end2, nums1, start1, end1, k);</span><br><span class="line">        <span class="keyword">if</span> (len1 == <span class="number">0</span>)  <span class="keyword">return</span> nums2[start2 + k - <span class="number">1</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(k == <span class="number">1</span>) <span class="keyword">return</span> <span class="built_in">min</span>(nums1[start1], nums2[start2]);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> i = start1 + <span class="built_in">min</span>(len1, k / <span class="number">2</span>) - <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> j = start2 + <span class="built_in">min</span>(len2, k / <span class="number">2</span>) - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(nums1[i] &gt; nums2[j])&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">getKth</span>(nums1, start1, end1, nums2, j + <span class="number">1</span>, end2, k - (j - start2 + <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">getKth</span>(nums1, i + <span class="number">1</span>, end1, nums2, start2, end2, k - (i - start1 + <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>RTTO</category>
-      </categories>
-      <tags>
-        <tag>RTTO</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>RTTO WEEK5</title>
     <url>/2023/02/22/rtto_5/</url>
     <content><![CDATA[<!-- toc -->
@@ -1883,6 +1922,37 @@
 
 <p>非递归法：</p>
 <p>层序遍历</p>
+]]></content>
+      <categories>
+        <category>RTTO</category>
+      </categories>
+      <tags>
+        <tag>RTTO</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RTTO HOT 100</title>
+    <url>/2023/03/16/rtto_hot100/</url>
+    <content><![CDATA[<!-- toc -->
+
+<ul>
+<li><a href="#hot-100">HOT 100</a><ul>
+<li><a href="#1%E4%B8%A4%E6%95%B0%E4%B9%8B%E5%92%8Ce">1.两数之和（e）</a></li>
+<li><a href="#2%E4%B8%A4%E6%95%B0%E7%9B%B8%E5%8A%A0m">2.两数相加（m）</a></li>
+<li><a href="#3%E6%97%A0%E9%87%8D%E5%A4%8D%E5%AD%97%E7%AC%A6%E7%9A%84%E6%9C%80%E9%95%BF%E5%AD%90%E4%B8%B2m">3.无重复字符的最长子串（m）</a></li>
+<li><a href="#4%E5%AF%BB%E6%89%BE%E4%B8%A4%E4%B8%AA%E6%AD%A3%E5%BA%8F%E6%95%B0%E7%BB%84%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0h">4.寻找两个正序数组的中位数（h）</a></li>
+</ul>
+</li>
+</ul>
+<!-- tocstop -->
+
+<span id="more"></span>
+
+<h1><span id="hot-100">HOT 100</span></h1><h2><span id="1两数之和e">1.两数之和（e）</span></h2><p>使用map&lt;int,int&gt;构造哈希表；使用map的count方法寻找target-nums[i]是否存在，存在的话就存入res相关index，否则存入nums[i]的索引位置。</p>
+<h2><span id="2两数相加m">2.两数相加（m）</span></h2><p>遍历l1，l2计算sum和进位，尾插法更新tail，注意此时的tail是逆序的，需要一开始使用head指向初始节点作为结果返回。</p>
+<h2><span id="3无重复字符的最长子串m">3.无重复字符的最长子串（m）</span></h2><p>滑动窗口法，使用start，end，使用end进行遍历整个字符串，记录每次end的所指向的字符记为tmp，子循环从start遍历到end，若发现有与tmp相等的符号，则发生子串重复，更新start位置到当前index下一位，计算当前子串length，并退出子循环。动态更新res和length的最大值作为当前结果。</p>
+<h2><span id="4寻找两个正序数组的中位数h">4.寻找两个正序数组的中位数（h）</span></h2><p>二分法</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">double</span> <span class="title">findMedianSortedArrays</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums1, vector&lt;<span class="type">int</span>&gt;&amp; nums2)</span> </span>&#123;</span><br><span class="line">        <span class="type">int</span> n = nums1.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> m = nums2.<span class="built_in">size</span>();</span><br><span class="line">        <span class="type">int</span> left = (n + m + <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> right = (n + m + <span class="number">2</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">return</span> (<span class="built_in">getKth</span>(nums1, <span class="number">0</span>, n - <span class="number">1</span>, nums2, <span class="number">0</span>, m - <span class="number">1</span>, left) + <span class="built_in">getKth</span>(nums1, <span class="number">0</span>, n - <span class="number">1</span>, nums2, <span class="number">0</span>, m - <span class="number">1</span>, right)) * <span class="number">0.5</span>; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getKth</span><span class="params">(vector&lt;<span class="type">int</span>&gt;&amp; nums1, <span class="type">int</span> start1, <span class="type">int</span> end1, vector&lt;<span class="type">int</span>&gt;&amp; nums2, <span class="type">int</span> start2, <span class="type">int</span> end2, <span class="type">int</span> k)</span></span>&#123;</span><br><span class="line">        <span class="type">int</span> len1 = end1 - start1 + <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> len2 = end2 - start2 + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(len1 &gt; len2) <span class="keyword">return</span>  <span class="built_in">getKth</span>(nums2, start2, end2, nums1, start1, end1, k);</span><br><span class="line">        <span class="keyword">if</span> (len1 == <span class="number">0</span>)  <span class="keyword">return</span> nums2[start2 + k - <span class="number">1</span>];</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span>(k == <span class="number">1</span>) <span class="keyword">return</span> <span class="built_in">min</span>(nums1[start1], nums2[start2]);</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span> i = start1 + <span class="built_in">min</span>(len1, k / <span class="number">2</span>) - <span class="number">1</span>;</span><br><span class="line">        <span class="type">int</span> j = start2 + <span class="built_in">min</span>(len2, k / <span class="number">2</span>) - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(nums1[i] &gt; nums2[j])&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">getKth</span>(nums1, start1, end1, nums2, j + <span class="number">1</span>, end2, k - (j - start2 + <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">getKth</span>(nums1, i + <span class="number">1</span>, end1, nums2, start2, end2, k - (i - start1 + <span class="number">1</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>RTTO</category>
